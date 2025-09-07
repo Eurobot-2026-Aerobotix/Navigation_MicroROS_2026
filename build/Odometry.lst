@@ -1,0 +1,1735 @@
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"Odometry.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/Odometry.c"
+  20              		.section	.text.set_right_encoder,"ax",%progbits
+  21              		.align	1
+  22              		.global	set_right_encoder
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	set_right_encoder:
+  28              	.LVL0:
+  29              	.LFB138:
+   1:Core/Src/Odometry.c **** #include "Odometry.h"
+   2:Core/Src/Odometry.c **** #include "Robot_Navi_Euro20.h"
+   3:Core/Src/Odometry.c **** 
+   4:Core/Src/Odometry.c **** long volatile millis=0,t=0;
+   5:Core/Src/Odometry.c **** 
+   6:Core/Src/Odometry.c **** TIM_HandleTypeDef* htim_right_encoder;
+   7:Core/Src/Odometry.c **** TIM_TypeDef* right_TIM;
+   8:Core/Src/Odometry.c **** int right_resolution;
+   9:Core/Src/Odometry.c **** int right_precision;
+  10:Core/Src/Odometry.c **** int right_sens;
+  11:Core/Src/Odometry.c **** volatile unsigned int current_right_count;
+  12:Core/Src/Odometry.c **** volatile unsigned int last_right_count;
+  13:Core/Src/Odometry.c **** volatile long d_right;
+  14:Core/Src/Odometry.c **** volatile long total_right_count;
+  15:Core/Src/Odometry.c **** volatile float total_right=0,d_right_counter=0;
+  16:Core/Src/Odometry.c **** volatile double right_speed,right_encoder_speed;
+  17:Core/Src/Odometry.c **** 
+  18:Core/Src/Odometry.c **** TIM_HandleTypeDef* htim_left_Encoder;
+  19:Core/Src/Odometry.c **** TIM_TypeDef* left_TIM;
+  20:Core/Src/Odometry.c **** int left_resolution;
+  21:Core/Src/Odometry.c **** int left_precision;
+  22:Core/Src/Odometry.c **** int left_sens;
+  23:Core/Src/Odometry.c **** volatile unsigned int current_left_count;
+  24:Core/Src/Odometry.c **** volatile unsigned int last_left_count;
+  25:Core/Src/Odometry.c **** volatile long d_left;
+  26:Core/Src/Odometry.c **** volatile long total_left_count;
+  27:Core/Src/Odometry.c **** volatile float total_left=0,d_left_counter=0,total_centre=0;
+  28:Core/Src/Odometry.c **** volatile double left_speed,left_encoder_speed;
+  29:Core/Src/Odometry.c **** 
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 2
+
+
+  30:Core/Src/Odometry.c **** volatile float dR,dL,dC;
+  31:Core/Src/Odometry.c **** volatile float left_radius,right_radius,spacing_encoder,spacing_wheel;
+  32:Core/Src/Odometry.c **** //volatile float current_x=1225;//           ==> 285
+  33:Core/Src/Odometry.c **** //volatile float current_y=23 0;//        ==> 676
+  34:Core/Src/Odometry.c **** //volatile float current_phi_rad=-PI/2;//PI/2;
+  35:Core/Src/Odometry.c **** //volatile float current_phi_deg=-90;
+  36:Core/Src/Odometry.c **** 
+  37:Core/Src/Odometry.c **** volatile float current_x=1225;//           ==> 285
+  38:Core/Src/Odometry.c **** volatile float current_y=230;//        ==> 676
+  39:Core/Src/Odometry.c **** volatile float current_phi_rad=-PI/2;//PI/2;
+  40:Core/Src/Odometry.c **** volatile double phi_speed,d_phi_counter;
+  41:Core/Src/Odometry.c **** volatile float current_phi_deg=-90;
+  42:Core/Src/Odometry.c **** 
+  43:Core/Src/Odometry.c **** float ref_x,ref_y,dec=100;
+  44:Core/Src/Odometry.c **** extern RL_b_sens;
+  45:Core/Src/Odometry.c **** 
+  46:Core/Src/Odometry.c **** void set_right_encoder(TIM_HandleTypeDef* htim, TIM_TypeDef* TIM, int resolution, int precision, in
+  47:Core/Src/Odometry.c **** {
+  30              		.loc 1 47 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 4, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 47 1 is_stmt 0 view .LVU1
+  35 0000 10B5     		push	{r4, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 4, -8
+  39              		.cfi_offset 14, -4
+  48:Core/Src/Odometry.c **** 	htim_right_encoder = htim;
+  40              		.loc 1 48 2 is_stmt 1 view .LVU2
+  41              		.loc 1 48 21 is_stmt 0 view .LVU3
+  42 0002 0A4C     		ldr	r4, .L3
+  43 0004 2060     		str	r0, [r4]
+  49:Core/Src/Odometry.c **** 	right_TIM = TIM;
+  44              		.loc 1 49 2 is_stmt 1 view .LVU4
+  45              		.loc 1 49 12 is_stmt 0 view .LVU5
+  46 0006 0A4C     		ldr	r4, .L3+4
+  47 0008 2160     		str	r1, [r4]
+  50:Core/Src/Odometry.c **** 	right_resolution = resolution;
+  48              		.loc 1 50 2 is_stmt 1 view .LVU6
+  49              		.loc 1 50 19 is_stmt 0 view .LVU7
+  50 000a 0A49     		ldr	r1, .L3+8
+  51              	.LVL1:
+  52              		.loc 1 50 19 view .LVU8
+  53 000c 0A60     		str	r2, [r1]
+  51:Core/Src/Odometry.c **** 	right_precision = precision;
+  54              		.loc 1 51 2 is_stmt 1 view .LVU9
+  55              		.loc 1 51 18 is_stmt 0 view .LVU10
+  56 000e 0A4A     		ldr	r2, .L3+12
+  57              	.LVL2:
+  58              		.loc 1 51 18 view .LVU11
+  59 0010 1360     		str	r3, [r2]
+  52:Core/Src/Odometry.c **** 	right_sens=sens;
+  60              		.loc 1 52 2 is_stmt 1 view .LVU12
+  61              		.loc 1 52 12 is_stmt 0 view .LVU13
+  62 0012 029A     		ldr	r2, [sp, #8]
+  63 0014 094B     		ldr	r3, .L3+16
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 3
+
+
+  64              	.LVL3:
+  65              		.loc 1 52 12 view .LVU14
+  66 0016 1A60     		str	r2, [r3]
+  53:Core/Src/Odometry.c **** 	HAL_TIM_Encoder_Start(htim_right_encoder,TIM_CHANNEL_1);
+  67              		.loc 1 53 2 is_stmt 1 view .LVU15
+  68 0018 0021     		movs	r1, #0
+  69              		.loc 1 53 2 is_stmt 0 view .LVU16
+  70 001a FFF7FEFF 		bl	HAL_TIM_Encoder_Start
+  71              	.LVL4:
+  54:Core/Src/Odometry.c **** 	right_TIM->CNT = 0;
+  72              		.loc 1 54 2 is_stmt 1 view .LVU17
+  73              		.loc 1 54 11 is_stmt 0 view .LVU18
+  74 001e 2268     		ldr	r2, [r4]
+  75              		.loc 1 54 17 view .LVU19
+  76 0020 0023     		movs	r3, #0
+  77 0022 5362     		str	r3, [r2, #36]
+  55:Core/Src/Odometry.c **** 	total_right_count = 0;
+  78              		.loc 1 55 2 is_stmt 1 view .LVU20
+  79              		.loc 1 55 20 is_stmt 0 view .LVU21
+  80 0024 064A     		ldr	r2, .L3+20
+  81 0026 1360     		str	r3, [r2]
+  56:Core/Src/Odometry.c **** }
+  82              		.loc 1 56 1 view .LVU22
+  83 0028 10BD     		pop	{r4, pc}
+  84              	.LVL5:
+  85              	.L4:
+  86              		.loc 1 56 1 view .LVU23
+  87 002a 00BF     		.align	2
+  88              	.L3:
+  89 002c 00000000 		.word	htim_right_encoder
+  90 0030 00000000 		.word	right_TIM
+  91 0034 00000000 		.word	right_resolution
+  92 0038 00000000 		.word	right_precision
+  93 003c 00000000 		.word	right_sens
+  94 0040 00000000 		.word	total_right_count
+  95              		.cfi_endproc
+  96              	.LFE138:
+  98              		.section	.text.set_left_encoder,"ax",%progbits
+  99              		.align	1
+ 100              		.global	set_left_encoder
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 105              	set_left_encoder:
+ 106              	.LVL6:
+ 107              	.LFB139:
+  57:Core/Src/Odometry.c **** 
+  58:Core/Src/Odometry.c **** void set_left_encoder(TIM_HandleTypeDef* htim, TIM_TypeDef* TIM, int resolution, int precision, int
+  59:Core/Src/Odometry.c **** {
+ 108              		.loc 1 59 1 is_stmt 1 view -0
+ 109              		.cfi_startproc
+ 110              		@ args = 4, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		.loc 1 59 1 is_stmt 0 view .LVU25
+ 113 0000 10B5     		push	{r4, lr}
+ 114              	.LCFI1:
+ 115              		.cfi_def_cfa_offset 8
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 4
+
+
+ 116              		.cfi_offset 4, -8
+ 117              		.cfi_offset 14, -4
+  60:Core/Src/Odometry.c **** 	htim_left_Encoder = htim;
+ 118              		.loc 1 60 2 is_stmt 1 view .LVU26
+ 119              		.loc 1 60 20 is_stmt 0 view .LVU27
+ 120 0002 0A4C     		ldr	r4, .L7
+ 121 0004 2060     		str	r0, [r4]
+  61:Core/Src/Odometry.c **** 	left_TIM = TIM;
+ 122              		.loc 1 61 2 is_stmt 1 view .LVU28
+ 123              		.loc 1 61 11 is_stmt 0 view .LVU29
+ 124 0006 0A4C     		ldr	r4, .L7+4
+ 125 0008 2160     		str	r1, [r4]
+  62:Core/Src/Odometry.c **** 	left_resolution = resolution;
+ 126              		.loc 1 62 2 is_stmt 1 view .LVU30
+ 127              		.loc 1 62 18 is_stmt 0 view .LVU31
+ 128 000a 0A49     		ldr	r1, .L7+8
+ 129              	.LVL7:
+ 130              		.loc 1 62 18 view .LVU32
+ 131 000c 0A60     		str	r2, [r1]
+  63:Core/Src/Odometry.c **** 	left_precision = precision;
+ 132              		.loc 1 63 2 is_stmt 1 view .LVU33
+ 133              		.loc 1 63 17 is_stmt 0 view .LVU34
+ 134 000e 0A4A     		ldr	r2, .L7+12
+ 135              	.LVL8:
+ 136              		.loc 1 63 17 view .LVU35
+ 137 0010 1360     		str	r3, [r2]
+  64:Core/Src/Odometry.c **** 	left_sens=sens;
+ 138              		.loc 1 64 2 is_stmt 1 view .LVU36
+ 139              		.loc 1 64 11 is_stmt 0 view .LVU37
+ 140 0012 029A     		ldr	r2, [sp, #8]
+ 141 0014 094B     		ldr	r3, .L7+16
+ 142              	.LVL9:
+ 143              		.loc 1 64 11 view .LVU38
+ 144 0016 1A60     		str	r2, [r3]
+  65:Core/Src/Odometry.c **** 	HAL_TIM_Encoder_Start(htim_left_Encoder,TIM_CHANNEL_1);
+ 145              		.loc 1 65 2 is_stmt 1 view .LVU39
+ 146 0018 0021     		movs	r1, #0
+ 147              		.loc 1 65 2 is_stmt 0 view .LVU40
+ 148 001a FFF7FEFF 		bl	HAL_TIM_Encoder_Start
+ 149              	.LVL10:
+  66:Core/Src/Odometry.c **** 	left_TIM->CNT = 0;
+ 150              		.loc 1 66 2 is_stmt 1 view .LVU41
+ 151              		.loc 1 66 10 is_stmt 0 view .LVU42
+ 152 001e 2268     		ldr	r2, [r4]
+ 153              		.loc 1 66 16 view .LVU43
+ 154 0020 0023     		movs	r3, #0
+ 155 0022 5362     		str	r3, [r2, #36]
+  67:Core/Src/Odometry.c **** 	total_left_count = 0;
+ 156              		.loc 1 67 2 is_stmt 1 view .LVU44
+ 157              		.loc 1 67 19 is_stmt 0 view .LVU45
+ 158 0024 064A     		ldr	r2, .L7+20
+ 159 0026 1360     		str	r3, [r2]
+  68:Core/Src/Odometry.c **** }
+ 160              		.loc 1 68 1 view .LVU46
+ 161 0028 10BD     		pop	{r4, pc}
+ 162              	.LVL11:
+ 163              	.L8:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 5
+
+
+ 164              		.loc 1 68 1 view .LVU47
+ 165 002a 00BF     		.align	2
+ 166              	.L7:
+ 167 002c 00000000 		.word	htim_left_Encoder
+ 168 0030 00000000 		.word	left_TIM
+ 169 0034 00000000 		.word	left_resolution
+ 170 0038 00000000 		.word	left_precision
+ 171 003c 00000000 		.word	left_sens
+ 172 0040 00000000 		.word	total_left_count
+ 173              		.cfi_endproc
+ 174              	.LFE139:
+ 176              		.section	.text.read_right_encoder,"ax",%progbits
+ 177              		.align	1
+ 178              		.global	read_right_encoder
+ 179              		.syntax unified
+ 180              		.thumb
+ 181              		.thumb_func
+ 183              	read_right_encoder:
+ 184              	.LFB140:
+  69:Core/Src/Odometry.c **** 
+  70:Core/Src/Odometry.c **** void read_right_encoder(void)
+  71:Core/Src/Odometry.c **** {
+ 185              		.loc 1 71 1 is_stmt 1 view -0
+ 186              		.cfi_startproc
+ 187              		@ args = 0, pretend = 0, frame = 0
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+ 189              		@ link register save eliminated.
+  72:Core/Src/Odometry.c **** 	last_right_count = current_right_count;
+ 190              		.loc 1 72 2 view .LVU49
+ 191              		.loc 1 72 19 is_stmt 0 view .LVU50
+ 192 0000 164B     		ldr	r3, .L12
+ 193 0002 1A68     		ldr	r2, [r3]
+ 194 0004 1649     		ldr	r1, .L12+4
+ 195 0006 0A60     		str	r2, [r1]
+  73:Core/Src/Odometry.c **** 	current_right_count = right_sens*right_TIM->CNT;
+ 196              		.loc 1 73 2 is_stmt 1 view .LVU51
+ 197              		.loc 1 73 44 is_stmt 0 view .LVU52
+ 198 0008 164A     		ldr	r2, .L12+8
+ 199 000a 1268     		ldr	r2, [r2]
+ 200 000c 526A     		ldr	r2, [r2, #36]
+ 201              		.loc 1 73 34 view .LVU53
+ 202 000e 1648     		ldr	r0, .L12+12
+ 203 0010 0068     		ldr	r0, [r0]
+ 204 0012 00FB02F2 		mul	r2, r0, r2
+ 205              		.loc 1 73 22 view .LVU54
+ 206 0016 1A60     		str	r2, [r3]
+  74:Core/Src/Odometry.c **** 	d_right = current_right_count - last_right_count;
+ 207              		.loc 1 74 2 is_stmt 1 view .LVU55
+ 208              		.loc 1 74 32 is_stmt 0 view .LVU56
+ 209 0018 1B68     		ldr	r3, [r3]
+ 210 001a 0A68     		ldr	r2, [r1]
+ 211 001c 9B1A     		subs	r3, r3, r2
+ 212              		.loc 1 74 10 view .LVU57
+ 213 001e 134A     		ldr	r2, .L12+16
+ 214 0020 1360     		str	r3, [r2]
+  75:Core/Src/Odometry.c **** 	if (d_right>30000)
+ 215              		.loc 1 75 2 is_stmt 1 view .LVU58
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 6
+
+
+ 216              		.loc 1 75 13 is_stmt 0 view .LVU59
+ 217 0022 1268     		ldr	r2, [r2]
+ 218              		.loc 1 75 5 view .LVU60
+ 219 0024 47F23053 		movw	r3, #30000
+ 220 0028 9A42     		cmp	r2, r3
+ 221 002a 05DD     		ble	.L10
+  76:Core/Src/Odometry.c **** 		d_right = d_right - 65535;
+ 222              		.loc 1 76 3 is_stmt 1 view .LVU61
+ 223              		.loc 1 76 21 is_stmt 0 view .LVU62
+ 224 002c 0F4A     		ldr	r2, .L12+16
+ 225 002e 1368     		ldr	r3, [r2]
+ 226 0030 A3F57F43 		sub	r3, r3, #65280
+ 227 0034 FF3B     		subs	r3, r3, #255
+ 228              		.loc 1 76 11 view .LVU63
+ 229 0036 1360     		str	r3, [r2]
+ 230              	.L10:
+  77:Core/Src/Odometry.c **** 	if (d_right<-30000)
+ 231              		.loc 1 77 2 is_stmt 1 view .LVU64
+ 232              		.loc 1 77 13 is_stmt 0 view .LVU65
+ 233 0038 0C4B     		ldr	r3, .L12+16
+ 234 003a 1A68     		ldr	r2, [r3]
+ 235              		.loc 1 77 5 view .LVU66
+ 236 003c 0C4B     		ldr	r3, .L12+20
+ 237 003e 9A42     		cmp	r2, r3
+ 238 0040 05DA     		bge	.L11
+  78:Core/Src/Odometry.c **** 		d_right = d_right + 65535;
+ 239              		.loc 1 78 3 is_stmt 1 view .LVU67
+ 240              		.loc 1 78 21 is_stmt 0 view .LVU68
+ 241 0042 0A4A     		ldr	r2, .L12+16
+ 242 0044 1368     		ldr	r3, [r2]
+ 243 0046 03F57F43 		add	r3, r3, #65280
+ 244 004a FF33     		adds	r3, r3, #255
+ 245              		.loc 1 78 11 view .LVU69
+ 246 004c 1360     		str	r3, [r2]
+ 247              	.L11:
+  79:Core/Src/Odometry.c **** 	total_right_count = total_right_count + d_right;
+ 248              		.loc 1 79 2 is_stmt 1 view .LVU70
+ 249              		.loc 1 79 40 is_stmt 0 view .LVU71
+ 250 004e 094A     		ldr	r2, .L12+24
+ 251 0050 1368     		ldr	r3, [r2]
+ 252 0052 0649     		ldr	r1, .L12+16
+ 253 0054 0968     		ldr	r1, [r1]
+ 254 0056 0B44     		add	r3, r3, r1
+ 255              		.loc 1 79 20 view .LVU72
+ 256 0058 1360     		str	r3, [r2]
+  80:Core/Src/Odometry.c **** }
+ 257              		.loc 1 80 1 view .LVU73
+ 258 005a 7047     		bx	lr
+ 259              	.L13:
+ 260              		.align	2
+ 261              	.L12:
+ 262 005c 00000000 		.word	current_right_count
+ 263 0060 00000000 		.word	last_right_count
+ 264 0064 00000000 		.word	right_TIM
+ 265 0068 00000000 		.word	right_sens
+ 266 006c 00000000 		.word	d_right
+ 267 0070 D08AFFFF 		.word	-30000
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 7
+
+
+ 268 0074 00000000 		.word	total_right_count
+ 269              		.cfi_endproc
+ 270              	.LFE140:
+ 272              		.section	.text.read_left_encoder,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	read_left_encoder
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 279              	read_left_encoder:
+ 280              	.LFB141:
+  81:Core/Src/Odometry.c **** 
+  82:Core/Src/Odometry.c **** void read_left_encoder(void)
+  83:Core/Src/Odometry.c **** {
+ 281              		.loc 1 83 1 is_stmt 1 view -0
+ 282              		.cfi_startproc
+ 283              		@ args = 0, pretend = 0, frame = 0
+ 284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285              		@ link register save eliminated.
+  84:Core/Src/Odometry.c **** 	last_left_count = current_left_count;
+ 286              		.loc 1 84 2 view .LVU75
+ 287              		.loc 1 84 18 is_stmt 0 view .LVU76
+ 288 0000 164B     		ldr	r3, .L17
+ 289 0002 1A68     		ldr	r2, [r3]
+ 290 0004 1649     		ldr	r1, .L17+4
+ 291 0006 0A60     		str	r2, [r1]
+  85:Core/Src/Odometry.c **** 	current_left_count = left_sens*left_TIM->CNT;
+ 292              		.loc 1 85 2 is_stmt 1 view .LVU77
+ 293              		.loc 1 85 41 is_stmt 0 view .LVU78
+ 294 0008 164A     		ldr	r2, .L17+8
+ 295 000a 1268     		ldr	r2, [r2]
+ 296 000c 526A     		ldr	r2, [r2, #36]
+ 297              		.loc 1 85 32 view .LVU79
+ 298 000e 1648     		ldr	r0, .L17+12
+ 299 0010 0068     		ldr	r0, [r0]
+ 300 0012 00FB02F2 		mul	r2, r0, r2
+ 301              		.loc 1 85 21 view .LVU80
+ 302 0016 1A60     		str	r2, [r3]
+  86:Core/Src/Odometry.c **** 	d_left = current_left_count - last_left_count;
+ 303              		.loc 1 86 2 is_stmt 1 view .LVU81
+ 304              		.loc 1 86 30 is_stmt 0 view .LVU82
+ 305 0018 1B68     		ldr	r3, [r3]
+ 306 001a 0A68     		ldr	r2, [r1]
+ 307 001c 9B1A     		subs	r3, r3, r2
+ 308              		.loc 1 86 9 view .LVU83
+ 309 001e 134A     		ldr	r2, .L17+16
+ 310 0020 1360     		str	r3, [r2]
+  87:Core/Src/Odometry.c **** 	if (d_left>30000)
+ 311              		.loc 1 87 2 is_stmt 1 view .LVU84
+ 312              		.loc 1 87 12 is_stmt 0 view .LVU85
+ 313 0022 1268     		ldr	r2, [r2]
+ 314              		.loc 1 87 5 view .LVU86
+ 315 0024 47F23053 		movw	r3, #30000
+ 316 0028 9A42     		cmp	r2, r3
+ 317 002a 05DD     		ble	.L15
+  88:Core/Src/Odometry.c **** 		d_left = d_left - 65535;
+ 318              		.loc 1 88 3 is_stmt 1 view .LVU87
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 8
+
+
+ 319              		.loc 1 88 19 is_stmt 0 view .LVU88
+ 320 002c 0F4A     		ldr	r2, .L17+16
+ 321 002e 1368     		ldr	r3, [r2]
+ 322 0030 A3F57F43 		sub	r3, r3, #65280
+ 323 0034 FF3B     		subs	r3, r3, #255
+ 324              		.loc 1 88 10 view .LVU89
+ 325 0036 1360     		str	r3, [r2]
+ 326              	.L15:
+  89:Core/Src/Odometry.c **** 	if (d_left<-30000)
+ 327              		.loc 1 89 2 is_stmt 1 view .LVU90
+ 328              		.loc 1 89 12 is_stmt 0 view .LVU91
+ 329 0038 0C4B     		ldr	r3, .L17+16
+ 330 003a 1A68     		ldr	r2, [r3]
+ 331              		.loc 1 89 5 view .LVU92
+ 332 003c 0C4B     		ldr	r3, .L17+20
+ 333 003e 9A42     		cmp	r2, r3
+ 334 0040 05DA     		bge	.L16
+  90:Core/Src/Odometry.c **** 		d_left = d_left + 65535;
+ 335              		.loc 1 90 3 is_stmt 1 view .LVU93
+ 336              		.loc 1 90 19 is_stmt 0 view .LVU94
+ 337 0042 0A4A     		ldr	r2, .L17+16
+ 338 0044 1368     		ldr	r3, [r2]
+ 339 0046 03F57F43 		add	r3, r3, #65280
+ 340 004a FF33     		adds	r3, r3, #255
+ 341              		.loc 1 90 10 view .LVU95
+ 342 004c 1360     		str	r3, [r2]
+ 343              	.L16:
+  91:Core/Src/Odometry.c **** 	total_left_count = total_left_count + d_left;
+ 344              		.loc 1 91 2 is_stmt 1 view .LVU96
+ 345              		.loc 1 91 38 is_stmt 0 view .LVU97
+ 346 004e 094A     		ldr	r2, .L17+24
+ 347 0050 1368     		ldr	r3, [r2]
+ 348 0052 0649     		ldr	r1, .L17+16
+ 349 0054 0968     		ldr	r1, [r1]
+ 350 0056 0B44     		add	r3, r3, r1
+ 351              		.loc 1 91 19 view .LVU98
+ 352 0058 1360     		str	r3, [r2]
+  92:Core/Src/Odometry.c **** }
+ 353              		.loc 1 92 1 view .LVU99
+ 354 005a 7047     		bx	lr
+ 355              	.L18:
+ 356              		.align	2
+ 357              	.L17:
+ 358 005c 00000000 		.word	current_left_count
+ 359 0060 00000000 		.word	last_left_count
+ 360 0064 00000000 		.word	left_TIM
+ 361 0068 00000000 		.word	left_sens
+ 362 006c 00000000 		.word	d_left
+ 363 0070 D08AFFFF 		.word	-30000
+ 364 0074 00000000 		.word	total_left_count
+ 365              		.cfi_endproc
+ 366              	.LFE141:
+ 368              		.section	.text.set_dimentions,"ax",%progbits
+ 369              		.align	1
+ 370              		.global	set_dimentions
+ 371              		.syntax unified
+ 372              		.thumb
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 9
+
+
+ 373              		.thumb_func
+ 375              	set_dimentions:
+ 376              	.LVL12:
+ 377              	.LFB142:
+  93:Core/Src/Odometry.c **** 
+  94:Core/Src/Odometry.c **** void set_dimentions(float right_wheel_radius, float left_wheel_radius, float encoder_spacing, float
+  95:Core/Src/Odometry.c **** {
+ 378              		.loc 1 95 1 is_stmt 1 view -0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382              		@ link register save eliminated.
+  96:Core/Src/Odometry.c **** 	right_radius = right_wheel_radius;
+ 383              		.loc 1 96 2 view .LVU101
+ 384              		.loc 1 96 15 is_stmt 0 view .LVU102
+ 385 0000 064B     		ldr	r3, .L20
+ 386 0002 83ED000A 		vstr.32	s0, [r3]
+  97:Core/Src/Odometry.c **** 	left_radius = left_wheel_radius;
+ 387              		.loc 1 97 2 is_stmt 1 view .LVU103
+ 388              		.loc 1 97 14 is_stmt 0 view .LVU104
+ 389 0006 064B     		ldr	r3, .L20+4
+ 390 0008 C3ED000A 		vstr.32	s1, [r3]
+  98:Core/Src/Odometry.c **** 	spacing_encoder = encoder_spacing;
+ 391              		.loc 1 98 2 is_stmt 1 view .LVU105
+ 392              		.loc 1 98 18 is_stmt 0 view .LVU106
+ 393 000c 054B     		ldr	r3, .L20+8
+ 394 000e 83ED001A 		vstr.32	s2, [r3]
+  99:Core/Src/Odometry.c **** 	spacing_wheel = wheels_spacing;
+ 395              		.loc 1 99 2 is_stmt 1 view .LVU107
+ 396              		.loc 1 99 16 is_stmt 0 view .LVU108
+ 397 0012 054B     		ldr	r3, .L20+12
+ 398 0014 C3ED001A 		vstr.32	s3, [r3]
+ 100:Core/Src/Odometry.c **** }
+ 399              		.loc 1 100 1 view .LVU109
+ 400 0018 7047     		bx	lr
+ 401              	.L21:
+ 402 001a 00BF     		.align	2
+ 403              	.L20:
+ 404 001c 00000000 		.word	right_radius
+ 405 0020 00000000 		.word	left_radius
+ 406 0024 00000000 		.word	spacing_encoder
+ 407 0028 00000000 		.word	spacing_wheel
+ 408              		.cfi_endproc
+ 409              	.LFE142:
+ 411              		.global	__aeabi_f2d
+ 412              		.global	__aeabi_ddiv
+ 413              		.global	__aeabi_dmul
+ 414              		.global	__aeabi_dadd
+ 415              		.global	__aeabi_dsub
+ 416              		.section	.text.speed_calcul,"ax",%progbits
+ 417              		.align	1
+ 418              		.global	speed_calcul
+ 419              		.syntax unified
+ 420              		.thumb
+ 421              		.thumb_func
+ 423              	speed_calcul:
+ 424              	.LFB144:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 10
+
+
+ 101:Core/Src/Odometry.c **** 
+ 102:Core/Src/Odometry.c **** void update_position(void)
+ 103:Core/Src/Odometry.c **** {
+ 104:Core/Src/Odometry.c **** 	read_right_encoder();
+ 105:Core/Src/Odometry.c **** 	read_left_encoder();
+ 106:Core/Src/Odometry.c **** 	dR = ticks_to_distance(d_right,right_radius,right_resolution,right_precision);
+ 107:Core/Src/Odometry.c **** 	//dR=-dR;
+ 108:Core/Src/Odometry.c **** 	//dL=-dL;
+ 109:Core/Src/Odometry.c **** 	total_right += dR;
+ 110:Core/Src/Odometry.c **** 	d_right_counter += dR;
+ 111:Core/Src/Odometry.c **** 	dL = ticks_to_distance(d_left,left_radius,left_resolution,left_precision);
+ 112:Core/Src/Odometry.c **** 	total_left += dL;
+ 113:Core/Src/Odometry.c **** 	d_left_counter += dL;
+ 114:Core/Src/Odometry.c **** 	dC = (dR+dL)/2;
+ 115:Core/Src/Odometry.c **** 	total_centre+=dC;
+ 116:Core/Src/Odometry.c **** 
+ 117:Core/Src/Odometry.c **** 	current_x = current_x + RL_b_sens * dC*cos(current_phi_rad);
+ 118:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 119:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 120:Core/Src/Odometry.c **** 	d_phi_counter += ((dR-dL)/spacing_encoder);
+ 121:Core/Src/Odometry.c **** 	while (current_phi_rad>PI)
+ 122:Core/Src/Odometry.c **** 	{
+ 123:Core/Src/Odometry.c **** 		current_phi_rad -= 2*PI;
+ 124:Core/Src/Odometry.c **** 	}
+ 125:Core/Src/Odometry.c **** 	while (current_phi_rad<-PI)
+ 126:Core/Src/Odometry.c **** 	{
+ 127:Core/Src/Odometry.c **** 		current_phi_rad += 2*PI;
+ 128:Core/Src/Odometry.c **** 	}
+ 129:Core/Src/Odometry.c **** 	current_phi_deg = rad_to_deg(current_phi_rad);
+ 130:Core/Src/Odometry.c **** 	//Robot navi 2020
+ 131:Core/Src/Odometry.c **** 	millis++;
+ 132:Core/Src/Odometry.c **** 	t++;
+ 133:Core/Src/Odometry.c **** 	//ref_x = current_x + cos(current_phi_rad) *dec;
+ 134:Core/Src/Odometry.c **** 	//ref_y = current_y + sin(current_phi_rad) *dec;
+ 135:Core/Src/Odometry.c **** }
+ 136:Core/Src/Odometry.c **** 
+ 137:Core/Src/Odometry.c **** void speed_calcul(void)
+ 138:Core/Src/Odometry.c **** {
+ 425              		.loc 1 138 1 is_stmt 1 view -0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 429 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 430              	.LCFI2:
+ 431              		.cfi_def_cfa_offset 40
+ 432              		.cfi_offset 3, -40
+ 433              		.cfi_offset 4, -36
+ 434              		.cfi_offset 5, -32
+ 435              		.cfi_offset 6, -28
+ 436              		.cfi_offset 7, -24
+ 437              		.cfi_offset 8, -20
+ 438              		.cfi_offset 9, -16
+ 439              		.cfi_offset 10, -12
+ 440              		.cfi_offset 11, -8
+ 441              		.cfi_offset 14, -4
+ 442 0004 2DED028B 		vpush.64	{d8}
+ 443              	.LCFI3:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 11
+
+
+ 444              		.cfi_def_cfa_offset 48
+ 445              		.cfi_offset 80, -48
+ 446              		.cfi_offset 81, -44
+ 139:Core/Src/Odometry.c **** 	right_encoder_speed = d_right_counter/T*1000;
+ 447              		.loc 1 139 2 view .LVU111
+ 448              		.loc 1 139 39 is_stmt 0 view .LVU112
+ 449 0008 3E4C     		ldr	r4, .L24
+ 450 000a 94ED007A 		vldr.32	s14, [r4]
+ 451 000e F2EE048A 		vmov.f32	s17, #1.0e+1
+ 452 0012 C7EE287A 		vdiv.f32	s15, s14, s17
+ 453              		.loc 1 139 41 view .LVU113
+ 454 0016 9FED3C8A 		vldr.32	s16, .L24+4
+ 455 001a 67EE887A 		vmul.f32	s15, s15, s16
+ 456 001e 17EE900A 		vmov	r0, s15
+ 457 0022 FFF7FEFF 		bl	__aeabi_f2d
+ 458              	.LVL13:
+ 459              		.loc 1 139 22 view .LVU114
+ 460 0026 394D     		ldr	r5, .L24+8
+ 461 0028 C5E90001 		strd	r0, [r5]
+ 140:Core/Src/Odometry.c **** 	d_right_counter = 0;
+ 462              		.loc 1 140 2 is_stmt 1 view .LVU115
+ 463              		.loc 1 140 18 is_stmt 0 view .LVU116
+ 464 002c 0027     		movs	r7, #0
+ 465 002e 2760     		str	r7, [r4]	@ float
+ 141:Core/Src/Odometry.c **** 	left_encoder_speed = d_left_counter/T*1000;
+ 466              		.loc 1 141 2 is_stmt 1 view .LVU117
+ 467              		.loc 1 141 37 is_stmt 0 view .LVU118
+ 468 0030 374E     		ldr	r6, .L24+12
+ 469 0032 96ED007A 		vldr.32	s14, [r6]
+ 470 0036 C7EE287A 		vdiv.f32	s15, s14, s17
+ 471              		.loc 1 141 39 view .LVU119
+ 472 003a 67EE887A 		vmul.f32	s15, s15, s16
+ 473 003e 17EE900A 		vmov	r0, s15
+ 474 0042 FFF7FEFF 		bl	__aeabi_f2d
+ 475              	.LVL14:
+ 476              		.loc 1 141 21 view .LVU120
+ 477 0046 334C     		ldr	r4, .L24+16
+ 478 0048 C4E90001 		strd	r0, [r4]
+ 142:Core/Src/Odometry.c **** 	d_left_counter = 0;
+ 479              		.loc 1 142 2 is_stmt 1 view .LVU121
+ 480              		.loc 1 142 17 is_stmt 0 view .LVU122
+ 481 004c 3760     		str	r7, [r6]	@ float
+ 143:Core/Src/Odometry.c **** 	phi_speed = d_phi_counter/T*1000;
+ 482              		.loc 1 143 2 is_stmt 1 view .LVU123
+ 483              		.loc 1 143 27 is_stmt 0 view .LVU124
+ 484 004e 324F     		ldr	r7, .L24+20
+ 485 0050 0022     		movs	r2, #0
+ 486 0052 324B     		ldr	r3, .L24+24
+ 487 0054 D7E90001 		ldrd	r0, [r7]
+ 488 0058 FFF7FEFF 		bl	__aeabi_ddiv
+ 489              	.LVL15:
+ 490              		.loc 1 143 29 view .LVU125
+ 491 005c 0022     		movs	r2, #0
+ 492 005e 304B     		ldr	r3, .L24+28
+ 493 0060 FFF7FEFF 		bl	__aeabi_dmul
+ 494              	.LVL16:
+ 495              		.loc 1 143 12 view .LVU126
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 12
+
+
+ 496 0064 2F4E     		ldr	r6, .L24+32
+ 497 0066 C6E90001 		strd	r0, [r6]
+ 144:Core/Src/Odometry.c **** 	d_phi_counter = 0;
+ 498              		.loc 1 144 2 is_stmt 1 view .LVU127
+ 499              		.loc 1 144 16 is_stmt 0 view .LVU128
+ 500 006a 0022     		movs	r2, #0
+ 501 006c 0023     		movs	r3, #0
+ 502 006e C7E90023 		strd	r2, [r7]
+ 145:Core/Src/Odometry.c **** 	right_speed = (right_encoder_speed + left_encoder_speed)/2 + phi_speed * spacing_wheel/2;
+ 503              		.loc 1 145 2 is_stmt 1 view .LVU129
+ 504              		.loc 1 145 37 is_stmt 0 view .LVU130
+ 505 0072 D5E90001 		ldrd	r0, [r5]
+ 506 0076 D4E90023 		ldrd	r2, [r4]
+ 507 007a FFF7FEFF 		bl	__aeabi_dadd
+ 508              	.LVL17:
+ 509              		.loc 1 145 58 view .LVU131
+ 510 007e 0022     		movs	r2, #0
+ 511 0080 294B     		ldr	r3, .L24+36
+ 512 0082 FFF7FEFF 		bl	__aeabi_dmul
+ 513              	.LVL18:
+ 514 0086 8046     		mov	r8, r0
+ 515 0088 8946     		mov	r9, r1
+ 516              		.loc 1 145 73 view .LVU132
+ 517 008a 284F     		ldr	r7, .L24+40
+ 518 008c 3868     		ldr	r0, [r7]	@ float
+ 519 008e D6E900AB 		ldrd	r10, [r6]
+ 520 0092 FFF7FEFF 		bl	__aeabi_f2d
+ 521              	.LVL19:
+ 522 0096 5246     		mov	r2, r10
+ 523 0098 5B46     		mov	r3, fp
+ 524 009a FFF7FEFF 		bl	__aeabi_dmul
+ 525              	.LVL20:
+ 526              		.loc 1 145 88 view .LVU133
+ 527 009e 0022     		movs	r2, #0
+ 528 00a0 214B     		ldr	r3, .L24+36
+ 529 00a2 FFF7FEFF 		bl	__aeabi_dmul
+ 530              	.LVL21:
+ 531 00a6 0246     		mov	r2, r0
+ 532 00a8 0B46     		mov	r3, r1
+ 533              		.loc 1 145 61 view .LVU134
+ 534 00aa 4046     		mov	r0, r8
+ 535 00ac 4946     		mov	r1, r9
+ 536 00ae FFF7FEFF 		bl	__aeabi_dadd
+ 537              	.LVL22:
+ 538              		.loc 1 145 14 view .LVU135
+ 539 00b2 1F4B     		ldr	r3, .L24+44
+ 540 00b4 C3E90001 		strd	r0, [r3]
+ 146:Core/Src/Odometry.c **** 	left_speed = (right_encoder_speed + left_encoder_speed)/2 - phi_speed * spacing_wheel/2;
+ 541              		.loc 1 146 2 is_stmt 1 view .LVU136
+ 542              		.loc 1 146 36 is_stmt 0 view .LVU137
+ 543 00b8 D5E90001 		ldrd	r0, [r5]
+ 544 00bc D4E90023 		ldrd	r2, [r4]
+ 545 00c0 FFF7FEFF 		bl	__aeabi_dadd
+ 546              	.LVL23:
+ 547              		.loc 1 146 57 view .LVU138
+ 548 00c4 0022     		movs	r2, #0
+ 549 00c6 184B     		ldr	r3, .L24+36
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 13
+
+
+ 550 00c8 FFF7FEFF 		bl	__aeabi_dmul
+ 551              	.LVL24:
+ 552 00cc 0446     		mov	r4, r0
+ 553 00ce 0D46     		mov	r5, r1
+ 554              		.loc 1 146 72 view .LVU139
+ 555 00d0 3868     		ldr	r0, [r7]	@ float
+ 556 00d2 D6E90067 		ldrd	r6, [r6]
+ 557 00d6 FFF7FEFF 		bl	__aeabi_f2d
+ 558              	.LVL25:
+ 559 00da 3246     		mov	r2, r6
+ 560 00dc 3B46     		mov	r3, r7
+ 561 00de FFF7FEFF 		bl	__aeabi_dmul
+ 562              	.LVL26:
+ 563              		.loc 1 146 87 view .LVU140
+ 564 00e2 0022     		movs	r2, #0
+ 565 00e4 104B     		ldr	r3, .L24+36
+ 566 00e6 FFF7FEFF 		bl	__aeabi_dmul
+ 567              	.LVL27:
+ 568 00ea 0246     		mov	r2, r0
+ 569 00ec 0B46     		mov	r3, r1
+ 570              		.loc 1 146 60 view .LVU141
+ 571 00ee 2046     		mov	r0, r4
+ 572 00f0 2946     		mov	r1, r5
+ 573 00f2 FFF7FEFF 		bl	__aeabi_dsub
+ 574              	.LVL28:
+ 575              		.loc 1 146 13 view .LVU142
+ 576 00f6 0F4B     		ldr	r3, .L24+48
+ 577 00f8 C3E90001 		strd	r0, [r3]
+ 147:Core/Src/Odometry.c **** }
+ 578              		.loc 1 147 1 view .LVU143
+ 579 00fc BDEC028B 		vldm	sp!, {d8}
+ 580              	.LCFI4:
+ 581              		.cfi_restore 80
+ 582              		.cfi_restore 81
+ 583              		.cfi_def_cfa_offset 40
+ 584 0100 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 585              	.L25:
+ 586              		.align	2
+ 587              	.L24:
+ 588 0104 00000000 		.word	d_right_counter
+ 589 0108 00007A44 		.word	1148846080
+ 590 010c 00000000 		.word	right_encoder_speed
+ 591 0110 00000000 		.word	d_left_counter
+ 592 0114 00000000 		.word	left_encoder_speed
+ 593 0118 00000000 		.word	d_phi_counter
+ 594 011c 00002440 		.word	1076101120
+ 595 0120 00408F40 		.word	1083129856
+ 596 0124 00000000 		.word	phi_speed
+ 597 0128 0000E03F 		.word	1071644672
+ 598 012c 00000000 		.word	spacing_wheel
+ 599 0130 00000000 		.word	right_speed
+ 600 0134 00000000 		.word	left_speed
+ 601              		.cfi_endproc
+ 602              	.LFE144:
+ 604              		.section	.text.reset_position,"ax",%progbits
+ 605              		.align	1
+ 606              		.global	reset_position
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 14
+
+
+ 607              		.syntax unified
+ 608              		.thumb
+ 609              		.thumb_func
+ 611              	reset_position:
+ 612              	.LFB145:
+ 148:Core/Src/Odometry.c **** 
+ 149:Core/Src/Odometry.c **** void reset_position(void)
+ 150:Core/Src/Odometry.c **** {
+ 613              		.loc 1 150 1 is_stmt 1 view -0
+ 614              		.cfi_startproc
+ 615              		@ args = 0, pretend = 0, frame = 0
+ 616              		@ frame_needed = 0, uses_anonymous_args = 0
+ 617              		@ link register save eliminated.
+ 151:Core/Src/Odometry.c **** 	current_x = 0;
+ 618              		.loc 1 151 2 view .LVU145
+ 619              		.loc 1 151 12 is_stmt 0 view .LVU146
+ 620 0000 0023     		movs	r3, #0
+ 621 0002 044A     		ldr	r2, .L27
+ 622 0004 1360     		str	r3, [r2]	@ float
+ 152:Core/Src/Odometry.c **** 	current_y = 0;
+ 623              		.loc 1 152 2 is_stmt 1 view .LVU147
+ 624              		.loc 1 152 12 is_stmt 0 view .LVU148
+ 625 0006 044A     		ldr	r2, .L27+4
+ 626 0008 1360     		str	r3, [r2]	@ float
+ 153:Core/Src/Odometry.c **** 	current_phi_deg = 0;
+ 627              		.loc 1 153 2 is_stmt 1 view .LVU149
+ 628              		.loc 1 153 18 is_stmt 0 view .LVU150
+ 629 000a 044A     		ldr	r2, .L27+8
+ 630 000c 1360     		str	r3, [r2]	@ float
+ 154:Core/Src/Odometry.c **** 	current_phi_rad = 0;
+ 631              		.loc 1 154 2 is_stmt 1 view .LVU151
+ 632              		.loc 1 154 18 is_stmt 0 view .LVU152
+ 633 000e 044A     		ldr	r2, .L27+12
+ 634 0010 1360     		str	r3, [r2]	@ float
+ 155:Core/Src/Odometry.c **** }
+ 635              		.loc 1 155 1 view .LVU153
+ 636 0012 7047     		bx	lr
+ 637              	.L28:
+ 638              		.align	2
+ 639              	.L27:
+ 640 0014 00000000 		.word	current_x
+ 641 0018 00000000 		.word	current_y
+ 642 001c 00000000 		.word	current_phi_deg
+ 643 0020 00000000 		.word	current_phi_rad
+ 644              		.cfi_endproc
+ 645              	.LFE145:
+ 647              		.section	.text.ticks_to_distance,"ax",%progbits
+ 648              		.align	1
+ 649              		.global	ticks_to_distance
+ 650              		.syntax unified
+ 651              		.thumb
+ 652              		.thumb_func
+ 654              	ticks_to_distance:
+ 655              	.LVL29:
+ 656              	.LFB146:
+ 156:Core/Src/Odometry.c **** 
+ 157:Core/Src/Odometry.c **** float ticks_to_distance(int x, float r, int resolution, int precision)
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 15
+
+
+ 158:Core/Src/Odometry.c **** {
+ 657              		.loc 1 158 1 is_stmt 1 view -0
+ 658              		.cfi_startproc
+ 659              		@ args = 0, pretend = 0, frame = 0
+ 660              		@ frame_needed = 0, uses_anonymous_args = 0
+ 661              		@ link register save eliminated.
+ 159:Core/Src/Odometry.c **** 	return (x*2*PI*r/(resolution*precision));
+ 662              		.loc 1 159 2 view .LVU155
+ 663              		.loc 1 159 11 is_stmt 0 view .LVU156
+ 664 0000 4300     		lsls	r3, r0, #1
+ 665 0002 07EE903A 		vmov	s15, r3	@ int
+ 666              		.loc 1 159 13 view .LVU157
+ 667 0006 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 668 000a 9FED077A 		vldr.32	s14, .L30
+ 669 000e 67EE877A 		vmul.f32	s15, s15, s14
+ 670              		.loc 1 159 16 view .LVU158
+ 671 0012 67EE807A 		vmul.f32	s15, s15, s0
+ 672              		.loc 1 159 30 view .LVU159
+ 673 0016 02FB01F1 		mul	r1, r2, r1
+ 674              	.LVL30:
+ 675              		.loc 1 159 18 view .LVU160
+ 676 001a 07EE101A 		vmov	s14, r1	@ int
+ 677 001e B8EEC70A 		vcvt.f32.s32	s0, s14
+ 678              	.LVL31:
+ 160:Core/Src/Odometry.c **** }
+ 679              		.loc 1 160 1 view .LVU161
+ 680 0022 87EE800A 		vdiv.f32	s0, s15, s0
+ 681 0026 7047     		bx	lr
+ 682              	.L31:
+ 683              		.align	2
+ 684              	.L30:
+ 685 0028 DB0F4940 		.word	1078530011
+ 686              		.cfi_endproc
+ 687              	.LFE146:
+ 689              		.global	__aeabi_d2f
+ 690              		.section	.text.rad_to_deg,"ax",%progbits
+ 691              		.align	1
+ 692              		.global	rad_to_deg
+ 693              		.syntax unified
+ 694              		.thumb
+ 695              		.thumb_func
+ 697              	rad_to_deg:
+ 698              	.LVL32:
+ 699              	.LFB147:
+ 161:Core/Src/Odometry.c **** 
+ 162:Core/Src/Odometry.c **** float rad_to_deg(double x)
+ 163:Core/Src/Odometry.c **** {
+ 700              		.loc 1 163 1 is_stmt 1 view -0
+ 701              		.cfi_startproc
+ 702              		@ args = 0, pretend = 0, frame = 0
+ 703              		@ frame_needed = 0, uses_anonymous_args = 0
+ 704              		.loc 1 163 1 is_stmt 0 view .LVU163
+ 705 0000 08B5     		push	{r3, lr}
+ 706              	.LCFI5:
+ 707              		.cfi_def_cfa_offset 8
+ 708              		.cfi_offset 3, -8
+ 709              		.cfi_offset 14, -4
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 16
+
+
+ 710 0002 51EC100B 		vmov	r0, r1, d0
+ 164:Core/Src/Odometry.c **** 	return (x*360/(2*PI));
+ 711              		.loc 1 164 2 is_stmt 1 view .LVU164
+ 712              		.loc 1 164 11 is_stmt 0 view .LVU165
+ 713 0006 0022     		movs	r2, #0
+ 714 0008 094B     		ldr	r3, .L34+8
+ 715 000a FFF7FEFF 		bl	__aeabi_dmul
+ 716              	.LVL33:
+ 717              		.loc 1 164 15 view .LVU166
+ 718 000e 06A3     		adr	r3, .L34
+ 719 0010 D3E90023 		ldrd	r2, [r3]
+ 720 0014 FFF7FEFF 		bl	__aeabi_ddiv
+ 721              	.LVL34:
+ 722 0018 FFF7FEFF 		bl	__aeabi_d2f
+ 723              	.LVL35:
+ 165:Core/Src/Odometry.c **** }
+ 724              		.loc 1 165 1 view .LVU167
+ 725 001c 00EE100A 		vmov	s0, r0
+ 726 0020 08BD     		pop	{r3, pc}
+ 727              	.L35:
+ 728 0022 00BFAFF3 		.align	3
+ 728      0080
+ 729              	.L34:
+ 730 0028 00000060 		.word	1610612736
+ 731 002c FB211940 		.word	1075388923
+ 732 0030 00807640 		.word	1081507840
+ 733              		.cfi_endproc
+ 734              	.LFE147:
+ 736              		.section	.text.update_position,"ax",%progbits
+ 737              		.align	1
+ 738              		.global	update_position
+ 739              		.syntax unified
+ 740              		.thumb
+ 741              		.thumb_func
+ 743              	update_position:
+ 744              	.LFB143:
+ 103:Core/Src/Odometry.c **** 	read_right_encoder();
+ 745              		.loc 1 103 1 is_stmt 1 view -0
+ 746              		.cfi_startproc
+ 747              		@ args = 0, pretend = 0, frame = 0
+ 748              		@ frame_needed = 0, uses_anonymous_args = 0
+ 749 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 750              	.LCFI6:
+ 751              		.cfi_def_cfa_offset 40
+ 752              		.cfi_offset 3, -40
+ 753              		.cfi_offset 4, -36
+ 754              		.cfi_offset 5, -32
+ 755              		.cfi_offset 6, -28
+ 756              		.cfi_offset 7, -24
+ 757              		.cfi_offset 8, -20
+ 758              		.cfi_offset 9, -16
+ 759              		.cfi_offset 10, -12
+ 760              		.cfi_offset 11, -8
+ 761              		.cfi_offset 14, -4
+ 762 0004 2DED028B 		vpush.64	{d8}
+ 763              	.LCFI7:
+ 764              		.cfi_def_cfa_offset 48
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 17
+
+
+ 765              		.cfi_offset 80, -48
+ 766              		.cfi_offset 81, -44
+ 104:Core/Src/Odometry.c **** 	read_left_encoder();
+ 767              		.loc 1 104 2 view .LVU169
+ 768 0008 FFF7FEFF 		bl	read_right_encoder
+ 769              	.LVL36:
+ 105:Core/Src/Odometry.c **** 	dR = ticks_to_distance(d_right,right_radius,right_resolution,right_precision);
+ 770              		.loc 1 105 2 view .LVU170
+ 771 000c FFF7FEFF 		bl	read_left_encoder
+ 772              	.LVL37:
+ 106:Core/Src/Odometry.c **** 	//dR=-dR;
+ 773              		.loc 1 106 2 view .LVU171
+ 106:Core/Src/Odometry.c **** 	//dR=-dR;
+ 774              		.loc 1 106 7 is_stmt 0 view .LVU172
+ 775 0010 874B     		ldr	r3, .L42
+ 776 0012 1868     		ldr	r0, [r3]
+ 777 0014 874B     		ldr	r3, .L42+4
+ 778 0016 93ED000A 		vldr.32	s0, [r3]
+ 779 001a 874B     		ldr	r3, .L42+8
+ 780 001c 1A68     		ldr	r2, [r3]
+ 781 001e 874B     		ldr	r3, .L42+12
+ 782 0020 1968     		ldr	r1, [r3]
+ 783 0022 FFF7FEFF 		bl	ticks_to_distance
+ 784              	.LVL38:
+ 106:Core/Src/Odometry.c **** 	//dR=-dR;
+ 785              		.loc 1 106 5 discriminator 1 view .LVU173
+ 786 0026 864D     		ldr	r5, .L42+16
+ 787 0028 85ED000A 		vstr.32	s0, [r5]
+ 109:Core/Src/Odometry.c **** 	d_right_counter += dR;
+ 788              		.loc 1 109 2 is_stmt 1 view .LVU174
+ 789 002c 95ED007A 		vldr.32	s14, [r5]
+ 109:Core/Src/Odometry.c **** 	d_right_counter += dR;
+ 790              		.loc 1 109 14 is_stmt 0 view .LVU175
+ 791 0030 844B     		ldr	r3, .L42+20
+ 792 0032 D3ED007A 		vldr.32	s15, [r3]
+ 793 0036 77EE877A 		vadd.f32	s15, s15, s14
+ 794 003a C3ED007A 		vstr.32	s15, [r3]
+ 110:Core/Src/Odometry.c **** 	dL = ticks_to_distance(d_left,left_radius,left_resolution,left_precision);
+ 795              		.loc 1 110 2 is_stmt 1 view .LVU176
+ 796 003e 95ED007A 		vldr.32	s14, [r5]
+ 110:Core/Src/Odometry.c **** 	dL = ticks_to_distance(d_left,left_radius,left_resolution,left_precision);
+ 797              		.loc 1 110 18 is_stmt 0 view .LVU177
+ 798 0042 814B     		ldr	r3, .L42+24
+ 799 0044 D3ED007A 		vldr.32	s15, [r3]
+ 800 0048 77EE877A 		vadd.f32	s15, s15, s14
+ 801 004c C3ED007A 		vstr.32	s15, [r3]
+ 111:Core/Src/Odometry.c **** 	total_left += dL;
+ 802              		.loc 1 111 2 is_stmt 1 view .LVU178
+ 111:Core/Src/Odometry.c **** 	total_left += dL;
+ 803              		.loc 1 111 7 is_stmt 0 view .LVU179
+ 804 0050 7E4B     		ldr	r3, .L42+28
+ 805 0052 1868     		ldr	r0, [r3]
+ 806 0054 7E4B     		ldr	r3, .L42+32
+ 807 0056 93ED000A 		vldr.32	s0, [r3]
+ 808 005a 7E4B     		ldr	r3, .L42+36
+ 809 005c 1A68     		ldr	r2, [r3]
+ 810 005e 7E4B     		ldr	r3, .L42+40
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 18
+
+
+ 811 0060 1968     		ldr	r1, [r3]
+ 812 0062 FFF7FEFF 		bl	ticks_to_distance
+ 813              	.LVL39:
+ 111:Core/Src/Odometry.c **** 	total_left += dL;
+ 814              		.loc 1 111 5 discriminator 1 view .LVU180
+ 815 0066 7D4C     		ldr	r4, .L42+44
+ 816 0068 84ED000A 		vstr.32	s0, [r4]
+ 112:Core/Src/Odometry.c **** 	d_left_counter += dL;
+ 817              		.loc 1 112 2 is_stmt 1 view .LVU181
+ 818 006c 94ED007A 		vldr.32	s14, [r4]
+ 112:Core/Src/Odometry.c **** 	d_left_counter += dL;
+ 819              		.loc 1 112 13 is_stmt 0 view .LVU182
+ 820 0070 7B4B     		ldr	r3, .L42+48
+ 821 0072 D3ED007A 		vldr.32	s15, [r3]
+ 822 0076 77EE877A 		vadd.f32	s15, s15, s14
+ 823 007a C3ED007A 		vstr.32	s15, [r3]
+ 113:Core/Src/Odometry.c **** 	dC = (dR+dL)/2;
+ 824              		.loc 1 113 2 is_stmt 1 view .LVU183
+ 825 007e 94ED007A 		vldr.32	s14, [r4]
+ 113:Core/Src/Odometry.c **** 	dC = (dR+dL)/2;
+ 826              		.loc 1 113 17 is_stmt 0 view .LVU184
+ 827 0082 784B     		ldr	r3, .L42+52
+ 828 0084 D3ED007A 		vldr.32	s15, [r3]
+ 829 0088 77EE877A 		vadd.f32	s15, s15, s14
+ 830 008c C3ED007A 		vstr.32	s15, [r3]
+ 114:Core/Src/Odometry.c **** 	total_centre+=dC;
+ 831              		.loc 1 114 2 is_stmt 1 view .LVU185
+ 114:Core/Src/Odometry.c **** 	total_centre+=dC;
+ 832              		.loc 1 114 10 is_stmt 0 view .LVU186
+ 833 0090 D5ED007A 		vldr.32	s15, [r5]
+ 834 0094 94ED007A 		vldr.32	s14, [r4]
+ 835 0098 77EE877A 		vadd.f32	s15, s15, s14
+ 114:Core/Src/Odometry.c **** 	total_centre+=dC;
+ 836              		.loc 1 114 14 view .LVU187
+ 837 009c B6EE007A 		vmov.f32	s14, #5.0e-1
+ 838 00a0 67EE877A 		vmul.f32	s15, s15, s14
+ 114:Core/Src/Odometry.c **** 	total_centre+=dC;
+ 839              		.loc 1 114 5 view .LVU188
+ 840 00a4 704F     		ldr	r7, .L42+56
+ 841 00a6 C7ED007A 		vstr.32	s15, [r7]
+ 115:Core/Src/Odometry.c **** 
+ 842              		.loc 1 115 2 is_stmt 1 view .LVU189
+ 843 00aa 97ED007A 		vldr.32	s14, [r7]
+ 115:Core/Src/Odometry.c **** 
+ 844              		.loc 1 115 14 is_stmt 0 view .LVU190
+ 845 00ae 6F4B     		ldr	r3, .L42+60
+ 846 00b0 D3ED007A 		vldr.32	s15, [r3]
+ 847 00b4 77EE877A 		vadd.f32	s15, s15, s14
+ 848 00b8 C3ED007A 		vstr.32	s15, [r3]
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 849              		.loc 1 117 2 is_stmt 1 view .LVU191
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 850              		.loc 1 117 24 is_stmt 0 view .LVU192
+ 851 00bc DFF8D8A1 		ldr	r10, .L42+104
+ 852 00c0 DAF800B0 		ldr	fp, [r10]	@ float
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 853              		.loc 1 117 36 view .LVU193
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 19
+
+
+ 854 00c4 6A4B     		ldr	r3, .L42+64
+ 855 00c6 93ED008A 		vldr.32	s16, [r3]	@ int
+ 856 00ca B8EEC88A 		vcvt.f32.s32	s16, s16
+ 857 00ce D7ED007A 		vldr.32	s15, [r7]
+ 858 00d2 68EE277A 		vmul.f32	s15, s16, s15
+ 859 00d6 17EE900A 		vmov	r0, s15
+ 860 00da FFF7FEFF 		bl	__aeabi_f2d
+ 861              	.LVL40:
+ 862 00de 8046     		mov	r8, r0
+ 863 00e0 8946     		mov	r9, r1
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 864              		.loc 1 117 41 view .LVU194
+ 865 00e2 644E     		ldr	r6, .L42+68
+ 866 00e4 3068     		ldr	r0, [r6]	@ float
+ 867 00e6 FFF7FEFF 		bl	__aeabi_f2d
+ 868              	.LVL41:
+ 869 00ea 41EC100B 		vmov	d0, r0, r1
+ 870 00ee FFF7FEFF 		bl	cos
+ 871              	.LVL42:
+ 872 00f2 53EC102B 		vmov	r2, r3, d0
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 873              		.loc 1 117 40 discriminator 1 view .LVU195
+ 874 00f6 4046     		mov	r0, r8
+ 875 00f8 4946     		mov	r1, r9
+ 876 00fa FFF7FEFF 		bl	__aeabi_dmul
+ 877              	.LVL43:
+ 878 00fe 8046     		mov	r8, r0
+ 879 0100 8946     		mov	r9, r1
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 880              		.loc 1 117 24 view .LVU196
+ 881 0102 5846     		mov	r0, fp	@ float
+ 882 0104 FFF7FEFF 		bl	__aeabi_f2d
+ 883              	.LVL44:
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 884              		.loc 1 117 24 discriminator 1 view .LVU197
+ 885 0108 4246     		mov	r2, r8
+ 886 010a 4B46     		mov	r3, r9
+ 887 010c FFF7FEFF 		bl	__aeabi_dadd
+ 888              	.LVL45:
+ 889 0110 FFF7FEFF 		bl	__aeabi_d2f
+ 890              	.LVL46:
+ 117:Core/Src/Odometry.c **** 	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
+ 891              		.loc 1 117 12 discriminator 1 view .LVU198
+ 892 0114 CAF80000 		str	r0, [r10]	@ float
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 893              		.loc 1 118 2 is_stmt 1 view .LVU199
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 894              		.loc 1 118 24 is_stmt 0 view .LVU200
+ 895 0118 DFF880A1 		ldr	r10, .L42+108
+ 896 011c DAF800B0 		ldr	fp, [r10]	@ float
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 897              		.loc 1 118 36 view .LVU201
+ 898 0120 D7ED007A 		vldr.32	s15, [r7]
+ 899 0124 68EE277A 		vmul.f32	s15, s16, s15
+ 900 0128 17EE900A 		vmov	r0, s15
+ 901 012c FFF7FEFF 		bl	__aeabi_f2d
+ 902              	.LVL47:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 20
+
+
+ 903 0130 8046     		mov	r8, r0
+ 904 0132 8946     		mov	r9, r1
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 905              		.loc 1 118 41 view .LVU202
+ 906 0134 3068     		ldr	r0, [r6]	@ float
+ 907 0136 FFF7FEFF 		bl	__aeabi_f2d
+ 908              	.LVL48:
+ 909 013a 41EC100B 		vmov	d0, r0, r1
+ 910 013e FFF7FEFF 		bl	sin
+ 911              	.LVL49:
+ 912 0142 53EC102B 		vmov	r2, r3, d0
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 913              		.loc 1 118 40 discriminator 1 view .LVU203
+ 914 0146 4046     		mov	r0, r8
+ 915 0148 4946     		mov	r1, r9
+ 916 014a FFF7FEFF 		bl	__aeabi_dmul
+ 917              	.LVL50:
+ 918 014e 8046     		mov	r8, r0
+ 919 0150 8946     		mov	r9, r1
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 920              		.loc 1 118 24 view .LVU204
+ 921 0152 5846     		mov	r0, fp	@ float
+ 922 0154 FFF7FEFF 		bl	__aeabi_f2d
+ 923              	.LVL51:
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 924              		.loc 1 118 24 discriminator 1 view .LVU205
+ 925 0158 4246     		mov	r2, r8
+ 926 015a 4B46     		mov	r3, r9
+ 927 015c FFF7FEFF 		bl	__aeabi_dadd
+ 928              	.LVL52:
+ 929 0160 FFF7FEFF 		bl	__aeabi_d2f
+ 930              	.LVL53:
+ 118:Core/Src/Odometry.c **** 	current_phi_rad += ((dR-dL)/spacing_encoder);
+ 931              		.loc 1 118 12 discriminator 1 view .LVU206
+ 932 0164 CAF80000 		str	r0, [r10]	@ float
+ 119:Core/Src/Odometry.c **** 	d_phi_counter += ((dR-dL)/spacing_encoder);
+ 933              		.loc 1 119 2 is_stmt 1 view .LVU207
+ 119:Core/Src/Odometry.c **** 	d_phi_counter += ((dR-dL)/spacing_encoder);
+ 934              		.loc 1 119 25 is_stmt 0 view .LVU208
+ 935 0168 D5ED007A 		vldr.32	s15, [r5]
+ 936 016c 94ED007A 		vldr.32	s14, [r4]
+ 937 0170 77EEC77A 		vsub.f32	s15, s15, s14
+ 119:Core/Src/Odometry.c **** 	d_phi_counter += ((dR-dL)/spacing_encoder);
+ 938              		.loc 1 119 29 view .LVU209
+ 939 0174 404B     		ldr	r3, .L42+72
+ 940 0176 D3ED006A 		vldr.32	s13, [r3]
+ 941 017a 87EEA67A 		vdiv.f32	s14, s15, s13
+ 119:Core/Src/Odometry.c **** 	d_phi_counter += ((dR-dL)/spacing_encoder);
+ 942              		.loc 1 119 18 view .LVU210
+ 943 017e D6ED007A 		vldr.32	s15, [r6]
+ 944 0182 77EE877A 		vadd.f32	s15, s15, s14
+ 945 0186 C6ED007A 		vstr.32	s15, [r6]
+ 120:Core/Src/Odometry.c **** 	while (current_phi_rad>PI)
+ 946              		.loc 1 120 2 is_stmt 1 view .LVU211
+ 120:Core/Src/Odometry.c **** 	while (current_phi_rad>PI)
+ 947              		.loc 1 120 23 is_stmt 0 view .LVU212
+ 948 018a D5ED007A 		vldr.32	s15, [r5]
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 21
+
+
+ 949 018e 94ED007A 		vldr.32	s14, [r4]
+ 950 0192 77EEC77A 		vsub.f32	s15, s15, s14
+ 120:Core/Src/Odometry.c **** 	while (current_phi_rad>PI)
+ 951              		.loc 1 120 27 view .LVU213
+ 952 0196 93ED007A 		vldr.32	s14, [r3]
+ 953 019a C7EE877A 		vdiv.f32	s15, s15, s14
+ 954 019e 17EE900A 		vmov	r0, s15
+ 955 01a2 FFF7FEFF 		bl	__aeabi_f2d
+ 956              	.LVL54:
+ 120:Core/Src/Odometry.c **** 	while (current_phi_rad>PI)
+ 957              		.loc 1 120 16 view .LVU214
+ 958 01a6 354C     		ldr	r4, .L42+76
+ 959 01a8 D4E90023 		ldrd	r2, [r4]
+ 960 01ac FFF7FEFF 		bl	__aeabi_dadd
+ 961              	.LVL55:
+ 962 01b0 C4E90001 		strd	r0, [r4]
+ 121:Core/Src/Odometry.c **** 	{
+ 963              		.loc 1 121 2 is_stmt 1 view .LVU215
+ 121:Core/Src/Odometry.c **** 	{
+ 964              		.loc 1 121 8 is_stmt 0 view .LVU216
+ 965 01b4 08E0     		b	.L37
+ 966              	.L38:
+ 123:Core/Src/Odometry.c **** 	}
+ 967              		.loc 1 123 3 is_stmt 1 view .LVU217
+ 123:Core/Src/Odometry.c **** 	}
+ 968              		.loc 1 123 19 is_stmt 0 view .LVU218
+ 969 01b6 2F4B     		ldr	r3, .L42+68
+ 970 01b8 D3ED007A 		vldr.32	s15, [r3]
+ 971 01bc 9FED307A 		vldr.32	s14, .L42+80
+ 972 01c0 77EEC77A 		vsub.f32	s15, s15, s14
+ 973 01c4 C3ED007A 		vstr.32	s15, [r3]
+ 974              	.L37:
+ 121:Core/Src/Odometry.c **** 	{
+ 975              		.loc 1 121 24 is_stmt 1 view .LVU219
+ 976 01c8 2A4B     		ldr	r3, .L42+68
+ 977 01ca 93ED007A 		vldr.32	s14, [r3]
+ 978 01ce DFED2D7A 		vldr.32	s15, .L42+84
+ 979 01d2 B4EEE77A 		vcmpe.f32	s14, s15
+ 980 01d6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 981 01da ECDC     		bgt	.L38
+ 982 01dc 08E0     		b	.L39
+ 983              	.L40:
+ 127:Core/Src/Odometry.c **** 	}
+ 984              		.loc 1 127 3 view .LVU220
+ 127:Core/Src/Odometry.c **** 	}
+ 985              		.loc 1 127 19 is_stmt 0 view .LVU221
+ 986 01de 254B     		ldr	r3, .L42+68
+ 987 01e0 D3ED007A 		vldr.32	s15, [r3]
+ 988 01e4 9FED267A 		vldr.32	s14, .L42+80
+ 989 01e8 77EE877A 		vadd.f32	s15, s15, s14
+ 990 01ec C3ED007A 		vstr.32	s15, [r3]
+ 991              	.L39:
+ 125:Core/Src/Odometry.c **** 	{
+ 992              		.loc 1 125 24 is_stmt 1 view .LVU222
+ 993 01f0 204B     		ldr	r3, .L42+68
+ 994 01f2 93ED007A 		vldr.32	s14, [r3]
+ 995 01f6 DFED247A 		vldr.32	s15, .L42+88
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 22
+
+
+ 996 01fa B4EEE77A 		vcmpe.f32	s14, s15
+ 997 01fe F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 998 0202 ECD4     		bmi	.L40
+ 129:Core/Src/Odometry.c **** 	//Robot navi 2020
+ 999              		.loc 1 129 2 view .LVU223
+ 129:Core/Src/Odometry.c **** 	//Robot navi 2020
+ 1000              		.loc 1 129 20 is_stmt 0 view .LVU224
+ 1001 0204 1868     		ldr	r0, [r3]	@ float
+ 1002 0206 FFF7FEFF 		bl	__aeabi_f2d
+ 1003              	.LVL56:
+ 1004 020a 41EC100B 		vmov	d0, r0, r1
+ 1005 020e FFF7FEFF 		bl	rad_to_deg
+ 1006              	.LVL57:
+ 129:Core/Src/Odometry.c **** 	//Robot navi 2020
+ 1007              		.loc 1 129 18 discriminator 1 view .LVU225
+ 1008 0212 1E4B     		ldr	r3, .L42+92
+ 1009 0214 83ED000A 		vstr.32	s0, [r3]
+ 131:Core/Src/Odometry.c **** 	t++;
+ 1010              		.loc 1 131 2 is_stmt 1 view .LVU226
+ 131:Core/Src/Odometry.c **** 	t++;
+ 1011              		.loc 1 131 8 is_stmt 0 view .LVU227
+ 1012 0218 1D4A     		ldr	r2, .L42+96
+ 1013 021a 1368     		ldr	r3, [r2]
+ 1014 021c 0133     		adds	r3, r3, #1
+ 1015 021e 1360     		str	r3, [r2]
+ 132:Core/Src/Odometry.c **** 	//ref_x = current_x + cos(current_phi_rad) *dec;
+ 1016              		.loc 1 132 2 is_stmt 1 view .LVU228
+ 132:Core/Src/Odometry.c **** 	//ref_x = current_x + cos(current_phi_rad) *dec;
+ 1017              		.loc 1 132 3 is_stmt 0 view .LVU229
+ 1018 0220 1C4A     		ldr	r2, .L42+100
+ 1019 0222 1368     		ldr	r3, [r2]
+ 1020 0224 0133     		adds	r3, r3, #1
+ 1021 0226 1360     		str	r3, [r2]
+ 135:Core/Src/Odometry.c **** 
+ 1022              		.loc 1 135 1 view .LVU230
+ 1023 0228 BDEC028B 		vldm	sp!, {d8}
+ 1024              	.LCFI8:
+ 1025              		.cfi_restore 80
+ 1026              		.cfi_restore 81
+ 1027              		.cfi_def_cfa_offset 40
+ 1028 022c BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1029              	.L43:
+ 1030              		.align	2
+ 1031              	.L42:
+ 1032 0230 00000000 		.word	d_right
+ 1033 0234 00000000 		.word	right_radius
+ 1034 0238 00000000 		.word	right_precision
+ 1035 023c 00000000 		.word	right_resolution
+ 1036 0240 00000000 		.word	dR
+ 1037 0244 00000000 		.word	total_right
+ 1038 0248 00000000 		.word	d_right_counter
+ 1039 024c 00000000 		.word	d_left
+ 1040 0250 00000000 		.word	left_radius
+ 1041 0254 00000000 		.word	left_precision
+ 1042 0258 00000000 		.word	left_resolution
+ 1043 025c 00000000 		.word	dL
+ 1044 0260 00000000 		.word	total_left
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 23
+
+
+ 1045 0264 00000000 		.word	d_left_counter
+ 1046 0268 00000000 		.word	dC
+ 1047 026c 00000000 		.word	total_centre
+ 1048 0270 00000000 		.word	RL_b_sens
+ 1049 0274 00000000 		.word	current_phi_rad
+ 1050 0278 00000000 		.word	spacing_encoder
+ 1051 027c 00000000 		.word	d_phi_counter
+ 1052 0280 DB0FC940 		.word	1086918619
+ 1053 0284 DB0F4940 		.word	1078530011
+ 1054 0288 DB0F49C0 		.word	-1068953637
+ 1055 028c 00000000 		.word	current_phi_deg
+ 1056 0290 00000000 		.word	millis
+ 1057 0294 00000000 		.word	t
+ 1058 0298 00000000 		.word	current_x
+ 1059 029c 00000000 		.word	current_y
+ 1060              		.cfi_endproc
+ 1061              	.LFE143:
+ 1063              		.global	dec
+ 1064              		.section	.data.dec,"aw"
+ 1065              		.align	2
+ 1068              	dec:
+ 1069 0000 0000C842 		.word	1120403456
+ 1070              		.global	ref_y
+ 1071              		.section	.bss.ref_y,"aw",%nobits
+ 1072              		.align	2
+ 1075              	ref_y:
+ 1076 0000 00000000 		.space	4
+ 1077              		.global	ref_x
+ 1078              		.section	.bss.ref_x,"aw",%nobits
+ 1079              		.align	2
+ 1082              	ref_x:
+ 1083 0000 00000000 		.space	4
+ 1084              		.global	current_phi_deg
+ 1085              		.section	.data.current_phi_deg,"aw"
+ 1086              		.align	2
+ 1089              	current_phi_deg:
+ 1090 0000 0000B4C2 		.word	-1028390912
+ 1091              		.global	d_phi_counter
+ 1092              		.section	.bss.d_phi_counter,"aw",%nobits
+ 1093              		.align	3
+ 1096              	d_phi_counter:
+ 1097 0000 00000000 		.space	8
+ 1097      00000000 
+ 1098              		.global	phi_speed
+ 1099              		.section	.bss.phi_speed,"aw",%nobits
+ 1100              		.align	3
+ 1103              	phi_speed:
+ 1104 0000 00000000 		.space	8
+ 1104      00000000 
+ 1105              		.global	current_phi_rad
+ 1106              		.section	.data.current_phi_rad,"aw"
+ 1107              		.align	2
+ 1110              	current_phi_rad:
+ 1111 0000 DB0FC9BF 		.word	-1077342245
+ 1112              		.global	current_y
+ 1113              		.section	.data.current_y,"aw"
+ 1114              		.align	2
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 24
+
+
+ 1117              	current_y:
+ 1118 0000 00006643 		.word	1130758144
+ 1119              		.global	current_x
+ 1120              		.section	.data.current_x,"aw"
+ 1121              		.align	2
+ 1124              	current_x:
+ 1125 0000 00209944 		.word	1150885888
+ 1126              		.global	spacing_wheel
+ 1127              		.section	.bss.spacing_wheel,"aw",%nobits
+ 1128              		.align	2
+ 1131              	spacing_wheel:
+ 1132 0000 00000000 		.space	4
+ 1133              		.global	spacing_encoder
+ 1134              		.section	.bss.spacing_encoder,"aw",%nobits
+ 1135              		.align	2
+ 1138              	spacing_encoder:
+ 1139 0000 00000000 		.space	4
+ 1140              		.global	right_radius
+ 1141              		.section	.bss.right_radius,"aw",%nobits
+ 1142              		.align	2
+ 1145              	right_radius:
+ 1146 0000 00000000 		.space	4
+ 1147              		.global	left_radius
+ 1148              		.section	.bss.left_radius,"aw",%nobits
+ 1149              		.align	2
+ 1152              	left_radius:
+ 1153 0000 00000000 		.space	4
+ 1154              		.global	dC
+ 1155              		.section	.bss.dC,"aw",%nobits
+ 1156              		.align	2
+ 1159              	dC:
+ 1160 0000 00000000 		.space	4
+ 1161              		.global	dL
+ 1162              		.section	.bss.dL,"aw",%nobits
+ 1163              		.align	2
+ 1166              	dL:
+ 1167 0000 00000000 		.space	4
+ 1168              		.global	dR
+ 1169              		.section	.bss.dR,"aw",%nobits
+ 1170              		.align	2
+ 1173              	dR:
+ 1174 0000 00000000 		.space	4
+ 1175              		.global	left_encoder_speed
+ 1176              		.section	.bss.left_encoder_speed,"aw",%nobits
+ 1177              		.align	3
+ 1180              	left_encoder_speed:
+ 1181 0000 00000000 		.space	8
+ 1181      00000000 
+ 1182              		.global	left_speed
+ 1183              		.section	.bss.left_speed,"aw",%nobits
+ 1184              		.align	3
+ 1187              	left_speed:
+ 1188 0000 00000000 		.space	8
+ 1188      00000000 
+ 1189              		.global	total_centre
+ 1190              		.section	.bss.total_centre,"aw",%nobits
+ 1191              		.align	2
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 25
+
+
+ 1194              	total_centre:
+ 1195 0000 00000000 		.space	4
+ 1196              		.global	d_left_counter
+ 1197              		.section	.bss.d_left_counter,"aw",%nobits
+ 1198              		.align	2
+ 1201              	d_left_counter:
+ 1202 0000 00000000 		.space	4
+ 1203              		.global	total_left
+ 1204              		.section	.bss.total_left,"aw",%nobits
+ 1205              		.align	2
+ 1208              	total_left:
+ 1209 0000 00000000 		.space	4
+ 1210              		.global	total_left_count
+ 1211              		.section	.bss.total_left_count,"aw",%nobits
+ 1212              		.align	2
+ 1215              	total_left_count:
+ 1216 0000 00000000 		.space	4
+ 1217              		.global	d_left
+ 1218              		.section	.bss.d_left,"aw",%nobits
+ 1219              		.align	2
+ 1222              	d_left:
+ 1223 0000 00000000 		.space	4
+ 1224              		.global	last_left_count
+ 1225              		.section	.bss.last_left_count,"aw",%nobits
+ 1226              		.align	2
+ 1229              	last_left_count:
+ 1230 0000 00000000 		.space	4
+ 1231              		.global	current_left_count
+ 1232              		.section	.bss.current_left_count,"aw",%nobits
+ 1233              		.align	2
+ 1236              	current_left_count:
+ 1237 0000 00000000 		.space	4
+ 1238              		.global	left_sens
+ 1239              		.section	.bss.left_sens,"aw",%nobits
+ 1240              		.align	2
+ 1243              	left_sens:
+ 1244 0000 00000000 		.space	4
+ 1245              		.global	left_precision
+ 1246              		.section	.bss.left_precision,"aw",%nobits
+ 1247              		.align	2
+ 1250              	left_precision:
+ 1251 0000 00000000 		.space	4
+ 1252              		.global	left_resolution
+ 1253              		.section	.bss.left_resolution,"aw",%nobits
+ 1254              		.align	2
+ 1257              	left_resolution:
+ 1258 0000 00000000 		.space	4
+ 1259              		.global	left_TIM
+ 1260              		.section	.bss.left_TIM,"aw",%nobits
+ 1261              		.align	2
+ 1264              	left_TIM:
+ 1265 0000 00000000 		.space	4
+ 1266              		.global	htim_left_Encoder
+ 1267              		.section	.bss.htim_left_Encoder,"aw",%nobits
+ 1268              		.align	2
+ 1271              	htim_left_Encoder:
+ 1272 0000 00000000 		.space	4
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 26
+
+
+ 1273              		.global	right_encoder_speed
+ 1274              		.section	.bss.right_encoder_speed,"aw",%nobits
+ 1275              		.align	3
+ 1278              	right_encoder_speed:
+ 1279 0000 00000000 		.space	8
+ 1279      00000000 
+ 1280              		.global	right_speed
+ 1281              		.section	.bss.right_speed,"aw",%nobits
+ 1282              		.align	3
+ 1285              	right_speed:
+ 1286 0000 00000000 		.space	8
+ 1286      00000000 
+ 1287              		.global	d_right_counter
+ 1288              		.section	.bss.d_right_counter,"aw",%nobits
+ 1289              		.align	2
+ 1292              	d_right_counter:
+ 1293 0000 00000000 		.space	4
+ 1294              		.global	total_right
+ 1295              		.section	.bss.total_right,"aw",%nobits
+ 1296              		.align	2
+ 1299              	total_right:
+ 1300 0000 00000000 		.space	4
+ 1301              		.global	total_right_count
+ 1302              		.section	.bss.total_right_count,"aw",%nobits
+ 1303              		.align	2
+ 1306              	total_right_count:
+ 1307 0000 00000000 		.space	4
+ 1308              		.global	d_right
+ 1309              		.section	.bss.d_right,"aw",%nobits
+ 1310              		.align	2
+ 1313              	d_right:
+ 1314 0000 00000000 		.space	4
+ 1315              		.global	last_right_count
+ 1316              		.section	.bss.last_right_count,"aw",%nobits
+ 1317              		.align	2
+ 1320              	last_right_count:
+ 1321 0000 00000000 		.space	4
+ 1322              		.global	current_right_count
+ 1323              		.section	.bss.current_right_count,"aw",%nobits
+ 1324              		.align	2
+ 1327              	current_right_count:
+ 1328 0000 00000000 		.space	4
+ 1329              		.global	right_sens
+ 1330              		.section	.bss.right_sens,"aw",%nobits
+ 1331              		.align	2
+ 1334              	right_sens:
+ 1335 0000 00000000 		.space	4
+ 1336              		.global	right_precision
+ 1337              		.section	.bss.right_precision,"aw",%nobits
+ 1338              		.align	2
+ 1341              	right_precision:
+ 1342 0000 00000000 		.space	4
+ 1343              		.global	right_resolution
+ 1344              		.section	.bss.right_resolution,"aw",%nobits
+ 1345              		.align	2
+ 1348              	right_resolution:
+ 1349 0000 00000000 		.space	4
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 27
+
+
+ 1350              		.global	right_TIM
+ 1351              		.section	.bss.right_TIM,"aw",%nobits
+ 1352              		.align	2
+ 1355              	right_TIM:
+ 1356 0000 00000000 		.space	4
+ 1357              		.global	htim_right_encoder
+ 1358              		.section	.bss.htim_right_encoder,"aw",%nobits
+ 1359              		.align	2
+ 1362              	htim_right_encoder:
+ 1363 0000 00000000 		.space	4
+ 1364              		.global	t
+ 1365              		.section	.bss.t,"aw",%nobits
+ 1366              		.align	2
+ 1369              	t:
+ 1370 0000 00000000 		.space	4
+ 1371              		.global	millis
+ 1372              		.section	.bss.millis,"aw",%nobits
+ 1373              		.align	2
+ 1376              	millis:
+ 1377 0000 00000000 		.space	4
+ 1378              		.text
+ 1379              	.Letext0:
+ 1380              		.file 2 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 1381              		.file 3 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 1382              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 1383              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1384              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1385              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 1386              		.file 8 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 Odometry.c
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:21     .text.set_right_encoder:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:27     .text.set_right_encoder:00000000 set_right_encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:89     .text.set_right_encoder:0000002c $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1362   .bss.htim_right_encoder:00000000 htim_right_encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1355   .bss.right_TIM:00000000 right_TIM
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1348   .bss.right_resolution:00000000 right_resolution
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1341   .bss.right_precision:00000000 right_precision
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1334   .bss.right_sens:00000000 right_sens
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1306   .bss.total_right_count:00000000 total_right_count
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:99     .text.set_left_encoder:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:105    .text.set_left_encoder:00000000 set_left_encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:167    .text.set_left_encoder:0000002c $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1271   .bss.htim_left_Encoder:00000000 htim_left_Encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1264   .bss.left_TIM:00000000 left_TIM
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1257   .bss.left_resolution:00000000 left_resolution
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1250   .bss.left_precision:00000000 left_precision
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1243   .bss.left_sens:00000000 left_sens
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1215   .bss.total_left_count:00000000 total_left_count
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:177    .text.read_right_encoder:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:183    .text.read_right_encoder:00000000 read_right_encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:262    .text.read_right_encoder:0000005c $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1327   .bss.current_right_count:00000000 current_right_count
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1320   .bss.last_right_count:00000000 last_right_count
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1313   .bss.d_right:00000000 d_right
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:273    .text.read_left_encoder:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:279    .text.read_left_encoder:00000000 read_left_encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:358    .text.read_left_encoder:0000005c $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1236   .bss.current_left_count:00000000 current_left_count
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1229   .bss.last_left_count:00000000 last_left_count
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1222   .bss.d_left:00000000 d_left
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:369    .text.set_dimentions:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:375    .text.set_dimentions:00000000 set_dimentions
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:404    .text.set_dimentions:0000001c $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1145   .bss.right_radius:00000000 right_radius
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1152   .bss.left_radius:00000000 left_radius
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1138   .bss.spacing_encoder:00000000 spacing_encoder
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1131   .bss.spacing_wheel:00000000 spacing_wheel
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:417    .text.speed_calcul:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:423    .text.speed_calcul:00000000 speed_calcul
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:588    .text.speed_calcul:00000104 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1292   .bss.d_right_counter:00000000 d_right_counter
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1278   .bss.right_encoder_speed:00000000 right_encoder_speed
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1201   .bss.d_left_counter:00000000 d_left_counter
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1180   .bss.left_encoder_speed:00000000 left_encoder_speed
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1096   .bss.d_phi_counter:00000000 d_phi_counter
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1103   .bss.phi_speed:00000000 phi_speed
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1285   .bss.right_speed:00000000 right_speed
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1187   .bss.left_speed:00000000 left_speed
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:605    .text.reset_position:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:611    .text.reset_position:00000000 reset_position
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:640    .text.reset_position:00000014 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1124   .data.current_x:00000000 current_x
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1117   .data.current_y:00000000 current_y
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1089   .data.current_phi_deg:00000000 current_phi_deg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1110   .data.current_phi_rad:00000000 current_phi_rad
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 29
+
+
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:648    .text.ticks_to_distance:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:654    .text.ticks_to_distance:00000000 ticks_to_distance
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:685    .text.ticks_to_distance:00000028 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:691    .text.rad_to_deg:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:697    .text.rad_to_deg:00000000 rad_to_deg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:730    .text.rad_to_deg:00000028 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:737    .text.update_position:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:743    .text.update_position:00000000 update_position
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1032   .text.update_position:00000230 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1173   .bss.dR:00000000 dR
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1299   .bss.total_right:00000000 total_right
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1166   .bss.dL:00000000 dL
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1208   .bss.total_left:00000000 total_left
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1159   .bss.dC:00000000 dC
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1194   .bss.total_centre:00000000 total_centre
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1376   .bss.millis:00000000 millis
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1369   .bss.t:00000000 t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1068   .data.dec:00000000 dec
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1065   .data.dec:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1075   .bss.ref_y:00000000 ref_y
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1072   .bss.ref_y:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1082   .bss.ref_x:00000000 ref_x
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1079   .bss.ref_x:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1086   .data.current_phi_deg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1093   .bss.d_phi_counter:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1100   .bss.phi_speed:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1107   .data.current_phi_rad:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1114   .data.current_y:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1121   .data.current_x:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1128   .bss.spacing_wheel:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1135   .bss.spacing_encoder:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1142   .bss.right_radius:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1149   .bss.left_radius:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1156   .bss.dC:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1163   .bss.dL:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1170   .bss.dR:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1177   .bss.left_encoder_speed:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1184   .bss.left_speed:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1191   .bss.total_centre:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1198   .bss.d_left_counter:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1205   .bss.total_left:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1212   .bss.total_left_count:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1219   .bss.d_left:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1226   .bss.last_left_count:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1233   .bss.current_left_count:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1240   .bss.left_sens:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1247   .bss.left_precision:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1254   .bss.left_resolution:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1261   .bss.left_TIM:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1268   .bss.htim_left_Encoder:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1275   .bss.right_encoder_speed:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1282   .bss.right_speed:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1289   .bss.d_right_counter:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1296   .bss.total_right:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1303   .bss.total_right_count:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1310   .bss.d_right:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1317   .bss.last_right_count:00000000 $d
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s 			page 30
+
+
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1324   .bss.current_right_count:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1331   .bss.right_sens:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1338   .bss.right_precision:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1345   .bss.right_resolution:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1352   .bss.right_TIM:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1359   .bss.htim_right_encoder:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1366   .bss.t:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccb01dcc.s:1373   .bss.millis:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_TIM_Encoder_Start
+__aeabi_f2d
+__aeabi_ddiv
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_dsub
+__aeabi_d2f
+cos
+sin
+RL_b_sens
