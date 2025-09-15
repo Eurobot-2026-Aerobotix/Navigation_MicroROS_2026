@@ -202,8 +202,8 @@ build/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h \
- Core/Inc/motors.h Core/Inc/odometry.h Core/Inc/motors.h \
- Core/Inc/navigation.h Core/Inc/odometry.h
+ Core/Inc/Motors.h Core/Inc/Odometry.h Core/Inc/Motors.h \
+ Core/Inc/navigation.h Core/Inc/Odometry.h
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -410,8 +410,8 @@ libmicroros/uros_include/service/service/srv/set_variables.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h:
-Core/Inc/motors.h:
-Core/Inc/odometry.h:
-Core/Inc/motors.h:
+Core/Inc/Motors.h:
+Core/Inc/Odometry.h:
+Core/Inc/Motors.h:
 Core/Inc/navigation.h:
-Core/Inc/odometry.h:
+Core/Inc/Odometry.h:

@@ -8,7 +8,7 @@
 #ifndef INC_NAVIGATION_H_
 #define INC_NAVIGATION_H_
 
-#include "odometry.h"
+#include "Odometry.h"
 
 enum Robot_state{
 	DEAD_STOP,

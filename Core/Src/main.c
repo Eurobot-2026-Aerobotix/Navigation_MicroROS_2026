@@ -35,8 +35,8 @@
 #include <std_msgs/msg/int32.h>
 #include <service/srv/navi_stm.h>
 #include <service/srv/set_variables.h>
-#include "motors.h"
-#include "odometry.h"
+#include "Motors.h"
+#include "Odometry.h"
 #include "navigation.h"
 
 /* USER CODE END Includes */
@@ -95,9 +95,16 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    	}
     			    	  		    	res_out->result = true;
     			    	  			    break;
-    			    	  		    case 1:  // "move_distance"
-    			    	  		    	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    			    	  		    case 1:  // "move_forward"
     			    	  		    	move_forward(req_in->arg2, req_in->arg3);
+										res_out->result = true;
+										break;
+    			    	  		    case 3:  // "move_backward"
+										move_backward(req_in->arg2, req_in->arg3);
+										res_out->result = true;
+										break;
+    			    	  		    case 2:  // "move_backward"
+										rotate(req_in->arg2, req_in->arg3);
 										res_out->result = true;
 										break;
 
@@ -217,6 +224,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM1_Init();
@@ -226,6 +234,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   MX_TIM5_Init();
+
+  /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
   setup_motor_channels(&htim1, TIM_CHANNEL_3, TIM_CHANNEL_4, TIM_CHANNEL_2, TIM_CHANNEL_1);
@@ -249,10 +259,30 @@ int main(void)
 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // encoder timer
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // encoder timer
-  /* USER CODE BEGIN 2 */
-  __HAL_TIM_SET_COMPARE(htim_motors, right_forward, 2000);
-  __HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
-  move_forward(100,300);
+
+  // hedhom lezem ykounou hnee, tes2elch 3leech
+  current_speed_R = 0;
+  current_speed_L = 0;
+  previous_speed_R = 0;
+  previous_speed_L = 0;
+  target_speed_R = 0;
+  target_speed_L = 0;
+  current_acceleration_R = 0;
+  current_acceleration_L = 0;
+  previous_speed_calculation_time = 0;
+
+  speed_integral_R = 0;
+  speed_derivative_R = 0;
+  previous_speed_error_R = 0;
+  speed_integral_L = 0;
+  speed_derivative_L = 0;
+  previous_speed_error_L = 0;
+
+  PWM_R = 0;
+  PWM_L = 0;
+
+
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -828,9 +858,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		update_position(); // will also update the speed internally
 
 		float tmp = (TIM5->CNT - previous_speed_control_time);
-		debugger=tmp;
 		// right motor speed control
 		float error = target_speed_R - current_speed_R;
+
+		debugger_2 = error;
 		speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
 		speed_integral_R += error*(tmp/1000000);
 		speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;

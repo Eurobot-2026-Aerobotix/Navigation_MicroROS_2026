@@ -5,7 +5,7 @@
  *      Author: monji
  */
 
-#include "../Inc/odometry.h"
+#include "../Inc/Odometry.h"
 
 float driven_wheels_spacing;
 float dead_wheels_spacing;
@@ -15,6 +15,7 @@ float current_phi = 0;
 float absolute_phi = 0;
 
 void update_position(){
+
 	float dR = ticks_to_distance(encoder_count_R - previous_encoder_count_R, wheel_diameter_R);
 	float dL = ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L);
 	float dC = (dR+dL)/2;
@@ -31,6 +32,7 @@ void update_position(){
 	while (current_phi <= -PI){
 		current_phi += 2*PI;
 	}
+
 	update_speed();
 }
 void reset_position(){

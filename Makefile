@@ -43,8 +43,8 @@ Core/Src/system_stm32f4xx.c \
 Core/Src/sysmem.c \
 Core/Src/syscalls.c \
 Core/Src/navigation.c \
-Core/Src/motors.c \
-Core/Src/odometry.c \
+Core/Src/Motors.c \
+Core/Src/Odometry.c \
 Core/Src/freertos.c \
 Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
 Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \

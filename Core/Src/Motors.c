@@ -5,7 +5,7 @@
  *      Author: monji
  */
 
-#include "../Inc/motors.h"
+#include "../Inc/Motors.h"
 
 TIM_HandleTypeDef* htim_motors;
 uint32_t right_forward, right_backward, left_forward, left_backward;
@@ -34,7 +34,8 @@ TIM_HandleTypeDef* encoder_timer_L;
 int CPR;
 float wheel_diameter_R;
 float wheel_diameter_L;
-int32_t debugger;
+int32_t debugger = 0;
+float debugger_2 = 0.0f;
 extern UART_HandleTypeDef huart2;
 
 void run_right_motor(){
@@ -100,8 +101,9 @@ void update_encoder_counts(){ // ISR safe, takes approximately 250ns
 }
 void update_speed(){ // ISR safe, takes approximately 350ns
 	float tmp = (float)((int32_t)TIM5->CNT - (int32_t)previous_speed_calculation_time);
+	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR);
 	// TODO: after setting up the constants in the following expression, calculate the second part and paste it as is to save on CPU cycles
-	current_speed_R = current_speed_R*0.7 + 0.3* ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR); // unit = mm/s // the first part is a filter that reduces jitter
+	current_speed_R = current_speed_R*0.7 + debugger_2; // unit = mm/s // the first part is a filter that reduces jitter
 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*(wheel_diameter_L*PI*1000000/CPR);
 	previous_encoder_count_R = encoder_count_R;
 	previous_encoder_count_L = encoder_count_L;

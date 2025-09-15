@@ -52,6 +52,7 @@ extern int CPR;
 extern float wheel_diameter_R;
 extern float wheel_diameter_L;
 extern int32_t debugger;
+extern float debugger_2;
 extern UART_HandleTypeDef huart2;
 
 void run_right_motor();
