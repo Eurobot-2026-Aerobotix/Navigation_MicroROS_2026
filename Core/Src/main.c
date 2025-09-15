@@ -95,18 +95,35 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    	}
     			    	  		    	res_out->result = true;
     			    	  			    break;
-    			    	  		    case 1:  // "move_forward"
-    			    	  		    	move_forward(req_in->arg2, req_in->arg3);
+									 case 1:
+										move_forward(req_in->arg2, req_in->arg3);  // distance, speed
 										res_out->result = true;
 										break;
-    			    	  		    case 3:  // "move_backward"
-										move_backward(req_in->arg2, req_in->arg3);
+
+									 case 2:
+										move_backward(req_in->arg2, req_in->arg3);  // distance, speed
 										res_out->result = true;
 										break;
-    			    	  		    case 2:  // "move_backward"
-										rotate(req_in->arg2, req_in->arg3);
+
+									 case 3:
+										rotate(req_in->arg2, req_in->arg3);  // angle, is_radian
 										res_out->result = true;
 										break;
+
+									 case 4:
+										orientate(req_in->arg2, req_in->arg3);  // orientation, is_radian
+										res_out->result = true;
+										break;
+
+									 case 5:
+										go_to(req_in->arg2, req_in->arg3, req_in->arg4);  // x, y, speed
+										res_out->result = true;
+										break;
+
+
+									 default:
+										  res_out->result = false;
+										  break;
 
     			    	  		}
 }
