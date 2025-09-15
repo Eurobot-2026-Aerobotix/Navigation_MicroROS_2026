@@ -7,8 +7,8 @@
 #ifndef INC_ODOMETRY_H_
 #define INC_ODOMETRY_H_
 
-#include "motors.h"
 #include <math.h>
+#include "motors.h"
 
 #define SQR(x) ((x) * (x))
 #define SGN(x) ( ( (x)<0 ) ? -1 : 1)

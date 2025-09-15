@@ -36,11 +36,6 @@ build/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- Core/Inc/Odometry.h Core/Inc/main.h Core/Inc/Robot_Navi_Euro20.h \
- Core/Inc/Odometry.h Core/Inc/Motors.h \
- Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
- Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- Middlewares/Third_Party/FreeRTOS/Source/include/task.h Core/Inc/Motors.h \
  libmicroros/uros_include/rcl/rcl/rcl.h \
  libmicroros/uros_include/rcl/rcl/init.h \
  libmicroros/uros_include/rcl/rcl/allocator.h \
@@ -206,7 +201,9 @@ build/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  libmicroros/uros_include/service/service/srv/set_variables.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h \
- libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h
+ libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h \
+ Core/Inc/motors.h Core/Inc/odometry.h Core/Inc/motors.h \
+ Core/Inc/navigation.h Core/Inc/odometry.h
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -247,15 +244,6 @@ Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
-Core/Inc/Odometry.h:
-Core/Inc/main.h:
-Core/Inc/Robot_Navi_Euro20.h:
-Core/Inc/Odometry.h:
-Core/Inc/Motors.h:
-Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
-Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
-Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
-Core/Inc/Motors.h:
 libmicroros/uros_include/rcl/rcl/rcl.h:
 libmicroros/uros_include/rcl/rcl/init.h:
 libmicroros/uros_include/rcl/rcl/allocator.h:
@@ -422,3 +410,8 @@ libmicroros/uros_include/service/service/srv/set_variables.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h:
+Core/Inc/motors.h:
+Core/Inc/odometry.h:
+Core/Inc/motors.h:
+Core/Inc/navigation.h:
+Core/Inc/odometry.h:

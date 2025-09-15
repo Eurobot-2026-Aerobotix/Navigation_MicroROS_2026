@@ -31,9 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "motors.h"
-#include "odometry.h"
-#include "navigation.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

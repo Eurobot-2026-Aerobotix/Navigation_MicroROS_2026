@@ -5,7 +5,7 @@
  *      Author: monji
  */
 
-#include "odometry.h"
+#include "../Inc/odometry.h"
 
 float driven_wheels_spacing;
 float dead_wheels_spacing;

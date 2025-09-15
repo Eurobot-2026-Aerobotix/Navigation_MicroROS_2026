@@ -35,7 +35,9 @@
 #include <std_msgs/msg/int32.h>
 #include <service/srv/navi_stm.h>
 #include <service/srv/set_variables.h>
-
+#include "motors.h"
+#include "odometry.h"
+#include "navigation.h"
 
 /* USER CODE END Includes */
 
@@ -88,57 +90,17 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    case 0 :
     			    	  		    	for (int i = 0; i < 5; i++)  // Blink 10 times
     			    	  		    	{
-    			    	  		    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
     			    	  		    	    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     			    	  		    	    osDelay(500);  // 500 ms ON/OFF cycle
     			    	  		    	}
     			    	  		    	res_out->result = true;
     			    	  			    break;
     			    	  		    case 1:  // "move_distance"
-    			    	  		        move_distance(req_in->arg2, req_in->arg3);
-    			    	  		        res_out->result = true;
-    			    	  		        break;
-    			    	  		    case 2:  // "rotate"
-    			    	  		        rotate(req_in->arg2, req_in->arg3);
-    			    	  		        res_out->result = true;
-    			    	  		        break;
-    			    	  		    case 4:  // "robotlocate"
-    			    	  		    	Robot_Locate(req_in->arg2, req_in->arg3,req_in->arg4);
-    			    	  		      	res_out->result = true;
-    			    	  		        break;
-    			    	  		    case 3:  // "orientate"
-										orientate(req_in->arg2, req_in->arg3);
+    			    	  		    	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    			    	  		    	move_forward(req_in->arg2, req_in->arg3);
 										res_out->result = true;
 										break;
-    			    	  		    case 5:  // "robot locate b sens"
-										Robot_Locate_b_sens(req_in->arg2, req_in->arg3,req_in->arg4,req_in->arg5);
-										res_out->result = true;
-										break;
-    			    	  		    case 6: //"set parameters"
-    			    	  		    	set_parameters(req_in->arg2, req_in->arg3,req_in->arg4, req_in->arg5,req_in->arg6, req_in->arg7);
-										res_out->result = true;
-    			    	  		    	break;
-    			    	  		    case 7: //"set ki"
-    			    	  		    	set_ki(req_in->arg2, req_in->arg3);
-										res_out->result = true;
-    			    	  		    	break;
-    			    	  		    case 8: //"set kp"
-    			    	  		    	set_kp(req_in->arg2, req_in->arg3);
-										res_out->result = true;
-    			    	  		    	break;
-    			    	  		    case 9: //"set ramp"
-    			    	  		    	set_ramp(req_in->arg2, req_in->arg3);
-										res_out->result = true;
-    			    	  		    	break;
-    			    	  		    case 10 :
-    			    	  		    	PWM_R = 2000;
-    			    	  		    	PWM_L = 2000;
-    			    	  		    	run_motors();
-    			    	  		    	break;
-    			    	  		    default:
-    			    	  		    	res_out->result=false ;
-    			    	  		        // Invalid function number
-    			    	  		    	stop_motors();
+
     			    	  		}
 }
 
@@ -155,20 +117,6 @@ void service_callback(const void *request_msg, void *response_msg) {
 
 }*/
 
-//  Publisher Task (Runs Independently)
-void publisher_task(void *argument) {
-    geometry_msgs__msg__Vector3 pose_msg;
-
-    for (;;) {
-        // Get pose data
-        pose_msg.x = current_x;       // Replace with actual function
-        pose_msg.y = current_y;
-        pose_msg.z =current_phi_deg;   // Store θ in z
-
-        rcl_publish(&pose_publisher, &pose_msg, NULL);
-        osDelay(1500);  // Adjust as needed
-    }
-}
 
 
 /* USER CODE END PD */
@@ -198,7 +146,24 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
+// speed control parameters
+// TODO: don't forget to make sure the center of gravity is on the roll axis
+float kpS_R = 5; // 1.5 3
+float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
+float kiS_R = 15; // 8 13.5
+float speed_integral_R = 0;
+float speed_derivative_R = 0;
+float previous_speed_error_R = 0;
 
+float kpS_L = 5; // 3.5 5
+float kdS_L = 0; // 0.00 0
+float kiS_L = 15; // 20 15.5
+float speed_integral_L = 0;
+float speed_derivative_L = 0;
+float previous_speed_error_L = 0;
+
+float speed_integral_limit = 10000;
+int32_t previous_speed_control_time = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -261,10 +226,33 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   MX_TIM5_Init();
-  TIM5->CNT = 0;
-  HAL_TIM_Base_Start(&htim5);
-  /* USER CODE BEGIN 2 */
+  // setting up timers and stuff
+  // TODO: configure correct parameters
+  setup_motor_channels(&htim1, TIM_CHANNEL_3, TIM_CHANNEL_4, TIM_CHANNEL_2, TIM_CHANNEL_1);
+  setup_encoder_timers(&htim4, &htim3, 4000);
+  //setup_wheel_diameters(80.6119787, 80.9302886);
+  setup_wheel_diameters(79.67706788, 80.9302886);
+  setup_wheels_spacing(188.5, 338.68892271);
+  //setup_wheels_spacing(188.5, 342.5);
+  setup_PWM_min_max(4499, 1080, 1280, -1180, -1480);
 
+  // starting timers
+  HAL_TIM_Base_Start_IT(&htim7); // interrupt timer
+
+  TIM5->CNT = 0;
+  HAL_TIM_Base_Start(&htim5); // main clock timer
+
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // PWM timer
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // encoder timer
+  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // encoder timer
+  /* USER CODE BEGIN 2 */
+  __HAL_TIM_SET_COMPARE(htim_motors, right_forward, 2000);
+  __HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+  move_forward(100,300);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -299,6 +287,7 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
+
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
@@ -596,8 +585,9 @@ static void MX_TIM7_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 
   /* USER CODE BEGIN TIM7_Init 1 */
-
+  __HAL_RCC_TIM7_CLK_ENABLE();
   /* USER CODE END TIM7_Init 1 */
+
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 83;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -834,6 +824,39 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim-> Instance == TIM7){
+		update_encoder_counts();
+		update_position(); // will also update the speed internally
+
+		float tmp = (TIM5->CNT - previous_speed_control_time);
+		debugger=tmp;
+		// right motor speed control
+		float error = target_speed_R - current_speed_R;
+		speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
+		speed_integral_R += error*(tmp/1000000);
+		speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+		//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
+
+		previous_speed_error_R = error;
+
+		PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
+		PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+		PWM_R = (target_speed_R == 0)?0: PWM_R;
+
+		// left motor speed control
+		error = target_speed_L - current_speed_L;
+		speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
+		speed_integral_L += error*(tmp/1000000);
+		speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+		//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
+
+		previous_speed_error_L = error;
+		previous_speed_control_time = TIM5->CNT;
+
+		PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
+		PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+		PWM_L = (target_speed_L == 0)?0: PWM_L;
+		run_right_motor();
+		run_left_motor();
 	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM2) {
