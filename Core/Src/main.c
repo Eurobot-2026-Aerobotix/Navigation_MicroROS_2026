@@ -22,73 +22,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
-#include "Odometry.h"
-#include "Robot_Navi_Euro20.h"
-#include "Motors.h"
 #include <stdbool.h>
 #include <rcl/rcl.h>
 #include <rclc/rclc.h>
 #include <geometry_msgs/geometry_msgs/msg/vector3.h>
 #include <std_msgs/msg/bool.h>
-
-
-
-extern int sum;
-volatile bool evitementFlag=false;
-extern volatile float current_x;
-extern volatile float current_y;
-extern volatile float current_phi_deg ;
-extern volatile float left_radius,right_radius,spacing_encoder,spacing_wheel;
-
-extern float** matrix;
-extern int taille;
-extern float Vx;
-extern float Vz;
-extern float PWMR,PWML,PWM_linear,PWM_angular;
-extern int PWM;
-extern int PWM_Min;
-extern uint32_t right_forward;
-extern uint32_t right_backward;
-extern uint32_t left_forward;
-extern uint32_t left_backward;
-extern TIM_HandleTypeDef* htim_Motors;
-
-extern int right_correction,left_correction;
-extern volatile float total_right,d_right_counter;
-extern volatile float total_left,d_left_counter,total_centre;
-extern int PWM_LB,PWM_RB;
-extern int coef_correct_dist;
-extern volatile long total_right_count;
-extern volatile long total_left_count;
-extern float test;
-
-extern volatile float spacing_wheel;
-
-volatile int mutex_button=0;
-
-
-
-extern float kp, ki;
-
-extern volatile double left_speed,left_encoder_speed;
-extern volatile double right_speed,right_encoder_speed;
-extern volatile long t;
-//unsigned long long int delta=0,t0=0;
-extern int PWM_L,PWM_R;
-extern int i ;
-extern char buf[64];
-
-extern double v_rx ;
-extern double omega_r ;
-volatile unsigned long ulHighFrequencyTimerTicks;
-
-
-
-
-#include <rcl/rcl.h>
 #include <rcl/error_handling.h>
-#include <rclc/rclc.h>
 #include <rclc/executor.h>
 #include <uxr/client/transport.h>
 #include <rmw_microxrcedds_c/config.h>
@@ -103,9 +42,6 @@ volatile unsigned long ulHighFrequencyTimerTicks;
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-
-
-
 bool cubemx_transport_open(struct uxrCustomTransport * transport);
 bool cubemx_transport_close(struct uxrCustomTransport * transport);
 size_t cubemx_transport_write(struct uxrCustomTransport* transport, const uint8_t * buf, size_t len, uint8_t * err);
@@ -115,9 +51,6 @@ void * microros_allocate(size_t size, void * state);
 void microros_deallocate(void * pointer, void * state);
 void * microros_reallocate(void * pointer, size_t size, void * state);
 void * microros_zero_allocate(size_t number_of_elements, size_t size_of_element, void * state);
-
-
-
 
 /* USER CODE END PTD */
 
@@ -223,7 +156,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 }*/
 
 //  Publisher Task (Runs Independently)
-/*void publisher_task(void *argument) {
+void publisher_task(void *argument) {
     geometry_msgs__msg__Vector3 pose_msg;
 
     for (;;) {
@@ -235,7 +168,7 @@ void service_callback(const void *request_msg, void *response_msg) {
         rcl_publish(&pose_publisher, &pose_msg, NULL);
         osDelay(1500);  // Adjust as needed
     }
-}*/
+}
 
 
 /* USER CODE END PD */
@@ -249,6 +182,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
+TIM_HandleTypeDef htim5;
 TIM_HandleTypeDef htim7;
 TIM_HandleTypeDef htim14;
 
@@ -277,6 +211,7 @@ static void MX_TIM4_Init(void);
 static void MX_TIM7_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM14_Init(void);
+static void MX_TIM5_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
@@ -304,11 +239,7 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-  for (int i = 0; i < 5; i++)  // Blink 10 times
-	{
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-		osDelay(500);  // 500 ms ON/OFF cycle
-	}
+
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -329,36 +260,10 @@ int main(void)
   MX_TIM7_Init();
   MX_USART2_UART_Init();
   MX_TIM14_Init();
+  MX_TIM5_Init();
+  TIM5->CNT = 0;
+  HAL_TIM_Base_Start(&htim5);
   /* USER CODE BEGIN 2 */
-//         HAL_Delay(3000);
-//         Robot_Locate(1100, 600, 500);
-//         HAL_Delay(1000);
-//         Robot_Locate(1100, 950, 500 );
-//         HAL_Delay(1000);
-//         Robot_Locate(1225, 300, 500 );
-//         move_distance(-1300, 500);
-//         HAL_Delay(1000);
-//         orientate(90, 500);
-         //Robot_locateCurv(800, 500, 60, 300);
-         //move_distance_allouch(500, 300);
-
-         //Robot_Locate(2325, 1750, 600);
-         //move_distance(-1000, 500);
-         //Robot_Locate_b_sens(1900,600,500, -1);
-         //orientate(90,500);
-         //move_distance(-400, 400);
-//         Robot_Locate_b_sens(1900, 600, 500 , -1);
-//         HAL_Delay(1000);
-//         orientate(-90, 500);
-//         HAL_Delay(1000);
-//         move_distance(-350, 300);
-//         HAL_Delay(1000);
-//         Robot_Locate_b_sens(2225, 532.5, 500 ,-1);
-//         HAL_Delay(1000);
-//         Robot_Locate_b_sens(2225, 250, 300 ,-1);
-
-
-
 
   /* USER CODE END 2 */
 
@@ -403,7 +308,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -632,6 +537,51 @@ static void MX_TIM4_Init(void)
 }
 
 /**
+  * @brief TIM5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM5_Init(void)
+{
+
+  /* USER CODE BEGIN TIM5_Init 0 */
+
+  /* USER CODE END TIM5_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM5_Init 1 */
+
+  /* USER CODE END TIM5_Init 1 */
+  htim5.Instance = TIM5;
+  htim5.Init.Prescaler = 83;
+  htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim5.Init.Period = 4294967295;
+  htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim5, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim5, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM5_Init 2 */
+
+  /* USER CODE END TIM5_Init 2 */
+
+}
+
+/**
   * @brief TIM7 Initialization Function
   * @param None
   * @retval None
@@ -798,7 +748,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : PB8 */
   GPIO_InitStruct.Pin = GPIO_PIN_8;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
@@ -830,13 +780,13 @@ void StartDefaultTask(void *argument)
 	    rclc_node_init_default(&node, "cubemx_node", "", &support);
 
 	    //  Initialize the Publisher
-	    /*rclc_publisher_init_default(
+	    rclc_publisher_init_default(
 	        &pose_publisher,
 	        &node,
 	        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
 	        "/pose_topic"
 	    );
-	    //  Initialize the Subscriber
+	   /* //  Initialize the Subscriber
 	        rclc_subscription_init_default(
 	            &bool_subscriber,
 	            &node,
@@ -883,16 +833,7 @@ void StartDefaultTask(void *argument)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-	if (htim-> Instance == TIM7)
-	{
-		update_position();
-		PWM_sign_change_counter();
-		if (t%T == 0)
-			speed_calcul();
-		/*if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)==0){mutex_button=0;
-		    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);}
-		else if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)==1){mutex_button=1;
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);}*/
+	if (htim-> Instance == TIM7){
 	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM2) {

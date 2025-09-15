@@ -1,104 +1,121 @@
-#include "Motors.h"
+/*
+ * motors.c
+ *
+ *  Created on: Aug 25, 2025
+ *      Author: monji
+ */
 
-TIM_HandleTypeDef* htim_Motors;
+#include "motors.h"
+
+TIM_HandleTypeDef* htim_motors;
 uint32_t right_forward, right_backward, left_forward, left_backward;
-int PWM_R=1000,PWM_L=1000;
-int PWM_Max;
-int PWM_R_Min,PWM_L_Min;
-int PWM_R_Min_Rot,PWM_L_Min_Rot;
-int PWM_R_sign,PWM_L_sign;
-int PWM_R_last_sign,PWM_L_last_sign;
-int PWM_R_sign_counter,PWM_L_sign_counter;
+int PWM_R, PWM_L;
+int PWM_max;
+int PWM_R_forward_min, PWM_L_forward_min, PWM_R_backward_min, PWM_L_backward_min;
+int PWM_offset_R;
+int PWM_offset_L;
+float current_speed_R = 0;
+float current_speed_L = 0;
+float previous_speed_R = 0;
+float previous_speed_L = 0;
+float target_speed_R = 0;
+float target_speed_L = 0;
+float current_acceleration_R = 0;
+float current_acceleration_L = 0;
+uint32_t previous_speed_calculation_time = 0;
+int32_t encoder_count_R;
+int32_t encoder_count_L;
+uint16_t previous_encoder_timer_CNT_R;
+uint16_t previous_encoder_timer_CNT_L;
+int32_t previous_encoder_count_R;
+int32_t previous_encoder_count_L;
+TIM_HandleTypeDef* encoder_timer_R;
+TIM_HandleTypeDef* encoder_timer_L;
+int CPR;
+float wheel_diameter_R;
+float wheel_diameter_L;
+int32_t debugger;
+UART_HandleTypeDef huart2;
 
-void set_motors (TIM_HandleTypeDef* htim, int MAX_PWM, uint32_t forward_right, uint32_t backward_right, uint32_t forward_left, uint32_t backward_left)
-{
-	htim_Motors = htim;
-	PWM_Max = MAX_PWM;
-	right_forward = forward_right;
-	right_backward = backward_right;
-	left_forward = forward_left;
-	left_backward = backward_left;
-	HAL_TIM_PWM_Start(htim_Motors, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(htim_Motors, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(htim_Motors, TIM_CHANNEL_3);
-	HAL_TIM_PWM_Start(htim_Motors, TIM_CHANNEL_4);
-	stop_motors();
-}
-
-void stop_motors (void)
-{
-	__HAL_TIM_SetCompare(htim_Motors, TIM_CHANNEL_1, 0);
-	__HAL_TIM_SetCompare(htim_Motors, TIM_CHANNEL_2, 0);
-	__HAL_TIM_SetCompare(htim_Motors, TIM_CHANNEL_3, 0);
-	__HAL_TIM_SetCompare(htim_Motors, TIM_CHANNEL_4, 0);
-}
-
-void run_motors(void)
-{
-
-
-	if (PWM_R>0)
-	{
-		if (PWM_R>PWM_Max) PWM_R=PWM_Max;
-		__HAL_TIM_SetCompare(htim_Motors, right_forward, PWM_R);
-		__HAL_TIM_SetCompare(htim_Motors, right_backward, 0);
+void run_right_motor(){
+	if (PWM_R>0){
+		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+	}else{
+		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
+		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
 	}
-	else
-	{
-		if (PWM_R<-PWM_Max) PWM_R=-PWM_Max;
-		__HAL_TIM_SetCompare(htim_Motors, right_forward, 0);
-		__HAL_TIM_SetCompare(htim_Motors, right_backward, -PWM_R);
-	}
-	if (PWM_L>0)
-	{
-		if (PWM_L>PWM_Max) PWM_L=PWM_Max;
-		__HAL_TIM_SetCompare(htim_Motors, left_forward, PWM_L);
-		__HAL_TIM_SetCompare(htim_Motors, left_backward, 0);
-	}
-	else	{
-		if (PWM_L<-PWM_Max) PWM_L=-PWM_Max;
-		__HAL_TIM_SetCompare(htim_Motors, left_forward, 0);
-		__HAL_TIM_SetCompare(htim_Motors, left_backward, -PWM_L);
-	}
-
 }
-void smooth_stop() {
-    while (PWM_R > 0 || PWM_L > 0) {
-        PWM_R -= 50;
-        PWM_L -= 50;
-        if (PWM_R < 0) PWM_R = 0;
-        if (PWM_L < 0) PWM_L = 0;
-        run_motors();
-        osDelay(10); // Small delay for smooth braking
-    }
-    stop_motors();
-}// for lidar when detect enemy it stops with deceleration
-
-
-/*void run_forward (int right_PWM, int left_PWM)
-{
-	__HAL_TIM_SetCompare(htim_Motors, right_forward, right_PWM);
-	__HAL_TIM_SetCompare(htim_Motors, right_backward, 0);
-	__HAL_TIM_SetCompare(htim_Motors, left_forward, left_PWM);
-	__HAL_TIM_SetCompare(htim_Motors, left_backward, 0);
-}*/
-
-void set_PWM_min (int PWM_Min_R, int PWM_Min_L, int PWM_Min_R_Rot, int PWM_Min_L_Rot)
-{
-	PWM_R_Min=PWM_Min_R;
-	PWM_L_Min=PWM_Min_L;
-	PWM_R_Min_Rot=PWM_Min_R_Rot;
-	PWM_L_Min_Rot=PWM_Min_L_Rot;
+void run_left_motor(){
+	if (PWM_L>0){
+		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+	}else{
+		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+	}
 }
+void setup_motor_channels(TIM_HandleTypeDef* motors_timer, uint32_t right__forward, uint32_t right__backward, uint32_t left__forward, uint32_t left__backward){
+	htim_motors =  motors_timer;
+	right_forward = right__forward;
+	right_backward = right__backward;
+	left_forward = left__forward;
+	left_backward = left__backward;
+}
+void setup_encoder_timers(TIM_HandleTypeDef* right_timer, TIM_HandleTypeDef* left_timer, int cpr){
+	encoder_timer_R = right_timer;
+	encoder_timer_L = left_timer;
+	CPR = cpr;
+}
+void setup_wheel_diameters(float right_wheel, float left_wheel){
+	wheel_diameter_R = right_wheel;
+	wheel_diameter_L = left_wheel;
+}
+void setup_PWM_min_max(int PWM__max, int PWM__R_forward_min, int PWM__L_forward_min, int PWM__R_backward_min,int PWM__L_backward_min){
+	PWM_max = PWM__max;
+	PWM_R_forward_min = PWM__R_forward_min;
+	PWM_L_forward_min = PWM__L_forward_min;
+	PWM_R_backward_min = PWM__R_backward_min;
+	PWM_L_backward_min = PWM__L_backward_min;
+}
+void stop_motors(){
+	__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
+	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+	target_speed_R = 0;
+	target_speed_L = 0;
+}
+void update_encoder_counts(){ // ISR safe, takes approximately 250ns
+	int32_t delta = (int32_t)(encoder_timer_R->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_R;
+	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta; // handling overflow
+	encoder_count_R -= delta;
 
-void PWM_sign_change_counter(void)
-{
-	PWM_L_last_sign = PWM_L_sign;
-	PWM_R_last_sign = PWM_R_sign;
-	if (PWM_R >= 0) PWM_R_sign = 1;
-		else PWM_R_sign = -1;
-	if (PWM_R >= 0) PWM_L_sign = 1;
-		else PWM_L_sign = -1;
-	if (PWM_L_sign != PWM_L_last_sign) PWM_L_sign_counter++;
-	if (PWM_R_sign != PWM_R_last_sign) PWM_R_sign_counter++;
+	delta = (int32_t)(encoder_timer_L->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_L;
+	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
+	encoder_count_L += delta;
+
+	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
+	previous_encoder_timer_CNT_L = encoder_timer_L->Instance->CNT;
+}
+void update_speed(){ // ISR safe, takes approximately 350ns
+	float tmp = (float)((int32_t)TIM2->CNT - (int32_t)previous_speed_calculation_time);
+	// TODO: after setting up the constants in the following expression, calculate the second part and paste it as is to save on CPU cycles
+	current_speed_R = current_speed_R*0.7 + 0.3* ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR); // unit = mm/s // the first part is a filter that reduces jitter
+	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*(wheel_diameter_L*PI*1000000/CPR);
+	previous_encoder_count_R = encoder_count_R;
+	previous_encoder_count_L = encoder_count_L;
+	// TODO: after setting up the constants in the following expression, calculate the second part and paste it as is to save on CPU cycles
+	current_acceleration_R = current_acceleration_R * 0.998 + 0.002* (current_speed_R - previous_speed_R)*1000000 / tmp;// unit = mm/s² // the first part is a filter that reduces jitter
+	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed_L)*1000000 / tmp;
+	previous_speed_R = current_speed_R;
+	previous_speed_L = current_speed_L;
+	previous_speed_calculation_time = TIM2->CNT;
+	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's speed does not exactly match the driven wheel's speed, no problem for now
+}
+void set_target_speeds(float target__speed_R, float target__speed_L){
+	PWM_offset_R = (target__speed_R > 0)? PWM_R_forward_min - 30: PWM_R_backward_min +30;
+	target_speed_R = target__speed_R;
+	PWM_offset_L = (target__speed_L > 0)? PWM_L_forward_min - 30: PWM_L_backward_min +30;
+	target_speed_L = target__speed_L;
 }

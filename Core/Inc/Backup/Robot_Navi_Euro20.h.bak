@@ -18,6 +18,10 @@ extern "C" {
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
+void Set_Coordinates(float currentX,float currentY , float currentPhiDeg);
+void move_distance_allouch(float distance,float speed);
+void Safe_Robot_Locate_turky_b_sens(float goal_x, float goal_y, float speed);
+void move_distance_test_rihem(float distance,float speed);
 void set_parameters(float kpRM_local , float kpLM_local , float kiRM_local , float kiLM_local , float ramp_local , float rampR_local);
 void set_ki(float kiRM_local , float kiLM_local );
 void set_kp(float kpRM_local , float kpLM_local );

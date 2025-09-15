@@ -1,4 +1,4 @@
-build/Core/Src/Motors.o: Core/Src/Motors.c Core/Inc/Motors.h \
+build/Core/Src/motors.o: Core/Src/motors.c Core/Inc/Motors.h \
  Core/Inc/main.h Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  Core/Inc/stm32f4xx_hal_conf.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \

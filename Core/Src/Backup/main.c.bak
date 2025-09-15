@@ -153,10 +153,13 @@ void service_callback(const void *request_msg, void *response_msg) {
 
     switch ((int)req_in->arg1) {
     			    	  		    case 0 :
-    			    	  			    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
-    			    	  			    osDelay(10000);
-    			    	  			    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
-    			    	  			    res_out->result=true;
+    			    	  		    	for (int i = 0; i < 5; i++)  // Blink 10 times
+    			    	  		    	{
+    			    	  		    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
+    			    	  		    	    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    			    	  		    	    osDelay(500);  // 500 ms ON/OFF cycle
+    			    	  		    	}
+    			    	  		    	res_out->result = true;
     			    	  			    break;
     			    	  		    case 1:  // "move_distance"
     			    	  		        move_distance(req_in->arg2, req_in->arg3);
@@ -206,7 +209,7 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		}
 }
 
-void bool_subscriber_callback(const void *msg_in) {
+/*void bool_subscriber_callback(const void *msg_in) {
     const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
     evitementFlag = msg->data; // true = stop
 //    if (evitementFlag==true){
@@ -217,10 +220,10 @@ void bool_subscriber_callback(const void *msg_in) {
 
 
 
-}
+}*/
 
 //  Publisher Task (Runs Independently)
-void publisher_task(void *argument) {
+/*void publisher_task(void *argument) {
     geometry_msgs__msg__Vector3 pose_msg;
 
     for (;;) {
@@ -230,9 +233,9 @@ void publisher_task(void *argument) {
         pose_msg.z =current_phi_deg;   // Store θ in z
 
         rcl_publish(&pose_publisher, &pose_msg, NULL);
-        osDelay(1000);  // Adjust as needed
+        osDelay(1500);  // Adjust as needed
     }
-}
+}*/
 
 
 /* USER CODE END PD */
@@ -301,7 +304,11 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
+  for (int i = 0; i < 5; i++)  // Blink 10 times
+	{
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		osDelay(500);  // 500 ms ON/OFF cycle
+	}
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -323,12 +330,34 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-  set_dimentions(40.55628236735574,40.55328236735574,348,227.9);//40.36836,40.59922,246,108.45 ROBOT SGHIR //40.36836,40.59922,265,120.2 ROBOT PRINCIPAL
-         set_motors(&htim1,4499,TIM_CHANNEL_1,TIM_CHANNEL_2,TIM_CHANNEL_4,TIM_CHANNEL_3);
-         set_right_encoder(&htim4,TIM4,1000,4,-1);//400 ROBOT KBIR
-         set_left_encoder(&htim3,TIM3,1000,4,1);
-         HAL_TIM_Base_Start_IT(&htim7);
-         set_PWM_min (900,900,900,900);
+//         HAL_Delay(3000);
+//         Robot_Locate(1100, 600, 500);
+//         HAL_Delay(1000);
+//         Robot_Locate(1100, 950, 500 );
+//         HAL_Delay(1000);
+//         Robot_Locate(1225, 300, 500 );
+//         move_distance(-1300, 500);
+//         HAL_Delay(1000);
+//         orientate(90, 500);
+         //Robot_locateCurv(800, 500, 60, 300);
+         //move_distance_allouch(500, 300);
+
+         //Robot_Locate(2325, 1750, 600);
+         //move_distance(-1000, 500);
+         //Robot_Locate_b_sens(1900,600,500, -1);
+         //orientate(90,500);
+         //move_distance(-400, 400);
+//         Robot_Locate_b_sens(1900, 600, 500 , -1);
+//         HAL_Delay(1000);
+//         orientate(-90, 500);
+//         HAL_Delay(1000);
+//         move_distance(-350, 300);
+//         HAL_Delay(1000);
+//         Robot_Locate_b_sens(2225, 532.5, 500 ,-1);
+//         HAL_Delay(1000);
+//         Robot_Locate_b_sens(2225, 250, 300 ,-1);
+
+
 
 
   /* USER CODE END 2 */
@@ -374,7 +403,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -769,7 +798,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : PB8 */
   GPIO_InitStruct.Pin = GPIO_PIN_8;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
@@ -801,7 +830,7 @@ void StartDefaultTask(void *argument)
 	    rclc_node_init_default(&node, "cubemx_node", "", &support);
 
 	    //  Initialize the Publisher
-	    rclc_publisher_init_default(
+	    /*rclc_publisher_init_default(
 	        &pose_publisher,
 	        &node,
 	        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
@@ -813,7 +842,7 @@ void StartDefaultTask(void *argument)
 	            &node,
 	            ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
 	            "/bool_topic"
-	        );
+	        );*/
 
 	    //  initialize the Service
 	    const rosidl_message_type_support_t *service_type_support =
@@ -823,14 +852,14 @@ void StartDefaultTask(void *argument)
 	    //  executor for handling both service and publisher
 	    rclc_executor_init(&executor, &support.context, 15, &allocator);
 	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
-	    rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
+	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
 
-	    const osThreadAttr_t pubTask_attributes = {
+	   /* const osThreadAttr_t pubTask_attributes = {
 	        .name = "posePubTask",
 	        .stack_size = 256 * 4,  // Adjust if needed
 	        .priority = (osPriority_t) osPriorityNormal,
 	    };
-	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
+	    osThreadNew(publisher_task, NULL, &pubTask_attributes);*/
 
 
 	    //  Keep ROS 2 Running
@@ -860,10 +889,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		PWM_sign_change_counter();
 		if (t%T == 0)
 			speed_calcul();
-		if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)==0){mutex_button=0;
+		/*if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)==0){mutex_button=0;
 		    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);}
 		else if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)==1){mutex_button=1;
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);}
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);}*/
 	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM2) {

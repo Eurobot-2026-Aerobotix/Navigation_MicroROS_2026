@@ -1,18 +1,37 @@
-#include "main.h"
+/*
+ * odometry.h
+ *
+ *  Created on: Aug 27, 2025
+ */
+
+#ifndef INC_ODOMETRY_H_
+#define INC_ODOMETRY_H_
+
+#include "motors.h"
 #include <math.h>
-#define PI (float) 3.14159265358979323846
-#define T 10
 
-void set_right_encoder(TIM_HandleTypeDef* htim, TIM_TypeDef* TIM, int resolution, int precision, int sens);
-void set_left_encoder(TIM_HandleTypeDef* htim, TIM_TypeDef* TIM, int resolution, int precision, int sens);
-void set_dimentions(float right_wheel_radius, float left_wheel_radius, float encoder_spacing, float wheels_spacing);
-void speed_calcul(void);
+#define SQR(x) ((x) * (x))
+#define SGN(x) ( ( (x)<0 ) ? -1 : 1)
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void read_right_encoder(void);
-void read_left_encoder(void);
+extern float driven_wheels_spacing;
+extern float dead_wheels_spacing;
+extern float current_x;
+extern float current_y;
+extern float current_phi; // angle between x axis and the robot's center axis, in radians
+extern float absolute_phi; // phi without modulo 2PI
 
-void update_position(void);
-void reset_position(void);
+void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
+void update_position();
+void reset_position();
+void set_position(float current__x, float current__y, float current__phi, float absolute__phi);
+float get_distance_to(float x, float y);
+float get_angle_to(float x, float y);
+float ticks_to_distance(int32_t ticks, float wheel_diameter);
+float distance_to_ticks(int32_t distance, float wheel_diameter);
+float rad_to_deg(float radian);
+float deg_to_rad(float degrees);
 
-float ticks_to_distance(int x, float r, int resolution, int precision);
-float rad_to_deg(double x);
+
+#endif /* INC_ODOMETRY_H_ */

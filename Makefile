@@ -42,9 +42,9 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c \
 Core/Src/system_stm32f4xx.c \
 Core/Src/sysmem.c \
 Core/Src/syscalls.c \
-Core/Src/Robot_Navi_Euro.c \
-Core/Src/Motors.c \
-Core/Src/Odometry.c \
+Core/Src/navigation.c \
+Core/Src/motors.c \
+Core/Src/odometry.c \
 Core/Src/freertos.c \
 Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
 Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \

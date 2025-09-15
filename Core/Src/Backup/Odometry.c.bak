@@ -1,4 +1,5 @@
 #include "Odometry.h"
+#include "Robot_Navi_Euro20.h"
 
 long volatile millis=0,t=0;
 
@@ -28,13 +29,19 @@ volatile double left_speed,left_encoder_speed;
 
 volatile float dR,dL,dC;
 volatile float left_radius,right_radius,spacing_encoder,spacing_wheel;
-volatile float current_x=1775;//           ==> 285
-volatile float current_y=250;//        ==> 676
-volatile float current_phi_rad=PI/2;//PI/2;
+//volatile float current_x=1225;//           ==> 285
+//volatile float current_y=23 0;//        ==> 676
+//volatile float current_phi_rad=-PI/2;//PI/2;
+//volatile float current_phi_deg=-90;
+
+volatile float current_x=1225;//           ==> 285
+volatile float current_y=230;//        ==> 676
+volatile float current_phi_rad=-PI/2;//PI/2;
 volatile double phi_speed,d_phi_counter;
-volatile float current_phi_deg=90;
+volatile float current_phi_deg=-90;
 
 float ref_x,ref_y,dec=100;
+extern RL_b_sens;
 
 void set_right_encoder(TIM_HandleTypeDef* htim, TIM_TypeDef* TIM, int resolution, int precision, int sens)
 {
@@ -107,8 +114,8 @@ void update_position(void)
 	dC = (dR+dL)/2;
 	total_centre+=dC;
 
-	current_x += dC*cos(current_phi_rad);
-	current_y += dC*sin(current_phi_rad);
+	current_x = current_x + RL_b_sens * dC*cos(current_phi_rad);
+	current_y = current_y + RL_b_sens * dC*sin(current_phi_rad);
 	current_phi_rad += ((dR-dL)/spacing_encoder);
 	d_phi_counter += ((dR-dL)/spacing_encoder);
 	while (current_phi_rad>PI)
