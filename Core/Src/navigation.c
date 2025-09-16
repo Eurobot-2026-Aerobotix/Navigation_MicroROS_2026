@@ -414,7 +414,7 @@ int rotate(float angle, int8_t is_radian){
 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		speed = MAX(fabs(speed)*0.994, 0) * direction_R;
+		speed = MAX(fabs(speed)*0.98, 0) * direction_R;
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
