@@ -298,7 +298,22 @@ int main(void)
   PWM_R = 0;
   PWM_L = 0;
 
-
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
 
   /* USER CODE END 2 */
 

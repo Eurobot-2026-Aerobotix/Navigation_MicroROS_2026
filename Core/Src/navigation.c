@@ -245,7 +245,7 @@ int move_backward(float distance, float speed){
 }
 float calculate_instant_target_speed_R(float x, float distance){
 	if (robot_state == ACCELERATING){
-		x = (x == 0)? 100/ramping_acceleration : x;
+		x = (x < 10)? 100/ramping_acceleration : x;
 		if (direction_R == 1){
 			return MIN(ramping_acceleration*x, cruise_speed_R);
 		}else{
@@ -273,7 +273,7 @@ float calculate_instant_target_speed_R(float x, float distance){
 }
 float calculate_instant_target_speed_L(float x, float distance){
 	if (robot_state == ACCELERATING){
-		x = (x == 0)? 100/ramping_acceleration : x;
+		x = (x < 10)? 100/ramping_acceleration : x;
 		if (direction_L == 1){
 			return MIN(ramping_acceleration*x, cruise_speed_L);
 		}else{
@@ -342,7 +342,7 @@ int rotate(float angle, int8_t is_radian){
 	float yaw_centering_term;
 
 	robot_state = ACCELERATING;
-	while ( fabs(target_phi - absolute_phi) > deg_to_rad(20)){
+	while ( fabs(target_phi - absolute_phi) > deg_to_rad(10)){
 		x = distance - distance_to_target;
 		if (robot_state == ACCELERATING && x > x1 ){
 			robot_state = CRUISING;
@@ -394,13 +394,13 @@ int rotate(float angle, int8_t is_radian){
 	}
 	distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 	previous_distance_to_target = distance_to_target;
-	while (fabs(target_phi - absolute_phi) > deg_to_rad(0.05) && distance_to_target <= previous_distance_to_target + 10){
+	while (fabs(target_phi - absolute_phi) > deg_to_rad(0.2) && distance_to_target <= previous_distance_to_target + 10){
 		distance_traveled_R = (encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
 		distance_traveled_L = (encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		speed = MAX(fabs(speed)*0.99, 0) * direction_R;
+		speed = MAX(fabs(speed)*0.998, 0) * direction_R;
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
