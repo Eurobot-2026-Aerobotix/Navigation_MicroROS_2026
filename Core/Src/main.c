@@ -96,30 +96,24 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    	res_out->result = true;
     			    	  			    break;
 									 case 1:
-										move_forward(req_in->arg2, req_in->arg3);  // distance, speed
-										res_out->result = true;
+										res_out->result = move_forward(req_in->arg2, req_in->arg3)? false : true;// distance, speed
 										break;
 
 									 case 2:
-										move_backward(req_in->arg2, req_in->arg3);  // distance, speed
-										res_out->result = true;
+										res_out->result = move_backward(req_in->arg2, req_in->arg3)? false : true;  // distance, speed
 										break;
 
 									 case 3:
-										rotate(req_in->arg2, req_in->arg3);  // angle, is_radian
-										res_out->result = true;
+										res_out->result = rotate(req_in->arg2, req_in->arg3)? false : true;  // angle, is_radian
 										break;
 
 									 case 4:
-										orientate(req_in->arg2, req_in->arg3);  // orientation, is_radian
-										res_out->result = true;
+										res_out->result = orientate(req_in->arg2, req_in->arg3)? false : true;  // orientation, is_radian
 										break;
 
 									 case 5:
-										go_to(req_in->arg2, req_in->arg3, req_in->arg4);  // x, y, speed
-										res_out->result = true;
+										res_out->result = go_to(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // x, y, speed
 										break;
-
 
 									 default:
 										  res_out->result = false;
@@ -257,9 +251,10 @@ int main(void)
   // TODO: configure correct parameters
   setup_motor_channels(&htim1, TIM_CHANNEL_3, TIM_CHANNEL_4, TIM_CHANNEL_2, TIM_CHANNEL_1);
   setup_encoder_timers(&htim4, &htim3, 4000);
-  //setup_wheel_diameters(80.6119787, 80.9302886);
-  setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheels_spacing(188.5, 338.68892271);
+  //setup_wheel_diameters(79.67706788, 80.9302886);
+  setup_wheel_diameters(80.677778549896687536965, 80.107963379862647517991419120495);
+
+  setup_wheels_spacing(188.5, 339.50835142717724915667004269125);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 1080, 1280, -1180, -1480);
 

@@ -39,7 +39,7 @@ int move_forward(float distance, float speed){
 	float target_point_y = current_y + distance*sin(current_phi);
 	float distance_to_target = distance;
 	float previous_distance_to_target = distance;
-	float x;
+	float x = 0;
 
 	robot_state = ACCELERATING;
 	starting_phi = absolute_phi;
@@ -62,11 +62,11 @@ int move_forward(float distance, float speed){
 		HAL_Delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
-		if (distance_to_target > previous_distance_to_target + 1){
-			stop_motors();
-			emergency_break();
-			return 1;
-		}
+
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
 
 		uint8_t header1 = 0xAA;
 		uint8_t header2 = 0xAB;
@@ -103,6 +103,11 @@ int move_forward(float distance, float speed){
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
+
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
 
 		uint8_t header1 = 0xAA;
 		uint8_t header2 = 0xAB;
@@ -153,7 +158,7 @@ int move_backward(float distance, float speed){
 	float target_point_y = current_y - distance*sin(current_phi);
 	float distance_to_target = distance;
 	float previous_distance_to_target = distance;
-	float x;
+	float x = 0;
 
 	robot_state = ACCELERATING;
 	starting_phi = absolute_phi;
@@ -176,11 +181,10 @@ int move_backward(float distance, float speed){
 		HAL_Delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
-		if (distance_to_target > previous_distance_to_target + 2){
-			stop_motors();
-			emergency_break();
-			return 1;
-		}
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
 
 		uint8_t header1 = 0xAA;
 		uint8_t header2 = 0xAB;
@@ -217,6 +221,11 @@ int move_backward(float distance, float speed){
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
+
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
 
 		uint8_t header1 = 0xAA;
 		uint8_t header2 = 0xAB;
@@ -342,7 +351,7 @@ int rotate(float angle, int8_t is_radian){
 	float yaw_centering_term;
 
 	robot_state = ACCELERATING;
-	while ( fabs(target_phi - absolute_phi) > deg_to_rad(10)){
+	while ( fabs(target_phi - absolute_phi) > deg_to_rad(15)){
 		x = distance - distance_to_target;
 		if (robot_state == ACCELERATING && x > x1 ){
 			robot_state = CRUISING;
@@ -364,6 +373,11 @@ int rotate(float angle, int8_t is_radian){
 		HAL_Delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
+
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
 
 		uint8_t header1 = 0xAA;
 		uint8_t header2 = 0xAB;
@@ -400,10 +414,15 @@ int rotate(float angle, int8_t is_radian){
 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		speed = MAX(fabs(speed)*0.998, 0) * direction_R;
+		speed = MAX(fabs(speed)*0.994, 0) * direction_R;
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
+
+//		if (distance_to_target >= previous_distance_to_target+2){
+//			stop_motors();
+//			return 1;
+//		}
 
 		uint8_t header1 = 0xAA;
 		uint8_t header2 = 0xAB;
