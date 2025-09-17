@@ -223,7 +223,7 @@ int move_backward(float distance, float speed){
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 80 ; // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 20 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
 		speed = MIN(speed*0.975, 0);
 		previous_distance_to_target = distance_to_target;
