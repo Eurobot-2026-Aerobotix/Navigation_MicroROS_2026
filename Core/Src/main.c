@@ -79,7 +79,8 @@ service__srv__NaviStm_Response response_msg;
 
 //  Service Callback
 
-
+int8_t activated = 0; // blocks the main PID until the Raspberry activates the STM
+int8_t first_forward_recieved = 0;
 
 
 void service_callback(const void *request_msg, void *response_msg) {
@@ -96,6 +97,7 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    	res_out->result = true;
     			    	  			    break;
 									 case 1:
+										first_forward_recieved = 1;
 										res_out->result = move_forward(req_in->arg2, req_in->arg3)? false : true;// distance, speed
 										break;
 
@@ -113,6 +115,15 @@ void service_callback(const void *request_msg, void *response_msg) {
 
 									 case 5:
 										res_out->result = go_to(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // x, y, speed
+										break;
+
+									 case 6:
+										activated = 1 - activated;
+										res_out->result = true; // activate/deactivate STM
+										break;
+
+									 case 7:
+										res_out->result = (first_forward_recieved)? true: false;
 										break;
 
 									 default:
@@ -178,10 +189,12 @@ float kdS_L = 0; // 0.00 0
 float kiS_L = 15; // 20 15.5
 float speed_integral_L = 0;
 float speed_derivative_L = 0;
+
 float previous_speed_error_L = 0;
 
 float speed_integral_limit = 10000;
 int32_t previous_speed_control_time = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -292,6 +305,7 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
+  activated = 0;
 
 
 // mounewra
@@ -840,7 +854,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -918,38 +931,43 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim-> Instance == TIM7){
-		update_encoder_counts();
-		update_position(); // will also update the speed internally
+		if(activated){
+			update_encoder_counts();
+			update_position(); // will also update the speed internally
 
-		float tmp = (TIM5->CNT - previous_speed_control_time);
-		// right motor speed control
-		float error = target_speed_R - current_speed_R;
+			float tmp = (TIM5->CNT - previous_speed_control_time);
+			// right motor speed control
+			float error = target_speed_R - current_speed_R;
 
-		debugger_2 = error;
-		speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
-		speed_integral_R += error*(tmp/1000000);
-		speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
-		//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
+			debugger_2 = error;
+			speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
+			speed_integral_R += error*(tmp/1000000);
+			speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+			//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
 
-		previous_speed_error_R = error;
+			previous_speed_error_R = error;
 
-		PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
-		PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
-		PWM_R = (target_speed_R == 0)?0: PWM_R;
+			PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
+			PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+			PWM_R = (target_speed_R == 0)?0: PWM_R;
 
-		// left motor speed control
-		error = target_speed_L - current_speed_L;
-		speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
-		speed_integral_L += error*(tmp/1000000);
-		speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
-		//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
+			// left motor speed control
+			error = target_speed_L - current_speed_L;
+			speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
+			speed_integral_L += error*(tmp/1000000);
+			speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+			//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
 
-		previous_speed_error_L = error;
-		previous_speed_control_time = TIM5->CNT;
+			previous_speed_error_L = error;
+			previous_speed_control_time = TIM5->CNT;
 
-		PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
-		PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
-		PWM_L = (target_speed_L == 0)?0: PWM_L;
+			PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
+			PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+			PWM_L = (target_speed_L == 0)?0: PWM_L;
+		}else{
+			PWM_L = 0;
+			PWM_R = 0;
+		}
 		run_right_motor();
 		run_left_motor();
 	}
