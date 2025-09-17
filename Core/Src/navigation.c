@@ -44,7 +44,8 @@ int move_forward(float distance, float speed){
 	robot_state = ACCELERATING;
 	starting_phi = absolute_phi;
 	float lane_correction_term;
-	while (distance_to_target > 30){
+	float phase_two_distance = 30;
+	while (distance_to_target > phase_two_distance){
 		x = distance - distance_to_target;
 		if (robot_state == ACCELERATING && x > x1 ){
 			robot_state = CRUISING;
@@ -94,6 +95,9 @@ int move_forward(float distance, float speed){
 	float x_closest = ( target_point_y - current_y + tan(current_phi)*current_x - tan(current_phi - PI/2)*target_point_x ) / ( tan(current_phi) - tan(current_phi - PI/2) );
 	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
 	speed = (target_speed_R + target_speed_L)/ 2;
+	if (fabs(speed) < phase_two_distance*(-breaking_acceleration) ){ // handling the case where the robot skips the first while loop, being too close to target_distance
+		speed = - phase_two_distance * breaking_acceleration;
+	}
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
@@ -163,7 +167,8 @@ int move_backward(float distance, float speed){
 	robot_state = ACCELERATING;
 	starting_phi = absolute_phi;
 	float lane_correction_term;
-	while (distance_to_target > 30){
+	float phase_two_distance = 20;
+	while (distance_to_target > phase_two_distance){
 		x = distance - distance_to_target;
 		if (robot_state == ACCELERATING && x > x1 ){
 			robot_state = CRUISING;
@@ -212,12 +217,15 @@ int move_backward(float distance, float speed){
 	float x_closest = ( target_point_y - current_y + tan(current_phi)*current_x - tan(current_phi - PI/2)*target_point_x ) / ( tan(current_phi) - tan(current_phi - PI/2) );
 	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
 	speed = (target_speed_R + target_speed_L)/ 2;
+	if (fabs(speed) < phase_two_distance*(-breaking_acceleration) ){ // handling the case where the robot skips the first while loop, being too close to target_distance
+		speed = - phase_two_distance * breaking_acceleration;
+	}
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 80 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
-		speed = MIN(speed*0.985, 0);
+		speed = MIN(speed*0.975, 0);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
@@ -350,8 +358,10 @@ int rotate(float angle, int8_t is_radian){
 	const int32_t starting_encoder_count_L = encoder_count_L;
 	float yaw_centering_term;
 
+	float phase_two_angle = 15;
+
 	robot_state = ACCELERATING;
-	while ( fabs(target_phi - absolute_phi) > deg_to_rad(15)){
+	while ( fabs(target_phi - absolute_phi) > deg_to_rad(phase_two_angle)){
 		x = distance - distance_to_target;
 		if (robot_state == ACCELERATING && x > x1 ){
 			robot_state = CRUISING;
@@ -403,8 +413,8 @@ int rotate(float angle, int8_t is_radian){
 	// completing the last part of distance separately, so the break happens on point
 
 	speed = (target_speed_R - target_speed_L)/ 2; // one of the speeds is negative, that's why there is a minus
-	if (speed == 0){ // handling the case where the robot skips the first while loop, being too close to target_phi
-		speed = 150*direction_R;
+	if (fabs(speed) < (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-breaking_acceleration) ){ // handling the case where the robot skips the first while loop, being too close to target_phi
+		speed = (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-breaking_acceleration) * direction_R;
 	}
 	distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 	previous_distance_to_target = distance_to_target;

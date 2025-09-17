@@ -293,8 +293,22 @@ int main(void)
   PWM_R = 0;
   PWM_L = 0;
 
-  HAL_Delay(1500);
-  rotate(-45, 0);
+
+// mounewra
+//  HAL_Delay(1500);
+//  rotate(-35, 0);
+//  HAL_Delay(500);
+//  move_forward(250, 300);
+//  HAL_Delay(500);
+//  rotate(35, 0);
+//  HAL_Delay(500);
+//  move_backward(250, 300);
+//  HAL_Delay(500);
+//  rotate(35, 0);
+//  HAL_Delay(500);
+//  move_forward(250, 300);
+//  HAL_Delay(500);
+//  rotate(-35, 0);
 
    // moraba3
 //  HAL_Delay(1500);
