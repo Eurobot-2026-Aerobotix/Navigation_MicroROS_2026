@@ -81,6 +81,25 @@ service__srv__NaviStm_Response response_msg;
 
 int8_t activated = 0; // blocks the main PID until the Raspberry activates the STM
 int8_t first_forward_recieved = 0;
+// speed control parameters
+// TODO: don't forget to make sure the center of gravity is on the roll axis
+float kpS_R = 5; // 1.5 3
+float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
+float kiS_R = 15; // 8 13.5
+float speed_integral_R = 0;
+float speed_derivative_R = 0;
+float previous_speed_error_R = 0;
+
+float kpS_L = 5; // 3.5 5
+float kdS_L = 0; // 0.00 0
+float kiS_L = 15; // 20 15.5
+float speed_integral_L = 0;
+float speed_derivative_L = 0;
+
+float previous_speed_error_L = 0;
+
+float speed_integral_limit = 10000;
+int32_t previous_speed_control_time = 0;
 
 
 void service_callback(const void *request_msg, void *response_msg) {
@@ -118,6 +137,25 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 6:
+										current_speed_R = 0;
+										current_speed_L = 0;
+										previous_speed_R = 0;
+										previous_speed_L = 0;
+										target_speed_R = 0;
+										target_speed_L = 0;
+										current_acceleration_R = 0;
+										current_acceleration_L = 0;
+										previous_speed_calculation_time = 0;
+
+										speed_integral_R = 0;
+										speed_derivative_R = 0;
+										previous_speed_error_R = 0;
+										speed_integral_L = 0;
+										speed_derivative_L = 0;
+										previous_speed_error_L = 0;
+
+										PWM_R = 0;
+										PWM_L = 0;
 										activated = 1 - activated;
 										res_out->result = (activated)? true: false; // activate/deactivate STM
 										break;
@@ -175,25 +213,6 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
-// speed control parameters
-// TODO: don't forget to make sure the center of gravity is on the roll axis
-float kpS_R = 5; // 1.5 3
-float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
-float kiS_R = 15; // 8 13.5
-float speed_integral_R = 0;
-float speed_derivative_R = 0;
-float previous_speed_error_R = 0;
-
-float kpS_L = 5; // 3.5 5
-float kdS_L = 0; // 0.00 0
-float kiS_L = 15; // 20 15.5
-float speed_integral_L = 0;
-float speed_derivative_L = 0;
-
-float previous_speed_error_L = 0;
-
-float speed_integral_limit = 10000;
-int32_t previous_speed_control_time = 0;
 
 /* USER CODE END PV */
 
@@ -307,7 +326,7 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-  activated = 1;
+  //activated = 1;
 
 //	HAL_Delay(500);
 //	rotate(10, 0);
@@ -352,23 +371,23 @@ int main(void)
 //  rotate(-35, 0);
 
    // moraba3
-  HAL_Delay(1500);
-  move_forward(250, 300);
-  HAL_Delay(500);
-  rotate(-90, 0);
-  HAL_Delay(500);
-  move_forward(250, 300);
-  HAL_Delay(500);
-  rotate(-90, 0);
-  HAL_Delay(500);
-  move_forward(250, 300);
-  HAL_Delay(500);
-  rotate(-90, 0);
-  HAL_Delay(500);
-  move_forward(250, 300);
-  HAL_Delay(500);
-  rotate(-90, 0);
-  HAL_Delay(500);
+//  HAL_Delay(1500);
+//  move_forward(250, 300);
+//  HAL_Delay(500);
+//  rotate(-90, 0);
+//  HAL_Delay(500);
+//  move_forward(250, 300);
+//  HAL_Delay(500);
+//  rotate(-90, 0);
+//  HAL_Delay(500);
+//  move_forward(250, 300);
+//  HAL_Delay(500);
+//  rotate(-90, 0);
+//  HAL_Delay(500);
+//  move_forward(250, 300);
+//  HAL_Delay(500);
+//  rotate(-90, 0);
+//  HAL_Delay(500);
 
 
 //  move_forward(100, 300);
