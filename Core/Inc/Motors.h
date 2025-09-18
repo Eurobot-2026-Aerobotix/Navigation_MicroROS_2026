@@ -65,5 +65,6 @@ void setup_encoder_timers(TIM_HandleTypeDef* right_timer, TIM_HandleTypeDef* lef
 void setup_wheel_diameters(float right_wheel, float left_wheel);
 void update_encoder_counts();
 void set_target_speeds(float target_speed_R, float target_speed_L);
+int32_t micros();
 
 #endif /* __MOTORS_H */

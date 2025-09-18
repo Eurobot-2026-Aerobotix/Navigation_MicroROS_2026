@@ -8,7 +8,7 @@
 
 enum Robot_state robot_state = DEAD_STOP;
 float ramping_acceleration = 5;
-float breaking_acceleration = -5;
+float breaking_acceleration = -2;
 float emergency_breaking_acceleration = -10;
 float rotating_speed = 200;
 int8_t direction_R;
@@ -100,14 +100,18 @@ int move_forward(float distance, float speed){
 	}
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
+	int32_t phase_two_start_time = micros();
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 110 ; // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 70 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
-		speed = MAX(speed*0.95, 0);
+		speed = MAX(speed*0.995, 0);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
 
+		if(micros() - phase_two_start_time> 4000000){
+			break;
+		}
 //		if (distance_to_target >= previous_distance_to_target + 2){
 //			stop_motors();
 //			return 1;
@@ -222,13 +226,19 @@ int move_backward(float distance, float speed){
 	}
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
+
+	int32_t phase_two_start_time = micros();
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 20 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
-		speed = MIN(speed*0.975, 0);
+		speed = MIN(speed*0.995, 0);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
+
+		if(micros() - phase_two_start_time> 4000000){
+			break;
+		}
 
 //		if (distance_to_target >= previous_distance_to_target + 2){
 //			stop_motors();
@@ -322,6 +332,8 @@ float calculate_instant_target_phi(float x, float distance){
 	}
 }
 int rotate(float angle, int8_t is_radian){
+	float old_breaking_acceleration = breaking_acceleration;
+	breaking_acceleration = -3.7;
 	angle = is_radian? angle: deg_to_rad(angle);
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
@@ -418,16 +430,22 @@ int rotate(float angle, int8_t is_radian){
 	}
 	distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 	previous_distance_to_target = distance_to_target;
+
+	uint32_t phase_two_start_time = micros();
 	while (fabs(target_phi - absolute_phi) > deg_to_rad(0.2) && distance_to_target <= previous_distance_to_target + 10){
 		distance_traveled_R = (encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
 		distance_traveled_L = (encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		speed = MAX(fabs(speed)*0.98, 0) * direction_R;
+		speed = MAX(fabs(speed)*0.985, 0) * direction_R;
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
+
+		if(micros() - phase_two_start_time> 3000000){
+			break;
+		}
 
 //		if (distance_to_target >= previous_distance_to_target+2){
 //			stop_motors();
@@ -457,6 +475,7 @@ int rotate(float angle, int8_t is_radian){
 	}
 	stop_motors();
 	robot_state = DEAD_STOP;
+	breaking_acceleration = old_breaking_acceleration;
 	return 0;
 }
 int orientate(float orientation, int8_t is_radian){

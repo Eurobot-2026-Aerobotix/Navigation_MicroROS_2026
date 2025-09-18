@@ -119,7 +119,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 
 									 case 6:
 										activated = 1 - activated;
-										res_out->result = true; // activate/deactivate STM
+										res_out->result = (activated)? true: false; // activate/deactivate STM
 										break;
 
 									 case 7:
@@ -307,6 +307,33 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
+  activated = 1;
+
+//	HAL_Delay(500);
+//	rotate(10, 0);
+//	HAL_Delay(500);
+//	rotate(10, 0);
+//	HAL_Delay(500);
+//	rotate(10, 0);
+//	HAL_Delay(500);
+//	rotate(10, 0);
+//	HAL_Delay(500);
+//	rotate(10, 0);
+//	HAL_Delay(500);
+//	rotate(10, 0);
+//	HAL_Delay(500);
+//	rotate(30, 0);
+//	HAL_Delay(500);
+//	rotate(-180, 0);
+//	HAL_Delay(500);
+//	rotate(90, 0);
+//	HAL_Delay(500);
+//	rotate(-360, 0);
+//	HAL_Delay(500);
+//  HAL_Delay(1500);
+//  move_forward(50, 500);
+//  HAL_Delay(500);
+//  move_backward(50, 500);
 
 // mounewra
 //  HAL_Delay(1500);
@@ -325,23 +352,23 @@ int main(void)
 //  rotate(-35, 0);
 
    // moraba3
-//  HAL_Delay(1500);
-//  move_forward(200, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-//  move_forward(200, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-//  move_forward(200, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-//  move_forward(200, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
+  HAL_Delay(1500);
+  move_forward(250, 300);
+  HAL_Delay(500);
+  rotate(-90, 0);
+  HAL_Delay(500);
+  move_forward(250, 300);
+  HAL_Delay(500);
+  rotate(-90, 0);
+  HAL_Delay(500);
+  move_forward(250, 300);
+  HAL_Delay(500);
+  rotate(-90, 0);
+  HAL_Delay(500);
+  move_forward(250, 300);
+  HAL_Delay(500);
+  rotate(-90, 0);
+  HAL_Delay(500);
 
 
 //  move_forward(100, 300);
@@ -935,7 +962,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			update_encoder_counts();
 			update_position(); // will also update the speed internally
 
-			float tmp = (TIM5->CNT - previous_speed_control_time);
+			float tmp = (micros() - previous_speed_control_time);
 			// right motor speed control
 			float error = target_speed_R - current_speed_R;
 
@@ -959,7 +986,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
 
 			previous_speed_error_L = error;
-			previous_speed_control_time = TIM5->CNT;
+			previous_speed_control_time = micros();
 
 			PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
 			PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
