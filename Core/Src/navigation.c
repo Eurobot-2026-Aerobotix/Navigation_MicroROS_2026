@@ -6,7 +6,9 @@
  */
 #include "navigation.h"
 
-enum Robot_state robot_state = DEAD_STOP;
+enum Wheel_state wheel_state_R = DEAD_STOP;
+enum Wheel_state wheel_state_L = DEAD_STOP;
+enum Trajectory trajectory = STRAIGHT;
 float ramping_acceleration = 5;
 float breaking_acceleration = -2;
 float emergency_breaking_acceleration = -10;
@@ -16,6 +18,7 @@ int8_t direction_L;
 float cruise_speed_R;
 float cruise_speed_L;
 float starting_phi;
+float turning_radius;
 
 int move_forward(float distance, float speed){
 	direction_R = 1;
@@ -41,17 +44,21 @@ int move_forward(float distance, float speed){
 	float previous_distance_to_target = distance;
 	float x = 0;
 
-	robot_state = ACCELERATING;
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	trajectory = STRAIGHT;
 	starting_phi = absolute_phi;
 	float lane_correction_term;
 	float phase_two_distance = 30;
 	while (distance_to_target > phase_two_distance){
 		x = distance - distance_to_target;
-		if (robot_state == ACCELERATING && x > x1 ){
-			robot_state = CRUISING;
-		}else if (robot_state == CRUISING && x > x2){
-			robot_state = CONTROLLED_BREAK;
-		}else if (robot_state == EMERGENCY_BREAK){
+		if (wheel_state_R == ACCELERATING && x > x1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && x > x2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
 			return 0;
 		}
 
@@ -73,10 +80,10 @@ int move_forward(float distance, float speed){
 		uint8_t header2 = 0xAB;
 		uint8_t header3 = 0xAC;
 		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_R;
+		float value1 = (float)current_speed_L;
 		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_R;
-		float value4 = (float)target_speed_L;
+		float value3 = (float)target_speed_L;
+		float value4 = (float)target_speed_R;
 		uint8_t* bytes1 = (uint8_t*)&value1;
 		uint8_t* bytes2 = (uint8_t*)&value2;
 		uint8_t* bytes3 = (uint8_t*)&value3;
@@ -121,10 +128,10 @@ int move_forward(float distance, float speed){
 		uint8_t header2 = 0xAB;
 		uint8_t header3 = 0xAC;
 		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_R;
+		float value1 = (float)current_speed_L;
 		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_R;
-		float value4 = (float)target_speed_L;
+		float value3 = (float)target_speed_L;
+		float value4 = (float)target_speed_R;
 		uint8_t* bytes1 = (uint8_t*)&value1;
 		uint8_t* bytes2 = (uint8_t*)&value2;
 		uint8_t* bytes3 = (uint8_t*)&value3;
@@ -139,7 +146,8 @@ int move_forward(float distance, float speed){
 		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
 	}
 	stop_motors();
-	robot_state = DEAD_STOP;
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
 	return 0;
 }
 int move_backward(float distance, float speed){
@@ -168,17 +176,22 @@ int move_backward(float distance, float speed){
 	float previous_distance_to_target = distance;
 	float x = 0;
 
-	robot_state = ACCELERATING;
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	trajectory = STRAIGHT;
 	starting_phi = absolute_phi;
 	float lane_correction_term;
 	float phase_two_distance = 20;
 	while (distance_to_target > phase_two_distance){
+
 		x = distance - distance_to_target;
-		if (robot_state == ACCELERATING && x > x1 ){
-			robot_state = CRUISING;
-		}else if (robot_state == CRUISING && x > x2){
-			robot_state = CONTROLLED_BREAK;
-		}else if (robot_state == EMERGENCY_BREAK){
+		if (wheel_state_R == ACCELERATING && x > x1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && x > x2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
 			return 0;
 		}
 
@@ -267,29 +280,30 @@ int move_backward(float distance, float speed){
 		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
 	}
 	stop_motors();
-	robot_state = DEAD_STOP;
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
 	return 0;
 }
-float calculate_instant_target_speed_R(float x, float distance){
-	if (robot_state == ACCELERATING){
-		x = (x < 10)? 100/ramping_acceleration : x;
+float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
+	if (wheel_state_R == ACCELERATING){
+		x = (x < 10)? 100/ramping__acceleration : x;
 		if (direction_R == 1){
-			return MIN(ramping_acceleration*x, cruise_speed_R);
+			return MIN(ramping__acceleration*x, cruise_speed_R);
 		}else{
-			return MAX(-ramping_acceleration*x, cruise_speed_R);
+			return MAX(-ramping__acceleration*x, cruise_speed_R);
 		}
 
-	}else if (robot_state == CRUISING){
+	}else if (wheel_state_R == CRUISING){
 		return cruise_speed_R;
 
-	}else if (robot_state == CONTROLLED_BREAK){
+	}else if (wheel_state_R == CONTROLLED_BREAK){
 		if (direction_R == 1){
-			return MAX(breaking_acceleration*(x-distance), 0);
+			return MAX(breaking__acceleration*(x-distance), 0);
 		}else{
-			return MIN(-breaking_acceleration*(x-distance), 0);
+			return MIN(-breaking__acceleration*(x-distance), 0);
 		}
 
-	}else if (robot_state == EMERGENCY_BREAK){
+	}else if (wheel_state_R == EMERGENCY_BREAK){
 		if (direction_R == 1){
 			return MAX(target_speed_R + emergency_breaking_acceleration*x, 0);
 		}else{
@@ -298,26 +312,26 @@ float calculate_instant_target_speed_R(float x, float distance){
 	}
 	return 0; // just to prevent debugger error, will be erased once a definitive else is added
 }
-float calculate_instant_target_speed_L(float x, float distance){
-	if (robot_state == ACCELERATING){
-		x = (x < 10)? 100/ramping_acceleration : x;
+float calculate_instant_target_speed_L_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
+	if (wheel_state_L == ACCELERATING){
+		x = (x < 10)? 100/ramping__acceleration : x;
 		if (direction_L == 1){
-			return MIN(ramping_acceleration*x, cruise_speed_L);
+			return MIN(ramping__acceleration*x, cruise_speed_L);
 		}else{
-			return MAX(-ramping_acceleration*x, cruise_speed_L);
+			return MAX(-ramping__acceleration*x, cruise_speed_L);
 		}
 
-	}else if (robot_state == CRUISING){
+	}else if (wheel_state_L == CRUISING){
 		return cruise_speed_L;
 
-	}else if (robot_state == CONTROLLED_BREAK){
+	}else if (wheel_state_L == CONTROLLED_BREAK){
 		if (direction_L == 1){
-			return MAX(breaking_acceleration*(x-distance), 0);
+			return MAX(breaking__acceleration*(x-distance), 0);
 		}else{
-			return MIN(-breaking_acceleration*(x-distance), 0);
+			return MIN(-breaking__acceleration*(x-distance), 0);
 		}
 
-	}else if (robot_state == EMERGENCY_BREAK){
+	}else if (wheel_state_L == EMERGENCY_BREAK){
 		if (direction_L == 1){
 			return MAX(target_speed_L + emergency_breaking_acceleration*x, 0);
 		}else{
@@ -326,10 +340,19 @@ float calculate_instant_target_speed_L(float x, float distance){
 	}
 	return 0; // just to prevent debugger error, will be erased once a definitive else is added
 }
+float calculate_instant_target_speed_R(float x, float distance){
+	return calculate_instant_target_speed_R_full( x, distance, ramping_acceleration, breaking_acceleration);
+}
+float calculate_instant_target_speed_L(float x, float distance){
+	return calculate_instant_target_speed_R_full( x, distance, ramping_acceleration, breaking_acceleration);
+}
 float calculate_instant_target_phi(float x, float distance){
-	if (robot_state == CRUISING || robot_state == ACCELERATING || robot_state == CONTROLLED_BREAK){
+	if (trajectory == STRAIGHT){
 		return starting_phi;
+	}else if ( trajectory == CIRCLE_CURVE ){
+		return starting_phi - x/turning_radius;
 	}
+	return 0;
 }
 int rotate(float angle, int8_t is_radian){
 	float old_breaking_acceleration = breaking_acceleration;
@@ -372,14 +395,18 @@ int rotate(float angle, int8_t is_radian){
 
 	float phase_two_angle = 15;
 
-	robot_state = ACCELERATING;
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	trajectory = ROTATING;
 	while ( fabs(target_phi - absolute_phi) > deg_to_rad(phase_two_angle)){
 		x = distance - distance_to_target;
-		if (robot_state == ACCELERATING && x > x1 ){
-			robot_state = CRUISING;
-		}else if (robot_state == CRUISING && x > x2){
-			robot_state = CONTROLLED_BREAK;
-		}else if (robot_state == EMERGENCY_BREAK){
+		if (wheel_state_R == ACCELERATING && x > x1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && x > x2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
 			return 0;
 		}
 
@@ -407,8 +434,8 @@ int rotate(float angle, int8_t is_radian){
 		uint8_t header4 = 0xAD;
 		float value1 = (float)current_speed_L;
 		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_R;
-		float value4 = (float)target_speed_L;
+		float value3 = (float)target_speed_L;
+		float value4 = (float)target_speed_R;
 		uint8_t* bytes1 = (uint8_t*)&value1;
 		uint8_t* bytes2 = (uint8_t*)&value2;
 		uint8_t* bytes3 = (uint8_t*)&value3;
@@ -458,8 +485,8 @@ int rotate(float angle, int8_t is_radian){
 		uint8_t header4 = 0xAD;
 		float value1 = (float)current_speed_L;
 		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_R;
-		float value4 = (float)target_speed_L;
+		float value3 = (float)target_speed_L;
+		float value4 = (float)target_speed_R;
 		uint8_t* bytes1 = (uint8_t*)&value1;
 		uint8_t* bytes2 = (uint8_t*)&value2;
 		uint8_t* bytes3 = (uint8_t*)&value3;
@@ -474,8 +501,157 @@ int rotate(float angle, int8_t is_radian){
 		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
 	}
 	stop_motors();
-	robot_state = DEAD_STOP;
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
 	breaking_acceleration = old_breaking_acceleration;
+	return 0;
+}
+int move_forward_with_left_deviation(float distance, float deviation, float speed){
+	// there is a lotta math going on here, can't explain it in code
+	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
+	float alpha = atan( (distance/2) / ( radius - distance/2 ));
+	float arc_length = 2 * alpha * radius;
+	float arc_length_R = 2 * alpha * ( radius - dead_wheels_spacing/2);
+	float arc_length_L = 2 * alpha * ( radius + dead_wheels_spacing/2);
+
+	float target_point_x = current_x + distance*cos(current_phi);
+	float target_point_y = current_y + distance*sin(current_phi);
+
+	starting_phi = absolute_phi + alpha;
+	turning_radius = radius;
+
+	float center_point_x = current_x + radius*cos(current_phi - PI/2 + alpha);
+	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
+
+	rotate(alpha, 1);
+	HAL_Delay(500);
+
+	direction_R = 1;
+	direction_L = 1;
+	cruise_speed_R = speed * ( arc_length_R/arc_length );
+	cruise_speed_L = speed * ( arc_length_L/arc_length );
+
+	float x1 = speed/4; // 4 is the ramping acceleration of this specific function
+	float x2 = speed/breaking_acceleration + arc_length;
+
+	while (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
+		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
+		float intersection_speed = ramping_acceleration * intersection_x;
+		speed = 0.9 * intersection_speed;
+		x1 = speed/ramping_acceleration;
+		x2 = speed/breaking_acceleration + distance;
+		cruise_speed_R = speed * ( arc_length_R/arc_length );
+		cruise_speed_L = speed * ( arc_length_L/arc_length );
+	}
+
+	float ramping_acceleration_R = ramping_acceleration * ( arc_length_R/arc_length );
+	float ramping_acceleration_L = ramping_acceleration * ( arc_length_L/arc_length );
+	float breaking_acceleration_R = breaking_acceleration * ( arc_length_R/arc_length );
+	float breaking_acceleration_L = breaking_acceleration * ( arc_length_L/arc_length );
+
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	trajectory = CIRCLE_CURVE;
+	float lane_correction_term;
+	float phase_two_distance = 30;
+	float x = 0;
+	float distance_to_target = arc_length;
+	float previous_distance_to_target = distance_to_target;
+	while (distance_to_target > phase_two_distance){
+		x = arc_length - distance_to_target;
+		if (wheel_state_R == ACCELERATING && x > x1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && x > x2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
+			return 0;
+		}
+
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 10; // the coefficient is tunable
+		if (x < 0.1*x1 || 1){
+			lane_correction_term = 0;
+		}
+		set_target_speeds(calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R)*(1 + lane_correction_term) ,calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L)* (1 - lane_correction_term));
+		HAL_Delay(4);
+		previous_distance_to_target = distance_to_target;
+
+		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
+
+		uint8_t header1 = 0xAA;
+		uint8_t header2 = 0xAB;
+		uint8_t header3 = 0xAC;
+		uint8_t header4 = 0xAD;
+		float value1 = (float)distance_to_target;
+		float value2 = (float)x;
+		float value3 = (float)target_speed_L;
+		float value4 = (float)target_speed_R;
+		uint8_t* bytes1 = (uint8_t*)&value1;
+		uint8_t* bytes2 = (uint8_t*)&value2;
+		uint8_t* bytes3 = (uint8_t*)&value3;
+		uint8_t* bytes4 = (uint8_t*)&value4;
+		HAL_UART_Transmit(&huart2, &header1, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
+		HAL_UART_Transmit(&huart2, &header2, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
+		HAL_UART_Transmit(&huart2, &header3, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
+		HAL_UART_Transmit(&huart2, &header4, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+	}
+	// completing the last part of distance separately, so the break happens on point
+	distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+	previous_distance_to_target = distance_to_target;
+	float speed_R = calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R);
+	float speed_L = calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L);
+	int32_t phase_two_start_time = micros();
+	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 0 ; // the coefficient is tunable
+		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
+		speed_R = MAX(speed_R*0.996, 0);
+		speed_L = MAX(speed_L*0.995, 0);
+		previous_distance_to_target = distance_to_target;
+		HAL_Delay(2);
+		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+
+		if(micros() - phase_two_start_time> 4000000){
+			break;
+		}
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
+
+		uint8_t header1 = 0xAA;
+		uint8_t header2 = 0xAB;
+		uint8_t header3 = 0xAC;
+		uint8_t header4 = 0xAD;
+		float value1 = (float)current_speed_L;
+		float value2 = (float)current_speed_R;
+		float value3 = (float)target_speed_L;
+		float value4 = (float)target_speed_R;
+		uint8_t* bytes1 = (uint8_t*)&value1;
+		uint8_t* bytes2 = (uint8_t*)&value2;
+		uint8_t* bytes3 = (uint8_t*)&value3;
+		uint8_t* bytes4 = (uint8_t*)&value4;
+		HAL_UART_Transmit(&huart2, &header1, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
+		HAL_UART_Transmit(&huart2, &header2, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
+		HAL_UART_Transmit(&huart2, &header3, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
+		HAL_UART_Transmit(&huart2, &header4, 1, 10);
+		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+	}
+	stop_motors();
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
 	return 0;
 }
 int orientate(float orientation, int8_t is_radian){
@@ -499,7 +675,8 @@ int go_to(float x, float y, float speed){
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
 }
 void emergency_break(){
-	robot_state = EMERGENCY_BREAK;
+	wheel_state_R = EMERGENCY_BREAK;
+	wheel_state_L = EMERGENCY_BREAK;
 	int32_t last_encoder_count_R = encoder_count_R;
 	int32_t last_encoder_count_L = encoder_count_L;
 	HAL_Delay(4);

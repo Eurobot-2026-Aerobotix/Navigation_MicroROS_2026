@@ -27,6 +27,7 @@ void update_position();
 void reset_position();
 void set_position(float current__x, float current__y, float current__phi, float absolute__phi);
 float get_distance_to(float x, float y);
+float get_arc_distance_to(float target_point_x, float target_point_y, float center_point_x, float center_point_y, float radius);
 float get_angle_to(float x, float y);
 float ticks_to_distance(int32_t ticks, float wheel_diameter);
 float distance_to_ticks(int32_t distance, float wheel_diameter);

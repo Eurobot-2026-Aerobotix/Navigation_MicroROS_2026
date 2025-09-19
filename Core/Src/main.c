@@ -326,7 +326,9 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-  //activated = 1;
+  activated = 1;
+  HAL_Delay(1500);
+  move_forward_with_left_deviation(500, 20, 350);
 
 //	HAL_Delay(500);
 //	rotate(10, 0);

@@ -50,6 +50,11 @@ void set_position(float current__x, float current__y, float current__phi, float 
 float get_distance_to(float x, float y){
 	return sqrt(SQR(current_x - x) + SQR(current_y - y));
 }
+float get_arc_distance_to(float target_point__x, float target_point__y, float center_point__x, float center_point__y, float R){
+	float projection_angle = atan2(current_y - center_point__y , current_x - center_point__x);
+	float target_angle = atan2(target_point__y - center_point__y , target_point__x - center_point__x);
+	return R * fabs(projection_angle - target_angle);
+}
 float get_angle_to(float x, float y){
 	return atan2(y - current_y, x - current_x);
 }
