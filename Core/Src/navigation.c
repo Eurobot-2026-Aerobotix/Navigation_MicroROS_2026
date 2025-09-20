@@ -652,8 +652,6 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
-	HAL_Delay(500);
-	orientate(0, 0);
 	return 0;
 }
 int orientate(float orientation, int8_t is_radian){

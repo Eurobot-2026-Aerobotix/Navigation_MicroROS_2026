@@ -164,6 +164,10 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = (first_forward_recieved)? true: false;
 										break;
 
+									 case 8:
+										res_out->result = move_forward_with_left_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
+										break;
+
 									 default:
 										  res_out->result = false;
 										  break;
@@ -326,10 +330,13 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-  activated = 1;
-  HAL_Delay(1500);
-  move_forward_with_left_deviation(500, 200, 350);
+//  activated = 1;
+//  HAL_Delay(1500);
+//  move_forward_with_left_deviation(600, 200, 350);
+//  HAL_Delay(500);
+//  orientate(0, 0);
 
+  // 3adheb e rotate
 //	HAL_Delay(500);
 //	rotate(10, 0);
 //	HAL_Delay(500);
@@ -391,23 +398,6 @@ int main(void)
 //  rotate(-90, 0);
 //  HAL_Delay(500);
 
-
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
-//  move_forward(100, 300);
-//  HAL_Delay(500);
 
   /* USER CODE END 2 */
 
