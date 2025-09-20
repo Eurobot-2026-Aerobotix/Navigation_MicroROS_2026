@@ -509,7 +509,7 @@ int rotate(float angle, int8_t is_radian){
 int move_forward_with_left_deviation(float distance, float deviation, float speed){
 	// there is a lotta math going on here, can't explain it in code
 	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
-	float alpha = atan( (distance/2) / ( radius - distance/2 ));
+	float alpha = atan( (distance/2) / ( radius - deviation ));
 	float arc_length = 2 * alpha * radius;
 	float arc_length_R = 2 * alpha * ( radius - dead_wheels_spacing/2);
 	float arc_length_L = 2 * alpha * ( radius + dead_wheels_spacing/2);
@@ -569,8 +569,8 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 			return 0;
 		}
 
-		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 10; // the coefficient is tunable
-		if (x < 0.1*x1 || 1){
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 20; // the coefficient is tunable
+		if (x < 0.1*x1){
 			lane_correction_term = 0;
 		}
 		set_target_speeds(calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R)*(1 + lane_correction_term) ,calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L)* (1 - lane_correction_term));
@@ -588,8 +588,8 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 		uint8_t header2 = 0xAB;
 		uint8_t header3 = 0xAC;
 		uint8_t header4 = 0xAD;
-		float value1 = (float)distance_to_target;
-		float value2 = (float)x;
+		float value1 = (float)current_speed_L;
+		float value2 = (float)current_speed_R;
 		float value3 = (float)target_speed_L;
 		float value4 = (float)target_speed_R;
 		uint8_t* bytes1 = (uint8_t*)&value1;
@@ -612,7 +612,7 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 	float speed_L = calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L);
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 0 ; // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 50 ; // the coefficient is tunable
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
 		speed_R = MAX(speed_R*0.996, 0);
 		speed_L = MAX(speed_L*0.995, 0);
@@ -652,6 +652,8 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
+	HAL_Delay(500);
+	orientate(0, 0);
 	return 0;
 }
 int orientate(float orientation, int8_t is_radian){
