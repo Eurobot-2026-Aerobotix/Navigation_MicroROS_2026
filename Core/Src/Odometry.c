@@ -22,10 +22,10 @@ void update_position(){
 
 	current_x += dC*cos(current_phi);
 	current_y += dC*sin(current_phi);
-	float d_phi = ((dR-dL)/dead_wheels_spacing);
-	current_phi += d_phi;
-	absolute_phi += d_phi;
 
+	absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_count_L, wheel_diameter_L) )/dead_wheels_spacing;
+
+	current_phi = absolute_phi;
 	while (current_phi > PI){
 		current_phi -= 2*PI;
 	}

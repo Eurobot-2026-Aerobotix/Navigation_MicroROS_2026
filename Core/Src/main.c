@@ -332,6 +332,15 @@ int main(void)
 
 //  activated = 1;
 //  HAL_Delay(1500);
+//  orientate(90, 0);
+//  HAL_Delay(500);
+//  orientate(-90, 0);
+//  HAL_Delay(500);
+//  orientate(0, 0);
+//  HAL_Delay(500);
+//  orientate(180, 0);
+
+//  HAL_Delay(1500);
 //  move_forward_with_left_deviation(600, 200, 350);
 //  HAL_Delay(500);
 //  orientate(0, 0);
