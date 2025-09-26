@@ -168,6 +168,10 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = move_forward_with_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
 										break;
 
+									 case 9:
+										res_out->result = circle_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5)? false : true;  // target_x, target_y, target_phi, speed
+										break;
+
 									 default:
 										  res_out->result = false;
 										  break;
@@ -331,7 +335,7 @@ int main(void)
   activated = 0;
 
   activated = 1;
-  move_forward_with_deviation(500, -100, 350);
+  circle_curve(500, -500, -PI/1.5, 300);
 //  HAL_Delay(1500);
 //  orientate(90, 0);
 //  HAL_Delay(500);

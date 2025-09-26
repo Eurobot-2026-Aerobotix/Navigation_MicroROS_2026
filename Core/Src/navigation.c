@@ -79,7 +79,7 @@ int move_forward(float distance, float speed){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
-		// calculating the distance to move that results in the robot being the closest to target point, i can't explain the math in code unfortunately
+		// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
 	float x_closest = ( target_point_y - current_y + tan(current_phi)*current_x - tan(current_phi - PI/2)*target_point_x ) / ( tan(current_phi) - tan(current_phi - PI/2) );
 	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
 	speed = (target_speed_R + target_speed_L)/ 2;
@@ -279,8 +279,7 @@ float calculate_instant_target_phi(float x, float distance){
 	return 0;
 }
 int rotate(float angle, int8_t is_radian){
-	float old_breaking_acceleration = breaking_acceleration;
-	breaking_acceleration = -3.7;
+	float rotating_breaking_acceleration = -3.7;
 	angle = is_radian? angle: deg_to_rad(angle);
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
@@ -291,14 +290,14 @@ int rotate(float angle, int8_t is_radian){
 	float speed = rotating_speed;
 	float distance = fabs(arc_length);
 	float x1 = speed/ramping_acceleration;
-	float x2 = speed/breaking_acceleration + distance;
+	float x2 = speed/rotating_breaking_acceleration + distance;
 
 	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
-		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
+		float intersection_x = (rotating_breaking_acceleration*distance)/(rotating_breaking_acceleration - ramping_acceleration);
 		float intersection_speed = ramping_acceleration * intersection_x;
 		speed = 0.9 * intersection_speed;
 		x1 = speed/ramping_acceleration;
-		x2 = speed/breaking_acceleration + distance;
+		x2 = speed/rotating_breaking_acceleration + distance;
 	}
 
 	cruise_speed_R = speed * direction_R;
@@ -341,7 +340,7 @@ int rotate(float angle, int8_t is_radian){
 		if (x < 0.1*x1){
 			yaw_centering_term = 0;
 		}
-		speed = calculate_instant_target_speed_R(x, distance);
+		speed = calculate_instant_target_speed_R_full(x, distance, ramping_acceleration, rotating_breaking_acceleration);
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
 		HAL_Delay(4);
 		previous_distance_to_target = distance_to_target;
@@ -357,8 +356,8 @@ int rotate(float angle, int8_t is_radian){
 	// completing the last part of distance separately, so the break happens on point
 
 	speed = (target_speed_R - target_speed_L)/ 2; // one of the speeds is negative, that's why there is a minus
-	if (fabs(speed) < (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-breaking_acceleration) ){ // handling the case where the robot skips the first while loop, being too close to target_phi
-		speed = (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-breaking_acceleration) * direction_R;
+	if (fabs(speed) < (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-rotating_breaking_acceleration) ){ // handling the case where the robot skips the first while loop, being too close to target_phi
+		speed = (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-rotating_breaking_acceleration) * direction_R;
 	}
 	distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 	previous_distance_to_target = distance_to_target;
@@ -389,7 +388,6 @@ int rotate(float angle, int8_t is_radian){
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
-	breaking_acceleration = old_breaking_acceleration;
 	return 0;
 }
 int move_forward_with_deviation(float distance, float deviation, float speed){
@@ -515,24 +513,23 @@ int orientate(float orientation, int8_t is_radian){
 	}
 	return 0;
 }
-int C_curve(float distance, float deviation, float target_x, float target_y, float target_phi, float speed ){
+int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	// there is a lotta math going on here, can't explain it in code
-	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
-	float alpha = atan( (distance/2) / ( radius - deviation ));
-	float arc_length = 2 * alpha * radius;
-	float arc_length_R = 2 * alpha * ( radius - dead_wheels_spacing/2);
-	float arc_length_L = 2 * alpha * ( radius + dead_wheels_spacing/2);
+	float trajectory_phi = atan( (target_x - current_x) / (target_y - current_y) );
+	float alpha = trajectory_phi - target_phi;
+	float distance = get_distance_to(target_x, target_y);
+	float radius = distance / ( 2*sin(alpha) );
+	float arc_length = 2 * fabs( alpha * radius);
+	float arc_length_R = 2 * fabs( alpha * ( radius - dead_wheels_spacing/2) );
+	float arc_length_L = 2 * fabs( alpha * ( radius + dead_wheels_spacing/2) );
 
-	float target_point_x = current_x + distance*cos(current_phi);
-	float target_point_y = current_y + distance*sin(current_phi);
-
-	starting_phi = absolute_phi + alpha;
+	starting_phi = absolute_phi - (current_phi - trajectory_phi) + alpha;
 	turning_radius = radius;
 
-	float center_point_x = current_x + radius*cos(current_phi - PI/2 + alpha);
-	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
+	float center_point_x = target_x + radius*cos(target_phi - PI/2 );
+	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
 
-	rotate(alpha, 1);
+	orientate(starting_phi, 1);
 	HAL_Delay(500);
 
 	direction_R = 1;
@@ -562,7 +559,7 @@ int C_curve(float distance, float deviation, float target_x, float target_y, flo
 	wheel_state_L = ACCELERATING;
 	trajectory = CIRCLE_CURVE;
 	float lane_correction_term;
-	float phase_two_distance = 30;
+	float phase_two_distance = 20;
 	float x = 0;
 	float distance_to_target = arc_length;
 	float previous_distance_to_target = distance_to_target;
@@ -586,7 +583,7 @@ int C_curve(float distance, float deviation, float target_x, float target_y, flo
 		HAL_Delay(4);
 		previous_distance_to_target = distance_to_target;
 
-		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 
 //		if (distance_to_target >= previous_distance_to_target + 2){
 //			stop_motors();
@@ -596,7 +593,7 @@ int C_curve(float distance, float deviation, float target_x, float target_y, flo
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
-	distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 	previous_distance_to_target = distance_to_target;
 	float speed_R = calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R);
 	float speed_L = calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L);
@@ -605,10 +602,10 @@ int C_curve(float distance, float deviation, float target_x, float target_y, flo
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 50 ; // the coefficient is tunable
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
 		speed_R = MAX(speed_R*0.996, 0);
-		speed_L = MAX(speed_L*0.995, 0);
+		speed_L = MAX(speed_L*0.996, 0);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
-		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 
 		if(micros() - phase_two_start_time> 4000000){
 			break;
