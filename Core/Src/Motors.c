@@ -124,3 +124,21 @@ void set_target_speeds(float target__speed_R, float target__speed_L){
 int32_t micros(){
 	return TIM5->CNT;
 }
+void send_values_to_usart(float value1, float value2, float value3, float value4){
+	uint8_t header1 = 0xAA;
+	uint8_t header2 = 0xAB;
+	uint8_t header3 = 0xAC;
+	uint8_t header4 = 0xAD;
+	uint8_t* bytes1 = (uint8_t*)&value1;
+	uint8_t* bytes2 = (uint8_t*)&value2;
+	uint8_t* bytes3 = (uint8_t*)&value3;
+	uint8_t* bytes4 = (uint8_t*)&value4;
+	HAL_UART_Transmit(&huart2, &header1, 1, 10);
+	HAL_UART_Transmit(&huart2, bytes1, 4, 10);
+	HAL_UART_Transmit(&huart2, &header2, 1, 10);
+	HAL_UART_Transmit(&huart2, bytes2, 4, 10);
+	HAL_UART_Transmit(&huart2, &header3, 1, 10);
+	HAL_UART_Transmit(&huart2, bytes3, 4, 10);
+	HAL_UART_Transmit(&huart2, &header4, 1, 10);
+	HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+}

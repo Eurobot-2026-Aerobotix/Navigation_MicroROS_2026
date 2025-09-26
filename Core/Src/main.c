@@ -165,7 +165,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 8:
-										res_out->result = move_forward_with_left_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
+										res_out->result = move_forward_with_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
 										break;
 
 									 default:
@@ -330,7 +330,8 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-//  activated = 1;
+  activated = 1;
+  move_forward_with_deviation(500, -100, 350);
 //  HAL_Delay(1500);
 //  orientate(90, 0);
 //  HAL_Delay(500);

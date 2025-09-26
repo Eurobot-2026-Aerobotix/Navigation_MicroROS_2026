@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -50,53 +50,54 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
   20:Core/Src/Odometry.c **** 	float dL = ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L);
   21:Core/Src/Odometry.c **** 	float dC = (dR+dL)/2;
   22:Core/Src/Odometry.c **** 
-  23:Core/Src/Odometry.c **** 	current_x += dC*cos(current_phi);
-  24:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
+  23:Core/Src/Odometry.c **** 	float previous_absolute_phi = absolute_phi;
+  24:Core/Src/Odometry.c **** 	absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_
   25:Core/Src/Odometry.c **** 
-  26:Core/Src/Odometry.c **** 	absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_
-  27:Core/Src/Odometry.c **** 
-  28:Core/Src/Odometry.c **** 	current_phi = absolute_phi;
-  29:Core/Src/Odometry.c **** 	while (current_phi > PI){
-  30:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 2
+  26:Core/Src/Odometry.c **** 	current_x += dC*cos( ( previous_absolute_phi + absolute_phi ) / 2 );
+  27:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+  28:Core/Src/Odometry.c **** 
+  29:Core/Src/Odometry.c **** 	current_phi = absolute_phi;
+  30:Core/Src/Odometry.c **** 	while (current_phi > PI){
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 2
 
 
-  31:Core/Src/Odometry.c **** 	}
-  32:Core/Src/Odometry.c **** 	while (current_phi <= -PI){
-  33:Core/Src/Odometry.c **** 		current_phi += 2*PI;
-  34:Core/Src/Odometry.c **** 	}
-  35:Core/Src/Odometry.c **** 
-  36:Core/Src/Odometry.c **** 	update_speed();
-  37:Core/Src/Odometry.c **** }
-  38:Core/Src/Odometry.c **** void reset_position(){
-  29              		.loc 1 38 22 view -0
+  31:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
+  32:Core/Src/Odometry.c **** 	}
+  33:Core/Src/Odometry.c **** 	while (current_phi <= -PI){
+  34:Core/Src/Odometry.c **** 		current_phi += 2*PI;
+  35:Core/Src/Odometry.c **** 	}
+  36:Core/Src/Odometry.c **** 
+  37:Core/Src/Odometry.c **** 	update_speed();
+  38:Core/Src/Odometry.c **** }
+  39:Core/Src/Odometry.c **** void reset_position(){
+  29              		.loc 1 39 22 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
-  39:Core/Src/Odometry.c **** 	current_x = 0;
-  34              		.loc 1 39 2 view .LVU1
-  35              		.loc 1 39 12 is_stmt 0 view .LVU2
+  40:Core/Src/Odometry.c **** 	current_x = 0;
+  34              		.loc 1 40 2 view .LVU1
+  35              		.loc 1 40 12 is_stmt 0 view .LVU2
   36 0000 0023     		movs	r3, #0
   37 0002 044A     		ldr	r2, .L2
   38 0004 1360     		str	r3, [r2]	@ float
-  40:Core/Src/Odometry.c **** 	current_y = 0;
-  39              		.loc 1 40 2 is_stmt 1 view .LVU3
-  40              		.loc 1 40 12 is_stmt 0 view .LVU4
+  41:Core/Src/Odometry.c **** 	current_y = 0;
+  39              		.loc 1 41 2 is_stmt 1 view .LVU3
+  40              		.loc 1 41 12 is_stmt 0 view .LVU4
   41 0006 044A     		ldr	r2, .L2+4
   42 0008 1360     		str	r3, [r2]	@ float
-  41:Core/Src/Odometry.c **** 	current_phi = 0;
-  43              		.loc 1 41 2 is_stmt 1 view .LVU5
-  44              		.loc 1 41 14 is_stmt 0 view .LVU6
+  42:Core/Src/Odometry.c **** 	current_phi = 0;
+  43              		.loc 1 42 2 is_stmt 1 view .LVU5
+  44              		.loc 1 42 14 is_stmt 0 view .LVU6
   45 000a 044A     		ldr	r2, .L2+8
   46 000c 1360     		str	r3, [r2]	@ float
-  42:Core/Src/Odometry.c **** 	absolute_phi = 0;
-  47              		.loc 1 42 2 is_stmt 1 view .LVU7
-  48              		.loc 1 42 15 is_stmt 0 view .LVU8
+  43:Core/Src/Odometry.c **** 	absolute_phi = 0;
+  47              		.loc 1 43 2 is_stmt 1 view .LVU7
+  48              		.loc 1 43 15 is_stmt 0 view .LVU8
   49 000e 044A     		ldr	r2, .L2+12
   50 0010 1360     		str	r3, [r2]	@ float
-  43:Core/Src/Odometry.c **** }
-  51              		.loc 1 43 1 view .LVU9
+  44:Core/Src/Odometry.c **** }
+  51              		.loc 1 44 1 view .LVU9
   52 0012 7047     		bx	lr
   53              	.L3:
   54              		.align	2
@@ -116,37 +117,37 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
   70              	set_position:
   71              	.LVL0:
   72              	.LFB136:
-  44:Core/Src/Odometry.c **** void set_position(float current__x, float current__y, float current__phi, float absolute__phi){
-  73              		.loc 1 44 95 is_stmt 1 view -0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 3
+  45:Core/Src/Odometry.c **** void set_position(float current__x, float current__y, float current__phi, float absolute__phi){
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 3
 
 
+  73              		.loc 1 45 95 is_stmt 1 view -0
   74              		.cfi_startproc
   75              		@ args = 0, pretend = 0, frame = 0
   76              		@ frame_needed = 0, uses_anonymous_args = 0
   77              		@ link register save eliminated.
-  45:Core/Src/Odometry.c **** 	current_x = current__x;
-  78              		.loc 1 45 2 view .LVU11
-  79              		.loc 1 45 12 is_stmt 0 view .LVU12
+  46:Core/Src/Odometry.c **** 	current_x = current__x;
+  78              		.loc 1 46 2 view .LVU11
+  79              		.loc 1 46 12 is_stmt 0 view .LVU12
   80 0000 064B     		ldr	r3, .L5
   81 0002 83ED000A 		vstr.32	s0, [r3]
-  46:Core/Src/Odometry.c **** 	current_y = current__y;
-  82              		.loc 1 46 2 is_stmt 1 view .LVU13
-  83              		.loc 1 46 12 is_stmt 0 view .LVU14
+  47:Core/Src/Odometry.c **** 	current_y = current__y;
+  82              		.loc 1 47 2 is_stmt 1 view .LVU13
+  83              		.loc 1 47 12 is_stmt 0 view .LVU14
   84 0006 064B     		ldr	r3, .L5+4
   85 0008 C3ED000A 		vstr.32	s1, [r3]
-  47:Core/Src/Odometry.c **** 	current_phi = current__phi;
-  86              		.loc 1 47 2 is_stmt 1 view .LVU15
-  87              		.loc 1 47 14 is_stmt 0 view .LVU16
+  48:Core/Src/Odometry.c **** 	current_phi = current__phi;
+  86              		.loc 1 48 2 is_stmt 1 view .LVU15
+  87              		.loc 1 48 14 is_stmt 0 view .LVU16
   88 000c 054B     		ldr	r3, .L5+8
   89 000e 83ED001A 		vstr.32	s2, [r3]
-  48:Core/Src/Odometry.c **** 	absolute_phi = absolute__phi;
-  90              		.loc 1 48 2 is_stmt 1 view .LVU17
-  91              		.loc 1 48 15 is_stmt 0 view .LVU18
+  49:Core/Src/Odometry.c **** 	absolute_phi = absolute__phi;
+  90              		.loc 1 49 2 is_stmt 1 view .LVU17
+  91              		.loc 1 49 15 is_stmt 0 view .LVU18
   92 0012 054B     		ldr	r3, .L5+12
   93 0014 C3ED001A 		vstr.32	s3, [r3]
-  49:Core/Src/Odometry.c **** }
-  94              		.loc 1 49 1 view .LVU19
+  50:Core/Src/Odometry.c **** }
+  94              		.loc 1 50 1 view .LVU19
   95 0018 7047     		bx	lr
   96              	.L6:
   97 001a 00BF     		.align	2
@@ -168,37 +169,37 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  115              	get_distance_to:
  116              	.LVL1:
  117              	.LFB137:
-  50:Core/Src/Odometry.c **** float get_distance_to(float x, float y){
- 118              		.loc 1 50 40 is_stmt 1 view -0
+  51:Core/Src/Odometry.c **** float get_distance_to(float x, float y){
+ 118              		.loc 1 51 40 is_stmt 1 view -0
  119              		.cfi_startproc
  120              		@ args = 0, pretend = 0, frame = 0
  121              		@ frame_needed = 0, uses_anonymous_args = 0
- 122              		.loc 1 50 40 is_stmt 0 view .LVU21
+ 122              		.loc 1 51 40 is_stmt 0 view .LVU21
  123 0000 08B5     		push	{r3, lr}
  124              	.LCFI0:
  125              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 4
+
+
  126              		.cfi_offset 3, -8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 4
-
-
  127              		.cfi_offset 14, -4
-  51:Core/Src/Odometry.c **** 	return sqrt(SQR(current_x - x) + SQR(current_y - y));
- 128              		.loc 1 51 2 is_stmt 1 view .LVU22
- 129              		.loc 1 51 14 is_stmt 0 view .LVU23
+  52:Core/Src/Odometry.c **** 	return sqrt(SQR(current_x - x) + SQR(current_y - y));
+ 128              		.loc 1 52 2 is_stmt 1 view .LVU22
+ 129              		.loc 1 52 14 is_stmt 0 view .LVU23
  130 0002 0F4B     		ldr	r3, .L9
  131 0004 D3ED007A 		vldr.32	s15, [r3]
  132 0008 37EEC00A 		vsub.f32	s0, s15, s0
  133              	.LVL2:
- 134              		.loc 1 51 14 view .LVU24
+ 134              		.loc 1 52 14 view .LVU24
  135 000c 20EE000A 		vmul.f32	s0, s0, s0
- 136              		.loc 1 51 35 view .LVU25
+ 136              		.loc 1 52 35 view .LVU25
  137 0010 0C4B     		ldr	r3, .L9+4
  138 0012 D3ED007A 		vldr.32	s15, [r3]
  139 0016 77EEE00A 		vsub.f32	s1, s15, s1
  140              	.LVL3:
- 141              		.loc 1 51 35 view .LVU26
+ 141              		.loc 1 52 35 view .LVU26
  142 001a 60EEA00A 		vmul.f32	s1, s1, s1
- 143              		.loc 1 51 9 view .LVU27
+ 143              		.loc 1 52 9 view .LVU27
  144 001e 70EE207A 		vadd.f32	s15, s0, s1
  145 0022 17EE900A 		vmov	r0, s15
  146 0026 FFF7FEFF 		bl	__aeabi_f2d
@@ -207,11 +208,11 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  149 002e FFF7FEFF 		bl	sqrt
  150              	.LVL5:
  151 0032 51EC100B 		vmov	r0, r1, d0
- 152              		.loc 1 51 9 discriminator 1 view .LVU28
+ 152              		.loc 1 52 9 discriminator 1 view .LVU28
  153 0036 FFF7FEFF 		bl	__aeabi_d2f
  154              	.LVL6:
-  52:Core/Src/Odometry.c **** }
- 155              		.loc 1 52 1 view .LVU29
+  53:Core/Src/Odometry.c **** }
+ 155              		.loc 1 53 1 view .LVU29
  156 003a 00EE100A 		vmov	s0, r0
  157 003e 08BD     		pop	{r3, pc}
  158              	.L10:
@@ -230,17 +231,17 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  173              	get_arc_distance_to:
  174              	.LVL7:
  175              	.LFB138:
-  53:Core/Src/Odometry.c **** float get_arc_distance_to(float target_point__x, float target_point__y, float center_point__x, floa
- 176              		.loc 1 53 127 is_stmt 1 view -0
+  54:Core/Src/Odometry.c **** float get_arc_distance_to(float target_point__x, float target_point__y, float center_point__x, floa
+ 176              		.loc 1 54 127 is_stmt 1 view -0
  177              		.cfi_startproc
  178              		@ args = 0, pretend = 0, frame = 0
  179              		@ frame_needed = 0, uses_anonymous_args = 0
- 180              		.loc 1 53 127 is_stmt 0 view .LVU31
+ 180              		.loc 1 54 127 is_stmt 0 view .LVU31
  181 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 5
+
+
  182              	.LCFI1:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 5
-
-
  183              		.cfi_def_cfa_offset 8
  184              		.cfi_offset 3, -8
  185              		.cfi_offset 14, -4
@@ -260,21 +261,21 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  199 000e F0EE419A 		vmov.f32	s19, s2
  200 0012 B0EE619A 		vmov.f32	s18, s3
  201 0016 B0EE42AA 		vmov.f32	s20, s4
-  54:Core/Src/Odometry.c **** 	float projection_angle = atan2(current_y - center_point__y , current_x - center_point__x);
- 202              		.loc 1 54 2 is_stmt 1 view .LVU32
- 203              		.loc 1 54 43 is_stmt 0 view .LVU33
+  55:Core/Src/Odometry.c **** 	float projection_angle = atan2(current_y - center_point__y , current_x - center_point__x);
+ 202              		.loc 1 55 2 is_stmt 1 view .LVU32
+ 203              		.loc 1 55 43 is_stmt 0 view .LVU33
  204 001a 234B     		ldr	r3, .L13
  205 001c 93ED008A 		vldr.32	s16, [r3]
  206 0020 38EE618A 		vsub.f32	s16, s16, s3
- 207              		.loc 1 54 73 view .LVU34
+ 207              		.loc 1 55 73 view .LVU34
  208 0024 214B     		ldr	r3, .L13+4
  209 0026 D3ED007A 		vldr.32	s15, [r3]
- 210              		.loc 1 54 27 view .LVU35
+ 210              		.loc 1 55 27 view .LVU35
  211 002a 77EEC17A 		vsub.f32	s15, s15, s2
  212 002e 17EE900A 		vmov	r0, s15
  213 0032 FFF7FEFF 		bl	__aeabi_f2d
  214              	.LVL8:
- 215              		.loc 1 54 27 view .LVU36
+ 215              		.loc 1 55 27 view .LVU36
  216 0036 41EC1B0B 		vmov	d11, r0, r1
  217 003a 18EE100A 		vmov	r0, s16
  218 003e FFF7FEFF 		bl	__aeabi_f2d
@@ -285,29 +286,29 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  223 004e FFF7FEFF 		bl	atan2
  224              	.LVL10:
  225 0052 51EC100B 		vmov	r0, r1, d0
- 226              		.loc 1 54 8 discriminator 1 view .LVU37
+ 226              		.loc 1 55 8 discriminator 1 view .LVU37
  227 0056 FFF7FEFF 		bl	__aeabi_d2f
  228              	.LVL11:
  229 005a 08EE100A 		vmov	s16, r0
  230              	.LVL12:
-  55:Core/Src/Odometry.c **** 	float target_angle = atan2(target_point__y - center_point__y , target_point__x - center_point__x);
- 231              		.loc 1 55 2 is_stmt 1 view .LVU38
- 232              		.loc 1 55 45 is_stmt 0 view .LVU39
+  56:Core/Src/Odometry.c **** 	float target_angle = atan2(target_point__y - center_point__y , target_point__x - center_point__x);
+ 231              		.loc 1 56 2 is_stmt 1 view .LVU38
+ 232              		.loc 1 56 45 is_stmt 0 view .LVU39
  233 005e 78EEC98A 		vsub.f32	s17, s17, s18
  234              	.LVL13:
- 235              		.loc 1 55 23 view .LVU40
+ 235              		.loc 1 56 23 view .LVU40
  236 0062 7AEEE97A 		vsub.f32	s15, s21, s19
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 6
+
+
  237 0066 17EE900A 		vmov	r0, s15
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 6
-
-
  238              	.LVL14:
- 239              		.loc 1 55 23 view .LVU41
+ 239              		.loc 1 56 23 view .LVU41
  240 006a FFF7FEFF 		bl	__aeabi_f2d
  241              	.LVL15:
  242 006e 41EC190B 		vmov	d9, r0, r1
  243              	.LVL16:
- 244              		.loc 1 55 23 view .LVU42
+ 244              		.loc 1 56 23 view .LVU42
  245 0072 18EE900A 		vmov	r0, s17
  246 0076 FFF7FEFF 		bl	__aeabi_f2d
  247              	.LVL17:
@@ -317,20 +318,20 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  251 0086 FFF7FEFF 		bl	atan2
  252              	.LVL18:
  253 008a 51EC100B 		vmov	r0, r1, d0
- 254              		.loc 1 55 8 discriminator 1 view .LVU43
+ 254              		.loc 1 56 8 discriminator 1 view .LVU43
  255 008e FFF7FEFF 		bl	__aeabi_d2f
  256              	.LVL19:
  257 0092 07EE900A 		vmov	s15, r0
  258              	.LVL20:
-  56:Core/Src/Odometry.c **** 	return R * fabs(projection_angle - target_angle);
- 259              		.loc 1 56 2 is_stmt 1 view .LVU44
- 260              		.loc 1 56 35 is_stmt 0 view .LVU45
+  57:Core/Src/Odometry.c **** 	return fabs(R * (projection_angle - target_angle));
+ 259              		.loc 1 57 2 is_stmt 1 view .LVU44
+ 260              		.loc 1 57 36 is_stmt 0 view .LVU45
  261 0096 38EE670A 		vsub.f32	s0, s16, s15
- 262              		.loc 1 56 13 view .LVU46
- 263 009a B0EEC00A 		vabs.f32	s0, s0
-  57:Core/Src/Odometry.c **** }
- 264              		.loc 1 57 1 view .LVU47
- 265 009e 20EE0A0A 		vmul.f32	s0, s0, s20
+ 262              		.loc 1 57 16 view .LVU46
+ 263 009a 20EE0A0A 		vmul.f32	s0, s0, s20
+  58:Core/Src/Odometry.c **** }
+ 264              		.loc 1 58 1 view .LVU47
+ 265 009e B0EEC00A 		vabs.f32	s0, s0
  266 00a2 BDEC088B 		vldm	sp!, {d8-d11}
  267              	.LCFI3:
  268              		.cfi_restore 86
@@ -343,7 +344,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  275              		.cfi_restore 81
  276              		.cfi_def_cfa_offset 8
  277              	.LVL21:
- 278              		.loc 1 57 1 view .LVU48
+ 278              		.loc 1 58 1 view .LVU48
  279 00a6 08BD     		pop	{r3, pc}
  280              	.L14:
  281              		.align	2
@@ -357,19 +358,19 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  290              		.global	get_angle_to
  291              		.syntax unified
  292              		.thumb
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 7
+
+
  293              		.thumb_func
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 7
-
-
  295              	get_angle_to:
  296              	.LVL22:
  297              	.LFB139:
-  58:Core/Src/Odometry.c **** float get_angle_to(float x, float y){
- 298              		.loc 1 58 37 is_stmt 1 view -0
+  59:Core/Src/Odometry.c **** float get_angle_to(float x, float y){
+ 298              		.loc 1 59 37 is_stmt 1 view -0
  299              		.cfi_startproc
  300              		@ args = 0, pretend = 0, frame = 0
  301              		@ frame_needed = 0, uses_anonymous_args = 0
- 302              		.loc 1 58 37 is_stmt 0 view .LVU50
+ 302              		.loc 1 59 37 is_stmt 0 view .LVU50
  303 0000 08B5     		push	{r3, lr}
  304              	.LCFI4:
  305              		.cfi_def_cfa_offset 8
@@ -382,21 +383,21 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  312              		.cfi_offset 81, -20
  313              		.cfi_offset 82, -16
  314              		.cfi_offset 83, -12
-  59:Core/Src/Odometry.c **** 	return atan2(y - current_y, x - current_x);
- 315              		.loc 1 59 2 is_stmt 1 view .LVU51
- 316              		.loc 1 59 17 is_stmt 0 view .LVU52
+  60:Core/Src/Odometry.c **** 	return atan2(y - current_y, x - current_x);
+ 315              		.loc 1 60 2 is_stmt 1 view .LVU51
+ 316              		.loc 1 60 17 is_stmt 0 view .LVU52
  317 0006 124B     		ldr	r3, .L17
  318 0008 D3ED007A 		vldr.32	s15, [r3]
  319 000c 30EEE79A 		vsub.f32	s18, s1, s15
- 320              		.loc 1 59 32 view .LVU53
+ 320              		.loc 1 60 32 view .LVU53
  321 0010 104B     		ldr	r3, .L17+4
  322 0012 D3ED007A 		vldr.32	s15, [r3]
- 323              		.loc 1 59 9 view .LVU54
+ 323              		.loc 1 60 9 view .LVU54
  324 0016 70EE677A 		vsub.f32	s15, s0, s15
  325 001a 17EE900A 		vmov	r0, s15
  326 001e FFF7FEFF 		bl	__aeabi_f2d
  327              	.LVL23:
- 328              		.loc 1 59 9 view .LVU55
+ 328              		.loc 1 60 9 view .LVU55
  329 0022 41EC180B 		vmov	d8, r0, r1
  330 0026 19EE100A 		vmov	r0, s18
  331 002a FFF7FEFF 		bl	__aeabi_f2d
@@ -407,20 +408,20 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  336 003a FFF7FEFF 		bl	atan2
  337              	.LVL25:
  338 003e 51EC100B 		vmov	r0, r1, d0
- 339              		.loc 1 59 9 discriminator 1 view .LVU56
+ 339              		.loc 1 60 9 discriminator 1 view .LVU56
  340 0042 FFF7FEFF 		bl	__aeabi_d2f
  341              	.LVL26:
-  60:Core/Src/Odometry.c **** }
- 342              		.loc 1 60 1 view .LVU57
+  61:Core/Src/Odometry.c **** }
+ 342              		.loc 1 61 1 view .LVU57
  343 0046 00EE100A 		vmov	s0, r0
  344 004a BDEC048B 		vldm	sp!, {d8-d9}
  345              	.LCFI6:
  346              		.cfi_restore 82
  347              		.cfi_restore 83
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 8
+
+
  348              		.cfi_restore 80
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 8
-
-
  349              		.cfi_restore 81
  350              		.cfi_def_cfa_offset 8
  351 004e 08BD     		pop	{r3, pc}
@@ -440,24 +441,24 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  367              	setup_wheels_spacing:
  368              	.LVL27:
  369              	.LFB140:
-  61:Core/Src/Odometry.c **** void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing){
- 370              		.loc 1 61 84 is_stmt 1 view -0
+  62:Core/Src/Odometry.c **** void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing){
+ 370              		.loc 1 62 84 is_stmt 1 view -0
  371              		.cfi_startproc
  372              		@ args = 0, pretend = 0, frame = 0
  373              		@ frame_needed = 0, uses_anonymous_args = 0
  374              		@ link register save eliminated.
-  62:Core/Src/Odometry.c **** 	driven_wheels_spacing = driven__wheels_spacing;
- 375              		.loc 1 62 2 view .LVU59
- 376              		.loc 1 62 24 is_stmt 0 view .LVU60
+  63:Core/Src/Odometry.c **** 	driven_wheels_spacing = driven__wheels_spacing;
+ 375              		.loc 1 63 2 view .LVU59
+ 376              		.loc 1 63 24 is_stmt 0 view .LVU60
  377 0000 034B     		ldr	r3, .L20
  378 0002 83ED000A 		vstr.32	s0, [r3]
-  63:Core/Src/Odometry.c **** 	dead_wheels_spacing = dead__wheels_spacing;
- 379              		.loc 1 63 2 is_stmt 1 view .LVU61
- 380              		.loc 1 63 22 is_stmt 0 view .LVU62
+  64:Core/Src/Odometry.c **** 	dead_wheels_spacing = dead__wheels_spacing;
+ 379              		.loc 1 64 2 is_stmt 1 view .LVU61
+ 380              		.loc 1 64 22 is_stmt 0 view .LVU62
  381 0006 034B     		ldr	r3, .L20+4
  382 0008 C3ED000A 		vstr.32	s1, [r3]
-  64:Core/Src/Odometry.c **** }
- 383              		.loc 1 64 1 view .LVU63
+  65:Core/Src/Odometry.c **** }
+ 383              		.loc 1 65 1 view .LVU63
  384 000c 7047     		bx	lr
  385              	.L21:
  386 000e 00BF     		.align	2
@@ -477,16 +478,16 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  401              		.thumb_func
  403              	ticks_to_distance:
  404              	.LVL28:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 9
+
+
  405              	.LFB141:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 9
-
-
-  65:Core/Src/Odometry.c **** float ticks_to_distance(int32_t ticks, float wheel_diameter){
- 406              		.loc 1 65 61 is_stmt 1 view -0
+  66:Core/Src/Odometry.c **** float ticks_to_distance(int32_t ticks, float wheel_diameter){
+ 406              		.loc 1 66 61 is_stmt 1 view -0
  407              		.cfi_startproc
  408              		@ args = 0, pretend = 0, frame = 0
  409              		@ frame_needed = 0, uses_anonymous_args = 0
- 410              		.loc 1 65 61 is_stmt 0 view .LVU65
+ 410              		.loc 1 66 61 is_stmt 0 view .LVU65
  411 0000 38B5     		push	{r3, r4, r5, lr}
  412              	.LCFI7:
  413              		.cfi_def_cfa_offset 16
@@ -495,24 +496,24 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  416              		.cfi_offset 5, -8
  417              		.cfi_offset 14, -4
  418 0002 07EE900A 		vmov	s15, r0	@ int
-  66:Core/Src/Odometry.c **** 	return (ticks*wheel_diameter*PI/CPR);
- 419              		.loc 1 66 2 is_stmt 1 view .LVU66
- 420              		.loc 1 66 15 is_stmt 0 view .LVU67
+  67:Core/Src/Odometry.c **** 	return (ticks*wheel_diameter*PI/CPR);
+ 419              		.loc 1 67 2 is_stmt 1 view .LVU66
+ 420              		.loc 1 67 15 is_stmt 0 view .LVU67
  421 0006 F8EEE77A 		vcvt.f32.s32	s15, s15
  422 000a 67EE807A 		vmul.f32	s15, s15, s0
  423 000e 17EE900A 		vmov	r0, s15
  424              	.LVL29:
- 425              		.loc 1 66 15 view .LVU68
+ 425              		.loc 1 67 15 view .LVU68
  426 0012 FFF7FEFF 		bl	__aeabi_f2d
  427              	.LVL30:
- 428              		.loc 1 66 30 view .LVU69
+ 428              		.loc 1 67 30 view .LVU69
  429 0016 0DA3     		adr	r3, .L24+4
  430 0018 D3E90023 		ldrd	r2, [r3]
  431 001c FFF7FEFF 		bl	__aeabi_dmul
  432              	.LVL31:
  433 0020 0446     		mov	r4, r0
  434 0022 0D46     		mov	r5, r1
- 435              		.loc 1 66 33 view .LVU70
+ 435              		.loc 1 67 33 view .LVU70
  436 0024 084B     		ldr	r3, .L24
  437 0026 1868     		ldr	r0, [r3]
  438 0028 FFF7FEFF 		bl	__aeabi_i2d
@@ -525,8 +526,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  445              	.LVL33:
  446 0038 FFF7FEFF 		bl	__aeabi_d2f
  447              	.LVL34:
-  67:Core/Src/Odometry.c **** }
- 448              		.loc 1 67 1 view .LVU71
+  68:Core/Src/Odometry.c **** }
+ 448              		.loc 1 68 1 view .LVU71
  449 003c 00EE100A 		vmov	s0, r0
  450 0040 38BD     		pop	{r3, r4, r5, pc}
  451              	.L25:
@@ -537,10 +538,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  455 004c 1E264454 		.word	1413752350
  456 0050 FB210940 		.word	1074340347
  457              		.cfi_endproc
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 10
+
+
  458              	.LFE141:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 10
-
-
  460              		.global	__aeabi_dadd
  461              		.global	__aeabi_dsub
  462              		.global	__aeabi_dcmpgt
@@ -558,562 +559,574 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 1
  474              		.cfi_startproc
  475              		@ args = 0, pretend = 0, frame = 0
  476              		@ frame_needed = 0, uses_anonymous_args = 0
- 477 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 477 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
  478              	.LCFI8:
- 479              		.cfi_def_cfa_offset 40
- 480              		.cfi_offset 3, -40
- 481              		.cfi_offset 4, -36
- 482              		.cfi_offset 5, -32
- 483              		.cfi_offset 6, -28
- 484              		.cfi_offset 7, -24
- 485              		.cfi_offset 8, -20
- 486              		.cfi_offset 9, -16
- 487              		.cfi_offset 10, -12
- 488              		.cfi_offset 11, -8
- 489              		.cfi_offset 14, -4
- 490 0004 2DED048B 		vpush.64	{d8, d9}
- 491              	.LCFI9:
- 492              		.cfi_def_cfa_offset 56
- 493              		.cfi_offset 80, -56
- 494              		.cfi_offset 81, -52
- 495              		.cfi_offset 82, -48
- 496              		.cfi_offset 83, -44
+ 479              		.cfi_def_cfa_offset 24
+ 480              		.cfi_offset 4, -24
+ 481              		.cfi_offset 5, -20
+ 482              		.cfi_offset 6, -16
+ 483              		.cfi_offset 7, -12
+ 484              		.cfi_offset 8, -8
+ 485              		.cfi_offset 14, -4
+ 486 0004 2DED068B 		vpush.64	{d8, d9, d10}
+ 487              	.LCFI9:
+ 488              		.cfi_def_cfa_offset 48
+ 489              		.cfi_offset 80, -48
+ 490              		.cfi_offset 81, -44
+ 491              		.cfi_offset 82, -40
+ 492              		.cfi_offset 83, -36
+ 493              		.cfi_offset 84, -32
+ 494              		.cfi_offset 85, -28
   19:Core/Src/Odometry.c **** 	float dL = ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L);
- 497              		.loc 1 19 2 view .LVU73
+ 495              		.loc 1 19 2 view .LVU73
   19:Core/Src/Odometry.c **** 	float dL = ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L);
- 498              		.loc 1 19 13 is_stmt 0 view .LVU74
- 499 0008 614B     		ldr	r3, .L32+24
- 500 000a D3F800A0 		ldr	r10, [r3]
- 501 000e 614B     		ldr	r3, .L32+28
- 502 0010 D3ED009A 		vldr.32	s19, [r3]
- 503 0014 604B     		ldr	r3, .L32+32
- 504 0016 1868     		ldr	r0, [r3]
- 505 0018 B0EE690A 		vmov.f32	s0, s19
- 506 001c AAEB0000 		sub	r0, r10, r0
- 507 0020 FFF7FEFF 		bl	ticks_to_distance
- 508              	.LVL35:
- 509 0024 B0EE408A 		vmov.f32	s16, s0
- 510              	.LVL36:
+ 496              		.loc 1 19 13 is_stmt 0 view .LVU74
+ 497 0008 614B     		ldr	r3, .L32+24
+ 498 000a 1E68     		ldr	r6, [r3]
+ 499 000c 614B     		ldr	r3, .L32+28
+ 500 000e D3ED008A 		vldr.32	s17, [r3]
+ 501 0012 614B     		ldr	r3, .L32+32
+ 502 0014 1868     		ldr	r0, [r3]
+ 503 0016 B0EE680A 		vmov.f32	s0, s17
+ 504 001a 301A     		subs	r0, r6, r0
+ 505 001c FFF7FEFF 		bl	ticks_to_distance
+ 506              	.LVL35:
+ 507 0020 B0EE408A 		vmov.f32	s16, s0
+ 508              	.LVL36:
   20:Core/Src/Odometry.c **** 	float dC = (dR+dL)/2;
- 511              		.loc 1 20 2 is_stmt 1 view .LVU75
+ 509              		.loc 1 20 2 is_stmt 1 view .LVU75
   20:Core/Src/Odometry.c **** 	float dC = (dR+dL)/2;
- 512              		.loc 1 20 13 is_stmt 0 view .LVU76
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 11
+ 510              		.loc 1 20 13 is_stmt 0 view .LVU76
+ 511 0024 5D4B     		ldr	r3, .L32+36
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 11
 
 
- 513 0028 5C4B     		ldr	r3, .L32+36
- 514 002a D3F80090 		ldr	r9, [r3]
- 515 002e 5C4B     		ldr	r3, .L32+40
- 516 0030 93ED009A 		vldr.32	s18, [r3]
- 517 0034 5B4B     		ldr	r3, .L32+44
- 518 0036 1868     		ldr	r0, [r3]
- 519 0038 B0EE490A 		vmov.f32	s0, s18
- 520              	.LVL37:
+ 512 0026 1D68     		ldr	r5, [r3]
+ 513 0028 5D4B     		ldr	r3, .L32+40
+ 514 002a 93ED009A 		vldr.32	s18, [r3]
+ 515 002e 5D4B     		ldr	r3, .L32+44
+ 516 0030 1868     		ldr	r0, [r3]
+ 517 0032 B0EE490A 		vmov.f32	s0, s18
+ 518              	.LVL37:
   20:Core/Src/Odometry.c **** 	float dC = (dR+dL)/2;
- 521              		.loc 1 20 13 view .LVU77
- 522 003c A9EB0000 		sub	r0, r9, r0
- 523 0040 FFF7FEFF 		bl	ticks_to_distance
- 524              	.LVL38:
+ 519              		.loc 1 20 13 view .LVU77
+ 520 0036 281A     		subs	r0, r5, r0
+ 521 0038 FFF7FEFF 		bl	ticks_to_distance
+ 522              	.LVL38:
   21:Core/Src/Odometry.c **** 
- 525              		.loc 1 21 2 is_stmt 1 view .LVU78
+ 523              		.loc 1 21 2 is_stmt 1 view .LVU78
   21:Core/Src/Odometry.c **** 
- 526              		.loc 1 21 16 is_stmt 0 view .LVU79
- 527 0044 38EE008A 		vadd.f32	s16, s16, s0
- 528              	.LVL39:
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 529              		.loc 1 23 2 is_stmt 1 view .LVU80
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 530              		.loc 1 23 17 is_stmt 0 view .LVU81
- 531 0048 F6EE007A 		vmov.f32	s15, #5.0e-1
- 532 004c 68EE277A 		vmul.f32	s15, s16, s15
- 533              	.LVL40:
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 534              		.loc 1 23 17 view .LVU82
- 535 0050 17EE900A 		vmov	r0, s15
- 536 0054 FFF7FEFF 		bl	__aeabi_f2d
- 537              	.LVL41:
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 538              		.loc 1 23 17 view .LVU83
- 539 0058 0446     		mov	r4, r0
- 540 005a 0D46     		mov	r5, r1
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 541              		.loc 1 23 18 view .LVU84
- 542 005c DFF85481 		ldr	r8, .L32+60
- 543 0060 D8F80000 		ldr	r0, [r8]	@ float
- 544 0064 FFF7FEFF 		bl	__aeabi_f2d
- 545              	.LVL42:
- 546 0068 41EC180B 		vmov	d8, r0, r1
- 547              	.LVL43:
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 548              		.loc 1 23 18 view .LVU85
- 549 006c B0EE480A 		vmov.f32	s0, s16
- 550 0070 F0EE680A 		vmov.f32	s1, s17
- 551 0074 FFF7FEFF 		bl	cos
- 552              	.LVL44:
- 553 0078 53EC102B 		vmov	r2, r3, d0
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 554              		.loc 1 23 17 discriminator 1 view .LVU86
- 555 007c 2046     		mov	r0, r4
- 556 007e 2946     		mov	r1, r5
- 557 0080 FFF7FEFF 		bl	__aeabi_dmul
- 558              	.LVL45:
- 559 0084 0646     		mov	r6, r0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 12
-
-
- 560 0086 0F46     		mov	r7, r1
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 561              		.loc 1 23 12 discriminator 1 view .LVU87
- 562 0088 DFF82CB1 		ldr	fp, .L32+64
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 563              		.loc 1 23 12 view .LVU88
- 564 008c DBF80000 		ldr	r0, [fp]	@ float
- 565 0090 FFF7FEFF 		bl	__aeabi_f2d
- 566              	.LVL46:
-  23:Core/Src/Odometry.c **** 	current_y += dC*sin(current_phi);
- 567              		.loc 1 23 12 discriminator 1 view .LVU89
- 568 0094 3246     		mov	r2, r6
- 569 0096 3B46     		mov	r3, r7
- 570 0098 FFF7FEFF 		bl	__aeabi_dadd
- 571              	.LVL47:
- 572 009c FFF7FEFF 		bl	__aeabi_d2f
- 573              	.LVL48:
- 574 00a0 CBF80000 		str	r0, [fp]	@ float
+ 524              		.loc 1 21 16 is_stmt 0 view .LVU79
+ 525 003c 38EE008A 		vadd.f32	s16, s16, s0
+ 526              	.LVL39:
+  21:Core/Src/Odometry.c **** 
+ 527              		.loc 1 21 8 view .LVU80
+ 528 0040 B6EE00AA 		vmov.f32	s20, #5.0e-1
+ 529 0044 28EE0A8A 		vmul.f32	s16, s16, s20
+ 530              	.LVL40:
+  23:Core/Src/Odometry.c **** 	absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_
+ 531              		.loc 1 23 2 is_stmt 1 view .LVU81
+  23:Core/Src/Odometry.c **** 	absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_
+ 532              		.loc 1 23 8 is_stmt 0 view .LVU82
+ 533 0048 574C     		ldr	r4, .L32+48
+ 534 004a D4ED009A 		vldr.32	s19, [r4]
+ 535              	.LVL41:
   24:Core/Src/Odometry.c **** 
- 575              		.loc 1 24 2 is_stmt 1 view .LVU90
+ 536              		.loc 1 24 2 is_stmt 1 view .LVU83
   24:Core/Src/Odometry.c **** 
- 576              		.loc 1 24 18 is_stmt 0 view .LVU91
- 577 00a4 B0EE480A 		vmov.f32	s0, s16
- 578 00a8 F0EE680A 		vmov.f32	s1, s17
- 579 00ac FFF7FEFF 		bl	sin
- 580              	.LVL49:
- 581 00b0 53EC102B 		vmov	r2, r3, d0
+ 537              		.loc 1 24 19 is_stmt 0 view .LVU84
+ 538 004e B0EE680A 		vmov.f32	s0, s17
+ 539              	.LVL42:
   24:Core/Src/Odometry.c **** 
- 582              		.loc 1 24 17 discriminator 1 view .LVU92
- 583 00b4 2046     		mov	r0, r4
- 584 00b6 2946     		mov	r1, r5
- 585 00b8 FFF7FEFF 		bl	__aeabi_dmul
- 586              	.LVL50:
- 587 00bc 0446     		mov	r4, r0
- 588 00be 0D46     		mov	r5, r1
+ 540              		.loc 1 24 19 view .LVU85
+ 541 0052 3046     		mov	r0, r6
+ 542 0054 FFF7FEFF 		bl	ticks_to_distance
+ 543              	.LVL43:
+ 544 0058 F0EE408A 		vmov.f32	s17, s0
   24:Core/Src/Odometry.c **** 
- 589              		.loc 1 24 12 discriminator 1 view .LVU93
- 590 00c0 394E     		ldr	r6, .L32+48
+ 545              		.loc 1 24 74 discriminator 1 view .LVU86
+ 546 005c B0EE490A 		vmov.f32	s0, s18
+ 547 0060 2846     		mov	r0, r5
+ 548 0062 FFF7FEFF 		bl	ticks_to_distance
+ 549              	.LVL44:
   24:Core/Src/Odometry.c **** 
- 591              		.loc 1 24 12 view .LVU94
- 592 00c2 3068     		ldr	r0, [r6]	@ float
- 593 00c4 FFF7FEFF 		bl	__aeabi_f2d
- 594              	.LVL51:
+ 550              		.loc 1 24 72 discriminator 2 view .LVU87
+ 551 0066 78EEC08A 		vsub.f32	s17, s17, s0
   24:Core/Src/Odometry.c **** 
- 595              		.loc 1 24 12 discriminator 1 view .LVU95
- 596 00c8 2246     		mov	r2, r4
- 597 00ca 2B46     		mov	r3, r5
- 598 00cc FFF7FEFF 		bl	__aeabi_dadd
- 599              	.LVL52:
- 600 00d0 FFF7FEFF 		bl	__aeabi_d2f
- 601              	.LVL53:
- 602 00d4 3060     		str	r0, [r6]	@ float
-  26:Core/Src/Odometry.c **** 
- 603              		.loc 1 26 2 is_stmt 1 view .LVU96
-  26:Core/Src/Odometry.c **** 
- 604              		.loc 1 26 19 is_stmt 0 view .LVU97
- 605 00d6 B0EE690A 		vmov.f32	s0, s19
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 13
+ 552              		.loc 1 24 128 discriminator 2 view .LVU88
+ 553 006a 504B     		ldr	r3, .L32+52
+ 554 006c D3ED007A 		vldr.32	s15, [r3]
+ 555 0070 88EEA79A 		vdiv.f32	s18, s17, s15
+  24:Core/Src/Odometry.c **** 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 12
 
 
- 606 00da 5046     		mov	r0, r10
- 607 00dc FFF7FEFF 		bl	ticks_to_distance
- 608              	.LVL54:
- 609 00e0 B0EE408A 		vmov.f32	s16, s0
-  26:Core/Src/Odometry.c **** 
- 610              		.loc 1 26 74 discriminator 1 view .LVU98
- 611 00e4 B0EE490A 		vmov.f32	s0, s18
- 612 00e8 4846     		mov	r0, r9
- 613 00ea FFF7FEFF 		bl	ticks_to_distance
- 614              	.LVL55:
-  26:Core/Src/Odometry.c **** 
- 615              		.loc 1 26 72 discriminator 2 view .LVU99
- 616 00ee 38EE408A 		vsub.f32	s16, s16, s0
-  26:Core/Src/Odometry.c **** 
- 617              		.loc 1 26 128 discriminator 2 view .LVU100
- 618 00f2 2E4B     		ldr	r3, .L32+52
- 619 00f4 93ED007A 		vldr.32	s14, [r3]
- 620 00f8 C8EE077A 		vdiv.f32	s15, s16, s14
-  26:Core/Src/Odometry.c **** 
- 621              		.loc 1 26 15 discriminator 2 view .LVU101
- 622 00fc 2C4B     		ldr	r3, .L32+56
- 623 00fe C3ED007A 		vstr.32	s15, [r3]
-  28:Core/Src/Odometry.c **** 	while (current_phi > PI){
- 624              		.loc 1 28 2 is_stmt 1 view .LVU102
-  28:Core/Src/Odometry.c **** 	while (current_phi > PI){
- 625              		.loc 1 28 14 is_stmt 0 view .LVU103
- 626 0102 C8ED007A 		vstr.32	s15, [r8]
-  29:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
- 627              		.loc 1 29 2 is_stmt 1 view .LVU104
-  29:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
- 628              		.loc 1 29 8 is_stmt 0 view .LVU105
- 629 0106 0AE0     		b	.L27
- 630              	.L28:
-  30:Core/Src/Odometry.c **** 	}
- 631              		.loc 1 30 3 is_stmt 1 view .LVU106
-  30:Core/Src/Odometry.c **** 	}
- 632              		.loc 1 30 15 is_stmt 0 view .LVU107
- 633 0108 1BA3     		adr	r3, .L32
- 634 010a D3E90023 		ldrd	r2, [r3]
- 635 010e 2046     		mov	r0, r4
- 636 0110 2946     		mov	r1, r5
- 637 0112 FFF7FEFF 		bl	__aeabi_dsub
- 638              	.LVL56:
- 639 0116 FFF7FEFF 		bl	__aeabi_d2f
- 640              	.LVL57:
- 641 011a 264B     		ldr	r3, .L32+60
- 642 011c 1860     		str	r0, [r3]	@ float
- 643              	.L27:
-  29:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
- 644              		.loc 1 29 21 is_stmt 1 view .LVU108
- 645 011e 254B     		ldr	r3, .L32+60
- 646 0120 1868     		ldr	r0, [r3]	@ float
- 647 0122 FFF7FEFF 		bl	__aeabi_f2d
- 648              	.LVL58:
- 649 0126 0446     		mov	r4, r0
- 650 0128 0D46     		mov	r5, r1
- 651 012a 15A3     		adr	r3, .L32+8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 14
+ 556              		.loc 1 24 15 discriminator 2 view .LVU89
+ 557 0074 84ED009A 		vstr.32	s18, [r4]
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 558              		.loc 1 26 2 is_stmt 1 view .LVU90
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 559              		.loc 1 26 17 is_stmt 0 view .LVU91
+ 560 0078 18EE100A 		vmov	r0, s16
+ 561 007c FFF7FEFF 		bl	__aeabi_f2d
+ 562              	.LVL45:
+ 563 0080 0446     		mov	r4, r0
+ 564 0082 0D46     		mov	r5, r1
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 565              		.loc 1 26 47 view .LVU92
+ 566 0084 79EE299A 		vadd.f32	s19, s18, s19
+ 567              	.LVL46:
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 568              		.loc 1 26 18 view .LVU93
+ 569 0088 69EE8A7A 		vmul.f32	s15, s19, s20
+ 570 008c 17EE900A 		vmov	r0, s15
+ 571 0090 FFF7FEFF 		bl	__aeabi_f2d
+ 572              	.LVL47:
+ 573 0094 41EC180B 		vmov	d8, r0, r1
+ 574              	.LVL48:
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 575              		.loc 1 26 18 view .LVU94
+ 576 0098 B0EE480A 		vmov.f32	s0, s16
+ 577 009c F0EE680A 		vmov.f32	s1, s17
+ 578 00a0 FFF7FEFF 		bl	cos
+ 579              	.LVL49:
+ 580 00a4 53EC102B 		vmov	r2, r3, d0
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 581              		.loc 1 26 17 discriminator 1 view .LVU95
+ 582 00a8 2046     		mov	r0, r4
+ 583 00aa 2946     		mov	r1, r5
+ 584 00ac FFF7FEFF 		bl	__aeabi_dmul
+ 585              	.LVL50:
+ 586 00b0 0646     		mov	r6, r0
+ 587 00b2 0F46     		mov	r7, r1
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 588              		.loc 1 26 12 discriminator 1 view .LVU96
+ 589 00b4 DFF80081 		ldr	r8, .L32+64
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 590              		.loc 1 26 12 view .LVU97
+ 591 00b8 D8F80000 		ldr	r0, [r8]	@ float
+ 592 00bc FFF7FEFF 		bl	__aeabi_f2d
+ 593              	.LVL51:
+  26:Core/Src/Odometry.c **** 	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
+ 594              		.loc 1 26 12 discriminator 1 view .LVU98
+ 595 00c0 3246     		mov	r2, r6
+ 596 00c2 3B46     		mov	r3, r7
+ 597 00c4 FFF7FEFF 		bl	__aeabi_dadd
+ 598              	.LVL52:
+ 599 00c8 FFF7FEFF 		bl	__aeabi_d2f
+ 600              	.LVL53:
+ 601 00cc C8F80000 		str	r0, [r8]	@ float
+  27:Core/Src/Odometry.c **** 
+ 602              		.loc 1 27 2 is_stmt 1 view .LVU99
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 13
 
 
- 652 012c D3E90023 		ldrd	r2, [r3]
- 653 0130 FFF7FEFF 		bl	__aeabi_dcmpgt
- 654              	.LVL59:
- 655 0134 0028     		cmp	r0, #0
- 656 0136 E7D1     		bne	.L28
- 657 0138 0AE0     		b	.L29
- 658              	.L30:
-  33:Core/Src/Odometry.c **** 	}
- 659              		.loc 1 33 3 view .LVU109
-  33:Core/Src/Odometry.c **** 	}
- 660              		.loc 1 33 15 is_stmt 0 view .LVU110
- 661 013a 0FA3     		adr	r3, .L32
- 662 013c D3E90023 		ldrd	r2, [r3]
- 663 0140 2046     		mov	r0, r4
- 664 0142 2946     		mov	r1, r5
- 665 0144 FFF7FEFF 		bl	__aeabi_dadd
- 666              	.LVL60:
- 667 0148 FFF7FEFF 		bl	__aeabi_d2f
- 668              	.LVL61:
- 669 014c 194B     		ldr	r3, .L32+60
- 670 014e 1860     		str	r0, [r3]	@ float
- 671              	.L29:
-  32:Core/Src/Odometry.c **** 		current_phi += 2*PI;
- 672              		.loc 1 32 21 is_stmt 1 view .LVU111
- 673 0150 184B     		ldr	r3, .L32+60
- 674 0152 1868     		ldr	r0, [r3]	@ float
- 675 0154 FFF7FEFF 		bl	__aeabi_f2d
- 676              	.LVL62:
- 677 0158 0446     		mov	r4, r0
- 678 015a 0D46     		mov	r5, r1
- 679 015c 0AA3     		adr	r3, .L32+16
- 680 015e D3E90023 		ldrd	r2, [r3]
- 681 0162 FFF7FEFF 		bl	__aeabi_dcmple
- 682              	.LVL63:
- 683 0166 0028     		cmp	r0, #0
- 684 0168 E7D1     		bne	.L30
-  36:Core/Src/Odometry.c **** }
- 685              		.loc 1 36 2 view .LVU112
- 686 016a FFF7FEFF 		bl	update_speed
- 687              	.LVL64:
-  37:Core/Src/Odometry.c **** void reset_position(){
- 688              		.loc 1 37 1 is_stmt 0 view .LVU113
- 689 016e BDEC048B 		vldm	sp!, {d8-d9}
- 690              	.LCFI10:
- 691              		.cfi_restore 82
- 692              		.cfi_restore 83
- 693              		.cfi_restore 80
- 694              		.cfi_restore 81
- 695              		.cfi_def_cfa_offset 40
- 696 0172 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
- 697              	.L33:
- 698 0176 00BF     		.align	3
- 699              	.L32:
- 700 0178 1E264454 		.word	1413752350
- 701 017c FB211940 		.word	1075388923
- 702 0180 1E264454 		.word	1413752350
- 703 0184 FB210940 		.word	1074340347
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 15
+  27:Core/Src/Odometry.c **** 
+ 603              		.loc 1 27 18 is_stmt 0 view .LVU100
+ 604 00d0 B0EE480A 		vmov.f32	s0, s16
+ 605 00d4 F0EE680A 		vmov.f32	s1, s17
+ 606 00d8 FFF7FEFF 		bl	sin
+ 607              	.LVL54:
+ 608 00dc 53EC102B 		vmov	r2, r3, d0
+  27:Core/Src/Odometry.c **** 
+ 609              		.loc 1 27 17 discriminator 1 view .LVU101
+ 610 00e0 2046     		mov	r0, r4
+ 611 00e2 2946     		mov	r1, r5
+ 612 00e4 FFF7FEFF 		bl	__aeabi_dmul
+ 613              	.LVL55:
+ 614 00e8 0446     		mov	r4, r0
+ 615 00ea 0D46     		mov	r5, r1
+  27:Core/Src/Odometry.c **** 
+ 616              		.loc 1 27 12 discriminator 1 view .LVU102
+ 617 00ec 304E     		ldr	r6, .L32+56
+  27:Core/Src/Odometry.c **** 
+ 618              		.loc 1 27 12 view .LVU103
+ 619 00ee 3068     		ldr	r0, [r6]	@ float
+ 620 00f0 FFF7FEFF 		bl	__aeabi_f2d
+ 621              	.LVL56:
+  27:Core/Src/Odometry.c **** 
+ 622              		.loc 1 27 12 discriminator 1 view .LVU104
+ 623 00f4 2246     		mov	r2, r4
+ 624 00f6 2B46     		mov	r3, r5
+ 625 00f8 FFF7FEFF 		bl	__aeabi_dadd
+ 626              	.LVL57:
+ 627 00fc FFF7FEFF 		bl	__aeabi_d2f
+ 628              	.LVL58:
+ 629 0100 3060     		str	r0, [r6]	@ float
+  29:Core/Src/Odometry.c **** 	while (current_phi > PI){
+ 630              		.loc 1 29 2 is_stmt 1 view .LVU105
+  29:Core/Src/Odometry.c **** 	while (current_phi > PI){
+ 631              		.loc 1 29 14 is_stmt 0 view .LVU106
+ 632 0102 2C4B     		ldr	r3, .L32+60
+ 633 0104 83ED009A 		vstr.32	s18, [r3]
+  30:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
+ 634              		.loc 1 30 2 is_stmt 1 view .LVU107
+  30:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
+ 635              		.loc 1 30 8 is_stmt 0 view .LVU108
+ 636 0108 0AE0     		b	.L27
+ 637              	.L28:
+  31:Core/Src/Odometry.c **** 	}
+ 638              		.loc 1 31 3 is_stmt 1 view .LVU109
+  31:Core/Src/Odometry.c **** 	}
+ 639              		.loc 1 31 15 is_stmt 0 view .LVU110
+ 640 010a 1BA3     		adr	r3, .L32
+ 641 010c D3E90023 		ldrd	r2, [r3]
+ 642 0110 2046     		mov	r0, r4
+ 643 0112 2946     		mov	r1, r5
+ 644 0114 FFF7FEFF 		bl	__aeabi_dsub
+ 645              	.LVL59:
+ 646 0118 FFF7FEFF 		bl	__aeabi_d2f
+ 647              	.LVL60:
+ 648 011c 254B     		ldr	r3, .L32+60
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 14
 
 
- 704 0188 1E264454 		.word	1413752350
- 705 018c FB2109C0 		.word	-1073143301
- 706 0190 00000000 		.word	encoder_count_R
- 707 0194 00000000 		.word	wheel_diameter_R
- 708 0198 00000000 		.word	previous_encoder_count_R
- 709 019c 00000000 		.word	encoder_count_L
- 710 01a0 00000000 		.word	wheel_diameter_L
- 711 01a4 00000000 		.word	previous_encoder_count_L
- 712 01a8 00000000 		.word	current_y
- 713 01ac 00000000 		.word	dead_wheels_spacing
- 714 01b0 00000000 		.word	absolute_phi
- 715 01b4 00000000 		.word	current_phi
- 716 01b8 00000000 		.word	current_x
- 717              		.cfi_endproc
- 718              	.LFE134:
- 720              		.section	.text.distance_to_ticks,"ax",%progbits
- 721              		.align	1
- 722              		.global	distance_to_ticks
- 723              		.syntax unified
- 724              		.thumb
- 725              		.thumb_func
- 727              	distance_to_ticks:
- 728              	.LVL65:
- 729              	.LFB142:
-  68:Core/Src/Odometry.c **** float distance_to_ticks(int32_t distance, float wheel_diameter){
- 730              		.loc 1 68 64 is_stmt 1 view -0
- 731              		.cfi_startproc
- 732              		@ args = 0, pretend = 0, frame = 0
- 733              		@ frame_needed = 0, uses_anonymous_args = 0
- 734              		.loc 1 68 64 is_stmt 0 view .LVU115
- 735 0000 70B5     		push	{r4, r5, r6, lr}
- 736              	.LCFI11:
- 737              		.cfi_def_cfa_offset 16
- 738              		.cfi_offset 4, -16
- 739              		.cfi_offset 5, -12
- 740              		.cfi_offset 6, -8
- 741              		.cfi_offset 14, -4
- 742 0002 0646     		mov	r6, r0
- 743 0004 10EE100A 		vmov	r0, s0
- 744              	.LVL66:
-  69:Core/Src/Odometry.c **** 	return (distance*CPR)/(wheel_diameter*PI);
- 745              		.loc 1 69 2 is_stmt 1 view .LVU116
- 746              		.loc 1 69 18 is_stmt 0 view .LVU117
- 747 0008 0F4B     		ldr	r3, .L36+8
- 748 000a 1B68     		ldr	r3, [r3]
- 749 000c 03FB06F6 		mul	r6, r3, r6
- 750              	.LVL67:
- 751              		.loc 1 69 39 view .LVU118
- 752 0010 FFF7FEFF 		bl	__aeabi_f2d
- 753              	.LVL68:
- 754              		.loc 1 69 39 view .LVU119
- 755 0014 0AA3     		adr	r3, .L36
- 756 0016 D3E90023 		ldrd	r2, [r3]
- 757 001a FFF7FEFF 		bl	__aeabi_dmul
- 758              	.LVL69:
- 759 001e 0446     		mov	r4, r0
- 760 0020 0D46     		mov	r5, r1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 16
+ 649 011e 1860     		str	r0, [r3]	@ float
+ 650              	.L27:
+  30:Core/Src/Odometry.c **** 		current_phi -= 2*PI;
+ 651              		.loc 1 30 21 is_stmt 1 view .LVU111
+ 652 0120 244B     		ldr	r3, .L32+60
+ 653 0122 1868     		ldr	r0, [r3]	@ float
+ 654 0124 FFF7FEFF 		bl	__aeabi_f2d
+ 655              	.LVL61:
+ 656 0128 0446     		mov	r4, r0
+ 657 012a 0D46     		mov	r5, r1
+ 658 012c 14A3     		adr	r3, .L32+8
+ 659 012e D3E90023 		ldrd	r2, [r3]
+ 660 0132 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 661              	.LVL62:
+ 662 0136 0028     		cmp	r0, #0
+ 663 0138 E7D1     		bne	.L28
+ 664 013a 0AE0     		b	.L29
+ 665              	.L30:
+  34:Core/Src/Odometry.c **** 	}
+ 666              		.loc 1 34 3 view .LVU112
+  34:Core/Src/Odometry.c **** 	}
+ 667              		.loc 1 34 15 is_stmt 0 view .LVU113
+ 668 013c 0EA3     		adr	r3, .L32
+ 669 013e D3E90023 		ldrd	r2, [r3]
+ 670 0142 2046     		mov	r0, r4
+ 671 0144 2946     		mov	r1, r5
+ 672 0146 FFF7FEFF 		bl	__aeabi_dadd
+ 673              	.LVL63:
+ 674 014a FFF7FEFF 		bl	__aeabi_d2f
+ 675              	.LVL64:
+ 676 014e 194B     		ldr	r3, .L32+60
+ 677 0150 1860     		str	r0, [r3]	@ float
+ 678              	.L29:
+  33:Core/Src/Odometry.c **** 		current_phi += 2*PI;
+ 679              		.loc 1 33 21 is_stmt 1 view .LVU114
+ 680 0152 184B     		ldr	r3, .L32+60
+ 681 0154 1868     		ldr	r0, [r3]	@ float
+ 682 0156 FFF7FEFF 		bl	__aeabi_f2d
+ 683              	.LVL65:
+ 684 015a 0446     		mov	r4, r0
+ 685 015c 0D46     		mov	r5, r1
+ 686 015e 0AA3     		adr	r3, .L32+16
+ 687 0160 D3E90023 		ldrd	r2, [r3]
+ 688 0164 FFF7FEFF 		bl	__aeabi_dcmple
+ 689              	.LVL66:
+ 690 0168 0028     		cmp	r0, #0
+ 691 016a E7D1     		bne	.L30
+  37:Core/Src/Odometry.c **** }
+ 692              		.loc 1 37 2 view .LVU115
+ 693 016c FFF7FEFF 		bl	update_speed
+ 694              	.LVL67:
+  38:Core/Src/Odometry.c **** void reset_position(){
+ 695              		.loc 1 38 1 is_stmt 0 view .LVU116
+ 696 0170 BDEC068B 		vldm	sp!, {d8-d10}
+ 697              	.LCFI10:
+ 698              		.cfi_restore 84
+ 699              		.cfi_restore 85
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 15
 
 
- 761              		.loc 1 69 23 view .LVU120
- 762 0022 3046     		mov	r0, r6
- 763 0024 FFF7FEFF 		bl	__aeabi_i2d
- 764              	.LVL70:
- 765 0028 2246     		mov	r2, r4
- 766 002a 2B46     		mov	r3, r5
- 767 002c FFF7FEFF 		bl	__aeabi_ddiv
- 768              	.LVL71:
- 769 0030 FFF7FEFF 		bl	__aeabi_d2f
- 770              	.LVL72:
-  70:Core/Src/Odometry.c **** }
- 771              		.loc 1 70 1 view .LVU121
- 772 0034 00EE100A 		vmov	s0, r0
- 773 0038 70BD     		pop	{r4, r5, r6, pc}
- 774              	.L37:
- 775 003a 00BFAFF3 		.align	3
- 775      0080
- 776              	.L36:
- 777 0040 1E264454 		.word	1413752350
- 778 0044 FB210940 		.word	1074340347
- 779 0048 00000000 		.word	CPR
- 780              		.cfi_endproc
- 781              	.LFE142:
- 783              		.section	.text.rad_to_deg,"ax",%progbits
- 784              		.align	1
- 785              		.global	rad_to_deg
- 786              		.syntax unified
- 787              		.thumb
- 788              		.thumb_func
- 790              	rad_to_deg:
- 791              	.LVL73:
- 792              	.LFB143:
-  71:Core/Src/Odometry.c **** float rad_to_deg(float radian){
- 793              		.loc 1 71 31 is_stmt 1 view -0
- 794              		.cfi_startproc
- 795              		@ args = 0, pretend = 0, frame = 0
- 796              		@ frame_needed = 0, uses_anonymous_args = 0
- 797              		.loc 1 71 31 is_stmt 0 view .LVU123
- 798 0000 08B5     		push	{r3, lr}
- 799              	.LCFI12:
- 800              		.cfi_def_cfa_offset 8
- 801              		.cfi_offset 3, -8
- 802              		.cfi_offset 14, -4
-  72:Core/Src/Odometry.c **** 	return ((radian*180)/PI);
- 803              		.loc 1 72 2 is_stmt 1 view .LVU124
- 804              		.loc 1 72 17 is_stmt 0 view .LVU125
- 805 0002 DFED0B7A 		vldr.32	s15, .L40+8
- 806 0006 60EE277A 		vmul.f32	s15, s0, s15
- 807 000a 17EE900A 		vmov	r0, s15
- 808 000e FFF7FEFF 		bl	__aeabi_f2d
- 809              	.LVL74:
- 810              		.loc 1 72 22 view .LVU126
- 811 0012 05A3     		adr	r3, .L40
- 812 0014 D3E90023 		ldrd	r2, [r3]
- 813 0018 FFF7FEFF 		bl	__aeabi_ddiv
- 814              	.LVL75:
- 815 001c FFF7FEFF 		bl	__aeabi_d2f
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 17
+ 700              		.cfi_restore 82
+ 701              		.cfi_restore 83
+ 702              		.cfi_restore 80
+ 703              		.cfi_restore 81
+ 704              		.cfi_def_cfa_offset 24
+ 705 0174 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 706              	.L33:
+ 707              		.align	3
+ 708              	.L32:
+ 709 0178 1E264454 		.word	1413752350
+ 710 017c FB211940 		.word	1075388923
+ 711 0180 1E264454 		.word	1413752350
+ 712 0184 FB210940 		.word	1074340347
+ 713 0188 1E264454 		.word	1413752350
+ 714 018c FB2109C0 		.word	-1073143301
+ 715 0190 00000000 		.word	encoder_count_R
+ 716 0194 00000000 		.word	wheel_diameter_R
+ 717 0198 00000000 		.word	previous_encoder_count_R
+ 718 019c 00000000 		.word	encoder_count_L
+ 719 01a0 00000000 		.word	wheel_diameter_L
+ 720 01a4 00000000 		.word	previous_encoder_count_L
+ 721 01a8 00000000 		.word	absolute_phi
+ 722 01ac 00000000 		.word	dead_wheels_spacing
+ 723 01b0 00000000 		.word	current_y
+ 724 01b4 00000000 		.word	current_phi
+ 725 01b8 00000000 		.word	current_x
+ 726              		.cfi_endproc
+ 727              	.LFE134:
+ 729              		.section	.text.distance_to_ticks,"ax",%progbits
+ 730              		.align	1
+ 731              		.global	distance_to_ticks
+ 732              		.syntax unified
+ 733              		.thumb
+ 734              		.thumb_func
+ 736              	distance_to_ticks:
+ 737              	.LVL68:
+ 738              	.LFB142:
+  69:Core/Src/Odometry.c **** float distance_to_ticks(int32_t distance, float wheel_diameter){
+ 739              		.loc 1 69 64 is_stmt 1 view -0
+ 740              		.cfi_startproc
+ 741              		@ args = 0, pretend = 0, frame = 0
+ 742              		@ frame_needed = 0, uses_anonymous_args = 0
+ 743              		.loc 1 69 64 is_stmt 0 view .LVU118
+ 744 0000 70B5     		push	{r4, r5, r6, lr}
+ 745              	.LCFI11:
+ 746              		.cfi_def_cfa_offset 16
+ 747              		.cfi_offset 4, -16
+ 748              		.cfi_offset 5, -12
+ 749              		.cfi_offset 6, -8
+ 750              		.cfi_offset 14, -4
+ 751 0002 0646     		mov	r6, r0
+ 752 0004 10EE100A 		vmov	r0, s0
+ 753              	.LVL69:
+  70:Core/Src/Odometry.c **** 	return (distance*CPR)/(wheel_diameter*PI);
+ 754              		.loc 1 70 2 is_stmt 1 view .LVU119
+ 755              		.loc 1 70 18 is_stmt 0 view .LVU120
+ 756 0008 0F4B     		ldr	r3, .L36+8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 16
 
 
- 816              	.LVL76:
-  73:Core/Src/Odometry.c **** }
- 817              		.loc 1 73 1 view .LVU127
- 818 0020 00EE100A 		vmov	s0, r0
- 819 0024 08BD     		pop	{r3, pc}
- 820              	.L41:
- 821 0026 00BF     		.align	3
- 822              	.L40:
- 823 0028 1E264454 		.word	1413752350
- 824 002c FB210940 		.word	1074340347
- 825 0030 00003443 		.word	1127481344
- 826              		.cfi_endproc
- 827              	.LFE143:
- 829              		.section	.text.deg_to_rad,"ax",%progbits
- 830              		.align	1
- 831              		.global	deg_to_rad
- 832              		.syntax unified
- 833              		.thumb
- 834              		.thumb_func
- 836              	deg_to_rad:
- 837              	.LVL77:
- 838              	.LFB144:
-  74:Core/Src/Odometry.c **** float deg_to_rad(float degrees){
- 839              		.loc 1 74 32 is_stmt 1 view -0
- 840              		.cfi_startproc
- 841              		@ args = 0, pretend = 0, frame = 0
- 842              		@ frame_needed = 0, uses_anonymous_args = 0
- 843              		.loc 1 74 32 is_stmt 0 view .LVU129
- 844 0000 08B5     		push	{r3, lr}
- 845              	.LCFI13:
- 846              		.cfi_def_cfa_offset 8
- 847              		.cfi_offset 3, -8
- 848              		.cfi_offset 14, -4
- 849 0002 10EE100A 		vmov	r0, s0
-  75:Core/Src/Odometry.c **** 	return ((degrees*PI)/180);
- 850              		.loc 1 75 2 is_stmt 1 view .LVU130
- 851              		.loc 1 75 18 is_stmt 0 view .LVU131
- 852 0006 FFF7FEFF 		bl	__aeabi_f2d
- 853              	.LVL78:
- 854              		.loc 1 75 18 view .LVU132
- 855 000a 08A3     		adr	r3, .L44+4
- 856 000c D3E90023 		ldrd	r2, [r3]
- 857 0010 FFF7FEFF 		bl	__aeabi_dmul
- 858              	.LVL79:
- 859              		.loc 1 75 22 view .LVU133
- 860 0014 0022     		movs	r2, #0
- 861 0016 044B     		ldr	r3, .L44
- 862 0018 FFF7FEFF 		bl	__aeabi_ddiv
- 863              	.LVL80:
- 864 001c FFF7FEFF 		bl	__aeabi_d2f
- 865              	.LVL81:
-  76:Core/Src/Odometry.c **** }
- 866              		.loc 1 76 1 view .LVU134
- 867 0020 00EE100A 		vmov	s0, r0
- 868 0024 08BD     		pop	{r3, pc}
- 869              	.L45:
- 870 0026 00BF     		.align	3
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 18
+ 757 000a 1B68     		ldr	r3, [r3]
+ 758 000c 03FB06F6 		mul	r6, r3, r6
+ 759              	.LVL70:
+ 760              		.loc 1 70 39 view .LVU121
+ 761 0010 FFF7FEFF 		bl	__aeabi_f2d
+ 762              	.LVL71:
+ 763              		.loc 1 70 39 view .LVU122
+ 764 0014 0AA3     		adr	r3, .L36
+ 765 0016 D3E90023 		ldrd	r2, [r3]
+ 766 001a FFF7FEFF 		bl	__aeabi_dmul
+ 767              	.LVL72:
+ 768 001e 0446     		mov	r4, r0
+ 769 0020 0D46     		mov	r5, r1
+ 770              		.loc 1 70 23 view .LVU123
+ 771 0022 3046     		mov	r0, r6
+ 772 0024 FFF7FEFF 		bl	__aeabi_i2d
+ 773              	.LVL73:
+ 774 0028 2246     		mov	r2, r4
+ 775 002a 2B46     		mov	r3, r5
+ 776 002c FFF7FEFF 		bl	__aeabi_ddiv
+ 777              	.LVL74:
+ 778 0030 FFF7FEFF 		bl	__aeabi_d2f
+ 779              	.LVL75:
+  71:Core/Src/Odometry.c **** }
+ 780              		.loc 1 71 1 view .LVU124
+ 781 0034 00EE100A 		vmov	s0, r0
+ 782 0038 70BD     		pop	{r4, r5, r6, pc}
+ 783              	.L37:
+ 784 003a 00BFAFF3 		.align	3
+ 784      0080
+ 785              	.L36:
+ 786 0040 1E264454 		.word	1413752350
+ 787 0044 FB210940 		.word	1074340347
+ 788 0048 00000000 		.word	CPR
+ 789              		.cfi_endproc
+ 790              	.LFE142:
+ 792              		.section	.text.rad_to_deg,"ax",%progbits
+ 793              		.align	1
+ 794              		.global	rad_to_deg
+ 795              		.syntax unified
+ 796              		.thumb
+ 797              		.thumb_func
+ 799              	rad_to_deg:
+ 800              	.LVL76:
+ 801              	.LFB143:
+  72:Core/Src/Odometry.c **** float rad_to_deg(float radian){
+ 802              		.loc 1 72 31 is_stmt 1 view -0
+ 803              		.cfi_startproc
+ 804              		@ args = 0, pretend = 0, frame = 0
+ 805              		@ frame_needed = 0, uses_anonymous_args = 0
+ 806              		.loc 1 72 31 is_stmt 0 view .LVU126
+ 807 0000 08B5     		push	{r3, lr}
+ 808              	.LCFI12:
+ 809              		.cfi_def_cfa_offset 8
+ 810              		.cfi_offset 3, -8
+ 811              		.cfi_offset 14, -4
+  73:Core/Src/Odometry.c **** 	return ((radian*180)/PI);
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 17
 
 
- 871              	.L44:
- 872 0028 00806640 		.word	1080459264
- 873 002c 1E264454 		.word	1413752350
- 874 0030 FB210940 		.word	1074340347
- 875              		.cfi_endproc
- 876              	.LFE144:
- 878              		.global	absolute_phi
- 879              		.section	.bss.absolute_phi,"aw",%nobits
- 880              		.align	2
- 883              	absolute_phi:
- 884 0000 00000000 		.space	4
- 885              		.global	current_phi
- 886              		.section	.bss.current_phi,"aw",%nobits
- 887              		.align	2
- 890              	current_phi:
- 891 0000 00000000 		.space	4
- 892              		.global	current_y
- 893              		.section	.bss.current_y,"aw",%nobits
- 894              		.align	2
- 897              	current_y:
- 898 0000 00000000 		.space	4
- 899              		.global	current_x
- 900              		.section	.bss.current_x,"aw",%nobits
- 901              		.align	2
- 904              	current_x:
- 905 0000 00000000 		.space	4
- 906              		.global	dead_wheels_spacing
- 907              		.section	.bss.dead_wheels_spacing,"aw",%nobits
- 908              		.align	2
- 911              	dead_wheels_spacing:
- 912 0000 00000000 		.space	4
- 913              		.global	driven_wheels_spacing
- 914              		.section	.bss.driven_wheels_spacing,"aw",%nobits
- 915              		.align	2
- 918              	driven_wheels_spacing:
- 919 0000 00000000 		.space	4
- 920              		.text
- 921              	.Letext0:
- 922              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 923              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 924              		.file 4 "Core/Src/../Inc/Motors.h"
- 925              		.file 5 "Core/Src/../Inc/Odometry.h"
- 926              		.file 6 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 19
+ 812              		.loc 1 73 2 is_stmt 1 view .LVU127
+ 813              		.loc 1 73 17 is_stmt 0 view .LVU128
+ 814 0002 DFED0B7A 		vldr.32	s15, .L40+8
+ 815 0006 60EE277A 		vmul.f32	s15, s0, s15
+ 816 000a 17EE900A 		vmov	r0, s15
+ 817 000e FFF7FEFF 		bl	__aeabi_f2d
+ 818              	.LVL77:
+ 819              		.loc 1 73 22 view .LVU129
+ 820 0012 05A3     		adr	r3, .L40
+ 821 0014 D3E90023 		ldrd	r2, [r3]
+ 822 0018 FFF7FEFF 		bl	__aeabi_ddiv
+ 823              	.LVL78:
+ 824 001c FFF7FEFF 		bl	__aeabi_d2f
+ 825              	.LVL79:
+  74:Core/Src/Odometry.c **** }
+ 826              		.loc 1 74 1 view .LVU130
+ 827 0020 00EE100A 		vmov	s0, r0
+ 828 0024 08BD     		pop	{r3, pc}
+ 829              	.L41:
+ 830 0026 00BF     		.align	3
+ 831              	.L40:
+ 832 0028 1E264454 		.word	1413752350
+ 833 002c FB210940 		.word	1074340347
+ 834 0030 00003443 		.word	1127481344
+ 835              		.cfi_endproc
+ 836              	.LFE143:
+ 838              		.section	.text.deg_to_rad,"ax",%progbits
+ 839              		.align	1
+ 840              		.global	deg_to_rad
+ 841              		.syntax unified
+ 842              		.thumb
+ 843              		.thumb_func
+ 845              	deg_to_rad:
+ 846              	.LVL80:
+ 847              	.LFB144:
+  75:Core/Src/Odometry.c **** float deg_to_rad(float degrees){
+ 848              		.loc 1 75 32 is_stmt 1 view -0
+ 849              		.cfi_startproc
+ 850              		@ args = 0, pretend = 0, frame = 0
+ 851              		@ frame_needed = 0, uses_anonymous_args = 0
+ 852              		.loc 1 75 32 is_stmt 0 view .LVU132
+ 853 0000 08B5     		push	{r3, lr}
+ 854              	.LCFI13:
+ 855              		.cfi_def_cfa_offset 8
+ 856              		.cfi_offset 3, -8
+ 857              		.cfi_offset 14, -4
+ 858 0002 10EE100A 		vmov	r0, s0
+  76:Core/Src/Odometry.c **** 	return ((degrees*PI)/180);
+ 859              		.loc 1 76 2 is_stmt 1 view .LVU133
+ 860              		.loc 1 76 18 is_stmt 0 view .LVU134
+ 861 0006 FFF7FEFF 		bl	__aeabi_f2d
+ 862              	.LVL81:
+ 863              		.loc 1 76 18 view .LVU135
+ 864 000a 08A3     		adr	r3, .L44+4
+ 865 000c D3E90023 		ldrd	r2, [r3]
+ 866 0010 FFF7FEFF 		bl	__aeabi_dmul
+ 867              	.LVL82:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 18
+
+
+ 868              		.loc 1 76 22 view .LVU136
+ 869 0014 0022     		movs	r2, #0
+ 870 0016 044B     		ldr	r3, .L44
+ 871 0018 FFF7FEFF 		bl	__aeabi_ddiv
+ 872              	.LVL83:
+ 873 001c FFF7FEFF 		bl	__aeabi_d2f
+ 874              	.LVL84:
+  77:Core/Src/Odometry.c **** }
+ 875              		.loc 1 77 1 view .LVU137
+ 876 0020 00EE100A 		vmov	s0, r0
+ 877 0024 08BD     		pop	{r3, pc}
+ 878              	.L45:
+ 879 0026 00BF     		.align	3
+ 880              	.L44:
+ 881 0028 00806640 		.word	1080459264
+ 882 002c 1E264454 		.word	1413752350
+ 883 0030 FB210940 		.word	1074340347
+ 884              		.cfi_endproc
+ 885              	.LFE144:
+ 887              		.global	absolute_phi
+ 888              		.section	.bss.absolute_phi,"aw",%nobits
+ 889              		.align	2
+ 892              	absolute_phi:
+ 893 0000 00000000 		.space	4
+ 894              		.global	current_phi
+ 895              		.section	.bss.current_phi,"aw",%nobits
+ 896              		.align	2
+ 899              	current_phi:
+ 900 0000 00000000 		.space	4
+ 901              		.global	current_y
+ 902              		.section	.bss.current_y,"aw",%nobits
+ 903              		.align	2
+ 906              	current_y:
+ 907 0000 00000000 		.space	4
+ 908              		.global	current_x
+ 909              		.section	.bss.current_x,"aw",%nobits
+ 910              		.align	2
+ 913              	current_x:
+ 914 0000 00000000 		.space	4
+ 915              		.global	dead_wheels_spacing
+ 916              		.section	.bss.dead_wheels_spacing,"aw",%nobits
+ 917              		.align	2
+ 920              	dead_wheels_spacing:
+ 921 0000 00000000 		.space	4
+ 922              		.global	driven_wheels_spacing
+ 923              		.section	.bss.driven_wheels_spacing,"aw",%nobits
+ 924              		.align	2
+ 927              	driven_wheels_spacing:
+ 928 0000 00000000 		.space	4
+ 929              		.text
+ 930              	.Letext0:
+ 931              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 932              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 933              		.file 4 "Core/Src/../Inc/Motors.h"
+ 934              		.file 5 "Core/Src/../Inc/Odometry.h"
+ 935              		.file 6 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 Odometry.c
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:21     .text.reset_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:27     .text.reset_position:00000000 reset_position
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:56     .text.reset_position:00000014 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:904    .bss.current_x:00000000 current_x
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:897    .bss.current_y:00000000 current_y
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:890    .bss.current_phi:00000000 current_phi
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:883    .bss.absolute_phi:00000000 absolute_phi
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:64     .text.set_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:70     .text.set_position:00000000 set_position
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:99     .text.set_position:0000001c $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:109    .text.get_distance_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:115    .text.get_distance_to:00000000 get_distance_to
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:161    .text.get_distance_to:00000040 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:167    .text.get_arc_distance_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:173    .text.get_arc_distance_to:00000000 get_arc_distance_to
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:283    .text.get_arc_distance_to:000000a8 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:289    .text.get_angle_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:295    .text.get_angle_to:00000000 get_angle_to
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:355    .text.get_angle_to:00000050 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:361    .text.setup_wheels_spacing:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:367    .text.setup_wheels_spacing:00000000 setup_wheels_spacing
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:388    .text.setup_wheels_spacing:00000010 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:918    .bss.driven_wheels_spacing:00000000 driven_wheels_spacing
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:911    .bss.dead_wheels_spacing:00000000 dead_wheels_spacing
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:397    .text.ticks_to_distance:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:403    .text.ticks_to_distance:00000000 ticks_to_distance
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:454    .text.ticks_to_distance:00000048 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:465    .text.update_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:471    .text.update_position:00000000 update_position
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:700    .text.update_position:00000178 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:721    .text.distance_to_ticks:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:727    .text.distance_to_ticks:00000000 distance_to_ticks
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:777    .text.distance_to_ticks:00000040 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:784    .text.rad_to_deg:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:790    .text.rad_to_deg:00000000 rad_to_deg
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:823    .text.rad_to_deg:00000028 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:830    .text.deg_to_rad:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:836    .text.deg_to_rad:00000000 deg_to_rad
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:872    .text.deg_to_rad:00000028 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:880    .bss.absolute_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:887    .bss.current_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:894    .bss.current_y:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:901    .bss.current_x:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:908    .bss.dead_wheels_spacing:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s:915    .bss.driven_wheels_spacing:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:21     .text.reset_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:27     .text.reset_position:00000000 reset_position
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:56     .text.reset_position:00000014 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:913    .bss.current_x:00000000 current_x
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:906    .bss.current_y:00000000 current_y
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:899    .bss.current_phi:00000000 current_phi
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:892    .bss.absolute_phi:00000000 absolute_phi
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:64     .text.set_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:70     .text.set_position:00000000 set_position
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:99     .text.set_position:0000001c $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:109    .text.get_distance_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:115    .text.get_distance_to:00000000 get_distance_to
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:161    .text.get_distance_to:00000040 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:167    .text.get_arc_distance_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:173    .text.get_arc_distance_to:00000000 get_arc_distance_to
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:283    .text.get_arc_distance_to:000000a8 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:289    .text.get_angle_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:295    .text.get_angle_to:00000000 get_angle_to
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:355    .text.get_angle_to:00000050 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:361    .text.setup_wheels_spacing:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:367    .text.setup_wheels_spacing:00000000 setup_wheels_spacing
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:388    .text.setup_wheels_spacing:00000010 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:927    .bss.driven_wheels_spacing:00000000 driven_wheels_spacing
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:920    .bss.dead_wheels_spacing:00000000 dead_wheels_spacing
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:397    .text.ticks_to_distance:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:403    .text.ticks_to_distance:00000000 ticks_to_distance
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:454    .text.ticks_to_distance:00000048 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:465    .text.update_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:471    .text.update_position:00000000 update_position
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:709    .text.update_position:00000178 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:730    .text.distance_to_ticks:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:736    .text.distance_to_ticks:00000000 distance_to_ticks
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:786    .text.distance_to_ticks:00000040 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:793    .text.rad_to_deg:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:799    .text.rad_to_deg:00000000 rad_to_deg
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:832    .text.rad_to_deg:00000028 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:839    .text.deg_to_rad:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:845    .text.deg_to_rad:00000000 deg_to_rad
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:881    .text.deg_to_rad:00000028 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:889    .bss.absolute_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:896    .bss.current_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:903    .bss.current_y:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:910    .bss.current_x:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:917    .bss.dead_wheels_spacing:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s:924    .bss.driven_wheels_spacing:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d
@@ -1124,7 +1137,7 @@ __aeabi_dmul
 __aeabi_i2d
 __aeabi_ddiv
 CPR
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPcGMRG.s 			page 20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccaaU3z5.s 			page 20
 
 
 __aeabi_dadd

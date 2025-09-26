@@ -20,10 +20,11 @@ void update_position(){
 	float dL = ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L);
 	float dC = (dR+dL)/2;
 
-	current_x += dC*cos(current_phi);
-	current_y += dC*sin(current_phi);
-
+	float previous_absolute_phi = absolute_phi;
 	absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_count_L, wheel_diameter_L) )/dead_wheels_spacing;
+
+	current_x += dC*cos( ( previous_absolute_phi + absolute_phi ) / 2 );
+	current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
 
 	current_phi = absolute_phi;
 	while (current_phi > PI){
@@ -53,7 +54,7 @@ float get_distance_to(float x, float y){
 float get_arc_distance_to(float target_point__x, float target_point__y, float center_point__x, float center_point__y, float R){
 	float projection_angle = atan2(current_y - center_point__y , current_x - center_point__x);
 	float target_angle = atan2(target_point__y - center_point__y , target_point__x - center_point__x);
-	return R * fabs(projection_angle - target_angle);
+	return fabs(R * (projection_angle - target_angle));
 }
 float get_angle_to(float x, float y){
 	return atan2(y - current_y, x - current_x);

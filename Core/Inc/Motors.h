@@ -65,6 +65,7 @@ void setup_encoder_timers(TIM_HandleTypeDef* right_timer, TIM_HandleTypeDef* lef
 void setup_wheel_diameters(float right_wheel, float left_wheel);
 void update_encoder_counts();
 void set_target_speeds(float target_speed_R, float target_speed_L);
+void send_values_to_usart(float value1, float value2, float value3, float value4); // hedhi ma3andheech 3ale9a b motors ama ma3andi win n7ottha, aslan for debugging
 int32_t micros();
 
 #endif /* __MOTORS_H */

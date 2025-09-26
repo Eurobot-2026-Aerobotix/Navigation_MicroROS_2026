@@ -76,26 +76,7 @@ int move_forward(float distance, float speed){
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 		// calculating the distance to move that results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -124,26 +105,7 @@ int move_forward(float distance, float speed){
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
@@ -208,26 +170,7 @@ int move_backward(float distance, float speed){
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 		// calculating the distance to move that results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -258,26 +201,7 @@ int move_backward(float distance, float speed){
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
@@ -428,26 +352,7 @@ int rotate(float angle, int8_t is_radian){
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 
@@ -479,26 +384,7 @@ int rotate(float angle, int8_t is_radian){
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
@@ -506,7 +392,130 @@ int rotate(float angle, int8_t is_radian){
 	breaking_acceleration = old_breaking_acceleration;
 	return 0;
 }
-int move_forward_with_left_deviation(float distance, float deviation, float speed){
+int move_forward_with_deviation(float distance, float deviation, float speed){
+	// there is a lotta math going on here, can't explain it in code
+	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
+	float alpha = atan( (distance/2) / ( fabs(radius) - fabs(deviation) ) ) * SGN(deviation);
+	float arc_length = 2 * fabs(alpha * radius);
+	float arc_length_R = fabs( 2 * alpha * ( radius - dead_wheels_spacing/2) );
+	float arc_length_L = fabs( 2 * alpha * ( radius + dead_wheels_spacing/2) );
+
+	float target_point_x = current_x + distance*cos(current_phi);
+	float target_point_y = current_y + distance*sin(current_phi);
+
+	starting_phi = absolute_phi + alpha;
+	turning_radius = radius;
+
+	float center_point_x = current_x + radius*cos(current_phi - PI/2 + alpha);
+	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
+
+	rotate(alpha, 1);
+	HAL_Delay(500);
+
+	direction_R = 1;
+	direction_L = 1;
+	cruise_speed_R = speed * ( arc_length_R/arc_length );
+	cruise_speed_L = speed * ( arc_length_L/arc_length );
+
+	float x1 = speed/4; // 4 is the ramping acceleration of this specific function
+	float x2 = speed/breaking_acceleration + arc_length;
+
+	while (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
+		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
+		float intersection_speed = ramping_acceleration * intersection_x;
+		speed = 0.9 * intersection_speed;
+		x1 = speed/ramping_acceleration;
+		x2 = speed/breaking_acceleration + distance;
+		cruise_speed_R = speed * ( arc_length_R/arc_length );
+		cruise_speed_L = speed * ( arc_length_L/arc_length );
+	}
+
+	float ramping_acceleration_R = ramping_acceleration * ( arc_length_R/arc_length );
+	float ramping_acceleration_L = ramping_acceleration * ( arc_length_L/arc_length );
+	float breaking_acceleration_R = breaking_acceleration * ( arc_length_R/arc_length );
+	float breaking_acceleration_L = breaking_acceleration * ( arc_length_L/arc_length );
+
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	trajectory = CIRCLE_CURVE;
+	float lane_correction_term;
+	float phase_two_distance = 30;
+	float x = 0;
+	float distance_to_target = arc_length;
+	float previous_distance_to_target = distance_to_target;
+	while (distance_to_target > phase_two_distance){
+		x = arc_length - distance_to_target;
+		if (wheel_state_R == ACCELERATING && x > x1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && x > x2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
+			return 0;
+		}
+
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 20; // the coefficient is tunable
+		if (x < 0.1*x1){
+			lane_correction_term = 0;
+		}
+		set_target_speeds(calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R)*(1 + lane_correction_term) ,calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L)* (1 - lane_correction_term));
+		HAL_Delay(4);
+		previous_distance_to_target = distance_to_target;
+
+		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
+
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+	}
+	// completing the last part of distance separately, so the break happens on point
+	distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+	previous_distance_to_target = distance_to_target;
+	float speed_R = calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R);
+	float speed_L = calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L);
+	int32_t phase_two_start_time = micros();
+	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 50 ; // the coefficient is tunable
+		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
+		speed_R = MAX(speed_R*0.995, 0);
+		speed_L = MAX(speed_L*0.995, 0);
+		previous_distance_to_target = distance_to_target;
+		HAL_Delay(2);
+		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
+
+		if(micros() - phase_two_start_time> 4000000){
+			break;
+		}
+//		if (distance_to_target >= previous_distance_to_target + 2){
+//			stop_motors();
+//			return 1;
+//		}
+
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+	}
+	stop_motors();
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
+	return 0;
+}
+int orientate(float orientation, int8_t is_radian){
+	orientation = (is_radian)? orientation : deg_to_rad(orientation);
+	if (orientation != current_phi){
+		float angle = orientation - current_phi;
+		if (angle > PI){
+			angle -= 2*PI;
+		}else if (angle < -PI){
+			angle += 2*PI;
+		}
+		return rotate(angle, 1);
+	}
+	return 0;
+}
+int C_curve(float distance, float deviation, float target_x, float target_y, float target_phi, float speed ){
 	// there is a lotta math going on here, can't explain it in code
 	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
 	float alpha = atan( (distance/2) / ( radius - deviation ));
@@ -584,26 +593,7 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
@@ -628,45 +618,14 @@ int move_forward_with_left_deviation(float distance, float deviation, float spee
 //			return 1;
 //		}
 
-		uint8_t header1 = 0xAA;
-		uint8_t header2 = 0xAB;
-		uint8_t header3 = 0xAC;
-		uint8_t header4 = 0xAD;
-		float value1 = (float)current_speed_L;
-		float value2 = (float)current_speed_R;
-		float value3 = (float)target_speed_L;
-		float value4 = (float)target_speed_R;
-		uint8_t* bytes1 = (uint8_t*)&value1;
-		uint8_t* bytes2 = (uint8_t*)&value2;
-		uint8_t* bytes3 = (uint8_t*)&value3;
-		uint8_t* bytes4 = (uint8_t*)&value4;
-		HAL_UART_Transmit(&huart2, &header1, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
-		HAL_UART_Transmit(&huart2, &header2, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
-		HAL_UART_Transmit(&huart2, &header3, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
-		HAL_UART_Transmit(&huart2, &header4, 1, 10);
-		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
 }
-int orientate(float orientation, int8_t is_radian){
-	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	if (orientation != current_phi){
-		float angle = orientation - current_phi;
-		if (angle > PI){
-			angle -= 2*PI;
-		}else if (angle < -PI){
-			angle += 2*PI;
-		}
-		return rotate(angle, 1);
-	}
-	return 0;
-}
+
 int go_to(float x, float y, float speed){
 	if ( orientate( get_angle_to(x, y), 1 ) ){
 		return 1;
