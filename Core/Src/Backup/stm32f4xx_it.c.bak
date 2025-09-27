@@ -234,7 +234,7 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
   /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 0 */
   HAL_TIM_IRQHandler(&htim14);
   /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
-  ulHighFrequencyTimerTicks++;
+  //ulHighFrequencyTimerTicks++;
 
   /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
 }

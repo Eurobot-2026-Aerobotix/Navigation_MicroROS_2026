@@ -201,10 +201,12 @@ libmicroros/uros_include/statistics_msgs/statistics_msgs/msg/detail \
 libmicroros/uros_include/std_msgs/std_msgs/msg/detail \
 libmicroros/uros_include/std_srvs/std_srvs/srv/detail \
 libmicroros/uros_include/stereo_msgs/stereo_msgs/msg/detail \
-. \
 libmicroros/uros_include/test_msgs/test_msgs/action/detail \
 libmicroros/uros_include/test_msgs/test_msgs/msg/detail \
 libmicroros/uros_include/test_msgs/test_msgs/srv/detail \
 libmicroros/uros_include/trajectory_msgs/trajectory_msgs/msg/detail \
 libmicroros/uros_include/unique_identifier_msgs/unique_identifier_msgs/msg/detail \
+libmicroros/uros_include/visualization_msgs/visualization_msgs/msg/detail \
+libmicroros/uros_include/visualization_msgs/visualization_msgs/srv/detail \
+. \
 

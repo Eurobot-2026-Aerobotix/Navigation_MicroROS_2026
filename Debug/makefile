@@ -9,6 +9,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include libmicroros/uros_include/visualization_msgs/visualization_msgs/srv/detail/subdir.mk
+-include libmicroros/uros_include/visualization_msgs/visualization_msgs/msg/detail/subdir.mk
 -include libmicroros/uros_include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/subdir.mk
 -include libmicroros/uros_include/trajectory_msgs/trajectory_msgs/msg/detail/subdir.mk
 -include libmicroros/uros_include/test_msgs/test_msgs/srv/detail/subdir.mk

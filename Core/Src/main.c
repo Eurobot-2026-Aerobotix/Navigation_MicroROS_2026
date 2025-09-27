@@ -233,6 +233,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 3000 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for navigation */
+osThreadId_t navigationHandle;
+const osThreadAttr_t navigation_attributes = {
+  .name = "navigation",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal7,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -249,6 +256,7 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM14_Init(void);
 static void MX_TIM5_Init(void);
 void StartDefaultTask(void *argument);
+void StartTask02(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -288,7 +296,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM1_Init();
@@ -298,7 +305,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   MX_TIM5_Init();
-
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
@@ -451,6 +457,9 @@ int main(void)
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
+  /* creation of navigation */
+  navigationHandle = osThreadNew(StartTask02, NULL, &navigation_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -460,7 +469,6 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
-
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
@@ -760,7 +768,6 @@ static void MX_TIM7_Init(void)
   /* USER CODE BEGIN TIM7_Init 1 */
   __HAL_RCC_TIM7_CLK_ENABLE();
   /* USER CODE END TIM7_Init 1 */
-
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 83;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -982,6 +989,24 @@ void StartDefaultTask(void *argument)
 	 osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartTask02 */
+/**
+* @brief Function implementing the navigation thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask02 */
+void StartTask02(void *argument)
+{
+  /* USER CODE BEGIN StartTask02 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartTask02 */
 }
 
 /**
