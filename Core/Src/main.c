@@ -178,6 +178,19 @@ void service_callback(const void *request_msg, void *response_msg) {
 
     			    	  		}
 }
+void publisher_task(void *argument) {
+    geometry_msgs__msg__Vector3 pose_msg;
+
+    for (;;) {
+        // Get pose data
+        pose_msg.x = current_x;       // Replace with actual function
+        pose_msg.y = current_y;
+        pose_msg.z =current_phi;   // Store θ in z
+
+        rcl_publish(&pose_publisher, &pose_msg, NULL);
+        osDelay(1500);  // Adjust as needed
+    }
+}
 
 /*void bool_subscriber_callback(const void *msg_in) {
     const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
@@ -334,7 +347,7 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-//  activated = 1;
+  activated = 1;
 //  circle_curve(500, -500, -PI/1.5, 300);
 //  HAL_Delay(1500);
 //  orientate(90, 0);
@@ -953,12 +966,12 @@ void StartDefaultTask(void *argument)
 	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
 	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
 
-	   /* const osThreadAttr_t pubTask_attributes = {
+	    const osThreadAttr_t pubTask_attributes = {
 	        .name = "posePubTask",
 	        .stack_size = 256 * 4,  // Adjust if needed
 	        .priority = (osPriority_t) osPriorityNormal,
 	    };
-	    osThreadNew(publisher_task, NULL, &pubTask_attributes);*/
+	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
 
 
 	    //  Keep ROS 2 Running
