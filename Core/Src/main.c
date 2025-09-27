@@ -334,8 +334,8 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-  activated = 1;
-  circle_curve(500, -500, -PI/1.5, 300);
+//  activated = 1;
+//  circle_curve(500, -500, -PI/1.5, 300);
 //  HAL_Delay(1500);
 //  orientate(90, 0);
 //  HAL_Delay(500);
