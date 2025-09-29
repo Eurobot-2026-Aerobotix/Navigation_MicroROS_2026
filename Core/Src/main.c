@@ -1007,7 +1007,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			debugger_2 = error;
 			speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
 			speed_integral_R += error*(tmp/1000000);
-			speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+			//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+
 			//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
 
 			previous_speed_error_R = error;
@@ -1016,11 +1017,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
 			PWM_R = (target_speed_R == 0)?0: PWM_R;
 
+			speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
+
 			// left motor speed control
 			error = target_speed_L - current_speed_L;
 			speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
 			speed_integral_L += error*(tmp/1000000);
-			speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+			//speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+
 			//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
 
 			previous_speed_error_L = error;
@@ -1029,6 +1033,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
 			PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
 			PWM_L = (target_speed_L == 0)?0: PWM_L;
+
+			speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
 		}else{
 			PWM_L = 0;
 			PWM_R = 0;
