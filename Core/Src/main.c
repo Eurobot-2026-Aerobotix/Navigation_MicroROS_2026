@@ -38,7 +38,7 @@
 #include "Motors.h"
 #include "Odometry.h"
 #include "navigation.h"
-
+#include "state_machine.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,82 +101,86 @@ float previous_speed_error_L = 0;
 float speed_integral_limit = 10000;
 int32_t previous_speed_control_time = 0;
 
-
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
 
-    switch ((int)req_in->arg1) {
-    			    	  		    case 0 :
-    			    	  		    	for (int i = 0; i < 5; i++)  // Blink 10 times
-    			    	  		    	{
-    			    	  		    	    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    			    	  		    	    osDelay(500);  // 500 ms ON/OFF cycle
-    			    	  		    	}
-    			    	  		    	res_out->result = true;
-    			    	  			    break;
-									 case 1:
-										first_forward_recieved = 1;
-										res_out->result = move_forward(req_in->arg2, req_in->arg3)? false : true;// distance, speed
-										break;
+    switch((int)req_in->arg1) {
+        case 1: // Move forward
+            state_machine_set_state(MOVING_FORWARD, req_in->arg2, req_in->arg3, req_in->arg4, 0, 0, 0, 0, 0, 0); // distance, speed, deviation
+            res_out->result = true;
+            break;
 
-									 case 2:
-										res_out->result = move_backward(req_in->arg2, req_in->arg3)? false : true;  // distance, speed
-										break;
+        case 2: // Move backward
+            state_machine_set_state(MOVING_BACKWARD, req_in->arg2, req_in->arg3, 0, 0, 0, 0, 0, 0, 0); // distance, speed
+            res_out->result = true;
+            break;
 
-									 case 3:
-										res_out->result = rotate(req_in->arg2, req_in->arg3)? false : true;  // angle, is_radian
-										break;
+        case 3: // Turn robot
+            state_machine_set_state(ROTATING, req_in->arg2, req_in->arg3, 0, 0, 0, 0, 0, 0, 0); // angle, speed
+            res_out->result = true;
+            break;
 
-									 case 4:
-										res_out->result = orientate(req_in->arg2, req_in->arg3)? false : true;  // orientation, is_radian
-										break;
+        case 4: // Stop motors
+            state_machine_set_state(EMERGENCY_STOP, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            res_out->result = true;
+            break;
 
-									 case 5:
-										res_out->result = go_to(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // x, y, speed
-										break;
+        case 5: // Go to position
+            state_machine_set_state(GOTO_POSITION, req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5, 0, 0, 0, 0, 0); // x, y, phi, speed
+            res_out->result = true;
+            break;
 
-									 case 6:
-										current_speed_R = 0;
-										current_speed_L = 0;
-										previous_speed_R = 0;
-										previous_speed_L = 0;
-										target_speed_R = 0;
-										target_speed_L = 0;
-										current_acceleration_R = 0;
-										current_acceleration_L = 0;
-										previous_speed_calculation_time = 0;
+        case 6: // Circle curve
+            state_machine_set_state(CURVE, req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5, 0, 0, 0, 0, 0); // target_x, target_y, target_phi, speed
+            res_out->result = true;
+            break;
 
-										speed_integral_R = 0;
-										speed_derivative_R = 0;
-										previous_speed_error_R = 0;
-										speed_integral_L = 0;
-										speed_derivative_L = 0;
-										previous_speed_error_L = 0;
+        case 7: // Reset position
+        	current_speed_R = 0;
+			current_speed_L = 0;
+			previous_speed_R = 0;
+			previous_speed_L = 0;
+			target_speed_R = 0;
+			target_speed_L = 0;
+			current_acceleration_R = 0;
+			current_acceleration_L = 0;
+			previous_speed_calculation_time = 0;
 
-										PWM_R = 0;
-										PWM_L = 0;
-										activated = 1 - activated;
-										res_out->result = (activated)? true: false; // activate/deactivate STM
-										break;
+			speed_integral_R = 0;
+			speed_derivative_R = 0;
+			previous_speed_error_R = 0;
+			speed_integral_L = 0;
+			speed_derivative_L = 0;
+			previous_speed_error_L = 0;
 
-									 case 7:
-										res_out->result = (first_forward_recieved)? true: false;
-										break;
+			PWM_R = 0;
+			PWM_L = 0;
+			activated = 1 - activated;
+			res_out->result = (activated)? true: false; // activate/deactivate STM
+            break;
 
-									 case 8:
-										res_out->result = move_forward_with_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
-										break;
+        case 8: // Activate/Deactivate
+            activated = 1 - activated;
+            res_out->result = (activated) ? true : false;
+            break;
 
-									 case 9:
-										res_out->result = circle_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5)? false : true;  // target_x, target_y, target_phi, speed
-										break;
+        case 9: // Check if robot is busy
+            res_out->result = state_machine_is_busy() ? true : false;
+            break;
 
-									 default:
-										  res_out->result = false;
-										  break;
+        case 10: // Check if operation is complete
+            res_out->result = state_machine_is_complete() ? true : false;
+            break;
 
-    			    	  		}
+        case 11: // Get current state
+            res_out->result = (robot_state_machine.current_state == COMPLETED) ? true : false;
+            break;
+
+        default:
+            res_out->result = false;
+            break;
+    }
 }
 void publisher_task(void *argument) {
     geometry_msgs__msg__Vector3 pose_msg;
@@ -233,13 +237,6 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 3000 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for navigation */
-osThreadId_t navigationHandle;
-const osThreadAttr_t navigation_attributes = {
-  .name = "navigation",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal7,
-};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -256,7 +253,6 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM14_Init(void);
 static void MX_TIM5_Init(void);
 void StartDefaultTask(void *argument);
-void StartTask02(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -264,6 +260,16 @@ void StartTask02(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void state_machine_task_thread(void *argument) {
+    state_machine_init();
+
+    for (;;) {
+        if (activated) {
+            state_machine_task();
+        }
+        osDelay(10); // Run at 100Hz
+    }
+}
 
 /* USER CODE END 0 */
 
@@ -476,9 +482,6 @@ int main(void)
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
-
-  /* creation of navigation */
-  navigationHandle = osThreadNew(StartTask02, NULL, &navigation_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -958,76 +961,56 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	 // Set Micro-ROS transport
-	    rmw_uros_set_custom_transport(true, (void *)&huart2,
-	        cubemx_transport_open, cubemx_transport_close,
-	        cubemx_transport_write, cubemx_transport_read);
+    // Set Micro-ROS transport
+    rmw_uros_set_custom_transport(true, (void *)&huart2,
+        cubemx_transport_open, cubemx_transport_close,
+        cubemx_transport_write, cubemx_transport_read);
 
-	    // Init ROS 2
-	    allocator = rcl_get_default_allocator();
-	    rclc_support_init(&support, 0, NULL, &allocator);
-	    rclc_node_init_default(&node, "cubemx_node", "", &support);
+    // Init ROS 2
+    allocator = rcl_get_default_allocator();
+    rclc_support_init(&support, 0, NULL, &allocator);
+    rclc_node_init_default(&node, "cubemx_node", "", &support);
 
-	    //  Initialize the Publisher
-	    rclc_publisher_init_default(
-	        &pose_publisher,
-	        &node,
-	        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
-	        "/pose_topic"
-	    );
-	   /* //  Initialize the Subscriber
-	        rclc_subscription_init_default(
-	            &bool_subscriber,
-	            &node,
-	            ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
-	            "/bool_topic"
-	        );*/
+    // Initialize the Publisher
+    rclc_publisher_init_default(
+        &pose_publisher,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
+        "/pose_topic"
+    );
 
-	    //  initialize the Service
-	    const rosidl_message_type_support_t *service_type_support =
-	        ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
-	    rclc_service_init_default(&service, &node, service_type_support, "/stm/navi_stm");
+    // initialize the Service
+    const rosidl_message_type_support_t *service_type_support =
+        ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
+    rclc_service_init_default(&service, &node, service_type_support, "/stm/navi_stm");
 
-	    //  executor for handling both service and publisher
-	    rclc_executor_init(&executor, &support.context, 15, &allocator);
-	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
-	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
+    // executor for handling both service and publisher
+    rclc_executor_init(&executor, &support.context, 15, &allocator);
+    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
 
-	    const osThreadAttr_t pubTask_attributes = {
-	        .name = "posePubTask",
-	        .stack_size = 256 * 4,  // Adjust if needed
-	        .priority = (osPriority_t) osPriorityNormal,
-	    };
-	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
+    // Create publisher task
+    const osThreadAttr_t pubTask_attributes = {
+        .name = "posePubTask",
+        .stack_size = 256 * 4,
+        .priority = (osPriority_t) osPriorityNormal,
+    };
+    osThreadNew(publisher_task, NULL, &pubTask_attributes);
 
+    // Create state machine task
+    const osThreadAttr_t stateTask_attributes = {
+        .name = "stateMachineTask",
+        .stack_size = 512 * 4,
+        .priority = (osPriority_t) osPriorityHigh,
+    };
+    osThreadNew(state_machine_task_thread, NULL, &stateTask_attributes);
 
-	    //  Keep ROS 2 Running
-  /* Infinite loop */
-  for(;;)
-  {
-	  rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
-
-	 osDelay(1);
-  }
+    // Keep ROS 2 Running
+    for(;;)
+    {
+        rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+        osDelay(1);
+    }
   /* USER CODE END 5 */
-}
-
-/* USER CODE BEGIN Header_StartTask02 */
-/**
-* @brief Function implementing the navigation thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask02 */
-void StartTask02(void *argument)
-{
-  /* USER CODE BEGIN StartTask02 */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartTask02 */
 }
 
 /**

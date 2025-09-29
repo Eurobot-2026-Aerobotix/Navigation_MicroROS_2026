@@ -1,0 +1,114 @@
+#include "state_machine.h"
+#include "navigation.h"
+
+// Global state machine instance
+state_machine robot_state_machine;
+
+void state_machine_init(void) {
+    robot_state_machine.current_state = IDLE;
+    robot_state_machine.execution_complete = 1;
+    robot_state_machine.param1 = 0;
+    robot_state_machine.param2 = 0;
+    robot_state_machine.param3 = 0;
+    robot_state_machine.param4 = 0;
+    robot_state_machine.param5 = 0;
+    robot_state_machine.param6 = 0;
+    robot_state_machine.param7 = 0;
+    robot_state_machine.param8 = 0;
+    robot_state_machine.param9 = 0;
+}
+
+void state_machine_set_state(robot_state_t new_state, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float p9) {
+    robot_state_machine.current_state = new_state;
+    robot_state_machine.param1 = p1;
+    robot_state_machine.param2 = p2;
+    robot_state_machine.param3 = p3;
+    robot_state_machine.param4 = p4;
+    robot_state_machine.param5 = p5;
+    robot_state_machine.param6 = p6;
+    robot_state_machine.param7 = p7;
+    robot_state_machine.param8 = p8;
+    robot_state_machine.param9 = p9;
+    robot_state_machine.execution_complete = 0;
+}
+
+uint8_t state_machine_is_busy(void) {
+    return (robot_state_machine.current_state != IDLE && 
+            robot_state_machine.current_state != COMPLETED &&
+            robot_state_machine.current_state != ERROR);
+}
+
+uint8_t state_machine_is_complete(void) {
+    return robot_state_machine.execution_complete;
+}
+
+void state_machine_task(void) {
+    switch (robot_state_machine.current_state) {
+        case IDLE:
+            // Robot is idle, do nothing
+            robot_state_machine.execution_complete = 1;
+            break;
+
+        case MOVING_FORWARD:
+            // Execute move forward - using param1 (distance), param2 (speed), param3 (deviation if needed)
+            if (move_forward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
+                robot_state_machine.current_state = COMPLETED;
+                robot_state_machine.execution_complete = 1;
+            }
+            break;
+
+        case MOVING_BACKWARD:
+            // Execute move backward - using param1 (distance), param2 (speed)
+            if (move_backward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
+                robot_state_machine.current_state = COMPLETED;
+                robot_state_machine.execution_complete = 1;
+            }
+            break;
+
+        case ROTATING:
+            // Execute rotation - using param1 (angle), param2 (speed)
+            if (turn_robot(robot_state_machine.param1, robot_state_machine.param2) == 0) {
+                robot_state_machine.current_state = COMPLETED;
+                robot_state_machine.execution_complete = 1;
+            }
+            break;
+
+        case CURVE:
+            // Execute curve movement - using param1 (target_x), param2 (target_y), param3 (target_phi), param4 (speed)
+            if (circle_curve(robot_state_machine.param1, robot_state_machine.param2, 
+                           robot_state_machine.param3, robot_state_machine.param4) == 0) {
+                robot_state_machine.current_state = COMPLETED;
+                robot_state_machine.execution_complete = 1;
+            }
+            break;
+
+        case GOTO_POSITION:
+            // Execute goto position - using param1 (x), param2 (y), param3 (phi), param4 (speed)
+            if (go_to(robot_state_machine.param1, robot_state_machine.param2, 
+                     robot_state_machine.param3, robot_state_machine.param4) == 0) {
+                robot_state_machine.current_state = COMPLETED;
+                robot_state_machine.execution_complete = 1;
+            }
+            break;
+
+        case EMERGENCY_STOP:
+            // Emergency stop
+            stop_motors();
+            robot_state_machine.current_state = COMPLETED;
+            robot_state_machine.execution_complete = 1;
+            break;
+
+        case COMPLETED:
+            // Operation completed successfully
+            break;
+
+        case ERROR:
+            // Handle error state
+            stop_motors();
+            break;
+
+        default:
+            robot_state_machine.current_state = ERROR;
+            break;
+    }
+}

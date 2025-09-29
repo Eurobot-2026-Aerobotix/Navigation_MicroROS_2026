@@ -38,7 +38,7 @@
 #include "Motors.h"
 #include "Odometry.h"
 #include "navigation.h"
-
+#include "state_machine.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,82 +101,67 @@ float previous_speed_error_L = 0;
 float speed_integral_limit = 10000;
 int32_t previous_speed_control_time = 0;
 
-
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
 
-    switch ((int)req_in->arg1) {
-    			    	  		    case 0 :
-    			    	  		    	for (int i = 0; i < 5; i++)  // Blink 10 times
-    			    	  		    	{
-    			    	  		    	    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    			    	  		    	    osDelay(500);  // 500 ms ON/OFF cycle
-    			    	  		    	}
-    			    	  		    	res_out->result = true;
-    			    	  			    break;
-									 case 1:
-										first_forward_recieved = 1;
-										res_out->result = move_forward(req_in->arg2, req_in->arg3)? false : true;// distance, speed
-										break;
+    switch(req_in->arg1) {
+        case 1: // Move forward
+            state_machine_set_state(MOVING_FORWARD, req_in->arg2, req_in->arg3, req_in->arg4, 0, 0, 0, 0, 0, 0); // distance, speed, deviation
+            res_out->result = true;
+            break;
 
-									 case 2:
-										res_out->result = move_backward(req_in->arg2, req_in->arg3)? false : true;  // distance, speed
-										break;
+        case 2: // Move backward
+            state_machine_set_state(MOVING_BACKWARD, req_in->arg2, req_in->arg3, 0, 0, 0, 0, 0, 0, 0); // distance, speed
+            res_out->result = true;
+            break;
 
-									 case 3:
-										res_out->result = rotate(req_in->arg2, req_in->arg3)? false : true;  // angle, is_radian
-										break;
+        case 3: // Turn robot
+            state_machine_set_state(ROTATING, req_in->arg2, req_in->arg3, 0, 0, 0, 0, 0, 0, 0); // angle, speed
+            res_out->result = true;
+            break;
 
-									 case 4:
-										res_out->result = orientate(req_in->arg2, req_in->arg3)? false : true;  // orientation, is_radian
-										break;
+        case 4: // Stop motors
+            state_machine_set_state(EMERGENCY_STOP, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            res_out->result = true;
+            break;
 
-									 case 5:
-										res_out->result = go_to(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // x, y, speed
-										break;
+        case 5: // Go to position
+            state_machine_set_state(GOTO_POSITION, req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5, 0, 0, 0, 0, 0); // x, y, phi, speed
+            res_out->result = true;
+            break;
 
-									 case 6:
-										current_speed_R = 0;
-										current_speed_L = 0;
-										previous_speed_R = 0;
-										previous_speed_L = 0;
-										target_speed_R = 0;
-										target_speed_L = 0;
-										current_acceleration_R = 0;
-										current_acceleration_L = 0;
-										previous_speed_calculation_time = 0;
+        case 6: // Circle curve
+            state_machine_set_state(CURVE, req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5, 0, 0, 0, 0, 0); // target_x, target_y, target_phi, speed
+            res_out->result = true;
+            break;
 
-										speed_integral_R = 0;
-										speed_derivative_R = 0;
-										previous_speed_error_R = 0;
-										speed_integral_L = 0;
-										speed_derivative_L = 0;
-										previous_speed_error_L = 0;
+        case 7: // Reset position
+            reset_odometry_position(req_in->arg2, req_in->arg3, req_in->arg4);
+            res_out->result = true;
+            break;
 
-										PWM_R = 0;
-										PWM_L = 0;
-										activated = 1 - activated;
-										res_out->result = (activated)? true: false; // activate/deactivate STM
-										break;
+        case 8: // Activate/Deactivate
+            activated = 1 - activated;
+            res_out->result = (activated) ? true : false;
+            break;
 
-									 case 7:
-										res_out->result = (first_forward_recieved)? true: false;
-										break;
+        case 9: // Check if robot is busy
+            res_out->result = state_machine_is_busy() ? true : false;
+            break;
 
-									 case 8:
-										res_out->result = move_forward_with_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
-										break;
+        case 10: // Check if operation is complete
+            res_out->result = state_machine_is_complete() ? true : false;
+            break;
 
-									 case 9:
-										res_out->result = circle_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5)? false : true;  // target_x, target_y, target_phi, speed
-										break;
+        case 11: // Get current state
+            res_out->result = (robot_state_machine.current_state == COMPLETED) ? true : false;
+            break;
 
-									 default:
-										  res_out->result = false;
-										  break;
-
-    			    	  		}
+        default:
+            res_out->result = false;
+            break;
+    }
 }
 void publisher_task(void *argument) {
     geometry_msgs__msg__Vector3 pose_msg;
@@ -185,7 +170,7 @@ void publisher_task(void *argument) {
         // Get pose data
         pose_msg.x = current_x;       // Replace with actual function
         pose_msg.y = current_y;
-        pose_msg.z =current_phi;   // Store θ in z
+        pose_msg.z = current_phi;   // Store θ in z
 
         rcl_publish(&pose_publisher, &pose_msg, NULL);
         osDelay(1500);  // Adjust as needed
@@ -288,7 +273,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM1_Init();
@@ -298,7 +282,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   MX_TIM5_Init();
-
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
@@ -347,8 +330,28 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-  activated = 1;
-//  circle_curve(500, -500, -PI/1.5, 300);
+//  activated = 1;
+//  HAL_Delay(1000);
+//  set_target_speeds(200, 200);
+//  for(int i=0; i < 200; i++){
+//	  send_values_to_usarst(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+//	  HAL_Delay(10);
+//  }
+//  set_target_speeds(0, 0);
+
+//  activated = 1;
+//  HAL_Delay(2000);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  go_to(100, 250, 200);
+//  HAL_Delay(500);
+//  go_to(100, -500, 300);
+//  HAL_Delay(500);
+//  orientate(62, 0);
+//  HAL_Delay(500);
+//  circle_curve(456.0, -710.0, 0, 300);
+
+
 //  HAL_Delay(1500);
 //  orientate(90, 0);
 //  HAL_Delay(500);
@@ -359,7 +362,7 @@ int main(void)
 //  orientate(180, 0);
 
 //  HAL_Delay(1500);
-//  move_forward_with_left_deviation(600, 200, 350);
+//  move_forward_with_deviation(600, 200, 350);
 //  HAL_Delay(500);
 //  orientate(0, 0);
 
@@ -460,7 +463,6 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
-
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
@@ -760,7 +762,6 @@ static void MX_TIM7_Init(void)
   /* USER CODE BEGIN TIM7_Init 1 */
   __HAL_RCC_TIM7_CLK_ENABLE();
   /* USER CODE END TIM7_Init 1 */
-
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 83;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -979,11 +980,22 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 	  rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+
 	 osDelay(1);
   }
+
   /* USER CODE END 5 */
 }
+void state_machine_task_thread(void *argument) {
+    state_machine_init();
 
+    for (;;) {
+        if (activated) {
+            state_machine_task();
+        }
+        osDelay(10); // Run at 100Hz
+    }
+}
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM2 interrupt took place, inside
@@ -1007,7 +1019,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			debugger_2 = error;
 			speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
 			speed_integral_R += error*(tmp/1000000);
-			speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+			//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+
 			//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
 
 			previous_speed_error_R = error;
@@ -1016,11 +1029,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
 			PWM_R = (target_speed_R == 0)?0: PWM_R;
 
+			speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
+
 			// left motor speed control
 			error = target_speed_L - current_speed_L;
 			speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
 			speed_integral_L += error*(tmp/1000000);
-			speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+			//speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+
 			//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
 
 			previous_speed_error_L = error;
@@ -1029,6 +1045,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
 			PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
 			PWM_L = (target_speed_L == 0)?0: PWM_L;
+
+			speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
 		}else{
 			PWM_L = 0;
 			PWM_R = 0;
