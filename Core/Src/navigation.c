@@ -502,7 +502,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 }
 int orientate(float orientation, int8_t is_radian){
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	if (orientation != current_phi){
+	if (abs(orientation - current_phi) > deg_to_rad(0.5) ){
 		float angle = orientation - current_phi;
 		if (angle > PI){
 			angle -= 2*PI;
@@ -515,7 +515,7 @@ int orientate(float orientation, int8_t is_radian){
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	// there is a lotta math going on here, can't explain it in code
-	float trajectory_phi = atan( (target_x - current_x) / (target_y - current_y) );
+	float trajectory_phi = atan( (target_y - current_y) / (target_x - current_x) ); // -30
 	float alpha = trajectory_phi - target_phi;
 	float distance = get_distance_to(target_x, target_y);
 	float radius = distance / ( 2*sin(alpha) );
@@ -523,13 +523,15 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float arc_length_R = 2 * fabs( alpha * ( radius - dead_wheels_spacing/2) );
 	float arc_length_L = 2 * fabs( alpha * ( radius + dead_wheels_spacing/2) );
 
-	starting_phi = absolute_phi - (current_phi - trajectory_phi) + alpha;
+	starting_phi = 2*trajectory_phi - target_phi + (absolute_phi - current_phi); // the part between paratheses is to offset the phi to make it in the prespective of absolute phi not current_phi
+
+	// !!!!!!!!!!!!!! el mochkla men starting phi, 9a3da tabda fi blasa bi 7aythou l get instant phi mahich s7i7a
 	turning_radius = radius;
 
 	float center_point_x = target_x + radius*cos(target_phi - PI/2 );
 	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
 
-	orientate(starting_phi, 1);
+	orientate( 2*trajectory_phi - target_phi , 1);
 	HAL_Delay(500);
 
 	direction_R = 1;

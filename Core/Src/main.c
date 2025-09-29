@@ -185,7 +185,7 @@ void publisher_task(void *argument) {
         // Get pose data
         pose_msg.x = current_x;       // Replace with actual function
         pose_msg.y = current_y;
-        pose_msg.z =current_phi;   // Store θ in z
+        pose_msg.z = current_phi;   // Store θ in z
 
         rcl_publish(&pose_publisher, &pose_msg, NULL);
         osDelay(1500);  // Adjust as needed
@@ -353,8 +353,28 @@ int main(void)
   PWM_L = 0;
   activated = 0;
 
-  activated = 1;
-//  circle_curve(500, -500, -PI/1.5, 300);
+//  activated = 1;
+//  HAL_Delay(1000);
+//  set_target_speeds(200, 200);
+//  for(int i=0; i < 200; i++){
+//	  send_values_to_usarst(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+//	  HAL_Delay(10);
+//  }
+//  set_target_speeds(0, 0);
+
+//  activated = 1;
+//  HAL_Delay(2000);
+//  move_forward(100, 300);
+//  HAL_Delay(500);
+//  go_to(100, 250, 200);
+//  HAL_Delay(500);
+//  go_to(100, -500, 300);
+//  HAL_Delay(500);
+//  orientate(62, 0);
+//  HAL_Delay(500);
+//  circle_curve(456.0, -710.0, 0, 300);
+
+
 //  HAL_Delay(1500);
 //  orientate(90, 0);
 //  HAL_Delay(500);
@@ -365,7 +385,7 @@ int main(void)
 //  orientate(180, 0);
 
 //  HAL_Delay(1500);
-//  move_forward_with_left_deviation(600, 200, 350);
+//  move_forward_with_deviation(600, 200, 350);
 //  HAL_Delay(500);
 //  orientate(0, 0);
 
@@ -986,6 +1006,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 	  rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+
 	 osDelay(1);
   }
   /* USER CODE END 5 */
@@ -1032,7 +1053,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			debugger_2 = error;
 			speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
 			speed_integral_R += error*(tmp/1000000);
-			speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+			//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+
 			//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
 
 			previous_speed_error_R = error;
@@ -1041,11 +1063,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
 			PWM_R = (target_speed_R == 0)?0: PWM_R;
 
+			speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
+
 			// left motor speed control
 			error = target_speed_L - current_speed_L;
 			speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
 			speed_integral_L += error*(tmp/1000000);
-			speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+			//speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+
 			//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
 
 			previous_speed_error_L = error;
@@ -1054,6 +1079,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
 			PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
 			PWM_L = (target_speed_L == 0)?0: PWM_L;
+
+			speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
 		}else{
 			PWM_L = 0;
 			PWM_R = 0;
