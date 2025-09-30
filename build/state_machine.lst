@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 1
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 1
   46 000c 5A60     		str	r2, [r3, #4]	@ float
   11:Core/Src/state_machine.c ****     robot_state_machine.param2 = 0;
   47              		.loc 1 11 5 is_stmt 1 view .LVU7
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 2
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 2
 
 
   48              		.loc 1 11 32 is_stmt 0 view .LVU8
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 1
   94              		@ link register save eliminated.
   22:Core/Src/state_machine.c ****     robot_state_machine.current_state = new_state;
   95              		.loc 1 22 5 view .LVU25
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 3
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 3
 
 
   96              		.loc 1 22 39 is_stmt 0 view .LVU26
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 1
  140              		.align	1
  141              		.global	state_machine_is_busy
  142              		.syntax unified
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 4
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 4
 
 
  143              		.thumb
@@ -195,453 +195,397 @@ ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 1
   36:Core/Src/state_machine.c ****     return (robot_state_machine.current_state != IDLE && 
  153              		.loc 1 36 5 view .LVU49
  154              		.loc 1 36 32 is_stmt 0 view .LVU50
- 155 0000 074B     		ldr	r3, .L13
+ 155 0000 054B     		ldr	r3, .L12
  156 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-  37:Core/Src/state_machine.c ****             robot_state_machine.current_state != COMPLETED &&
- 157              		.loc 1 37 60 view .LVU51
- 158 0004 3BB1     		cbz	r3, .L9
-  36:Core/Src/state_machine.c ****     return (robot_state_machine.current_state != IDLE && 
- 159              		.loc 1 36 55 view .LVU52
+ 157              		.loc 1 36 55 view .LVU51
+ 158 0004 2BB1     		cbz	r3, .L9
+ 159              		.loc 1 36 55 discriminator 1 view .LVU52
  160 0006 072B     		cmp	r3, #7
- 161 0008 07D0     		beq	.L10
- 162              		.loc 1 37 60 discriminator 4 view .LVU53
- 163 000a 012B     		cmp	r3, #1
- 164 000c 01D0     		beq	.L12
- 165              		.loc 1 37 60 discriminator 3 view .LVU54
- 166 000e 0120     		movs	r0, #1
-  38:Core/Src/state_machine.c ****             robot_state_machine.current_state != ERROR);
-  39:Core/Src/state_machine.c **** }
- 167              		.loc 1 39 1 view .LVU55
- 168 0010 7047     		bx	lr
- 169              	.L12:
-  37:Core/Src/state_machine.c ****             robot_state_machine.current_state != COMPLETED &&
- 170              		.loc 1 37 60 discriminator 2 view .LVU56
+ 161 0008 01D0     		beq	.L11
+ 162              		.loc 1 36 55 discriminator 3 view .LVU53
+ 163 000a 0120     		movs	r0, #1
+  37:Core/Src/state_machine.c ****             robot_state_machine.current_state != COMPLETED );
+  38:Core/Src/state_machine.c **** }
+ 164              		.loc 1 38 1 view .LVU54
+ 165 000c 7047     		bx	lr
+ 166              	.L11:
+  36:Core/Src/state_machine.c ****     return (robot_state_machine.current_state != IDLE && 
+ 167              		.loc 1 36 55 discriminator 4 view .LVU55
+ 168 000e 0020     		movs	r0, #0
+ 169 0010 7047     		bx	lr
+ 170              	.L9:
  171 0012 0020     		movs	r0, #0
  172 0014 7047     		bx	lr
- 173              	.L9:
- 174 0016 0020     		movs	r0, #0
- 175 0018 7047     		bx	lr
- 176              	.L10:
- 177 001a 0020     		movs	r0, #0
- 178 001c 7047     		bx	lr
- 179              	.L14:
- 180 001e 00BF     		.align	2
- 181              	.L13:
- 182 0020 00000000 		.word	robot_state_machine
- 183              		.cfi_endproc
- 184              	.LFE136:
- 186              		.section	.text.state_machine_is_complete,"ax",%progbits
- 187              		.align	1
- 188              		.global	state_machine_is_complete
- 189              		.syntax unified
- 190              		.thumb
- 191              		.thumb_func
- 193              	state_machine_is_complete:
- 194              	.LFB137:
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 5
+ 173              	.L13:
+ 174 0016 00BF     		.align	2
+ 175              	.L12:
+ 176 0018 00000000 		.word	robot_state_machine
+ 177              		.cfi_endproc
+ 178              	.LFE136:
+ 180              		.section	.text.state_machine_is_complete,"ax",%progbits
+ 181              		.align	1
+ 182              		.global	state_machine_is_complete
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	state_machine_is_complete:
+ 188              	.LFB137:
+  39:Core/Src/state_machine.c **** 
+  40:Core/Src/state_machine.c **** uint8_t state_machine_is_complete(void) {
+ 189              		.loc 1 40 41 is_stmt 1 view -0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193              		@ link register save eliminated.
+  41:Core/Src/state_machine.c ****     return robot_state_machine.execution_complete;
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 5
 
 
-  40:Core/Src/state_machine.c **** 
-  41:Core/Src/state_machine.c **** uint8_t state_machine_is_complete(void) {
- 195              		.loc 1 41 41 is_stmt 1 view -0
- 196              		.cfi_startproc
- 197              		@ args = 0, pretend = 0, frame = 0
- 198              		@ frame_needed = 0, uses_anonymous_args = 0
- 199              		@ link register save eliminated.
-  42:Core/Src/state_machine.c ****     return robot_state_machine.execution_complete;
- 200              		.loc 1 42 5 view .LVU58
-  43:Core/Src/state_machine.c **** }
- 201              		.loc 1 43 1 is_stmt 0 view .LVU59
- 202 0000 014B     		ldr	r3, .L16
- 203 0002 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 204 0004 7047     		bx	lr
- 205              	.L17:
- 206 0006 00BF     		.align	2
- 207              	.L16:
- 208 0008 00000000 		.word	robot_state_machine
- 209              		.cfi_endproc
- 210              	.LFE137:
- 212              		.section	.text.state_machine_task,"ax",%progbits
- 213              		.align	1
- 214              		.global	state_machine_task
- 215              		.syntax unified
- 216              		.thumb
- 217              		.thumb_func
- 219              	state_machine_task:
- 220              	.LFB138:
-  44:Core/Src/state_machine.c **** 
-  45:Core/Src/state_machine.c **** void state_machine_task(void) {
- 221              		.loc 1 45 31 is_stmt 1 view -0
- 222              		.cfi_startproc
- 223              		@ args = 0, pretend = 0, frame = 8
- 224              		@ frame_needed = 0, uses_anonymous_args = 0
- 225 0000 00B5     		push	{lr}
- 226              	.LCFI0:
- 227              		.cfi_def_cfa_offset 4
- 228              		.cfi_offset 14, -4
- 229 0002 83B0     		sub	sp, sp, #12
- 230              	.LCFI1:
- 231              		.cfi_def_cfa_offset 16
-  46:Core/Src/state_machine.c ****     switch (robot_state_machine.current_state) {
- 232              		.loc 1 46 5 view .LVU61
- 233              		.loc 1 46 32 is_stmt 0 view .LVU62
- 234 0004 3B4B     		ldr	r3, .L32
- 235 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 236              		.loc 1 46 5 view .LVU63
- 237 0008 082B     		cmp	r3, #8
- 238 000a 6ED8     		bhi	.L19
- 239 000c DFE803F0 		tbb	[pc, r3]
- 240              	.L21:
- 241 0010 05       		.byte	(.L29-.L21)/2
- 242 0011 0B       		.byte	(.L28-.L21)/2
- 243 0012 1A       		.byte	(.L27-.L21)/2
- 244 0013 29       		.byte	(.L26-.L21)/2
- 245 0014 3E       		.byte	(.L25-.L21)/2
- 246 0015 51       		.byte	(.L24-.L21)/2
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 6
+ 194              		.loc 1 41 5 view .LVU57
+  42:Core/Src/state_machine.c **** }
+ 195              		.loc 1 42 1 is_stmt 0 view .LVU58
+ 196 0000 014B     		ldr	r3, .L15
+ 197 0002 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 198 0004 7047     		bx	lr
+ 199              	.L16:
+ 200 0006 00BF     		.align	2
+ 201              	.L15:
+ 202 0008 00000000 		.word	robot_state_machine
+ 203              		.cfi_endproc
+ 204              	.LFE137:
+ 206              		.section	.text.state_machine_task,"ax",%progbits
+ 207              		.align	1
+ 208              		.global	state_machine_task
+ 209              		.syntax unified
+ 210              		.thumb
+ 211              		.thumb_func
+ 213              	state_machine_task:
+ 214              	.LFB138:
+  43:Core/Src/state_machine.c **** 
+  44:Core/Src/state_machine.c **** void state_machine_task(void) {
+ 215              		.loc 1 44 31 is_stmt 1 view -0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 8
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219 0000 30B5     		push	{r4, r5, lr}
+ 220              	.LCFI0:
+ 221              		.cfi_def_cfa_offset 12
+ 222              		.cfi_offset 4, -12
+ 223              		.cfi_offset 5, -8
+ 224              		.cfi_offset 14, -4
+ 225 0002 83B0     		sub	sp, sp, #12
+ 226              	.LCFI1:
+ 227              		.cfi_def_cfa_offset 24
+  45:Core/Src/state_machine.c ****     switch (robot_state_machine.current_state) {
+ 228              		.loc 1 45 5 view .LVU60
+ 229              		.loc 1 45 32 is_stmt 0 view .LVU61
+ 230 0004 334B     		ldr	r3, .L28
+ 231 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 232              		.loc 1 45 5 view .LVU62
+ 233 0008 013B     		subs	r3, r3, #1
+ 234 000a 052B     		cmp	r3, #5
+ 235 000c 10D8     		bhi	.L17
+ 236 000e DFE803F0 		tbb	[pc, r3]
+ 237              	.L20:
+ 238 0012 03       		.byte	(.L25-.L20)/2
+ 239 0013 11       		.byte	(.L24-.L20)/2
+ 240 0014 20       		.byte	(.L23-.L20)/2
+ 241 0015 35       		.byte	(.L22-.L20)/2
+ 242 0016 48       		.byte	(.L21-.L20)/2
+ 243 0017 59       		.byte	(.L19-.L20)/2
+ 244              		.p2align 1
+ 245              	.L25:
+  46:Core/Src/state_machine.c ****         case IDLE:
+  47:Core/Src/state_machine.c ****             // Robot is idle, do nothing
+  48:Core/Src/state_machine.c ****             break;
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 6
 
 
- 247 0016 62       		.byte	(.L23-.L21)/2
- 248 0017 08       		.byte	(.L18-.L21)/2
- 249 0018 6A       		.byte	(.L20-.L21)/2
- 250 0019 00       		.p2align 1
- 251              	.L29:
-  47:Core/Src/state_machine.c ****         case IDLE:
-  48:Core/Src/state_machine.c ****             // Robot is idle, do nothing
-  49:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
- 252              		.loc 1 49 13 is_stmt 1 view .LVU64
- 253              		.loc 1 49 52 is_stmt 0 view .LVU65
- 254 001a 364B     		ldr	r3, .L32
- 255 001c 0122     		movs	r2, #1
- 256 001e 5A70     		strb	r2, [r3, #1]
-  50:Core/Src/state_machine.c ****             break;
- 257              		.loc 1 50 13 is_stmt 1 view .LVU66
- 258              	.L18:
-  51:Core/Src/state_machine.c **** 
-  52:Core/Src/state_machine.c ****         case MOVING_FORWARD:
-  53:Core/Src/state_machine.c ****             // Execute move forward - using param1 (distance), param2 (speed), param3 (deviation if
-  54:Core/Src/state_machine.c ****             if (move_forward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
-  55:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
-  56:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
-  57:Core/Src/state_machine.c ****             }
-  58:Core/Src/state_machine.c ****             break;
-  59:Core/Src/state_machine.c **** 
-  60:Core/Src/state_machine.c ****         case MOVING_BACKWARD:
-  61:Core/Src/state_machine.c ****             // Execute move backward - using param1 (distance), param2 (speed)
-  62:Core/Src/state_machine.c ****             if (move_backward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
-  63:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
-  64:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
-  65:Core/Src/state_machine.c ****             }
-  66:Core/Src/state_machine.c ****             break;
-  67:Core/Src/state_machine.c **** 
-  68:Core/Src/state_machine.c ****         case ROTATIN:
-  69:Core/Src/state_machine.c ****             // Execute rotation - using param1 (angle), param2 (speed)
-  70:Core/Src/state_machine.c ****             if (rotate(robot_state_machine.param1, robot_state_machine.param2) == 0) {
-  71:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
-  72:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
-  73:Core/Src/state_machine.c ****             }
-  74:Core/Src/state_machine.c ****             break;
-  75:Core/Src/state_machine.c **** 
-  76:Core/Src/state_machine.c ****         case CURVE:
-  77:Core/Src/state_machine.c ****             // Execute curve movement - using param1 (target_x), param2 (target_y), param3 (target_
-  78:Core/Src/state_machine.c ****             if (circle_curve(robot_state_machine.param1, robot_state_machine.param2, 
-  79:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
-  80:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
-  81:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
-  82:Core/Src/state_machine.c ****             }
-  83:Core/Src/state_machine.c ****             break;
-  84:Core/Src/state_machine.c **** 
-  85:Core/Src/state_machine.c ****         case GOTO_POSITION:
-  86:Core/Src/state_machine.c ****             // Execute goto position - using param1 (x), param2 (y), param3 (phi), param4 (speed)
-  87:Core/Src/state_machine.c ****             if (go_to(robot_state_machine.param1, robot_state_machine.param2, 
-  88:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
-  89:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
-  90:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
-  91:Core/Src/state_machine.c ****             }
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 7
+  49:Core/Src/state_machine.c **** 
+  50:Core/Src/state_machine.c ****         case MOVING_FORWARD:
+  51:Core/Src/state_machine.c ****             // Execute move forward - using param1 (distance), param2 (speed), param3 (deviation if
+  52:Core/Src/state_machine.c ****         	robot_state_machine.current_state=MOVING_FORWARD;
+ 246              		.loc 1 52 10 is_stmt 1 view .LVU63
+ 247              		.loc 1 52 43 is_stmt 0 view .LVU64
+ 248 0018 2E4C     		ldr	r4, .L28
+ 249 001a 0125     		movs	r5, #1
+ 250 001c 2570     		strb	r5, [r4]
+  53:Core/Src/state_machine.c ****         	move_forward(robot_state_machine.param1, robot_state_machine.param2);
+ 251              		.loc 1 53 10 is_stmt 1 view .LVU65
+ 252 001e D4ED020A 		vldr.32	s1, [r4, #8]
+ 253 0022 94ED010A 		vldr.32	s0, [r4, #4]
+ 254 0026 FFF7FEFF 		bl	move_forward
+ 255              	.LVL1:
+  54:Core/Src/state_machine.c ****              robot_state_machine.current_state = COMPLETED;
+ 256              		.loc 1 54 14 view .LVU66
+ 257              		.loc 1 54 48 is_stmt 0 view .LVU67
+ 258 002a 0723     		movs	r3, #7
+ 259 002c 2370     		strb	r3, [r4]
+  55:Core/Src/state_machine.c ****              robot_state_machine.execution_complete = 1;
+ 260              		.loc 1 55 14 is_stmt 1 view .LVU68
+ 261              		.loc 1 55 53 is_stmt 0 view .LVU69
+ 262 002e 6570     		strb	r5, [r4, #1]
+  56:Core/Src/state_machine.c ****             break;
+ 263              		.loc 1 56 13 is_stmt 1 view .LVU70
+ 264              	.L17:
+  57:Core/Src/state_machine.c **** 
+  58:Core/Src/state_machine.c ****         case MOVING_BACKWARD:
+  59:Core/Src/state_machine.c ****             // Execute move backward - using param1 (distance), param2 (speed)
+  60:Core/Src/state_machine.c ****             if (move_backward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
+  61:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+  62:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+  63:Core/Src/state_machine.c ****             }
+  64:Core/Src/state_machine.c ****             break;
+  65:Core/Src/state_machine.c **** 
+  66:Core/Src/state_machine.c ****         case ROTATIN:
+  67:Core/Src/state_machine.c ****             // Execute rotation - using param1 (angle), param2 (speed)
+  68:Core/Src/state_machine.c ****             if (rotate(robot_state_machine.param1, robot_state_machine.param2) == 0) {
+  69:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+  70:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+  71:Core/Src/state_machine.c ****             }
+  72:Core/Src/state_machine.c ****             break;
+  73:Core/Src/state_machine.c **** 
+  74:Core/Src/state_machine.c ****         case CURVE:
+  75:Core/Src/state_machine.c ****             // Execute curve movement - using param1 (target_x), param2 (target_y), param3 (target_
+  76:Core/Src/state_machine.c ****             if (circle_curve(robot_state_machine.param1, robot_state_machine.param2, 
+  77:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
+  78:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+  79:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+  80:Core/Src/state_machine.c ****             }
+  81:Core/Src/state_machine.c ****             break;
+  82:Core/Src/state_machine.c **** 
+  83:Core/Src/state_machine.c ****         case GOTO_POSITION:
+  84:Core/Src/state_machine.c ****             // Execute goto position - using param1 (x), param2 (y), param3 (phi), param4 (speed)
+  85:Core/Src/state_machine.c ****             if (go_to(robot_state_machine.param1, robot_state_machine.param2, 
+  86:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 7
 
 
-  92:Core/Src/state_machine.c ****             break;
-  93:Core/Src/state_machine.c **** 
-  94:Core/Src/state_machine.c ****         case EMERGENCY_STOP:
-  95:Core/Src/state_machine.c ****             // Emergency stop
-  96:Core/Src/state_machine.c ****             stop_motors();
-  97:Core/Src/state_machine.c ****             robot_state_machine.current_state = COMPLETED;
-  98:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
-  99:Core/Src/state_machine.c ****             break;
- 100:Core/Src/state_machine.c **** 
- 101:Core/Src/state_machine.c ****         case COMPLETED:
- 102:Core/Src/state_machine.c ****             // Operation completed successfully
+  87:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+  88:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+  89:Core/Src/state_machine.c ****             }
+  90:Core/Src/state_machine.c ****             break;
+  91:Core/Src/state_machine.c **** 
+  92:Core/Src/state_machine.c ****         case EMERGENCY_STOP:
+  93:Core/Src/state_machine.c ****             // Emergency stop
+  94:Core/Src/state_machine.c ****             stop_motors();
+  95:Core/Src/state_machine.c ****             robot_state_machine.current_state = COMPLETED;
+  96:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
+  97:Core/Src/state_machine.c ****             break;
+  98:Core/Src/state_machine.c **** 
+  99:Core/Src/state_machine.c ****         case COMPLETED:
+ 100:Core/Src/state_machine.c ****             // Operation completed successfully
+ 101:Core/Src/state_machine.c ****             break;
+ 102:Core/Src/state_machine.c ****         default:
  103:Core/Src/state_machine.c ****             break;
- 104:Core/Src/state_machine.c **** 
- 105:Core/Src/state_machine.c ****         case ERRO:
- 106:Core/Src/state_machine.c ****             // Handle error state
- 107:Core/Src/state_machine.c ****             stop_motors();
- 108:Core/Src/state_machine.c ****             break;
- 109:Core/Src/state_machine.c **** 
- 110:Core/Src/state_machine.c ****         default:
- 111:Core/Src/state_machine.c ****             robot_state_machine.current_state = ERROR;
- 112:Core/Src/state_machine.c ****             break;
- 113:Core/Src/state_machine.c ****     }
- 114:Core/Src/state_machine.c **** }
- 259              		.loc 1 114 1 is_stmt 0 view .LVU67
- 260 0020 03B0     		add	sp, sp, #12
- 261              	.LCFI2:
- 262              		.cfi_remember_state
- 263              		.cfi_def_cfa_offset 4
- 264              		@ sp needed
- 265 0022 5DF804FB 		ldr	pc, [sp], #4
- 266              	.L28:
- 267              	.LCFI3:
- 268              		.cfi_restore_state
-  54:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 269              		.loc 1 54 13 is_stmt 1 view .LVU68
-  54:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 270              		.loc 1 54 17 is_stmt 0 view .LVU69
- 271 0026 334B     		ldr	r3, .L32
- 272 0028 D3ED020A 		vldr.32	s1, [r3, #8]
- 273 002c 93ED010A 		vldr.32	s0, [r3, #4]
- 274 0030 FFF7FEFF 		bl	move_forward
- 275              	.LVL1:
-  54:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 276              		.loc 1 54 16 discriminator 1 view .LVU70
- 277 0034 0028     		cmp	r0, #0
- 278 0036 F3D1     		bne	.L18
-  55:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 279              		.loc 1 55 17 is_stmt 1 view .LVU71
-  55:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 280              		.loc 1 55 51 is_stmt 0 view .LVU72
- 281 0038 2E4B     		ldr	r3, .L32
- 282 003a 0722     		movs	r2, #7
- 283 003c 1A70     		strb	r2, [r3]
-  56:Core/Src/state_machine.c ****             }
- 284              		.loc 1 56 17 is_stmt 1 view .LVU73
-  56:Core/Src/state_machine.c ****             }
- 285              		.loc 1 56 56 is_stmt 0 view .LVU74
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 8
+ 104:Core/Src/state_machine.c ****     }
+ 105:Core/Src/state_machine.c **** }
+ 265              		.loc 1 105 1 is_stmt 0 view .LVU71
+ 266 0030 03B0     		add	sp, sp, #12
+ 267              	.LCFI2:
+ 268              		.cfi_remember_state
+ 269              		.cfi_def_cfa_offset 12
+ 270              		@ sp needed
+ 271 0032 30BD     		pop	{r4, r5, pc}
+ 272              	.L24:
+ 273              	.LCFI3:
+ 274              		.cfi_restore_state
+  60:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 275              		.loc 1 60 13 is_stmt 1 view .LVU72
+  60:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 276              		.loc 1 60 17 is_stmt 0 view .LVU73
+ 277 0034 274B     		ldr	r3, .L28
+ 278 0036 D3ED020A 		vldr.32	s1, [r3, #8]
+ 279 003a 93ED010A 		vldr.32	s0, [r3, #4]
+ 280 003e FFF7FEFF 		bl	move_backward
+ 281              	.LVL2:
+  60:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 282              		.loc 1 60 16 discriminator 1 view .LVU74
+ 283 0042 0028     		cmp	r0, #0
+ 284 0044 F4D1     		bne	.L17
+  61:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 285              		.loc 1 61 17 is_stmt 1 view .LVU75
+  61:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 286              		.loc 1 61 51 is_stmt 0 view .LVU76
+ 287 0046 234B     		ldr	r3, .L28
+ 288 0048 0722     		movs	r2, #7
+ 289 004a 1A70     		strb	r2, [r3]
+  62:Core/Src/state_machine.c ****             }
+ 290              		.loc 1 62 17 is_stmt 1 view .LVU77
+  62:Core/Src/state_machine.c ****             }
+ 291              		.loc 1 62 56 is_stmt 0 view .LVU78
+ 292 004c 0122     		movs	r2, #1
+ 293 004e 5A70     		strb	r2, [r3, #1]
+ 294 0050 EEE7     		b	.L17
+ 295              	.L23:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 8
 
 
- 286 003e 0122     		movs	r2, #1
- 287 0040 5A70     		strb	r2, [r3, #1]
- 288 0042 EDE7     		b	.L18
- 289              	.L27:
-  62:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 290              		.loc 1 62 13 is_stmt 1 view .LVU75
-  62:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 291              		.loc 1 62 17 is_stmt 0 view .LVU76
- 292 0044 2B4B     		ldr	r3, .L32
- 293 0046 D3ED020A 		vldr.32	s1, [r3, #8]
- 294 004a 93ED010A 		vldr.32	s0, [r3, #4]
- 295 004e FFF7FEFF 		bl	move_backward
- 296              	.LVL2:
-  62:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 297              		.loc 1 62 16 discriminator 1 view .LVU77
- 298 0052 0028     		cmp	r0, #0
- 299 0054 E4D1     		bne	.L18
-  63:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 300              		.loc 1 63 17 is_stmt 1 view .LVU78
-  63:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 301              		.loc 1 63 51 is_stmt 0 view .LVU79
- 302 0056 274B     		ldr	r3, .L32
- 303 0058 0722     		movs	r2, #7
- 304 005a 1A70     		strb	r2, [r3]
-  64:Core/Src/state_machine.c ****             }
- 305              		.loc 1 64 17 is_stmt 1 view .LVU80
-  64:Core/Src/state_machine.c ****             }
- 306              		.loc 1 64 56 is_stmt 0 view .LVU81
- 307 005c 0122     		movs	r2, #1
- 308 005e 5A70     		strb	r2, [r3, #1]
- 309 0060 DEE7     		b	.L18
- 310              	.L26:
-  70:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 311              		.loc 1 70 13 is_stmt 1 view .LVU82
-  70:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 312              		.loc 1 70 71 is_stmt 0 view .LVU83
- 313 0062 244B     		ldr	r3, .L32
- 314 0064 D3ED027A 		vldr.32	s15, [r3, #8]
-  70:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 315              		.loc 1 70 17 view .LVU84
- 316 0068 FDEEE77A 		vcvt.s32.f32	s15, s15
- 317 006c CDED017A 		vstr.32	s15, [sp, #4]	@ int
- 318 0070 9DF90400 		ldrsb	r0, [sp, #4]
- 319 0074 93ED010A 		vldr.32	s0, [r3, #4]
- 320 0078 FFF7FEFF 		bl	rotate
- 321              	.LVL3:
-  70:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
- 322              		.loc 1 70 16 discriminator 1 view .LVU85
- 323 007c 0028     		cmp	r0, #0
- 324 007e CFD1     		bne	.L18
-  71:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 325              		.loc 1 71 17 is_stmt 1 view .LVU86
-  71:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 326              		.loc 1 71 51 is_stmt 0 view .LVU87
- 327 0080 1C4B     		ldr	r3, .L32
- 328 0082 0722     		movs	r2, #7
- 329 0084 1A70     		strb	r2, [r3]
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 9
+  68:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 296              		.loc 1 68 13 is_stmt 1 view .LVU79
+  68:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 297              		.loc 1 68 71 is_stmt 0 view .LVU80
+ 298 0052 204B     		ldr	r3, .L28
+ 299 0054 D3ED027A 		vldr.32	s15, [r3, #8]
+  68:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 300              		.loc 1 68 17 view .LVU81
+ 301 0058 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 302 005c CDED017A 		vstr.32	s15, [sp, #4]	@ int
+ 303 0060 9DF90400 		ldrsb	r0, [sp, #4]
+ 304 0064 93ED010A 		vldr.32	s0, [r3, #4]
+ 305 0068 FFF7FEFF 		bl	rotate
+ 306              	.LVL3:
+  68:Core/Src/state_machine.c ****                 robot_state_machine.current_state = COMPLETED;
+ 307              		.loc 1 68 16 discriminator 1 view .LVU82
+ 308 006c 0028     		cmp	r0, #0
+ 309 006e DFD1     		bne	.L17
+  69:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 310              		.loc 1 69 17 is_stmt 1 view .LVU83
+  69:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 311              		.loc 1 69 51 is_stmt 0 view .LVU84
+ 312 0070 184B     		ldr	r3, .L28
+ 313 0072 0722     		movs	r2, #7
+ 314 0074 1A70     		strb	r2, [r3]
+  70:Core/Src/state_machine.c ****             }
+ 315              		.loc 1 70 17 is_stmt 1 view .LVU85
+  70:Core/Src/state_machine.c ****             }
+ 316              		.loc 1 70 56 is_stmt 0 view .LVU86
+ 317 0076 0122     		movs	r2, #1
+ 318 0078 5A70     		strb	r2, [r3, #1]
+ 319 007a D9E7     		b	.L17
+ 320              	.L22:
+  76:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
+ 321              		.loc 1 76 13 is_stmt 1 view .LVU87
+  76:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
+ 322              		.loc 1 76 17 is_stmt 0 view .LVU88
+ 323 007c 154B     		ldr	r3, .L28
+ 324 007e D3ED041A 		vldr.32	s3, [r3, #16]
+ 325 0082 93ED031A 		vldr.32	s2, [r3, #12]
+ 326 0086 D3ED020A 		vldr.32	s1, [r3, #8]
+ 327 008a 93ED010A 		vldr.32	s0, [r3, #4]
+ 328 008e FFF7FEFF 		bl	circle_curve
+ 329              	.LVL4:
+  76:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
+ 330              		.loc 1 76 16 discriminator 1 view .LVU89
+ 331 0092 0028     		cmp	r0, #0
+ 332 0094 CCD1     		bne	.L17
+  78:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 333              		.loc 1 78 17 is_stmt 1 view .LVU90
+  78:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 334              		.loc 1 78 51 is_stmt 0 view .LVU91
+ 335 0096 0F4B     		ldr	r3, .L28
+ 336 0098 0722     		movs	r2, #7
+ 337 009a 1A70     		strb	r2, [r3]
+  79:Core/Src/state_machine.c ****             }
+ 338              		.loc 1 79 17 is_stmt 1 view .LVU92
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 9
 
 
-  72:Core/Src/state_machine.c ****             }
- 330              		.loc 1 72 17 is_stmt 1 view .LVU88
-  72:Core/Src/state_machine.c ****             }
- 331              		.loc 1 72 56 is_stmt 0 view .LVU89
- 332 0086 0122     		movs	r2, #1
- 333 0088 5A70     		strb	r2, [r3, #1]
- 334 008a C9E7     		b	.L18
- 335              	.L25:
-  78:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
- 336              		.loc 1 78 13 is_stmt 1 view .LVU90
-  78:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
- 337              		.loc 1 78 17 is_stmt 0 view .LVU91
- 338 008c 194B     		ldr	r3, .L32
- 339 008e D3ED041A 		vldr.32	s3, [r3, #16]
- 340 0092 93ED031A 		vldr.32	s2, [r3, #12]
- 341 0096 D3ED020A 		vldr.32	s1, [r3, #8]
- 342 009a 93ED010A 		vldr.32	s0, [r3, #4]
- 343 009e FFF7FEFF 		bl	circle_curve
- 344              	.LVL4:
-  78:Core/Src/state_machine.c ****                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
- 345              		.loc 1 78 16 discriminator 1 view .LVU92
- 346 00a2 0028     		cmp	r0, #0
- 347 00a4 BCD1     		bne	.L18
-  80:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 348              		.loc 1 80 17 is_stmt 1 view .LVU93
-  80:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 349              		.loc 1 80 51 is_stmt 0 view .LVU94
- 350 00a6 134B     		ldr	r3, .L32
- 351 00a8 0722     		movs	r2, #7
- 352 00aa 1A70     		strb	r2, [r3]
-  81:Core/Src/state_machine.c ****             }
- 353              		.loc 1 81 17 is_stmt 1 view .LVU95
-  81:Core/Src/state_machine.c ****             }
- 354              		.loc 1 81 56 is_stmt 0 view .LVU96
- 355 00ac 0122     		movs	r2, #1
- 356 00ae 5A70     		strb	r2, [r3, #1]
- 357 00b0 B6E7     		b	.L18
- 358              	.L24:
-  87:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
- 359              		.loc 1 87 13 is_stmt 1 view .LVU97
-  87:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
- 360              		.loc 1 87 17 is_stmt 0 view .LVU98
- 361 00b2 104B     		ldr	r3, .L32
- 362 00b4 93ED031A 		vldr.32	s2, [r3, #12]
- 363 00b8 D3ED020A 		vldr.32	s1, [r3, #8]
- 364 00bc 93ED010A 		vldr.32	s0, [r3, #4]
- 365 00c0 FFF7FEFF 		bl	go_to
- 366              	.LVL5:
-  87:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
- 367              		.loc 1 87 16 discriminator 1 view .LVU99
- 368 00c4 0028     		cmp	r0, #0
- 369 00c6 ABD1     		bne	.L18
-  89:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 370              		.loc 1 89 17 is_stmt 1 view .LVU100
-  89:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
- 371              		.loc 1 89 51 is_stmt 0 view .LVU101
- 372 00c8 0A4B     		ldr	r3, .L32
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 10
+  79:Core/Src/state_machine.c ****             }
+ 339              		.loc 1 79 56 is_stmt 0 view .LVU93
+ 340 009c 0122     		movs	r2, #1
+ 341 009e 5A70     		strb	r2, [r3, #1]
+ 342 00a0 C6E7     		b	.L17
+ 343              	.L21:
+  85:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
+ 344              		.loc 1 85 13 is_stmt 1 view .LVU94
+  85:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
+ 345              		.loc 1 85 17 is_stmt 0 view .LVU95
+ 346 00a2 0C4B     		ldr	r3, .L28
+ 347 00a4 93ED031A 		vldr.32	s2, [r3, #12]
+ 348 00a8 D3ED020A 		vldr.32	s1, [r3, #8]
+ 349 00ac 93ED010A 		vldr.32	s0, [r3, #4]
+ 350 00b0 FFF7FEFF 		bl	go_to
+ 351              	.LVL5:
+  85:Core/Src/state_machine.c ****                      robot_state_machine.param3) == 0) {
+ 352              		.loc 1 85 16 discriminator 1 view .LVU96
+ 353 00b4 0028     		cmp	r0, #0
+ 354 00b6 BBD1     		bne	.L17
+  87:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 355              		.loc 1 87 17 is_stmt 1 view .LVU97
+  87:Core/Src/state_machine.c ****                 robot_state_machine.execution_complete = 1;
+ 356              		.loc 1 87 51 is_stmt 0 view .LVU98
+ 357 00b8 064B     		ldr	r3, .L28
+ 358 00ba 0722     		movs	r2, #7
+ 359 00bc 1A70     		strb	r2, [r3]
+  88:Core/Src/state_machine.c ****             }
+ 360              		.loc 1 88 17 is_stmt 1 view .LVU99
+  88:Core/Src/state_machine.c ****             }
+ 361              		.loc 1 88 56 is_stmt 0 view .LVU100
+ 362 00be 0122     		movs	r2, #1
+ 363 00c0 5A70     		strb	r2, [r3, #1]
+ 364 00c2 B5E7     		b	.L17
+ 365              	.L19:
+  94:Core/Src/state_machine.c ****             robot_state_machine.current_state = COMPLETED;
+ 366              		.loc 1 94 13 is_stmt 1 view .LVU101
+ 367 00c4 FFF7FEFF 		bl	stop_motors
+ 368              	.LVL6:
+  95:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
+ 369              		.loc 1 95 13 view .LVU102
+  95:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
+ 370              		.loc 1 95 47 is_stmt 0 view .LVU103
+ 371 00c8 024B     		ldr	r3, .L28
+ 372 00ca 0722     		movs	r2, #7
+ 373 00cc 1A70     		strb	r2, [r3]
+  96:Core/Src/state_machine.c ****             break;
+ 374              		.loc 1 96 13 is_stmt 1 view .LVU104
+  96:Core/Src/state_machine.c ****             break;
+ 375              		.loc 1 96 52 is_stmt 0 view .LVU105
+ 376 00ce 0122     		movs	r2, #1
+ 377 00d0 5A70     		strb	r2, [r3, #1]
+  97:Core/Src/state_machine.c **** 
+ 378              		.loc 1 97 13 is_stmt 1 view .LVU106
+ 379              		.loc 1 105 1 is_stmt 0 view .LVU107
+ 380 00d2 ADE7     		b	.L17
+ 381              	.L29:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 10
 
 
- 373 00ca 0722     		movs	r2, #7
- 374 00cc 1A70     		strb	r2, [r3]
-  90:Core/Src/state_machine.c ****             }
- 375              		.loc 1 90 17 is_stmt 1 view .LVU102
-  90:Core/Src/state_machine.c ****             }
- 376              		.loc 1 90 56 is_stmt 0 view .LVU103
- 377 00ce 0122     		movs	r2, #1
- 378 00d0 5A70     		strb	r2, [r3, #1]
- 379 00d2 A5E7     		b	.L18
- 380              	.L23:
-  96:Core/Src/state_machine.c ****             robot_state_machine.current_state = COMPLETED;
- 381              		.loc 1 96 13 is_stmt 1 view .LVU104
- 382 00d4 FFF7FEFF 		bl	stop_motors
- 383              	.LVL6:
-  97:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
- 384              		.loc 1 97 13 view .LVU105
-  97:Core/Src/state_machine.c ****             robot_state_machine.execution_complete = 1;
- 385              		.loc 1 97 47 is_stmt 0 view .LVU106
- 386 00d8 064B     		ldr	r3, .L32
- 387 00da 0722     		movs	r2, #7
- 388 00dc 1A70     		strb	r2, [r3]
-  98:Core/Src/state_machine.c ****             break;
- 389              		.loc 1 98 13 is_stmt 1 view .LVU107
-  98:Core/Src/state_machine.c ****             break;
- 390              		.loc 1 98 52 is_stmt 0 view .LVU108
- 391 00de 0122     		movs	r2, #1
- 392 00e0 5A70     		strb	r2, [r3, #1]
-  99:Core/Src/state_machine.c **** 
- 393              		.loc 1 99 13 is_stmt 1 view .LVU109
- 394 00e2 9DE7     		b	.L18
- 395              	.L20:
- 107:Core/Src/state_machine.c ****             break;
- 396              		.loc 1 107 13 view .LVU110
- 397 00e4 FFF7FEFF 		bl	stop_motors
- 398              	.LVL7:
- 108:Core/Src/state_machine.c **** 
- 399              		.loc 1 108 13 view .LVU111
- 400 00e8 9AE7     		b	.L18
- 401              	.L19:
- 111:Core/Src/state_machine.c ****             break;
- 402              		.loc 1 111 13 view .LVU112
- 111:Core/Src/state_machine.c ****             break;
- 403              		.loc 1 111 47 is_stmt 0 view .LVU113
- 404 00ea 024B     		ldr	r3, .L32
- 405 00ec 0122     		movs	r2, #1
- 406 00ee 1A70     		strb	r2, [r3]
- 112:Core/Src/state_machine.c ****     }
- 407              		.loc 1 112 13 is_stmt 1 view .LVU114
- 408              		.loc 1 114 1 is_stmt 0 view .LVU115
- 409 00f0 96E7     		b	.L18
- 410              	.L33:
- 411 00f2 00BF     		.align	2
- 412              	.L32:
- 413 00f4 00000000 		.word	robot_state_machine
- 414              		.cfi_endproc
- 415              	.LFE138:
- 417              		.global	robot_state_machine
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 11
-
-
- 418              		.section	.bss.robot_state_machine,"aw",%nobits
- 419              		.align	2
- 422              	robot_state_machine:
- 423 0000 00000000 		.space	40
- 423      00000000 
- 423      00000000 
- 423      00000000 
- 423      00000000 
- 424              		.text
- 425              	.Letext0:
- 426              		.file 2 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
- 427              		.file 3 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
- 428              		.file 4 "Core/Inc/state_machine.h"
- 429              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 430              		.file 6 "Core/Inc/navigation.h"
- 431              		.file 7 "Core/Inc/Motors.h"
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s 			page 12
+ 382              		.align	2
+ 383              	.L28:
+ 384 00d4 00000000 		.word	robot_state_machine
+ 385              		.cfi_endproc
+ 386              	.LFE138:
+ 388              		.global	robot_state_machine
+ 389              		.section	.bss.robot_state_machine,"aw",%nobits
+ 390              		.align	2
+ 393              	robot_state_machine:
+ 394 0000 00000000 		.space	40
+ 394      00000000 
+ 394      00000000 
+ 394      00000000 
+ 394      00000000 
+ 395              		.text
+ 396              	.Letext0:
+ 397              		.file 2 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 398              		.file 3 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 399              		.file 4 "Core/Inc/state_machine.h"
+ 400              		.file 5 "Core/Inc/navigation.h"
+ 401              		.file 6 "Core/Inc/Motors.h"
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 state_machine.c
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:21     .text.state_machine_init:00000000 $t
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:27     .text.state_machine_init:00000000 state_machine_init
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:76     .text.state_machine_init:00000020 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:422    .bss.robot_state_machine:00000000 robot_state_machine
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:81     .text.state_machine_set_state:00000000 $t
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:87     .text.state_machine_set_state:00000000 state_machine_set_state
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:135    .text.state_machine_set_state:00000030 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:140    .text.state_machine_is_busy:00000000 $t
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:146    .text.state_machine_is_busy:00000000 state_machine_is_busy
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:182    .text.state_machine_is_busy:00000020 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:187    .text.state_machine_is_complete:00000000 $t
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:193    .text.state_machine_is_complete:00000000 state_machine_is_complete
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:208    .text.state_machine_is_complete:00000008 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:213    .text.state_machine_task:00000000 $t
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:219    .text.state_machine_task:00000000 state_machine_task
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:241    .text.state_machine_task:00000010 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:413    .text.state_machine_task:000000f4 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:419    .bss.robot_state_machine:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:250    .text.state_machine_task:00000019 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cceiF4gz.s:250    .text.state_machine_task:0000001a $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:21     .text.state_machine_init:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:27     .text.state_machine_init:00000000 state_machine_init
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:76     .text.state_machine_init:00000020 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:393    .bss.robot_state_machine:00000000 robot_state_machine
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:81     .text.state_machine_set_state:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:87     .text.state_machine_set_state:00000000 state_machine_set_state
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:135    .text.state_machine_set_state:00000030 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:140    .text.state_machine_is_busy:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:146    .text.state_machine_is_busy:00000000 state_machine_is_busy
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:176    .text.state_machine_is_busy:00000018 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:181    .text.state_machine_is_complete:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:187    .text.state_machine_is_complete:00000000 state_machine_is_complete
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:202    .text.state_machine_is_complete:00000008 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:207    .text.state_machine_task:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:213    .text.state_machine_task:00000000 state_machine_task
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:238    .text.state_machine_task:00000012 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:244    .text.state_machine_task:00000018 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:384    .text.state_machine_task:000000d4 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cctwdya4.s:390    .bss.robot_state_machine:00000000 $d
 
 UNDEFINED SYMBOLS
 move_forward

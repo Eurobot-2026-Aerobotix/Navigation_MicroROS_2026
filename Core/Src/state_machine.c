@@ -29,13 +29,11 @@ void state_machine_set_state(robot_state_t new_state, float p1, float p2, float 
     robot_state_machine.param7 = p7;
     robot_state_machine.param8 = p8;
     robot_state_machine.param9 = p9;
-    robot_state_machine.execution_complete = 0;
 }
 
 uint8_t state_machine_is_busy(void) {
     return (robot_state_machine.current_state != IDLE && 
-            robot_state_machine.current_state != COMPLETED &&
-            robot_state_machine.current_state != ERROR);
+            robot_state_machine.current_state != COMPLETED );
 }
 
 uint8_t state_machine_is_complete(void) {
@@ -46,22 +44,19 @@ void state_machine_task(void) {
     switch (robot_state_machine.current_state) {
         case IDLE:
             // Robot is idle, do nothing
-            robot_state_machine.execution_complete = 1;
             break;
 
         case MOVING_FORWARD:
             // Execute move forward - using param1 (distance), param2 (speed), param3 (deviation if needed)
-            if (move_forward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
-                robot_state_machine.current_state = COMPLETED;
-                robot_state_machine.execution_complete = 1;
-            }
+        	robot_state_machine.current_state=MOVING_FORWARD;
+        	move_forward(robot_state_machine.param1, robot_state_machine.param2);
+             robot_state_machine.current_state = COMPLETED;
             break;
 
         case MOVING_BACKWARD:
             // Execute move backward - using param1 (distance), param2 (speed)
             if (move_backward(robot_state_machine.param1, robot_state_machine.param2) == 0) {
                 robot_state_machine.current_state = COMPLETED;
-                robot_state_machine.execution_complete = 1;
             }
             break;
 
@@ -69,7 +64,6 @@ void state_machine_task(void) {
             // Execute rotation - using param1 (angle), param2 (speed)
             if (rotate(robot_state_machine.param1, robot_state_machine.param2) == 0) {
                 robot_state_machine.current_state = COMPLETED;
-                robot_state_machine.execution_complete = 1;
             }
             break;
 
@@ -78,7 +72,6 @@ void state_machine_task(void) {
             if (circle_curve(robot_state_machine.param1, robot_state_machine.param2, 
                            robot_state_machine.param3, robot_state_machine.param4) == 0) {
                 robot_state_machine.current_state = COMPLETED;
-                robot_state_machine.execution_complete = 1;
             }
             break;
 
@@ -87,7 +80,6 @@ void state_machine_task(void) {
             if (go_to(robot_state_machine.param1, robot_state_machine.param2, 
                      robot_state_machine.param3) == 0) {
                 robot_state_machine.current_state = COMPLETED;
-                robot_state_machine.execution_complete = 1;
             }
             break;
 
@@ -95,20 +87,12 @@ void state_machine_task(void) {
             // Emergency stop
             stop_motors();
             robot_state_machine.current_state = COMPLETED;
-            robot_state_machine.execution_complete = 1;
             break;
 
         case COMPLETED:
             // Operation completed successfully
             break;
-
-        case ERRO:
-            // Handle error state
-            stop_motors();
-            break;
-
         default:
-            robot_state_machine.current_state = ERROR;
             break;
     }
 }

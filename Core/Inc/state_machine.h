@@ -13,12 +13,10 @@ typedef enum {
     GOTO_POSITION,
     EMERGENCY_STOP,
     COMPLETED,
-    ERRO
 } robot_state_t;
 
 typedef struct {
     robot_state_t current_state;
-    uint8_t execution_complete;
     float param1, param2, param3, param4, param5, param6, param7, param8, param9; // 9 parameters for operations
 } state_machine;
 

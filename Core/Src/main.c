@@ -164,17 +164,12 @@ void service_callback(const void *request_msg, void *response_msg) {
             activated = 1 - activated;
             res_out->result = (activated) ? true : false;
             break;
-
-        case 9: // Check if robot is busy
-            res_out->result = state_machine_is_busy() ? true : false;
-            break;
-
-        case 10: // Check if operation is complete
+        case 9: // Check if operation is complete
             res_out->result = state_machine_is_complete() ? true : false;
             break;
 
-        case 11: // Get current state
-            res_out->result = (robot_state_machine.current_state == COMPLETED) ? true : false;
+        case 10: // Get current state
+            res_out->result = (robot_state_machine.current_state == COMPLETED || robot_state_machine.current_state == IDLE) ? true : false;
             break;
 
         default:
@@ -357,7 +352,7 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  activated = 0;
+  activated = 1;
 
 //  activated = 1;
 //  HAL_Delay(1000);
@@ -962,6 +957,10 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
     // Set Micro-ROS transport
+	state_machine_init();
+	activated=1;
+	state_machine_set_state(MOVING_FORWARD, 200.0, 200.0, 0, 0, 0, 0, 0, 0, 0);
+
     rmw_uros_set_custom_transport(true, (void *)&huart2,
         cubemx_transport_open, cubemx_transport_close,
         cubemx_transport_write, cubemx_transport_read);
