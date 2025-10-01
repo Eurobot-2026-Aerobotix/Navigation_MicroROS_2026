@@ -25,8 +25,16 @@ enum Trajectory{
 	POLYNOMIAL_CURVE
 };
 
+enum Control_loop {
+	DISACTIVATED, // blocks the main PID until the Raspberry activates the STM
+	ACTIVATED,
+	SPEED,
+	POSITION
+};
+
 extern enum Wheel_state wheel_state_R;
 extern enum Wheel_state wheel_state_L;
+extern enum Control_loop control_loop_state;
 extern enum Trajectory trajectory;
 extern float ramping_acceleration; // !!! these accelerations marks the rate of change in velocity with respect to the distance traveled, not time!!!
 extern float breaking_acceleration;
@@ -38,6 +46,12 @@ extern float cruise_speed_R; // the speed which the right wheel is accelerating 
 extern float cruise_speed_L;
 extern float starting_phi;
 extern float turning_radius;
+extern int32_t target_encoder_count_R;
+extern int32_t target_encoder_count_L;
+extern float position_integral_R;
+extern float position_derivative_R;
+extern float position_integral_L;
+extern float position_derivative_L;
 
 int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_backward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
@@ -52,5 +66,6 @@ int move_forward_with_deviation(float distance, float deviation, float speed); /
 int circle_curve(float target_x, float target_y, float target_phi, float speed);
 int go_to(float x, float y, float speed);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 void emergency_break();
+void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
 
 #endif /* INC_NAVIGATION_H_ */

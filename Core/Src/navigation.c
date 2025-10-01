@@ -9,6 +9,7 @@
 enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
+enum Control_loop control_loop_state = DISACTIVATED;
 float ramping_acceleration = 5;
 float breaking_acceleration = -2;
 float emergency_breaking_acceleration = -10;
@@ -19,6 +20,12 @@ float cruise_speed_R;
 float cruise_speed_L;
 float starting_phi;
 float turning_radius;
+int32_t target_encoder_count_R;
+int32_t target_encoder_count_L;
+float position_integral_R = 0;
+float position_derivative_R = 0;
+float position_integral_L = 0;
+float position_derivative_L = 0;
 
 int move_forward(float distance, float speed){
 	direction_R = 1;
@@ -47,6 +54,7 @@ int move_forward(float distance, float speed){
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
 	trajectory = STRAIGHT;
+	control_loop_state = SPEED;
 	starting_phi = absolute_phi;
 	float lane_correction_term;
 	float phase_two_distance = 30;
@@ -141,6 +149,7 @@ int move_backward(float distance, float speed){
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
 	trajectory = STRAIGHT;
+	control_loop_state = SPEED;
 	starting_phi = absolute_phi;
 	float lane_correction_term;
 	float phase_two_distance = 20;
@@ -321,6 +330,7 @@ int rotate(float angle, int8_t is_radian){
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
 	trajectory = ROTATING;
+	control_loop_state = SPEED;
 	while ( fabs(target_phi - absolute_phi) > deg_to_rad(phase_two_angle)){
 		x = distance - distance_to_target;
 		if (wheel_state_R == ACCELERATING && x > x1 ){
@@ -436,6 +446,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
 	trajectory = CIRCLE_CURVE;
+	control_loop_state = SPEED;
 	float lane_correction_term;
 	float phase_two_distance = 30;
 	float x = 0;
@@ -502,7 +513,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 }
 int orientate(float orientation, int8_t is_radian){
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	if (orientation != current_phi){
+	if (fabs(orientation - current_phi)< deg_to_rad(0.5) ){
 		float angle = orientation - current_phi;
 		if (angle > PI){
 			angle -= 2*PI;
@@ -560,6 +571,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
 	trajectory = CIRCLE_CURVE;
+	control_loop_state = SPEED;
 	float lane_correction_term;
 	float phase_two_distance = 20;
 	float x = 0;
@@ -635,6 +647,7 @@ int go_to(float x, float y, float speed){
 void emergency_break(){
 	wheel_state_R = EMERGENCY_BREAK;
 	wheel_state_L = EMERGENCY_BREAK;
+	control_loop_state = SPEED;
 	int32_t last_encoder_count_R = encoder_count_R;
 	int32_t last_encoder_count_L = encoder_count_L;
 	HAL_Delay(4);
@@ -649,4 +662,14 @@ void emergency_break(){
 		HAL_Delay(4);
 	}
 	stop_motors();
+}
+
+void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){
+	target_encoder_count_R = encoder__count_R;
+	target_encoder_count_L = encoder__count_L;
+	position_integral_R = 0;
+	position_derivative_R = 0;
+	position_integral_L = 0;
+	position_derivative_L = 0;
+	control_loop_state = POSITION;
 }

@@ -78,8 +78,6 @@ service__srv__NaviStm_Request request_msg;
 service__srv__NaviStm_Response response_msg;
 
 //  Service Callback
-
-int8_t activated = 0; // blocks the main PID until the Raspberry activates the STM
 int8_t first_forward_recieved = 0;
 // speed control parameters
 // TODO: don't forget to make sure the center of gravity is on the roll axis
@@ -95,11 +93,23 @@ float kdS_L = 0; // 0.00 0
 float kiS_L = 15; // 20 15.5
 float speed_integral_L = 0;
 float speed_derivative_L = 0;
-
 float previous_speed_error_L = 0;
 
 float speed_integral_limit = 10000;
 int32_t previous_speed_control_time = 0;
+
+// position control parameters
+float kpP_R = 25;
+float kdP_R = 2;
+float kiP_R = 100;
+float previous_position_error_R = 0;
+
+float kpP_L = 25;
+float kdP_L = 2;
+float kiP_L = 100;
+float previous_position_error_L = 0;
+
+int32_t previous_position_control_time = 0;
 
 
 void service_callback(const void *request_msg, void *response_msg) {
@@ -156,8 +166,8 @@ void service_callback(const void *request_msg, void *response_msg) {
 
 										PWM_R = 0;
 										PWM_L = 0;
-										activated = 1 - activated;
-										res_out->result = (activated)? true: false; // activate/deactivate STM
+										control_loop_state = (control_loop_state == DISACTIVATED)? ACTIVATED : DISACTIVATED;
+										res_out->result = (control_loop_state == ACTIVATED)? true: false; // activate/deactivate STM
 										break;
 
 									 case 7:
@@ -345,9 +355,17 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  activated = 0;
 
-  activated = 1;
+  control_loop_state = DISACTIVATED;
+
+
+
+  set_target_encoder_counts(0, 0);
+
+  while(1){
+	  send_values_to_usart(0, 0, encoder_count_R, 0);
+	  HAL_Delay(1);
+  }
 //  circle_curve(500, -500, -PI/1.5, 300);
 //  HAL_Delay(1500);
 //  orientate(90, 0);
@@ -996,48 +1014,80 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim-> Instance == TIM7){
-		if(activated){
-			update_encoder_counts();
-			update_position(); // will also update the speed internally
-
-			float tmp = (micros() - previous_speed_control_time);
-			// right motor speed control
-			float error = target_speed_R - current_speed_R;
-
-			debugger_2 = error;
-			speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
-			speed_integral_R += error*(tmp/1000000);
-			//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
-
-			//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
-
-			previous_speed_error_R = error;
-
-			PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
-			PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
-			PWM_R = (target_speed_R == 0)?0: PWM_R;
-
-			speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
-
-			// left motor speed control
-			error = target_speed_L - current_speed_L;
-			speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
-			speed_integral_L += error*(tmp/1000000);
-			//speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
-
-			//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
-
-			previous_speed_error_L = error;
-			previous_speed_control_time = micros();
-
-			PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
-			PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
-			PWM_L = (target_speed_L == 0)?0: PWM_L;
-
-			speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
-		}else{
+		if(control_loop_state == DISACTIVATED){
 			PWM_L = 0;
 			PWM_R = 0;
+		}else{
+			update_encoder_counts();
+			update_position(); // will also update the speed internally
+			if (control_loop_state == SPEED){
+				float tmp = (micros() - previous_speed_control_time);
+				// right motor speed control
+				float error = target_speed_R - current_speed_R;
+
+				debugger_2 = error;
+				speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
+				speed_integral_R += error*(tmp/1000000);
+				//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
+
+				//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
+
+				previous_speed_error_R = error;
+
+				PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
+				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+				PWM_R = (target_speed_R == 0)?0: PWM_R;
+
+				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
+
+				// left motor speed control
+				error = target_speed_L - current_speed_L;
+				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
+				speed_integral_L += error*(tmp/1000000);
+				//speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
+
+				//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
+
+				previous_speed_error_L = error;
+				previous_speed_control_time = micros();
+
+				PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
+				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+				PWM_L = (target_speed_L == 0)?0: PWM_L;
+
+				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
+
+			}else if (control_loop_state == POSITION){
+				float tmp = (micros() - previous_position_control_time);
+				// right motor position control
+				float error = target_encoder_count_R - encoder_count_R;
+
+				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
+				position_integral_R += error*(tmp/1000000);
+
+				previous_position_error_R = error;
+
+				PWM_R = PWM_R*0.0 + 1.0 * ( kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R); // the first part is a simple filter to reduce jitter
+				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+
+				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(tmp/1000000)) : position_integral_R;
+
+				// left motor position control
+				error = target_encoder_count_L - encoder_count_L;
+
+				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
+				position_integral_L += error*(tmp/1000000);
+
+				previous_position_error_L = error;
+
+				PWM_L = PWM_L*0.0 + 1.0 * ( kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L); // the first part is a simple filter to reduce jitter
+				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+
+				position_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (position_integral_L - 2*error*(tmp/1000000)) : position_integral_L;
+
+				previous_position_error_L = error;
+				previous_position_control_time = micros();
+			}
 		}
 		run_right_motor();
 		run_left_motor();
