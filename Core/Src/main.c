@@ -99,17 +99,28 @@ float speed_integral_limit = 10000;
 int32_t previous_speed_control_time = 0;
 
 // position control parameters
-float kpP_R = 25;
+//float kpP_R = 25;
+//float kdP_R = 2;
+//float kiP_R = 100;
+//float previous_position_error_R = 0;
+//
+//float kpP_L = 25;
+//float kdP_L = 2;
+//float kiP_L = 100;
+//float previous_position_error_L = 0;
+
+float kpP_R = 10;
 float kdP_R = 2;
 float kiP_R = 100;
 float previous_position_error_R = 0;
 
-float kpP_L = 25;
+float kpP_L = 10;
 float kdP_L = 2;
 float kiP_L = 100;
 float previous_position_error_L = 0;
 
 int32_t previous_position_control_time = 0;
+float position_max_response = 300;
 
 
 void service_callback(const void *request_msg, void *response_msg) {
@@ -358,91 +369,9 @@ int main(void)
 
   control_loop_state = DISACTIVATED;
 
-
-
-  set_target_encoder_counts(0, 0);
-
-  while(1){
-	  send_values_to_usart(0, 0, encoder_count_R, 0);
-	  HAL_Delay(1);
-  }
-//  circle_curve(500, -500, -PI/1.5, 300);
-//  HAL_Delay(1500);
-//  orientate(90, 0);
-//  HAL_Delay(500);
-//  orientate(-90, 0);
-//  HAL_Delay(500);
-//  orientate(0, 0);
-//  HAL_Delay(500);
-//  orientate(180, 0);
-
-//  HAL_Delay(1500);
-//  move_forward_with_left_deviation(600, 200, 350);
-//  HAL_Delay(500);
-//  orientate(0, 0);
-
-  // 3adheb e rotate
-//	HAL_Delay(500);
-//	rotate(10, 0);
-//	HAL_Delay(500);
-//	rotate(10, 0);
-//	HAL_Delay(500);
-//	rotate(10, 0);
-//	HAL_Delay(500);
-//	rotate(10, 0);
-//	HAL_Delay(500);
-//	rotate(10, 0);
-//	HAL_Delay(500);
-//	rotate(10, 0);
-//	HAL_Delay(500);
-//	rotate(30, 0);
-//	HAL_Delay(500);
-//	rotate(-180, 0);
-//	HAL_Delay(500);
-//	rotate(90, 0);
-//	HAL_Delay(500);
-//	rotate(-360, 0);
-//	HAL_Delay(500);
-//  HAL_Delay(1500);
-//  move_forward(50, 500);
-//  HAL_Delay(500);
-//  move_backward(50, 500);
-
-// mounewra
-//  HAL_Delay(1500);
-//  rotate(-35, 0);
-//  HAL_Delay(500);
-//  move_forward(250, 300);
-//  HAL_Delay(500);
-//  rotate(35, 0);
-//  HAL_Delay(500);
-//  move_backward(250, 300);
-//  HAL_Delay(500);
-//  rotate(35, 0);
-//  HAL_Delay(500);
-//  move_forward(250, 300);
-//  HAL_Delay(500);
-//  rotate(-35, 0);
-
-   // moraba3
-//  HAL_Delay(1500);
-//  move_forward(250, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-//  move_forward(250, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-//  move_forward(250, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-//  move_forward(250, 300);
-//  HAL_Delay(500);
-//  rotate(-90, 0);
-//  HAL_Delay(500);
-
+  control_loop_state = ACTIVATED;
+  //circle_curve(500, -500, -90, 300);
+  move_forward(500, 400);
 
   /* USER CODE END 2 */
 
@@ -1063,12 +992,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				float error = target_encoder_count_R - encoder_count_R;
 
 				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
-				position_integral_R += error*(tmp/1000000);
+
+				position_integral_R = ( SGN(error) == SGN( previous_position_error_R ) )? position_integral_R + error*(tmp/1000000) : 0;
 
 				previous_position_error_R = error;
 
-				PWM_R = PWM_R*0.0 + 1.0 * ( kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R); // the first part is a simple filter to reduce jitter
-				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+				PWM_R = kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R; // the first part is a simple filter to reduce jitter
+				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_response : (PWM_R < PWM_R_backward_min - position_max_response)? PWM_R_backward_min - position_max_response : PWM_R;
 
 				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(tmp/1000000)) : position_integral_R;
 
@@ -1076,12 +1006,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				error = target_encoder_count_L - encoder_count_L;
 
 				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
-				position_integral_L += error*(tmp/1000000);
+				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + error*(tmp/1000000) : 0;
 
 				previous_position_error_L = error;
 
-				PWM_L = PWM_L*0.0 + 1.0 * ( kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L); // the first part is a simple filter to reduce jitter
-				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+				PWM_L = kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L; // the first part is a simple filter to reduce jitter
+				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_response : (PWM_L < PWM_L_backward_min - position_max_response)? PWM_L_backward_min - position_max_response : PWM_L;
 
 				position_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (position_integral_L - 2*error*(tmp/1000000)) : position_integral_L;
 

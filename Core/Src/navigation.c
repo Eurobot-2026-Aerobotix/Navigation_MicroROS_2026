@@ -10,8 +10,8 @@ enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
-float ramping_acceleration = 5;
-float breaking_acceleration = -2;
+float ramping_acceleration = 3.5;
+float breaking_acceleration = -4;
 float emergency_breaking_acceleration = -10;
 float rotating_speed = 200;
 int8_t direction_R;
@@ -100,7 +100,7 @@ int move_forward(float distance, float speed){
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 20 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
-		speed = MAX(speed*0.995, 0);
+		speed = MAX(speed*0.97, 0);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
@@ -116,6 +116,8 @@ int move_forward(float distance, float speed){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
+
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
@@ -213,6 +215,7 @@ int move_backward(float distance, float speed){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
@@ -396,6 +399,7 @@ int rotate(float angle, int8_t is_radian){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
@@ -429,11 +433,11 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	float x2 = speed/breaking_acceleration + arc_length;
 
 	while (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
-		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
+		float intersection_x = (breaking_acceleration*arc_length)/(breaking_acceleration - ramping_acceleration);
 		float intersection_speed = ramping_acceleration * intersection_x;
 		speed = 0.9 * intersection_speed;
 		x1 = speed/ramping_acceleration;
-		x2 = speed/breaking_acceleration + distance;
+		x2 = speed/breaking_acceleration + arc_length;
 		cruise_speed_R = speed * ( arc_length_R/arc_length );
 		cruise_speed_L = speed * ( arc_length_L/arc_length );
 	}
@@ -488,7 +492,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	float speed_L = calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L);
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 50 ; // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 50 ; // the coefficient is tunable
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
 		speed_R = MAX(speed_R*0.995, 0);
 		speed_L = MAX(speed_L*0.995, 0);
@@ -507,6 +511,8 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
+	set_target_encoder_counts(encoder_count_R, encoder_count_L);
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(arc_length, arc_length) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
@@ -554,11 +560,11 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float x2 = speed/breaking_acceleration + arc_length;
 
 	while (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
-		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
+		float intersection_x = (breaking_acceleration*arc_length)/(breaking_acceleration - ramping_acceleration);
 		float intersection_speed = ramping_acceleration * intersection_x;
 		speed = 0.9 * intersection_speed;
 		x1 = speed/ramping_acceleration;
-		x2 = speed/breaking_acceleration + distance;
+		x2 = speed/breaking_acceleration + arc_length;
 		cruise_speed_R = speed * ( arc_length_R/arc_length );
 		cruise_speed_L = speed * ( arc_length_L/arc_length );
 	}
@@ -613,7 +619,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float speed_L = calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L);
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 50 ; // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 50 ; // the coefficient is tunable
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
 		speed_R = MAX(speed_R*0.996, 0);
 		speed_L = MAX(speed_L*0.996, 0);
@@ -632,6 +638,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(arc_length, arc_length) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
@@ -647,21 +654,23 @@ int go_to(float x, float y, float speed){
 void emergency_break(){
 	wheel_state_R = EMERGENCY_BREAK;
 	wheel_state_L = EMERGENCY_BREAK;
-	control_loop_state = SPEED;
-	int32_t last_encoder_count_R = encoder_count_R;
-	int32_t last_encoder_count_L = encoder_count_L;
-	HAL_Delay(4);
-	while (current_speed_R > 0.5 || current_speed_L > 0.5){
-		float dx_R = ticks_to_distance(fabs(encoder_count_R - last_encoder_count_R), wheel_diameter_R);
-		float dx_L = ticks_to_distance(fabs(encoder_count_L - last_encoder_count_L), wheel_diameter_L);
+//	control_loop_state = SPEED;
+//	int32_t last_encoder_count_R = encoder_count_R;
+//	int32_t last_encoder_count_L = encoder_count_L;
+//	HAL_Delay(4);
+//	while (current_speed_R > 0.5 || current_speed_L > 0.5){
+//		float dx_R = ticks_to_distance(fabs(encoder_count_R - last_encoder_count_R), wheel_diameter_R);
+//		float dx_L = ticks_to_distance(fabs(encoder_count_L - last_encoder_count_L), wheel_diameter_L);
+//
+//		set_target_speeds(calculate_instant_target_speed_R(dx_R, 0), calculate_instant_target_speed_L(dx_L, 0));
+//
+//		last_encoder_count_R = encoder_count_R;
+//		last_encoder_count_L = encoder_count_L;
+//		HAL_Delay(4);
+//	}
+//	stop_motors();
+	set_target_encoder_counts(encoder_count_R, encoder_count_L);
 
-		set_target_speeds(calculate_instant_target_speed_R(dx_R, 0), calculate_instant_target_speed_L(dx_L, 0));
-
-		last_encoder_count_R = encoder_count_R;
-		last_encoder_count_L = encoder_count_L;
-		HAL_Delay(4);
-	}
-	stop_motors();
 }
 
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){
