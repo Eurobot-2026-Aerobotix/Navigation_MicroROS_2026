@@ -13,7 +13,7 @@ enum Control_loop control_loop_state = DISACTIVATED;
 float ramping_acceleration = 3.5;
 float breaking_acceleration = -4;
 float emergency_breaking_acceleration = -10;
-float rotating_speed = 200;
+float rotating_speed = 300;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;
@@ -100,7 +100,7 @@ int move_forward(float distance, float speed){
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 20 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
-		speed = MAX(speed*0.97, 0);
+		speed = MAX(speed*0.95, 30);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
@@ -198,7 +198,7 @@ int move_backward(float distance, float speed){
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 20 ; // the coefficient is tunable
 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
-		speed = MIN(speed*0.995, 0);
+		speed = MIN(speed*0.95, 0);
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
@@ -215,7 +215,8 @@ int move_backward(float distance, float speed){
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
-	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
+	int32_t phi_error = (int32_t)( (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // this part is there to fix any last minute fuck ups, concerning the phi
+	set_target_encoder_counts(encoder_count_R + phi_error - phi_error/2, encoder_count_L - phi_error/2 ); // why not just phi_error/2 at first ? cause of arithmitic, those are integers
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	return 0;
@@ -291,7 +292,7 @@ float calculate_instant_target_phi(float x, float distance){
 	return 0;
 }
 int rotate(float angle, int8_t is_radian){
-	float rotating_breaking_acceleration = -3.7;
+	float rotating_breaking_acceleration = -2;
 	angle = is_radian? angle: deg_to_rad(angle);
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
@@ -328,7 +329,7 @@ int rotate(float angle, int8_t is_radian){
 	const int32_t starting_encoder_count_L = encoder_count_L;
 	float yaw_centering_term;
 
-	float phase_two_angle = 15;
+	float phase_two_angle = 10;
 
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
@@ -368,10 +369,11 @@ int rotate(float angle, int8_t is_radian){
 	}
 	// completing the last part of distance separately, so the break happens on point
 
-	speed = (target_speed_R - target_speed_L)/ 2; // one of the speeds is negative, that's why there is a minus
+	speed = fabs(target_speed_R - target_speed_L)/ 2; // one of the speeds is negative, that's why there is a minus
 	if (fabs(speed) < (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-rotating_breaking_acceleration) ){ // handling the case where the robot skips the first while loop, being too close to target_phi
 		speed = (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-rotating_breaking_acceleration) * direction_R;
 	}
+	speed = 100 * direction_R;
 	distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 	previous_distance_to_target = distance_to_target;
 
@@ -382,12 +384,12 @@ int rotate(float angle, int8_t is_radian){
 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		speed = MAX(fabs(speed)*0.985, 0) * direction_R;
+		speed = MAX(fabs(speed)*0.9, 30) * direction_R;
 		previous_distance_to_target = distance_to_target;
 		HAL_Delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 
-		if(micros() - phase_two_start_time> 3000000){
+		if(micros() - phase_two_start_time> 2000000){
 			break;
 		}
 
@@ -519,7 +521,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 }
 int orientate(float orientation, int8_t is_radian){
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	if (fabs(orientation - current_phi)< deg_to_rad(0.5) ){
+	if (fabs(orientation - current_phi) > deg_to_rad(0.5) ){
 		float angle = orientation - current_phi;
 		if (angle > PI){
 			angle -= 2*PI;
@@ -648,7 +650,7 @@ int go_to(float x, float y, float speed){
 	if ( orientate( get_angle_to(x, y), 1 ) ){
 		return 1;
 	}
-	HAL_Delay(500);
+	HAL_Delay(800);
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
 }
 void emergency_break(){

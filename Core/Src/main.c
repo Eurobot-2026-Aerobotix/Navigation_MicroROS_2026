@@ -109,18 +109,18 @@ int32_t previous_speed_control_time = 0;
 //float kiP_L = 100;
 //float previous_position_error_L = 0;
 
-float kpP_R = 10;
-float kdP_R = 2;
+float kpP_R = 25;
+float kdP_R = 6;
 float kiP_R = 100;
 float previous_position_error_R = 0;
 
-float kpP_L = 10;
-float kdP_L = 2;
+float kpP_L = 25;
+float kdP_L = 6;
 float kiP_L = 100;
 float previous_position_error_L = 0;
 
 int32_t previous_position_control_time = 0;
-float position_max_response = 300;
+float position_max_response = 500;
 
 
 void service_callback(const void *request_msg, void *response_msg) {
@@ -369,9 +369,6 @@ int main(void)
 
   control_loop_state = DISACTIVATED;
 
-  control_loop_state = ACTIVATED;
-  //circle_curve(500, -500, -90, 300);
-  move_forward(500, 400);
 
   /* USER CODE END 2 */
 
