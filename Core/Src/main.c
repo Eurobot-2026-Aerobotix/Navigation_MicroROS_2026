@@ -96,6 +96,7 @@ float kiS_L = 15; // 20 15.5
 float speed_integral_L = 0;
 float speed_derivative_L = 0;
 
+int bens3id = 2;
 float previous_speed_error_L = 0;
 
 float speed_integral_limit = 10000;
@@ -181,7 +182,8 @@ void service_callback(const void *request_msg, void *response_msg) {
 
 /*void bool_subscriber_callback(const void *msg_in) {
     const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
-    evitementFlag = msg->data; // true = stop
+    evitementFl
+    ag = msg->data; // true = stop
 //    if (evitementFlag==true){
 //    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
 //    	stop_motors();
