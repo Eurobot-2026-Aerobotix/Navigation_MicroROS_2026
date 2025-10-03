@@ -20,8 +20,8 @@ float cruise_speed_R;
 float cruise_speed_L;
 float starting_phi;
 float turning_radius;
-int32_t target_encoder_count_R;
-int32_t target_encoder_count_L;
+int32_t target_encoder_count_R = 0;
+int32_t target_encoder_count_L = 0;
 float position_integral_R = 0;
 float position_derivative_R = 0;
 float position_integral_L = 0;
@@ -650,7 +650,7 @@ int go_to(float x, float y, float speed){
 	if ( orientate( get_angle_to(x, y), 1 ) ){
 		return 1;
 	}
-	HAL_Delay(800);
+	HAL_Delay(1500);
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
 }
 void emergency_break(){

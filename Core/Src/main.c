@@ -122,6 +122,8 @@ float previous_position_error_L = 0;
 int32_t previous_position_control_time = 0;
 float position_max_response = 500;
 
+int step = 0;
+
 
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
@@ -178,10 +180,12 @@ void service_callback(const void *request_msg, void *response_msg) {
 										PWM_R = 0;
 										PWM_L = 0;
 										control_loop_state = (control_loop_state == DISACTIVATED)? ACTIVATED : DISACTIVATED;
+										communication_state = RASPBERRY;
 										res_out->result = (control_loop_state == ACTIVATED)? true: false; // activate/deactivate STM
 										break;
 
 									 case 7:
+										HAL_Delay(req_in->arg2);
 										res_out->result = (first_forward_recieved)? true: false;
 										break;
 
@@ -366,9 +370,26 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
+  communication_state = RASPBERRY;
 
   control_loop_state = DISACTIVATED;
-
+//  //while(step == 0);
+//  move_forward(100.0, 400.0);
+//  HAL_Delay(1500);
+//  //while(step == 1);
+//  go_to(100.0, 250.0, 400.0);
+//  HAL_Delay(1500);
+//  //while(step == 2);
+//  orientate(0.0, 0.0);
+//  HAL_Delay(1500);
+//  //while(step == 3);
+//  go_to(100.0, -500.0, 400.0);
+//  HAL_Delay(1500);
+//  //while(step == 4);
+//  orientate(62.0,0.0);
+//  HAL_Delay(1500);
+//  //while(step == 5);
+//  go_to(456.0, -710.0, 400.0);
 
   /* USER CODE END 2 */
 

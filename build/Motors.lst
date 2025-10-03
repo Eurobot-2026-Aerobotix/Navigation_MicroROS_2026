@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -39,77 +39,78 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
    9:Core/Src/Motors.c **** 
   10:Core/Src/Motors.c **** TIM_HandleTypeDef* htim_motors;
   11:Core/Src/Motors.c **** uint32_t right_forward, right_backward, left_forward, left_backward;
-  12:Core/Src/Motors.c **** int PWM_R, PWM_L;
-  13:Core/Src/Motors.c **** int PWM_max;
-  14:Core/Src/Motors.c **** int PWM_R_forward_min, PWM_L_forward_min, PWM_R_backward_min, PWM_L_backward_min;
-  15:Core/Src/Motors.c **** int PWM_offset_R;
-  16:Core/Src/Motors.c **** int PWM_offset_L;
-  17:Core/Src/Motors.c **** float current_speed_R = 0;
-  18:Core/Src/Motors.c **** float current_speed_L = 0;
-  19:Core/Src/Motors.c **** float previous_speed_R = 0;
-  20:Core/Src/Motors.c **** float previous_speed_L = 0;
-  21:Core/Src/Motors.c **** float target_speed_R = 0;
-  22:Core/Src/Motors.c **** float target_speed_L = 0;
-  23:Core/Src/Motors.c **** float current_acceleration_R = 0;
-  24:Core/Src/Motors.c **** float current_acceleration_L = 0;
-  25:Core/Src/Motors.c **** uint32_t previous_speed_calculation_time = 0;
-  26:Core/Src/Motors.c **** int32_t encoder_count_R;
-  27:Core/Src/Motors.c **** int32_t encoder_count_L;
-  28:Core/Src/Motors.c **** uint16_t previous_encoder_timer_CNT_R;
-  29:Core/Src/Motors.c **** uint16_t previous_encoder_timer_CNT_L;
-  30:Core/Src/Motors.c **** int32_t previous_encoder_count_R;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 2
+  12:Core/Src/Motors.c **** enum Communication communication_state;
+  13:Core/Src/Motors.c **** int PWM_R, PWM_L;
+  14:Core/Src/Motors.c **** int PWM_max;
+  15:Core/Src/Motors.c **** int PWM_R_forward_min, PWM_L_forward_min, PWM_R_backward_min, PWM_L_backward_min;
+  16:Core/Src/Motors.c **** int PWM_offset_R;
+  17:Core/Src/Motors.c **** int PWM_offset_L;
+  18:Core/Src/Motors.c **** float current_speed_R = 0;
+  19:Core/Src/Motors.c **** float current_speed_L = 0;
+  20:Core/Src/Motors.c **** float previous_speed_R = 0;
+  21:Core/Src/Motors.c **** float previous_speed_L = 0;
+  22:Core/Src/Motors.c **** float target_speed_R = 0;
+  23:Core/Src/Motors.c **** float target_speed_L = 0;
+  24:Core/Src/Motors.c **** float current_acceleration_R = 0;
+  25:Core/Src/Motors.c **** float current_acceleration_L = 0;
+  26:Core/Src/Motors.c **** uint32_t previous_speed_calculation_time = 0;
+  27:Core/Src/Motors.c **** int32_t encoder_count_R;
+  28:Core/Src/Motors.c **** int32_t encoder_count_L;
+  29:Core/Src/Motors.c **** uint16_t previous_encoder_timer_CNT_R;
+  30:Core/Src/Motors.c **** uint16_t previous_encoder_timer_CNT_L;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 2
 
 
-  31:Core/Src/Motors.c **** int32_t previous_encoder_count_L;
-  32:Core/Src/Motors.c **** TIM_HandleTypeDef* encoder_timer_R;
-  33:Core/Src/Motors.c **** TIM_HandleTypeDef* encoder_timer_L;
-  34:Core/Src/Motors.c **** int CPR;
-  35:Core/Src/Motors.c **** float wheel_diameter_R;
-  36:Core/Src/Motors.c **** float wheel_diameter_L;
-  37:Core/Src/Motors.c **** int32_t debugger = 0;
-  38:Core/Src/Motors.c **** float debugger_2 = 0.0f;
-  39:Core/Src/Motors.c **** extern UART_HandleTypeDef huart2;
-  40:Core/Src/Motors.c **** 
-  41:Core/Src/Motors.c **** void run_right_motor(){
-  29              		.loc 1 41 23 view -0
+  31:Core/Src/Motors.c **** int32_t previous_encoder_count_R;
+  32:Core/Src/Motors.c **** int32_t previous_encoder_count_L;
+  33:Core/Src/Motors.c **** TIM_HandleTypeDef* encoder_timer_R;
+  34:Core/Src/Motors.c **** TIM_HandleTypeDef* encoder_timer_L;
+  35:Core/Src/Motors.c **** int CPR;
+  36:Core/Src/Motors.c **** float wheel_diameter_R;
+  37:Core/Src/Motors.c **** float wheel_diameter_L;
+  38:Core/Src/Motors.c **** int32_t debugger = 0;
+  39:Core/Src/Motors.c **** float debugger_2 = 0.0f;
+  40:Core/Src/Motors.c **** extern UART_HandleTypeDef huart2;
+  41:Core/Src/Motors.c **** 
+  42:Core/Src/Motors.c **** void run_right_motor(){
+  29              		.loc 1 42 23 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
-  42:Core/Src/Motors.c **** 	if (PWM_R>0){
-  34              		.loc 1 42 2 view .LVU1
-  35              		.loc 1 42 11 is_stmt 0 view .LVU2
+  43:Core/Src/Motors.c **** 	if (PWM_R>0){
+  34              		.loc 1 43 2 view .LVU1
+  35              		.loc 1 43 11 is_stmt 0 view .LVU2
   36 0000 514B     		ldr	r3, .L40
   37 0002 1B68     		ldr	r3, [r3]
-  38              		.loc 1 42 5 view .LVU3
+  38              		.loc 1 43 5 view .LVU3
   39 0004 002B     		cmp	r3, #0
   40 0006 4CDD     		ble	.L2
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  41              		.loc 1 43 3 is_stmt 1 view .LVU4
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  41              		.loc 1 44 3 is_stmt 1 view .LVU4
   42 0008 504A     		ldr	r2, .L40+4
   43 000a 1268     		ldr	r2, [r2]
   44 000c 8AB9     		cbnz	r2, .L3
-  45              		.loc 1 43 3 is_stmt 0 discriminator 1 view .LVU5
+  45              		.loc 1 44 3 is_stmt 0 discriminator 1 view .LVU5
   46 000e 5049     		ldr	r1, .L40+8
   47 0010 0968     		ldr	r1, [r1]
   48 0012 8B42     		cmp	r3, r1
   49 0014 00DB     		blt	.L4
-  50              		.loc 1 43 3 discriminator 3 view .LVU6
+  50              		.loc 1 44 3 discriminator 3 view .LVU6
   51 0016 1A46     		mov	r2, r3
   52              	.L4:
-  53              		.loc 1 43 3 discriminator 6 view .LVU7
+  53              		.loc 1 44 3 discriminator 6 view .LVU7
   54 0018 4E4B     		ldr	r3, .L40+12
   55 001a 1B68     		ldr	r3, [r3]
   56 001c 1B68     		ldr	r3, [r3]
   57 001e 5A63     		str	r2, [r3, #52]
   58              	.L5:
-  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
-  59              		.loc 1 44 3 is_stmt 1 view .LVU8
+  45:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+  59              		.loc 1 45 3 is_stmt 1 view .LVU8
   60 0020 4D4B     		ldr	r3, .L40+16
   61 0022 1B68     		ldr	r3, [r3]
   62 0024 3BBB     		cbnz	r3, .L11
-  63              		.loc 1 44 3 is_stmt 0 discriminator 1 view .LVU9
+  63              		.loc 1 45 3 is_stmt 0 discriminator 1 view .LVU9
   64 0026 4B4B     		ldr	r3, .L40+12
   65 0028 1B68     		ldr	r3, [r3]
   66 002a 1B68     		ldr	r3, [r3]
@@ -117,81 +118,81 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
   68 002e 5A63     		str	r2, [r3, #52]
   69 0030 7047     		bx	lr
   70              	.L3:
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 3
 
 
-  71              		.loc 1 43 3 discriminator 2 view .LVU10
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  71              		.loc 1 44 3 discriminator 2 view .LVU10
   72 0032 042A     		cmp	r2, #4
   73 0034 0BD0     		beq	.L32
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  74              		.loc 1 43 3 discriminator 8 view .LVU11
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  74              		.loc 1 44 3 discriminator 8 view .LVU11
   75 0036 082A     		cmp	r2, #8
   76 0038 13D0     		beq	.L33
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  77              		.loc 1 43 3 discriminator 15 view .LVU12
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  77              		.loc 1 44 3 discriminator 15 view .LVU12
   78 003a 454A     		ldr	r2, .L40+8
   79 003c 1268     		ldr	r2, [r2]
   80 003e 9342     		cmp	r3, r2
   81 0040 00DA     		bge	.L10
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  82              		.loc 1 43 3 discriminator 22 view .LVU13
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  82              		.loc 1 44 3 discriminator 22 view .LVU13
   83 0042 0023     		movs	r3, #0
   84              	.L10:
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  85              		.loc 1 43 3 discriminator 24 view .LVU14
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  85              		.loc 1 44 3 discriminator 24 view .LVU14
   86 0044 434A     		ldr	r2, .L40+12
   87 0046 1268     		ldr	r2, [r2]
   88 0048 1268     		ldr	r2, [r2]
   89 004a 1364     		str	r3, [r2, #64]
   90 004c E8E7     		b	.L5
   91              	.L32:
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  92              		.loc 1 43 3 discriminator 7 view .LVU15
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  92              		.loc 1 44 3 discriminator 7 view .LVU15
   93 004e 404A     		ldr	r2, .L40+8
   94 0050 1268     		ldr	r2, [r2]
   95 0052 9342     		cmp	r3, r2
   96 0054 00DA     		bge	.L7
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
-  97              		.loc 1 43 3 discriminator 10 view .LVU16
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+  97              		.loc 1 44 3 discriminator 10 view .LVU16
   98 0056 0023     		movs	r3, #0
   99              	.L7:
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
- 100              		.loc 1 43 3 discriminator 12 view .LVU17
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+ 100              		.loc 1 44 3 discriminator 12 view .LVU17
  101 0058 3E4A     		ldr	r2, .L40+12
  102 005a 1268     		ldr	r2, [r2]
  103 005c 1268     		ldr	r2, [r2]
  104 005e 9363     		str	r3, [r2, #56]
  105 0060 DEE7     		b	.L5
  106              	.L33:
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
- 107              		.loc 1 43 3 discriminator 14 view .LVU18
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+ 107              		.loc 1 44 3 discriminator 14 view .LVU18
  108 0062 3B4A     		ldr	r2, .L40+8
  109 0064 1268     		ldr	r2, [r2]
  110 0066 9342     		cmp	r3, r2
  111 0068 00DA     		bge	.L9
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
- 112              		.loc 1 43 3 discriminator 17 view .LVU19
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+ 112              		.loc 1 44 3 discriminator 17 view .LVU19
  113 006a 0023     		movs	r3, #0
  114              	.L9:
-  43:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
- 115              		.loc 1 43 3 discriminator 19 view .LVU20
+  44:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, (PWM_R < PWM_R_forward_min)? 0 : PWM_R );
+ 115              		.loc 1 44 3 discriminator 19 view .LVU20
  116 006c 394A     		ldr	r2, .L40+12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 4
+
+
  117 006e 1268     		ldr	r2, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 4
-
-
  118 0070 1268     		ldr	r2, [r2]
  119 0072 D363     		str	r3, [r2, #60]
  120 0074 D4E7     		b	.L5
  121              	.L11:
- 122              		.loc 1 44 3 discriminator 2 view .LVU21
+ 122              		.loc 1 45 3 discriminator 2 view .LVU21
  123 0076 042B     		cmp	r3, #4
  124 0078 07D0     		beq	.L34
- 125              		.loc 1 44 3 discriminator 4 view .LVU22
+ 125              		.loc 1 45 3 discriminator 4 view .LVU22
  126 007a 082B     		cmp	r3, #8
  127 007c 0BD0     		beq	.L35
- 128              		.loc 1 44 3 discriminator 7 view .LVU23
+ 128              		.loc 1 45 3 discriminator 7 view .LVU23
  129 007e 354B     		ldr	r3, .L40+12
  130 0080 1B68     		ldr	r3, [r3]
  131 0082 1B68     		ldr	r3, [r3]
@@ -199,7 +200,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  133 0086 1A64     		str	r2, [r3, #64]
  134 0088 7047     		bx	lr
  135              	.L34:
- 136              		.loc 1 44 3 discriminator 3 view .LVU24
+ 136              		.loc 1 45 3 discriminator 3 view .LVU24
  137 008a 324B     		ldr	r3, .L40+12
  138 008c 1B68     		ldr	r3, [r3]
  139 008e 1B68     		ldr	r3, [r3]
@@ -207,7 +208,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  141 0092 9A63     		str	r2, [r3, #56]
  142 0094 7047     		bx	lr
  143              	.L35:
- 144              		.loc 1 44 3 discriminator 6 view .LVU25
+ 144              		.loc 1 45 3 discriminator 6 view .LVU25
  145 0096 2F4B     		ldr	r3, .L40+12
  146 0098 1B68     		ldr	r3, [r3]
  147 009a 1B68     		ldr	r3, [r3]
@@ -215,52 +216,52 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  149 009e DA63     		str	r2, [r3, #60]
  150 00a0 7047     		bx	lr
  151              	.L2:
-  45:Core/Src/Motors.c **** 	}else{
-  46:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
- 152              		.loc 1 46 3 is_stmt 1 view .LVU26
+  46:Core/Src/Motors.c **** 	}else{
+  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
+ 152              		.loc 1 47 3 is_stmt 1 view .LVU26
  153 00a2 2A4A     		ldr	r2, .L40+4
  154 00a4 1268     		ldr	r2, [r2]
  155 00a6 8AB9     		cbnz	r2, .L15
- 156              		.loc 1 46 3 is_stmt 0 discriminator 1 view .LVU27
+ 156              		.loc 1 47 3 is_stmt 0 discriminator 1 view .LVU27
  157 00a8 2A4A     		ldr	r2, .L40+12
  158 00aa 1268     		ldr	r2, [r2]
  159 00ac 1268     		ldr	r2, [r2]
  160 00ae 0021     		movs	r1, #0
  161 00b0 5163     		str	r1, [r2, #52]
  162              	.L16:
-  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
- 163              		.loc 1 47 3 is_stmt 1 view .LVU28
+  48:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
+ 163              		.loc 1 48 3 is_stmt 1 view .LVU28
  164 00b2 294A     		ldr	r2, .L40+16
  165 00b4 1268     		ldr	r2, [r2]
  166 00b6 FAB9     		cbnz	r2, .L19
- 167              		.loc 1 47 3 is_stmt 0 discriminator 1 view .LVU29
+ 167              		.loc 1 48 3 is_stmt 0 discriminator 1 view .LVU29
  168 00b8 2849     		ldr	r1, .L40+20
  169 00ba 0968     		ldr	r1, [r1]
  170 00bc 8B42     		cmp	r3, r1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 5
+
+
  171 00be 00DC     		bgt	.L20
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 5
-
-
- 172              		.loc 1 47 3 discriminator 3 view .LVU30
+ 172              		.loc 1 48 3 discriminator 3 view .LVU30
  173 00c0 5A42     		rsbs	r2, r3, #0
  174              	.L20:
- 175              		.loc 1 47 3 discriminator 6 view .LVU31
+ 175              		.loc 1 48 3 discriminator 6 view .LVU31
  176 00c2 244B     		ldr	r3, .L40+12
  177 00c4 1B68     		ldr	r3, [r3]
  178 00c6 1B68     		ldr	r3, [r3]
  179 00c8 5A63     		str	r2, [r3, #52]
  180 00ca 7047     		bx	lr
  181              	.L15:
-  46:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
- 182              		.loc 1 46 3 discriminator 2 view .LVU32
+  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
+ 182              		.loc 1 47 3 discriminator 2 view .LVU32
  183 00cc 042A     		cmp	r2, #4
  184 00ce 07D0     		beq	.L36
-  46:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
- 185              		.loc 1 46 3 discriminator 4 view .LVU33
+  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
+ 185              		.loc 1 47 3 discriminator 4 view .LVU33
  186 00d0 082A     		cmp	r2, #8
  187 00d2 0BD0     		beq	.L37
-  46:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
- 188              		.loc 1 46 3 discriminator 7 view .LVU34
+  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
+ 188              		.loc 1 47 3 discriminator 7 view .LVU34
  189 00d4 1F4A     		ldr	r2, .L40+12
  190 00d6 1268     		ldr	r2, [r2]
  191 00d8 1268     		ldr	r2, [r2]
@@ -268,8 +269,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  193 00dc 1164     		str	r1, [r2, #64]
  194 00de E8E7     		b	.L16
  195              	.L36:
-  46:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
- 196              		.loc 1 46 3 discriminator 3 view .LVU35
+  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
+ 196              		.loc 1 47 3 discriminator 3 view .LVU35
  197 00e0 1C4A     		ldr	r2, .L40+12
  198 00e2 1268     		ldr	r2, [r2]
  199 00e4 1268     		ldr	r2, [r2]
@@ -277,8 +278,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  201 00e8 9163     		str	r1, [r2, #56]
  202 00ea E2E7     		b	.L16
  203              	.L37:
-  46:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
- 204              		.loc 1 46 3 discriminator 6 view .LVU36
+  47:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
+ 204              		.loc 1 47 3 discriminator 6 view .LVU36
  205 00ec 194A     		ldr	r2, .L40+12
  206 00ee 1268     		ldr	r2, [r2]
  207 00f0 1268     		ldr	r2, [r2]
@@ -286,84 +287,84 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  209 00f4 D163     		str	r1, [r2, #60]
  210 00f6 DCE7     		b	.L16
  211              	.L19:
- 212              		.loc 1 47 3 discriminator 2 view .LVU37
+ 212              		.loc 1 48 3 discriminator 2 view .LVU37
  213 00f8 042A     		cmp	r2, #4
  214 00fa 0BD0     		beq	.L38
- 215              		.loc 1 47 3 discriminator 8 view .LVU38
+ 215              		.loc 1 48 3 discriminator 8 view .LVU38
  216 00fc 082A     		cmp	r2, #8
  217 00fe 15D0     		beq	.L39
- 218              		.loc 1 47 3 discriminator 15 view .LVU39
+ 218              		.loc 1 48 3 discriminator 15 view .LVU39
  219 0100 164A     		ldr	r2, .L40+20
  220 0102 1268     		ldr	r2, [r2]
  221 0104 9342     		cmp	r3, r2
  222 0106 1DDC     		bgt	.L31
- 223              		.loc 1 47 3 discriminator 21 view .LVU40
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 6
 
 
+ 223              		.loc 1 48 3 discriminator 21 view .LVU40
  224 0108 5B42     		rsbs	r3, r3, #0
  225              	.L25:
- 226              		.loc 1 47 3 discriminator 24 view .LVU41
+ 226              		.loc 1 48 3 discriminator 24 view .LVU41
  227 010a 124A     		ldr	r2, .L40+12
  228 010c 1268     		ldr	r2, [r2]
  229 010e 1268     		ldr	r2, [r2]
  230 0110 1364     		str	r3, [r2, #64]
-  48:Core/Src/Motors.c **** 	}
-  49:Core/Src/Motors.c **** }
- 231              		.loc 1 49 1 view .LVU42
+  49:Core/Src/Motors.c **** 	}
+  50:Core/Src/Motors.c **** }
+ 231              		.loc 1 50 1 view .LVU42
  232 0112 7047     		bx	lr
  233              	.L38:
-  47:Core/Src/Motors.c **** 	}
- 234              		.loc 1 47 3 discriminator 7 view .LVU43
+  48:Core/Src/Motors.c **** 	}
+ 234              		.loc 1 48 3 discriminator 7 view .LVU43
  235 0114 114A     		ldr	r2, .L40+20
  236 0116 1268     		ldr	r2, [r2]
  237 0118 9342     		cmp	r3, r2
  238 011a 05DC     		bgt	.L29
-  47:Core/Src/Motors.c **** 	}
- 239              		.loc 1 47 3 discriminator 9 view .LVU44
+  48:Core/Src/Motors.c **** 	}
+ 239              		.loc 1 48 3 discriminator 9 view .LVU44
  240 011c 5B42     		rsbs	r3, r3, #0
  241              	.L22:
-  47:Core/Src/Motors.c **** 	}
- 242              		.loc 1 47 3 discriminator 12 view .LVU45
+  48:Core/Src/Motors.c **** 	}
+ 242              		.loc 1 48 3 discriminator 12 view .LVU45
  243 011e 0D4A     		ldr	r2, .L40+12
  244 0120 1268     		ldr	r2, [r2]
  245 0122 1268     		ldr	r2, [r2]
  246 0124 9363     		str	r3, [r2, #56]
  247 0126 7047     		bx	lr
  248              	.L29:
-  47:Core/Src/Motors.c **** 	}
- 249              		.loc 1 47 3 discriminator 10 view .LVU46
+  48:Core/Src/Motors.c **** 	}
+ 249              		.loc 1 48 3 discriminator 10 view .LVU46
  250 0128 0023     		movs	r3, #0
  251 012a F8E7     		b	.L22
  252              	.L39:
-  47:Core/Src/Motors.c **** 	}
- 253              		.loc 1 47 3 discriminator 14 view .LVU47
+  48:Core/Src/Motors.c **** 	}
+ 253              		.loc 1 48 3 discriminator 14 view .LVU47
  254 012c 0B4A     		ldr	r2, .L40+20
  255 012e 1268     		ldr	r2, [r2]
  256 0130 9342     		cmp	r3, r2
  257 0132 05DC     		bgt	.L30
-  47:Core/Src/Motors.c **** 	}
- 258              		.loc 1 47 3 discriminator 16 view .LVU48
+  48:Core/Src/Motors.c **** 	}
+ 258              		.loc 1 48 3 discriminator 16 view .LVU48
  259 0134 5B42     		rsbs	r3, r3, #0
  260              	.L24:
-  47:Core/Src/Motors.c **** 	}
- 261              		.loc 1 47 3 discriminator 19 view .LVU49
+  48:Core/Src/Motors.c **** 	}
+ 261              		.loc 1 48 3 discriminator 19 view .LVU49
  262 0136 074A     		ldr	r2, .L40+12
  263 0138 1268     		ldr	r2, [r2]
  264 013a 1268     		ldr	r2, [r2]
  265 013c D363     		str	r3, [r2, #60]
  266 013e 7047     		bx	lr
  267              	.L30:
-  47:Core/Src/Motors.c **** 	}
- 268              		.loc 1 47 3 discriminator 17 view .LVU50
+  48:Core/Src/Motors.c **** 	}
+ 268              		.loc 1 48 3 discriminator 17 view .LVU50
  269 0140 0023     		movs	r3, #0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 7
+
+
  270 0142 F8E7     		b	.L24
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 7
-
-
  271              	.L31:
-  47:Core/Src/Motors.c **** 	}
- 272              		.loc 1 47 3 discriminator 22 view .LVU51
+  48:Core/Src/Motors.c **** 	}
+ 272              		.loc 1 48 3 discriminator 22 view .LVU51
  273 0144 0023     		movs	r3, #0
  274 0146 E0E7     		b	.L25
  275              	.L41:
@@ -385,48 +386,48 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  292              		.thumb_func
  294              	run_left_motor:
  295              	.LFB135:
-  50:Core/Src/Motors.c **** void run_left_motor(){
- 296              		.loc 1 50 22 is_stmt 1 view -0
+  51:Core/Src/Motors.c **** void run_left_motor(){
+ 296              		.loc 1 51 22 is_stmt 1 view -0
  297              		.cfi_startproc
  298              		@ args = 0, pretend = 0, frame = 0
  299              		@ frame_needed = 0, uses_anonymous_args = 0
  300              		@ link register save eliminated.
-  51:Core/Src/Motors.c **** 	if (PWM_L>0){
- 301              		.loc 1 51 2 view .LVU53
- 302              		.loc 1 51 11 is_stmt 0 view .LVU54
+  52:Core/Src/Motors.c **** 	if (PWM_L>0){
+ 301              		.loc 1 52 2 view .LVU53
+ 302              		.loc 1 52 11 is_stmt 0 view .LVU54
  303 0000 514B     		ldr	r3, .L81
  304 0002 1B68     		ldr	r3, [r3]
- 305              		.loc 1 51 5 view .LVU55
+ 305              		.loc 1 52 5 view .LVU55
  306 0004 002B     		cmp	r3, #0
  307 0006 4CDD     		ble	.L43
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 308              		.loc 1 52 3 is_stmt 1 view .LVU56
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 308              		.loc 1 53 3 is_stmt 1 view .LVU56
  309 0008 504A     		ldr	r2, .L81+4
  310 000a 1268     		ldr	r2, [r2]
  311 000c 8AB9     		cbnz	r2, .L44
- 312              		.loc 1 52 3 is_stmt 0 discriminator 1 view .LVU57
+ 312              		.loc 1 53 3 is_stmt 0 discriminator 1 view .LVU57
  313 000e 5049     		ldr	r1, .L81+8
  314 0010 0968     		ldr	r1, [r1]
  315 0012 8B42     		cmp	r3, r1
  316 0014 00DB     		blt	.L45
- 317              		.loc 1 52 3 discriminator 3 view .LVU58
+ 317              		.loc 1 53 3 discriminator 3 view .LVU58
  318 0016 1A46     		mov	r2, r3
  319              	.L45:
- 320              		.loc 1 52 3 discriminator 6 view .LVU59
+ 320              		.loc 1 53 3 discriminator 6 view .LVU59
  321 0018 4E4B     		ldr	r3, .L81+12
  322 001a 1B68     		ldr	r3, [r3]
  323 001c 1B68     		ldr	r3, [r3]
  324 001e 5A63     		str	r2, [r3, #52]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 8
+
+
  325              	.L46:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 8
-
-
-  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 326              		.loc 1 53 3 is_stmt 1 view .LVU60
+  54:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 326              		.loc 1 54 3 is_stmt 1 view .LVU60
  327 0020 4D4B     		ldr	r3, .L81+16
  328 0022 1B68     		ldr	r3, [r3]
  329 0024 3BBB     		cbnz	r3, .L52
- 330              		.loc 1 53 3 is_stmt 0 discriminator 1 view .LVU61
+ 330              		.loc 1 54 3 is_stmt 0 discriminator 1 view .LVU61
  331 0026 4B4B     		ldr	r3, .L81+12
  332 0028 1B68     		ldr	r3, [r3]
  333 002a 1B68     		ldr	r3, [r3]
@@ -434,78 +435,78 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  335 002e 5A63     		str	r2, [r3, #52]
  336 0030 7047     		bx	lr
  337              	.L44:
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 338              		.loc 1 52 3 discriminator 2 view .LVU62
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 338              		.loc 1 53 3 discriminator 2 view .LVU62
  339 0032 042A     		cmp	r2, #4
  340 0034 0BD0     		beq	.L73
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 341              		.loc 1 52 3 discriminator 8 view .LVU63
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 341              		.loc 1 53 3 discriminator 8 view .LVU63
  342 0036 082A     		cmp	r2, #8
  343 0038 13D0     		beq	.L74
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 344              		.loc 1 52 3 discriminator 15 view .LVU64
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 344              		.loc 1 53 3 discriminator 15 view .LVU64
  345 003a 454A     		ldr	r2, .L81+8
  346 003c 1268     		ldr	r2, [r2]
  347 003e 9342     		cmp	r3, r2
  348 0040 00DA     		bge	.L51
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 349              		.loc 1 52 3 discriminator 22 view .LVU65
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 349              		.loc 1 53 3 discriminator 22 view .LVU65
  350 0042 0023     		movs	r3, #0
  351              	.L51:
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 352              		.loc 1 52 3 discriminator 24 view .LVU66
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 352              		.loc 1 53 3 discriminator 24 view .LVU66
  353 0044 434A     		ldr	r2, .L81+12
  354 0046 1268     		ldr	r2, [r2]
  355 0048 1268     		ldr	r2, [r2]
  356 004a 1364     		str	r3, [r2, #64]
  357 004c E8E7     		b	.L46
  358              	.L73:
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 359              		.loc 1 52 3 discriminator 7 view .LVU67
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 359              		.loc 1 53 3 discriminator 7 view .LVU67
  360 004e 404A     		ldr	r2, .L81+8
  361 0050 1268     		ldr	r2, [r2]
  362 0052 9342     		cmp	r3, r2
  363 0054 00DA     		bge	.L48
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 364              		.loc 1 52 3 discriminator 10 view .LVU68
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 364              		.loc 1 53 3 discriminator 10 view .LVU68
  365 0056 0023     		movs	r3, #0
  366              	.L48:
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 367              		.loc 1 52 3 discriminator 12 view .LVU69
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 367              		.loc 1 53 3 discriminator 12 view .LVU69
  368 0058 3E4A     		ldr	r2, .L81+12
  369 005a 1268     		ldr	r2, [r2]
  370 005c 1268     		ldr	r2, [r2]
  371 005e 9363     		str	r3, [r2, #56]
  372 0060 DEE7     		b	.L46
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 9
+
+
  373              	.L74:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 9
-
-
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 374              		.loc 1 52 3 discriminator 14 view .LVU70
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 374              		.loc 1 53 3 discriminator 14 view .LVU70
  375 0062 3B4A     		ldr	r2, .L81+8
  376 0064 1268     		ldr	r2, [r2]
  377 0066 9342     		cmp	r3, r2
  378 0068 00DA     		bge	.L50
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 379              		.loc 1 52 3 discriminator 17 view .LVU71
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 379              		.loc 1 53 3 discriminator 17 view .LVU71
  380 006a 0023     		movs	r3, #0
  381              	.L50:
-  52:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
- 382              		.loc 1 52 3 discriminator 19 view .LVU72
+  53:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
+ 382              		.loc 1 53 3 discriminator 19 view .LVU72
  383 006c 394A     		ldr	r2, .L81+12
  384 006e 1268     		ldr	r2, [r2]
  385 0070 1268     		ldr	r2, [r2]
  386 0072 D363     		str	r3, [r2, #60]
  387 0074 D4E7     		b	.L46
  388              	.L52:
- 389              		.loc 1 53 3 discriminator 2 view .LVU73
+ 389              		.loc 1 54 3 discriminator 2 view .LVU73
  390 0076 042B     		cmp	r3, #4
  391 0078 07D0     		beq	.L75
- 392              		.loc 1 53 3 discriminator 4 view .LVU74
+ 392              		.loc 1 54 3 discriminator 4 view .LVU74
  393 007a 082B     		cmp	r3, #8
  394 007c 0BD0     		beq	.L76
- 395              		.loc 1 53 3 discriminator 7 view .LVU75
+ 395              		.loc 1 54 3 discriminator 7 view .LVU75
  396 007e 354B     		ldr	r3, .L81+12
  397 0080 1B68     		ldr	r3, [r3]
  398 0082 1B68     		ldr	r3, [r3]
@@ -513,7 +514,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  400 0086 1A64     		str	r2, [r3, #64]
  401 0088 7047     		bx	lr
  402              	.L75:
- 403              		.loc 1 53 3 discriminator 3 view .LVU76
+ 403              		.loc 1 54 3 discriminator 3 view .LVU76
  404 008a 324B     		ldr	r3, .L81+12
  405 008c 1B68     		ldr	r3, [r3]
  406 008e 1B68     		ldr	r3, [r3]
@@ -521,7 +522,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  408 0092 9A63     		str	r2, [r3, #56]
  409 0094 7047     		bx	lr
  410              	.L76:
- 411              		.loc 1 53 3 discriminator 6 view .LVU77
+ 411              		.loc 1 54 3 discriminator 6 view .LVU77
  412 0096 2F4B     		ldr	r3, .L81+12
  413 0098 1B68     		ldr	r3, [r3]
  414 009a 1B68     		ldr	r3, [r3]
@@ -529,52 +530,52 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  416 009e DA63     		str	r2, [r3, #60]
  417 00a0 7047     		bx	lr
  418              	.L43:
-  54:Core/Src/Motors.c **** 	}else{
-  55:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 419              		.loc 1 55 3 is_stmt 1 view .LVU78
+  55:Core/Src/Motors.c **** 	}else{
+  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 419              		.loc 1 56 3 is_stmt 1 view .LVU78
  420 00a2 2A4A     		ldr	r2, .L81+4
  421 00a4 1268     		ldr	r2, [r2]
  422 00a6 8AB9     		cbnz	r2, .L56
- 423              		.loc 1 55 3 is_stmt 0 discriminator 1 view .LVU79
+ 423              		.loc 1 56 3 is_stmt 0 discriminator 1 view .LVU79
  424 00a8 2A4A     		ldr	r2, .L81+12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 10
+
+
  425 00aa 1268     		ldr	r2, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 10
-
-
  426 00ac 1268     		ldr	r2, [r2]
  427 00ae 0021     		movs	r1, #0
  428 00b0 5163     		str	r1, [r2, #52]
  429              	.L57:
-  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
- 430              		.loc 1 56 3 is_stmt 1 view .LVU80
+  57:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+ 430              		.loc 1 57 3 is_stmt 1 view .LVU80
  431 00b2 294A     		ldr	r2, .L81+16
  432 00b4 1268     		ldr	r2, [r2]
  433 00b6 FAB9     		cbnz	r2, .L60
- 434              		.loc 1 56 3 is_stmt 0 discriminator 1 view .LVU81
+ 434              		.loc 1 57 3 is_stmt 0 discriminator 1 view .LVU81
  435 00b8 2849     		ldr	r1, .L81+20
  436 00ba 0968     		ldr	r1, [r1]
  437 00bc 8B42     		cmp	r3, r1
  438 00be 00DC     		bgt	.L61
- 439              		.loc 1 56 3 discriminator 3 view .LVU82
+ 439              		.loc 1 57 3 discriminator 3 view .LVU82
  440 00c0 5A42     		rsbs	r2, r3, #0
  441              	.L61:
- 442              		.loc 1 56 3 discriminator 6 view .LVU83
+ 442              		.loc 1 57 3 discriminator 6 view .LVU83
  443 00c2 244B     		ldr	r3, .L81+12
  444 00c4 1B68     		ldr	r3, [r3]
  445 00c6 1B68     		ldr	r3, [r3]
  446 00c8 5A63     		str	r2, [r3, #52]
  447 00ca 7047     		bx	lr
  448              	.L56:
-  55:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
- 449              		.loc 1 55 3 discriminator 2 view .LVU84
+  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+ 449              		.loc 1 56 3 discriminator 2 view .LVU84
  450 00cc 042A     		cmp	r2, #4
  451 00ce 07D0     		beq	.L77
-  55:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
- 452              		.loc 1 55 3 discriminator 4 view .LVU85
+  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+ 452              		.loc 1 56 3 discriminator 4 view .LVU85
  453 00d0 082A     		cmp	r2, #8
  454 00d2 0BD0     		beq	.L78
-  55:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
- 455              		.loc 1 55 3 discriminator 7 view .LVU86
+  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+ 455              		.loc 1 56 3 discriminator 7 view .LVU86
  456 00d4 1F4A     		ldr	r2, .L81+12
  457 00d6 1268     		ldr	r2, [r2]
  458 00d8 1268     		ldr	r2, [r2]
@@ -582,8 +583,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  460 00dc 1164     		str	r1, [r2, #64]
  461 00de E8E7     		b	.L57
  462              	.L77:
-  55:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
- 463              		.loc 1 55 3 discriminator 3 view .LVU87
+  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+ 463              		.loc 1 56 3 discriminator 3 view .LVU87
  464 00e0 1C4A     		ldr	r2, .L81+12
  465 00e2 1268     		ldr	r2, [r2]
  466 00e4 1268     		ldr	r2, [r2]
@@ -591,93 +592,93 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  468 00e8 9163     		str	r1, [r2, #56]
  469 00ea E2E7     		b	.L57
  470              	.L78:
-  55:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
- 471              		.loc 1 55 3 discriminator 6 view .LVU88
+  56:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_backward, (PWM_L > PWM_L_backward_min)? 0 : -PWM_L );
+ 471              		.loc 1 56 3 discriminator 6 view .LVU88
  472 00ec 194A     		ldr	r2, .L81+12
  473 00ee 1268     		ldr	r2, [r2]
  474 00f0 1268     		ldr	r2, [r2]
  475 00f2 0021     		movs	r1, #0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 11
+
+
  476 00f4 D163     		str	r1, [r2, #60]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 11
-
-
  477 00f6 DCE7     		b	.L57
  478              	.L60:
- 479              		.loc 1 56 3 discriminator 2 view .LVU89
+ 479              		.loc 1 57 3 discriminator 2 view .LVU89
  480 00f8 042A     		cmp	r2, #4
  481 00fa 0BD0     		beq	.L79
- 482              		.loc 1 56 3 discriminator 8 view .LVU90
+ 482              		.loc 1 57 3 discriminator 8 view .LVU90
  483 00fc 082A     		cmp	r2, #8
  484 00fe 15D0     		beq	.L80
- 485              		.loc 1 56 3 discriminator 15 view .LVU91
+ 485              		.loc 1 57 3 discriminator 15 view .LVU91
  486 0100 164A     		ldr	r2, .L81+20
  487 0102 1268     		ldr	r2, [r2]
  488 0104 9342     		cmp	r3, r2
  489 0106 1DDC     		bgt	.L72
- 490              		.loc 1 56 3 discriminator 21 view .LVU92
+ 490              		.loc 1 57 3 discriminator 21 view .LVU92
  491 0108 5B42     		rsbs	r3, r3, #0
  492              	.L66:
- 493              		.loc 1 56 3 discriminator 24 view .LVU93
+ 493              		.loc 1 57 3 discriminator 24 view .LVU93
  494 010a 124A     		ldr	r2, .L81+12
  495 010c 1268     		ldr	r2, [r2]
  496 010e 1268     		ldr	r2, [r2]
  497 0110 1364     		str	r3, [r2, #64]
-  57:Core/Src/Motors.c **** 	}
-  58:Core/Src/Motors.c **** }
- 498              		.loc 1 58 1 view .LVU94
+  58:Core/Src/Motors.c **** 	}
+  59:Core/Src/Motors.c **** }
+ 498              		.loc 1 59 1 view .LVU94
  499 0112 7047     		bx	lr
  500              	.L79:
-  56:Core/Src/Motors.c **** 	}
- 501              		.loc 1 56 3 discriminator 7 view .LVU95
+  57:Core/Src/Motors.c **** 	}
+ 501              		.loc 1 57 3 discriminator 7 view .LVU95
  502 0114 114A     		ldr	r2, .L81+20
  503 0116 1268     		ldr	r2, [r2]
  504 0118 9342     		cmp	r3, r2
  505 011a 05DC     		bgt	.L70
-  56:Core/Src/Motors.c **** 	}
- 506              		.loc 1 56 3 discriminator 9 view .LVU96
+  57:Core/Src/Motors.c **** 	}
+ 506              		.loc 1 57 3 discriminator 9 view .LVU96
  507 011c 5B42     		rsbs	r3, r3, #0
  508              	.L63:
-  56:Core/Src/Motors.c **** 	}
- 509              		.loc 1 56 3 discriminator 12 view .LVU97
+  57:Core/Src/Motors.c **** 	}
+ 509              		.loc 1 57 3 discriminator 12 view .LVU97
  510 011e 0D4A     		ldr	r2, .L81+12
  511 0120 1268     		ldr	r2, [r2]
  512 0122 1268     		ldr	r2, [r2]
  513 0124 9363     		str	r3, [r2, #56]
  514 0126 7047     		bx	lr
  515              	.L70:
-  56:Core/Src/Motors.c **** 	}
- 516              		.loc 1 56 3 discriminator 10 view .LVU98
+  57:Core/Src/Motors.c **** 	}
+ 516              		.loc 1 57 3 discriminator 10 view .LVU98
  517 0128 0023     		movs	r3, #0
  518 012a F8E7     		b	.L63
  519              	.L80:
-  56:Core/Src/Motors.c **** 	}
- 520              		.loc 1 56 3 discriminator 14 view .LVU99
+  57:Core/Src/Motors.c **** 	}
+ 520              		.loc 1 57 3 discriminator 14 view .LVU99
  521 012c 0B4A     		ldr	r2, .L81+20
  522 012e 1268     		ldr	r2, [r2]
  523 0130 9342     		cmp	r3, r2
  524 0132 05DC     		bgt	.L71
-  56:Core/Src/Motors.c **** 	}
- 525              		.loc 1 56 3 discriminator 16 view .LVU100
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 12
+  57:Core/Src/Motors.c **** 	}
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 12
 
 
+ 525              		.loc 1 57 3 discriminator 16 view .LVU100
  526 0134 5B42     		rsbs	r3, r3, #0
  527              	.L65:
-  56:Core/Src/Motors.c **** 	}
- 528              		.loc 1 56 3 discriminator 19 view .LVU101
+  57:Core/Src/Motors.c **** 	}
+ 528              		.loc 1 57 3 discriminator 19 view .LVU101
  529 0136 074A     		ldr	r2, .L81+12
  530 0138 1268     		ldr	r2, [r2]
  531 013a 1268     		ldr	r2, [r2]
  532 013c D363     		str	r3, [r2, #60]
  533 013e 7047     		bx	lr
  534              	.L71:
-  56:Core/Src/Motors.c **** 	}
- 535              		.loc 1 56 3 discriminator 17 view .LVU102
+  57:Core/Src/Motors.c **** 	}
+ 535              		.loc 1 57 3 discriminator 17 view .LVU102
  536 0140 0023     		movs	r3, #0
  537 0142 F8E7     		b	.L65
  538              	.L72:
-  56:Core/Src/Motors.c **** 	}
- 539              		.loc 1 56 3 discriminator 22 view .LVU103
+  57:Core/Src/Motors.c **** 	}
+ 539              		.loc 1 57 3 discriminator 22 view .LVU103
  540 0144 0023     		movs	r3, #0
  541 0146 E0E7     		b	.L66
  542              	.L82:
@@ -700,62 +701,62 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  561              	setup_motor_channels:
  562              	.LVL0:
  563              	.LFB136:
-  59:Core/Src/Motors.c **** void setup_motor_channels(TIM_HandleTypeDef* motors_timer, uint32_t right__forward, uint32_t right_
- 564              		.loc 1 59 159 is_stmt 1 view -0
+  60:Core/Src/Motors.c **** void setup_motor_channels(TIM_HandleTypeDef* motors_timer, uint32_t right__forward, uint32_t right_
+ 564              		.loc 1 60 159 is_stmt 1 view -0
  565              		.cfi_startproc
  566              		@ args = 4, pretend = 0, frame = 0
  567              		@ frame_needed = 0, uses_anonymous_args = 0
  568              		@ link register save eliminated.
- 569              		.loc 1 59 159 is_stmt 0 view .LVU105
+ 569              		.loc 1 60 159 is_stmt 0 view .LVU105
  570 0000 10B4     		push	{r4}
  571              	.LCFI0:
  572              		.cfi_def_cfa_offset 4
  573              		.cfi_offset 4, -4
-  60:Core/Src/Motors.c **** 	htim_motors =  motors_timer;
- 574              		.loc 1 60 2 is_stmt 1 view .LVU106
- 575              		.loc 1 60 14 is_stmt 0 view .LVU107
+  61:Core/Src/Motors.c **** 	htim_motors =  motors_timer;
+ 574              		.loc 1 61 2 is_stmt 1 view .LVU106
+ 575              		.loc 1 61 14 is_stmt 0 view .LVU107
  576 0002 074C     		ldr	r4, .L85
  577 0004 2060     		str	r0, [r4]
-  61:Core/Src/Motors.c **** 	right_forward = right__forward;
- 578              		.loc 1 61 2 is_stmt 1 view .LVU108
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 13
+  62:Core/Src/Motors.c **** 	right_forward = right__forward;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 13
 
 
- 579              		.loc 1 61 16 is_stmt 0 view .LVU109
+ 578              		.loc 1 62 2 is_stmt 1 view .LVU108
+ 579              		.loc 1 62 16 is_stmt 0 view .LVU109
  580 0006 0748     		ldr	r0, .L85+4
  581              	.LVL1:
- 582              		.loc 1 61 16 view .LVU110
+ 582              		.loc 1 62 16 view .LVU110
  583 0008 0160     		str	r1, [r0]
-  62:Core/Src/Motors.c **** 	right_backward = right__backward;
- 584              		.loc 1 62 2 is_stmt 1 view .LVU111
- 585              		.loc 1 62 17 is_stmt 0 view .LVU112
+  63:Core/Src/Motors.c **** 	right_backward = right__backward;
+ 584              		.loc 1 63 2 is_stmt 1 view .LVU111
+ 585              		.loc 1 63 17 is_stmt 0 view .LVU112
  586 000a 0749     		ldr	r1, .L85+8
  587              	.LVL2:
- 588              		.loc 1 62 17 view .LVU113
+ 588              		.loc 1 63 17 view .LVU113
  589 000c 0A60     		str	r2, [r1]
-  63:Core/Src/Motors.c **** 	left_forward = left__forward;
- 590              		.loc 1 63 2 is_stmt 1 view .LVU114
- 591              		.loc 1 63 15 is_stmt 0 view .LVU115
+  64:Core/Src/Motors.c **** 	left_forward = left__forward;
+ 590              		.loc 1 64 2 is_stmt 1 view .LVU114
+ 591              		.loc 1 64 15 is_stmt 0 view .LVU115
  592 000e 074A     		ldr	r2, .L85+12
  593              	.LVL3:
- 594              		.loc 1 63 15 view .LVU116
+ 594              		.loc 1 64 15 view .LVU116
  595 0010 1360     		str	r3, [r2]
-  64:Core/Src/Motors.c **** 	left_backward = left__backward;
- 596              		.loc 1 64 2 is_stmt 1 view .LVU117
- 597              		.loc 1 64 16 is_stmt 0 view .LVU118
+  65:Core/Src/Motors.c **** 	left_backward = left__backward;
+ 596              		.loc 1 65 2 is_stmt 1 view .LVU117
+ 597              		.loc 1 65 16 is_stmt 0 view .LVU118
  598 0012 019A     		ldr	r2, [sp, #4]
  599 0014 064B     		ldr	r3, .L85+16
  600              	.LVL4:
- 601              		.loc 1 64 16 view .LVU119
+ 601              		.loc 1 65 16 view .LVU119
  602 0016 1A60     		str	r2, [r3]
-  65:Core/Src/Motors.c **** }
- 603              		.loc 1 65 1 view .LVU120
+  66:Core/Src/Motors.c **** }
+ 603              		.loc 1 66 1 view .LVU120
  604 0018 5DF8044B 		ldr	r4, [sp], #4
  605              	.LCFI1:
  606              		.cfi_restore 4
  607              		.cfi_def_cfa_offset 0
  608              	.LVL5:
- 609              		.loc 1 65 1 view .LVU121
+ 609              		.loc 1 66 1 view .LVU121
  610 001c 7047     		bx	lr
  611              	.L86:
  612 001e 00BF     		.align	2
@@ -776,32 +777,32 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  629              	setup_encoder_timers:
  630              	.LVL6:
  631              	.LFB137:
-  66:Core/Src/Motors.c **** void setup_encoder_timers(TIM_HandleTypeDef* right_timer, TIM_HandleTypeDef* left_timer, int cpr){
- 632              		.loc 1 66 98 is_stmt 1 view -0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 14
+  67:Core/Src/Motors.c **** void setup_encoder_timers(TIM_HandleTypeDef* right_timer, TIM_HandleTypeDef* left_timer, int cpr){
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 14
 
 
+ 632              		.loc 1 67 98 is_stmt 1 view -0
  633              		.cfi_startproc
  634              		@ args = 0, pretend = 0, frame = 0
  635              		@ frame_needed = 0, uses_anonymous_args = 0
  636              		@ link register save eliminated.
-  67:Core/Src/Motors.c **** 	encoder_timer_R = right_timer;
- 637              		.loc 1 67 2 view .LVU123
- 638              		.loc 1 67 18 is_stmt 0 view .LVU124
+  68:Core/Src/Motors.c **** 	encoder_timer_R = right_timer;
+ 637              		.loc 1 68 2 view .LVU123
+ 638              		.loc 1 68 18 is_stmt 0 view .LVU124
  639 0000 034B     		ldr	r3, .L88
  640 0002 1860     		str	r0, [r3]
-  68:Core/Src/Motors.c **** 	encoder_timer_L = left_timer;
- 641              		.loc 1 68 2 is_stmt 1 view .LVU125
- 642              		.loc 1 68 18 is_stmt 0 view .LVU126
+  69:Core/Src/Motors.c **** 	encoder_timer_L = left_timer;
+ 641              		.loc 1 69 2 is_stmt 1 view .LVU125
+ 642              		.loc 1 69 18 is_stmt 0 view .LVU126
  643 0004 034B     		ldr	r3, .L88+4
  644 0006 1960     		str	r1, [r3]
-  69:Core/Src/Motors.c **** 	CPR = cpr;
- 645              		.loc 1 69 2 is_stmt 1 view .LVU127
- 646              		.loc 1 69 6 is_stmt 0 view .LVU128
+  70:Core/Src/Motors.c **** 	CPR = cpr;
+ 645              		.loc 1 70 2 is_stmt 1 view .LVU127
+ 646              		.loc 1 70 6 is_stmt 0 view .LVU128
  647 0008 034B     		ldr	r3, .L88+8
  648 000a 1A60     		str	r2, [r3]
-  70:Core/Src/Motors.c **** }
- 649              		.loc 1 70 1 view .LVU129
+  71:Core/Src/Motors.c **** }
+ 649              		.loc 1 71 1 view .LVU129
  650 000c 7047     		bx	lr
  651              	.L89:
  652 000e 00BF     		.align	2
@@ -820,27 +821,27 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  667              	setup_wheel_diameters:
  668              	.LVL7:
  669              	.LFB138:
-  71:Core/Src/Motors.c **** void setup_wheel_diameters(float right_wheel, float left_wheel){
- 670              		.loc 1 71 64 is_stmt 1 view -0
+  72:Core/Src/Motors.c **** void setup_wheel_diameters(float right_wheel, float left_wheel){
+ 670              		.loc 1 72 64 is_stmt 1 view -0
  671              		.cfi_startproc
  672              		@ args = 0, pretend = 0, frame = 0
  673              		@ frame_needed = 0, uses_anonymous_args = 0
  674              		@ link register save eliminated.
-  72:Core/Src/Motors.c **** 	wheel_diameter_R = right_wheel;
- 675              		.loc 1 72 2 view .LVU131
- 676              		.loc 1 72 19 is_stmt 0 view .LVU132
+  73:Core/Src/Motors.c **** 	wheel_diameter_R = right_wheel;
+ 675              		.loc 1 73 2 view .LVU131
+ 676              		.loc 1 73 19 is_stmt 0 view .LVU132
  677 0000 034B     		ldr	r3, .L91
  678 0002 83ED000A 		vstr.32	s0, [r3]
-  73:Core/Src/Motors.c **** 	wheel_diameter_L = left_wheel;
- 679              		.loc 1 73 2 is_stmt 1 view .LVU133
- 680              		.loc 1 73 19 is_stmt 0 view .LVU134
+  74:Core/Src/Motors.c **** 	wheel_diameter_L = left_wheel;
+ 679              		.loc 1 74 2 is_stmt 1 view .LVU133
+ 680              		.loc 1 74 19 is_stmt 0 view .LVU134
  681 0006 034B     		ldr	r3, .L91+4
  682 0008 C3ED000A 		vstr.32	s1, [r3]
-  74:Core/Src/Motors.c **** }
- 683              		.loc 1 74 1 view .LVU135
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 15
+  75:Core/Src/Motors.c **** }
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 15
 
 
+ 683              		.loc 1 75 1 view .LVU135
  684 000c 7047     		bx	lr
  685              	.L92:
  686 000e 00BF     		.align	2
@@ -858,62 +859,62 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  700              	setup_PWM_min_max:
  701              	.LVL8:
  702              	.LFB139:
-  75:Core/Src/Motors.c **** void setup_PWM_min_max(int PWM__max, int PWM__R_forward_min, int PWM__L_forward_min, int PWM__R_bac
- 703              		.loc 1 75 134 is_stmt 1 view -0
+  76:Core/Src/Motors.c **** void setup_PWM_min_max(int PWM__max, int PWM__R_forward_min, int PWM__L_forward_min, int PWM__R_bac
+ 703              		.loc 1 76 134 is_stmt 1 view -0
  704              		.cfi_startproc
  705              		@ args = 4, pretend = 0, frame = 0
  706              		@ frame_needed = 0, uses_anonymous_args = 0
  707              		@ link register save eliminated.
- 708              		.loc 1 75 134 is_stmt 0 view .LVU137
+ 708              		.loc 1 76 134 is_stmt 0 view .LVU137
  709 0000 10B4     		push	{r4}
  710              	.LCFI2:
  711              		.cfi_def_cfa_offset 4
  712              		.cfi_offset 4, -4
-  76:Core/Src/Motors.c **** 	PWM_max = PWM__max;
- 713              		.loc 1 76 2 is_stmt 1 view .LVU138
- 714              		.loc 1 76 10 is_stmt 0 view .LVU139
+  77:Core/Src/Motors.c **** 	PWM_max = PWM__max;
+ 713              		.loc 1 77 2 is_stmt 1 view .LVU138
+ 714              		.loc 1 77 10 is_stmt 0 view .LVU139
  715 0002 074C     		ldr	r4, .L95
  716 0004 2060     		str	r0, [r4]
-  77:Core/Src/Motors.c **** 	PWM_R_forward_min = PWM__R_forward_min;
- 717              		.loc 1 77 2 is_stmt 1 view .LVU140
- 718              		.loc 1 77 20 is_stmt 0 view .LVU141
+  78:Core/Src/Motors.c **** 	PWM_R_forward_min = PWM__R_forward_min;
+ 717              		.loc 1 78 2 is_stmt 1 view .LVU140
+ 718              		.loc 1 78 20 is_stmt 0 view .LVU141
  719 0006 0748     		ldr	r0, .L95+4
  720              	.LVL9:
- 721              		.loc 1 77 20 view .LVU142
+ 721              		.loc 1 78 20 view .LVU142
  722 0008 0160     		str	r1, [r0]
-  78:Core/Src/Motors.c **** 	PWM_L_forward_min = PWM__L_forward_min;
- 723              		.loc 1 78 2 is_stmt 1 view .LVU143
- 724              		.loc 1 78 20 is_stmt 0 view .LVU144
+  79:Core/Src/Motors.c **** 	PWM_L_forward_min = PWM__L_forward_min;
+ 723              		.loc 1 79 2 is_stmt 1 view .LVU143
+ 724              		.loc 1 79 20 is_stmt 0 view .LVU144
  725 000a 0749     		ldr	r1, .L95+8
  726              	.LVL10:
- 727              		.loc 1 78 20 view .LVU145
+ 727              		.loc 1 79 20 view .LVU145
  728 000c 0A60     		str	r2, [r1]
-  79:Core/Src/Motors.c **** 	PWM_R_backward_min = PWM__R_backward_min;
- 729              		.loc 1 79 2 is_stmt 1 view .LVU146
- 730              		.loc 1 79 21 is_stmt 0 view .LVU147
+  80:Core/Src/Motors.c **** 	PWM_R_backward_min = PWM__R_backward_min;
+ 729              		.loc 1 80 2 is_stmt 1 view .LVU146
+ 730              		.loc 1 80 21 is_stmt 0 view .LVU147
  731 000e 074A     		ldr	r2, .L95+12
  732              	.LVL11:
- 733              		.loc 1 79 21 view .LVU148
+ 733              		.loc 1 80 21 view .LVU148
  734 0010 1360     		str	r3, [r2]
-  80:Core/Src/Motors.c **** 	PWM_L_backward_min = PWM__L_backward_min;
- 735              		.loc 1 80 2 is_stmt 1 view .LVU149
- 736              		.loc 1 80 21 is_stmt 0 view .LVU150
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 16
+  81:Core/Src/Motors.c **** 	PWM_L_backward_min = PWM__L_backward_min;
+ 735              		.loc 1 81 2 is_stmt 1 view .LVU149
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 16
 
 
+ 736              		.loc 1 81 21 is_stmt 0 view .LVU150
  737 0012 019A     		ldr	r2, [sp, #4]
  738 0014 064B     		ldr	r3, .L95+16
  739              	.LVL12:
- 740              		.loc 1 80 21 view .LVU151
+ 740              		.loc 1 81 21 view .LVU151
  741 0016 1A60     		str	r2, [r3]
-  81:Core/Src/Motors.c **** }
- 742              		.loc 1 81 1 view .LVU152
+  82:Core/Src/Motors.c **** }
+ 742              		.loc 1 82 1 view .LVU152
  743 0018 5DF8044B 		ldr	r4, [sp], #4
  744              	.LCFI3:
  745              		.cfi_restore 4
  746              		.cfi_def_cfa_offset 0
  747              	.LVL13:
- 748              		.loc 1 81 1 view .LVU153
+ 748              		.loc 1 82 1 view .LVU153
  749 001c 7047     		bx	lr
  750              	.L96:
  751 001e 00BF     		.align	2
@@ -933,95 +934,95 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  766              		.thumb_func
  768              	stop_motors:
  769              	.LFB140:
-  82:Core/Src/Motors.c **** void stop_motors(){
- 770              		.loc 1 82 19 is_stmt 1 view -0
+  83:Core/Src/Motors.c **** void stop_motors(){
+ 770              		.loc 1 83 19 is_stmt 1 view -0
  771              		.cfi_startproc
  772              		@ args = 0, pretend = 0, frame = 0
  773              		@ frame_needed = 0, uses_anonymous_args = 0
  774              		@ link register save eliminated.
-  83:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
- 775              		.loc 1 83 2 view .LVU155
+  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
+ 775              		.loc 1 84 2 view .LVU155
  776 0000 404B     		ldr	r3, .L122
  777 0002 1B68     		ldr	r3, [r3]
  778 0004 002B     		cmp	r3, #0
  779 0006 25D1     		bne	.L98
- 780              		.loc 1 83 2 is_stmt 0 discriminator 1 view .LVU156
+ 780              		.loc 1 84 2 is_stmt 0 discriminator 1 view .LVU156
  781 0008 3F4B     		ldr	r3, .L122+4
  782 000a 1B68     		ldr	r3, [r3]
  783 000c 1B68     		ldr	r3, [r3]
  784 000e 0022     		movs	r2, #0
  785 0010 5A63     		str	r2, [r3, #52]
  786              	.L99:
-  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
- 787              		.loc 1 84 2 is_stmt 1 view .LVU157
+  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+ 787              		.loc 1 85 2 is_stmt 1 view .LVU157
  788 0012 3E4B     		ldr	r3, .L122+8
  789 0014 1B68     		ldr	r3, [r3]
  790 0016 002B     		cmp	r3, #0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 17
+
+
  791 0018 32D1     		bne	.L102
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 17
-
-
- 792              		.loc 1 84 2 is_stmt 0 discriminator 1 view .LVU158
+ 792              		.loc 1 85 2 is_stmt 0 discriminator 1 view .LVU158
  793 001a 3B4B     		ldr	r3, .L122+4
  794 001c 1B68     		ldr	r3, [r3]
  795 001e 1B68     		ldr	r3, [r3]
  796 0020 0022     		movs	r2, #0
  797 0022 5A63     		str	r2, [r3, #52]
  798              	.L103:
-  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 799              		.loc 1 85 2 is_stmt 1 view .LVU159
+  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 799              		.loc 1 86 2 is_stmt 1 view .LVU159
  800 0024 3A4B     		ldr	r3, .L122+12
  801 0026 1B68     		ldr	r3, [r3]
  802 0028 002B     		cmp	r3, #0
  803 002a 3FD1     		bne	.L106
- 804              		.loc 1 85 2 is_stmt 0 discriminator 1 view .LVU160
+ 804              		.loc 1 86 2 is_stmt 0 discriminator 1 view .LVU160
  805 002c 364B     		ldr	r3, .L122+4
  806 002e 1B68     		ldr	r3, [r3]
  807 0030 1B68     		ldr	r3, [r3]
  808 0032 0022     		movs	r2, #0
  809 0034 5A63     		str	r2, [r3, #52]
  810              	.L107:
-  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 811              		.loc 1 86 2 is_stmt 1 view .LVU161
+  87:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 811              		.loc 1 87 2 is_stmt 1 view .LVU161
  812 0036 374B     		ldr	r3, .L122+16
  813 0038 1B68     		ldr	r3, [r3]
  814 003a 002B     		cmp	r3, #0
  815 003c 4CD1     		bne	.L110
- 816              		.loc 1 86 2 is_stmt 0 discriminator 1 view .LVU162
+ 816              		.loc 1 87 2 is_stmt 0 discriminator 1 view .LVU162
  817 003e 324B     		ldr	r3, .L122+4
  818 0040 1B68     		ldr	r3, [r3]
  819 0042 1B68     		ldr	r3, [r3]
  820 0044 0022     		movs	r2, #0
  821 0046 5A63     		str	r2, [r3, #52]
  822              	.L111:
-  87:Core/Src/Motors.c **** 	target_speed_R = 0;
- 823              		.loc 1 87 2 is_stmt 1 view .LVU163
- 824              		.loc 1 87 17 is_stmt 0 view .LVU164
+  88:Core/Src/Motors.c **** 	target_speed_R = 0;
+ 823              		.loc 1 88 2 is_stmt 1 view .LVU163
+ 824              		.loc 1 88 17 is_stmt 0 view .LVU164
  825 0048 0023     		movs	r3, #0
  826 004a 334A     		ldr	r2, .L122+20
  827 004c 1360     		str	r3, [r2]	@ float
-  88:Core/Src/Motors.c **** 	target_speed_L = 0;
- 828              		.loc 1 88 2 is_stmt 1 view .LVU165
- 829              		.loc 1 88 17 is_stmt 0 view .LVU166
+  89:Core/Src/Motors.c **** 	target_speed_L = 0;
+ 828              		.loc 1 89 2 is_stmt 1 view .LVU165
+ 829              		.loc 1 89 17 is_stmt 0 view .LVU166
  830 004e 334A     		ldr	r2, .L122+24
  831 0050 1360     		str	r3, [r2]	@ float
-  89:Core/Src/Motors.c **** }
- 832              		.loc 1 89 1 view .LVU167
+  90:Core/Src/Motors.c **** }
+ 832              		.loc 1 90 1 view .LVU167
  833 0052 7047     		bx	lr
  834              	.L98:
-  83:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
- 835              		.loc 1 83 2 discriminator 2 view .LVU168
+  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+ 835              		.loc 1 84 2 discriminator 2 view .LVU168
  836 0054 042B     		cmp	r3, #4
  837 0056 07D0     		beq	.L114
-  83:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
- 838              		.loc 1 83 2 discriminator 4 view .LVU169
+  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+ 838              		.loc 1 84 2 discriminator 4 view .LVU169
  839 0058 082B     		cmp	r3, #8
  840 005a 0BD0     		beq	.L115
-  83:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 18
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 18
 
 
- 841              		.loc 1 83 2 discriminator 7 view .LVU170
+  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+ 841              		.loc 1 84 2 discriminator 7 view .LVU170
  842 005c 2A4B     		ldr	r3, .L122+4
  843 005e 1B68     		ldr	r3, [r3]
  844 0060 1B68     		ldr	r3, [r3]
@@ -1029,8 +1030,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  846 0064 1A64     		str	r2, [r3, #64]
  847 0066 D4E7     		b	.L99
  848              	.L114:
-  83:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
- 849              		.loc 1 83 2 discriminator 3 view .LVU171
+  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+ 849              		.loc 1 84 2 discriminator 3 view .LVU171
  850 0068 274B     		ldr	r3, .L122+4
  851 006a 1B68     		ldr	r3, [r3]
  852 006c 1B68     		ldr	r3, [r3]
@@ -1038,8 +1039,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  854 0070 9A63     		str	r2, [r3, #56]
  855 0072 CEE7     		b	.L99
  856              	.L115:
-  83:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
- 857              		.loc 1 83 2 discriminator 6 view .LVU172
+  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_backward, 0);
+ 857              		.loc 1 84 2 discriminator 6 view .LVU172
  858 0074 244B     		ldr	r3, .L122+4
  859 0076 1B68     		ldr	r3, [r3]
  860 0078 1B68     		ldr	r3, [r3]
@@ -1047,16 +1048,16 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  862 007c DA63     		str	r2, [r3, #60]
  863 007e C8E7     		b	.L99
  864              	.L102:
-  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 865              		.loc 1 84 2 discriminator 2 view .LVU173
+  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 865              		.loc 1 85 2 discriminator 2 view .LVU173
  866 0080 042B     		cmp	r3, #4
  867 0082 07D0     		beq	.L116
-  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 868              		.loc 1 84 2 discriminator 4 view .LVU174
+  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 868              		.loc 1 85 2 discriminator 4 view .LVU174
  869 0084 082B     		cmp	r3, #8
  870 0086 0BD0     		beq	.L117
-  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 871              		.loc 1 84 2 discriminator 7 view .LVU175
+  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 871              		.loc 1 85 2 discriminator 7 view .LVU175
  872 0088 1F4B     		ldr	r3, .L122+4
  873 008a 1B68     		ldr	r3, [r3]
  874 008c 1B68     		ldr	r3, [r3]
@@ -1064,8 +1065,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  876 0090 1A64     		str	r2, [r3, #64]
  877 0092 C7E7     		b	.L103
  878              	.L116:
-  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 879              		.loc 1 84 2 discriminator 3 view .LVU176
+  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 879              		.loc 1 85 2 discriminator 3 view .LVU176
  880 0094 1C4B     		ldr	r3, .L122+4
  881 0096 1B68     		ldr	r3, [r3]
  882 0098 1B68     		ldr	r3, [r3]
@@ -1073,28 +1074,28 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  884 009c 9A63     		str	r2, [r3, #56]
  885 009e C1E7     		b	.L103
  886              	.L117:
-  84:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
- 887              		.loc 1 84 2 discriminator 6 view .LVU177
+  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_forward, 0);
+ 887              		.loc 1 85 2 discriminator 6 view .LVU177
  888 00a0 194B     		ldr	r3, .L122+4
  889 00a2 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 19
+
+
  890 00a4 1B68     		ldr	r3, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 19
-
-
  891 00a6 0022     		movs	r2, #0
  892 00a8 DA63     		str	r2, [r3, #60]
  893 00aa BBE7     		b	.L103
  894              	.L106:
-  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 895              		.loc 1 85 2 discriminator 2 view .LVU178
+  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 895              		.loc 1 86 2 discriminator 2 view .LVU178
  896 00ac 042B     		cmp	r3, #4
  897 00ae 07D0     		beq	.L118
-  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 898              		.loc 1 85 2 discriminator 4 view .LVU179
+  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 898              		.loc 1 86 2 discriminator 4 view .LVU179
  899 00b0 082B     		cmp	r3, #8
  900 00b2 0BD0     		beq	.L119
-  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 901              		.loc 1 85 2 discriminator 7 view .LVU180
+  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 901              		.loc 1 86 2 discriminator 7 view .LVU180
  902 00b4 144B     		ldr	r3, .L122+4
  903 00b6 1B68     		ldr	r3, [r3]
  904 00b8 1B68     		ldr	r3, [r3]
@@ -1102,8 +1103,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  906 00bc 1A64     		str	r2, [r3, #64]
  907 00be BAE7     		b	.L107
  908              	.L118:
-  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 909              		.loc 1 85 2 discriminator 3 view .LVU181
+  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 909              		.loc 1 86 2 discriminator 3 view .LVU181
  910 00c0 114B     		ldr	r3, .L122+4
  911 00c2 1B68     		ldr	r3, [r3]
  912 00c4 1B68     		ldr	r3, [r3]
@@ -1111,8 +1112,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  914 00c8 9A63     		str	r2, [r3, #56]
  915 00ca B4E7     		b	.L107
  916              	.L119:
-  85:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
- 917              		.loc 1 85 2 discriminator 6 view .LVU182
+  86:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, left_backward, 0);
+ 917              		.loc 1 86 2 discriminator 6 view .LVU182
  918 00cc 0E4B     		ldr	r3, .L122+4
  919 00ce 1B68     		ldr	r3, [r3]
  920 00d0 1B68     		ldr	r3, [r3]
@@ -1120,16 +1121,16 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  922 00d4 DA63     		str	r2, [r3, #60]
  923 00d6 AEE7     		b	.L107
  924              	.L110:
-  86:Core/Src/Motors.c **** 	target_speed_R = 0;
- 925              		.loc 1 86 2 discriminator 2 view .LVU183
+  87:Core/Src/Motors.c **** 	target_speed_R = 0;
+ 925              		.loc 1 87 2 discriminator 2 view .LVU183
  926 00d8 042B     		cmp	r3, #4
  927 00da 07D0     		beq	.L120
-  86:Core/Src/Motors.c **** 	target_speed_R = 0;
- 928              		.loc 1 86 2 discriminator 4 view .LVU184
+  87:Core/Src/Motors.c **** 	target_speed_R = 0;
+ 928              		.loc 1 87 2 discriminator 4 view .LVU184
  929 00dc 082B     		cmp	r3, #8
  930 00de 0BD0     		beq	.L121
-  86:Core/Src/Motors.c **** 	target_speed_R = 0;
- 931              		.loc 1 86 2 discriminator 7 view .LVU185
+  87:Core/Src/Motors.c **** 	target_speed_R = 0;
+ 931              		.loc 1 87 2 discriminator 7 view .LVU185
  932 00e0 094B     		ldr	r3, .L122+4
  933 00e2 1B68     		ldr	r3, [r3]
  934 00e4 1B68     		ldr	r3, [r3]
@@ -1137,11 +1138,11 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  936 00e8 1A64     		str	r2, [r3, #64]
  937 00ea ADE7     		b	.L111
  938              	.L120:
-  86:Core/Src/Motors.c **** 	target_speed_R = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 20
 
 
- 939              		.loc 1 86 2 discriminator 3 view .LVU186
+  87:Core/Src/Motors.c **** 	target_speed_R = 0;
+ 939              		.loc 1 87 2 discriminator 3 view .LVU186
  940 00ec 064B     		ldr	r3, .L122+4
  941 00ee 1B68     		ldr	r3, [r3]
  942 00f0 1B68     		ldr	r3, [r3]
@@ -1149,8 +1150,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  944 00f4 9A63     		str	r2, [r3, #56]
  945 00f6 A7E7     		b	.L111
  946              	.L121:
-  86:Core/Src/Motors.c **** 	target_speed_R = 0;
- 947              		.loc 1 86 2 discriminator 6 view .LVU187
+  87:Core/Src/Motors.c **** 	target_speed_R = 0;
+ 947              		.loc 1 87 2 discriminator 6 view .LVU187
  948 00f8 034B     		ldr	r3, .L122+4
  949 00fa 1B68     		ldr	r3, [r3]
  950 00fc 1B68     		ldr	r3, [r3]
@@ -1177,8 +1178,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  972              		.thumb_func
  974              	update_encoder_counts:
  975              	.LFB141:
-  90:Core/Src/Motors.c **** void update_encoder_counts(){ // ISR safe, takes approximately 250ns
- 976              		.loc 1 90 29 is_stmt 1 view -0
+  91:Core/Src/Motors.c **** void update_encoder_counts(){ // ISR safe, takes approximately 250ns
+ 976              		.loc 1 91 29 is_stmt 1 view -0
  977              		.cfi_startproc
  978              		@ args = 0, pretend = 0, frame = 0
  979              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1187,99 +1188,99 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  982              	.LCFI4:
  983              		.cfi_def_cfa_offset 4
  984              		.cfi_offset 4, -4
-  91:Core/Src/Motors.c **** 	int32_t delta = (int32_t)(encoder_timer_R->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_R;
- 985              		.loc 1 91 2 view .LVU189
- 986              		.loc 1 91 43 is_stmt 0 view .LVU190
+  92:Core/Src/Motors.c **** 	int32_t delta = (int32_t)(encoder_timer_R->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_R;
+ 985              		.loc 1 92 2 view .LVU189
+ 986              		.loc 1 92 43 is_stmt 0 view .LVU190
  987 0002 1C4B     		ldr	r3, .L130
  988 0004 1868     		ldr	r0, [r3]
  989 0006 0368     		ldr	r3, [r0]
- 990              		.loc 1 91 53 view .LVU191
+ 990              		.loc 1 92 53 view .LVU191
  991 0008 5B6A     		ldr	r3, [r3, #36]
- 992              		.loc 1 91 62 view .LVU192
+ 992              		.loc 1 92 62 view .LVU192
  993 000a 1B4A     		ldr	r2, .L130+4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 21
+
+
  994 000c 1288     		ldrh	r2, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 21
-
-
- 995              		.loc 1 91 10 view .LVU193
+ 995              		.loc 1 92 10 view .LVU193
  996 000e 9B1A     		subs	r3, r3, r2
  997              	.LVL14:
-  92:Core/Src/Motors.c **** 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta; // handling overflow
- 998              		.loc 1 92 2 is_stmt 1 view .LVU194
- 999              		.loc 1 92 37 is_stmt 0 view .LVU195
+  93:Core/Src/Motors.c **** 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta; // handling overflow
+ 998              		.loc 1 93 2 is_stmt 1 view .LVU194
+ 999              		.loc 1 93 37 is_stmt 0 view .LVU195
  1000 0010 4EF66022 		movw	r2, #60000
  1001 0014 9342     		cmp	r3, r2
  1002 0016 21DD     		ble	.L125
- 1003              		.loc 1 92 37 discriminator 1 view .LVU196
+ 1003              		.loc 1 93 37 discriminator 1 view .LVU196
  1004 0018 A3F58033 		sub	r3, r3, #65536
  1005              	.LVL15:
  1006              	.L126:
-  93:Core/Src/Motors.c **** 	encoder_count_R -= delta;
- 1007              		.loc 1 93 2 is_stmt 1 view .LVU197
- 1008              		.loc 1 93 18 is_stmt 0 view .LVU198
+  94:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 1007              		.loc 1 94 2 is_stmt 1 view .LVU197
+ 1008              		.loc 1 94 18 is_stmt 0 view .LVU198
  1009 001c 1749     		ldr	r1, .L130+8
  1010 001e 0A68     		ldr	r2, [r1]
  1011 0020 D21A     		subs	r2, r2, r3
  1012 0022 0A60     		str	r2, [r1]
-  94:Core/Src/Motors.c **** 
-  95:Core/Src/Motors.c **** 	delta = (int32_t)(encoder_timer_L->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_L;
- 1013              		.loc 1 95 2 is_stmt 1 view .LVU199
- 1014              		.loc 1 95 35 is_stmt 0 view .LVU200
+  95:Core/Src/Motors.c **** 
+  96:Core/Src/Motors.c **** 	delta = (int32_t)(encoder_timer_L->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_L;
+ 1013              		.loc 1 96 2 is_stmt 1 view .LVU199
+ 1014              		.loc 1 96 35 is_stmt 0 view .LVU200
  1015 0024 164B     		ldr	r3, .L130+12
  1016              	.LVL16:
- 1017              		.loc 1 95 35 view .LVU201
+ 1017              		.loc 1 96 35 view .LVU201
  1018 0026 1968     		ldr	r1, [r3]
  1019 0028 0B68     		ldr	r3, [r1]
- 1020              		.loc 1 95 45 view .LVU202
+ 1020              		.loc 1 96 45 view .LVU202
  1021 002a 5B6A     		ldr	r3, [r3, #36]
- 1022              		.loc 1 95 54 view .LVU203
+ 1022              		.loc 1 96 54 view .LVU203
  1023 002c 154A     		ldr	r2, .L130+16
  1024 002e 1288     		ldrh	r2, [r2]
- 1025              		.loc 1 95 8 view .LVU204
+ 1025              		.loc 1 96 8 view .LVU204
  1026 0030 9B1A     		subs	r3, r3, r2
  1027              	.LVL17:
-  96:Core/Src/Motors.c **** 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
- 1028              		.loc 1 96 2 is_stmt 1 view .LVU205
- 1029              		.loc 1 96 37 is_stmt 0 view .LVU206
+  97:Core/Src/Motors.c **** 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
+ 1028              		.loc 1 97 2 is_stmt 1 view .LVU205
+ 1029              		.loc 1 97 37 is_stmt 0 view .LVU206
  1030 0032 4EF66022 		movw	r2, #60000
  1031 0036 9342     		cmp	r3, r2
  1032 0038 16DD     		ble	.L127
- 1033              		.loc 1 96 37 discriminator 1 view .LVU207
+ 1033              		.loc 1 97 37 discriminator 1 view .LVU207
  1034 003a A3F58033 		sub	r3, r3, #65536
  1035              	.LVL18:
  1036              	.L128:
-  97:Core/Src/Motors.c **** 	encoder_count_L += delta;
- 1037              		.loc 1 97 2 is_stmt 1 view .LVU208
- 1038              		.loc 1 97 18 is_stmt 0 view .LVU209
+  98:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 1037              		.loc 1 98 2 is_stmt 1 view .LVU208
+ 1038              		.loc 1 98 18 is_stmt 0 view .LVU209
  1039 003e 124C     		ldr	r4, .L130+20
  1040 0040 2268     		ldr	r2, [r4]
  1041 0042 1A44     		add	r2, r2, r3
  1042 0044 2260     		str	r2, [r4]
-  98:Core/Src/Motors.c **** 
-  99:Core/Src/Motors.c **** 	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
- 1043              		.loc 1 99 2 is_stmt 1 view .LVU210
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 22
+  99:Core/Src/Motors.c **** 
+ 100:Core/Src/Motors.c **** 	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 22
 
 
- 1044              		.loc 1 99 48 is_stmt 0 view .LVU211
+ 1043              		.loc 1 100 2 is_stmt 1 view .LVU210
+ 1044              		.loc 1 100 48 is_stmt 0 view .LVU211
  1045 0046 0368     		ldr	r3, [r0]
  1046              	.LVL19:
- 1047              		.loc 1 99 58 view .LVU212
+ 1047              		.loc 1 100 58 view .LVU212
  1048 0048 5A6A     		ldr	r2, [r3, #36]
- 1049              		.loc 1 99 31 view .LVU213
+ 1049              		.loc 1 100 31 view .LVU213
  1050 004a 0B4B     		ldr	r3, .L130+4
  1051 004c 1A80     		strh	r2, [r3]	@ movhi
- 100:Core/Src/Motors.c **** 	previous_encoder_timer_CNT_L = encoder_timer_L->Instance->CNT;
- 1052              		.loc 1 100 2 is_stmt 1 view .LVU214
- 1053              		.loc 1 100 48 is_stmt 0 view .LVU215
+ 101:Core/Src/Motors.c **** 	previous_encoder_timer_CNT_L = encoder_timer_L->Instance->CNT;
+ 1052              		.loc 1 101 2 is_stmt 1 view .LVU214
+ 1053              		.loc 1 101 48 is_stmt 0 view .LVU215
  1054 004e 0B68     		ldr	r3, [r1]
- 1055              		.loc 1 100 58 view .LVU216
+ 1055              		.loc 1 101 58 view .LVU216
  1056 0050 5A6A     		ldr	r2, [r3, #36]
- 1057              		.loc 1 100 31 view .LVU217
+ 1057              		.loc 1 101 31 view .LVU217
  1058 0052 0C4B     		ldr	r3, .L130+16
  1059 0054 1A80     		strh	r2, [r3]	@ movhi
- 101:Core/Src/Motors.c **** }
- 1060              		.loc 1 101 1 view .LVU218
+ 102:Core/Src/Motors.c **** }
+ 1060              		.loc 1 102 1 view .LVU218
  1061 0056 5DF8044B 		ldr	r4, [sp], #4
  1062              	.LCFI5:
  1063              		.cfi_remember_state
@@ -1290,37 +1291,37 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1068              	.L125:
  1069              	.LCFI6:
  1070              		.cfi_restore_state
-  92:Core/Src/Motors.c **** 	encoder_count_R -= delta;
- 1071              		.loc 1 92 67 discriminator 2 view .LVU219
+  93:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 1071              		.loc 1 93 67 discriminator 2 view .LVU219
  1072 005c 0B4A     		ldr	r2, .L130+24
  1073 005e 9342     		cmp	r3, r2
  1074 0060 DCDA     		bge	.L126
-  92:Core/Src/Motors.c **** 	encoder_count_R -= delta;
- 1075              		.loc 1 92 67 discriminator 4 view .LVU220
+  93:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 1075              		.loc 1 93 67 discriminator 4 view .LVU220
  1076 0062 03F58033 		add	r3, r3, #65536
  1077              	.LVL21:
-  92:Core/Src/Motors.c **** 	encoder_count_R -= delta;
- 1078              		.loc 1 92 67 discriminator 4 view .LVU221
+  93:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 1078              		.loc 1 93 67 discriminator 4 view .LVU221
  1079 0066 D9E7     		b	.L126
  1080              	.LVL22:
  1081              	.L127:
-  96:Core/Src/Motors.c **** 	encoder_count_L += delta;
- 1082              		.loc 1 96 67 discriminator 2 view .LVU222
+  97:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 1082              		.loc 1 97 67 discriminator 2 view .LVU222
  1083 0068 084A     		ldr	r2, .L130+24
  1084 006a 9342     		cmp	r3, r2
  1085 006c E7DA     		bge	.L128
-  96:Core/Src/Motors.c **** 	encoder_count_L += delta;
- 1086              		.loc 1 96 67 discriminator 4 view .LVU223
+  97:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 1086              		.loc 1 97 67 discriminator 4 view .LVU223
  1087 006e 03F58033 		add	r3, r3, #65536
  1088              	.LVL23:
-  96:Core/Src/Motors.c **** 	encoder_count_L += delta;
- 1089              		.loc 1 96 67 discriminator 4 view .LVU224
+  97:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 1089              		.loc 1 97 67 discriminator 4 view .LVU224
  1090 0072 E4E7     		b	.L128
  1091              	.L131:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 23
+
+
  1092              		.align	2
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 23
-
-
  1093              	.L130:
  1094 0074 00000000 		.word	encoder_timer_R
  1095 0078 00000000 		.word	previous_encoder_timer_CNT_R
@@ -1340,90 +1341,90 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1111              	set_target_speeds:
  1112              	.LVL24:
  1113              	.LFB143:
- 102:Core/Src/Motors.c **** void update_speed(){ // ISR safe, takes approximately 350ns
- 103:Core/Src/Motors.c **** 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
- 104:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
- 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 106:Core/Src/Motors.c **** 	current_speed_R = current_speed_R*0.7 + debugger_2; // unit = mm/s // the first part is a filter t
- 107:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
- 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 109:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
- 110:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 111:Core/Src/Motors.c **** 	current_acceleration_R = current_acceleration_R * 0.998 + 0.002* (current_speed_R - previous_speed
- 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 114:Core/Src/Motors.c **** 	previous_speed_L = current_speed_L;
- 115:Core/Src/Motors.c **** 	previous_speed_calculation_time = micros();
- 116:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
- 117:Core/Src/Motors.c **** }
- 118:Core/Src/Motors.c **** void set_target_speeds(float target__speed_R, float target__speed_L){
- 1114              		.loc 1 118 69 is_stmt 1 view -0
+ 103:Core/Src/Motors.c **** void update_speed(){ // ISR safe, takes approximately 350ns
+ 104:Core/Src/Motors.c **** 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
+ 105:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
+ 106:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 107:Core/Src/Motors.c **** 	current_speed_R = current_speed_R*0.7 + debugger_2; // unit = mm/s // the first part is a filter t
+ 108:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
+ 109:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 110:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
+ 111:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 112:Core/Src/Motors.c **** 	current_acceleration_R = current_acceleration_R * 0.998 + 0.002* (current_speed_R - previous_speed
+ 113:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 114:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 115:Core/Src/Motors.c **** 	previous_speed_L = current_speed_L;
+ 116:Core/Src/Motors.c **** 	previous_speed_calculation_time = micros();
+ 117:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
+ 118:Core/Src/Motors.c **** }
+ 119:Core/Src/Motors.c **** void set_target_speeds(float target__speed_R, float target__speed_L){
+ 1114              		.loc 1 119 69 is_stmt 1 view -0
  1115              		.cfi_startproc
  1116              		@ args = 0, pretend = 0, frame = 0
  1117              		@ frame_needed = 0, uses_anonymous_args = 0
  1118              		@ link register save eliminated.
- 119:Core/Src/Motors.c **** 	PWM_offset_R = (target__speed_R > 0)? PWM_R_forward_min - 30: PWM_R_backward_min +30;
- 1119              		.loc 1 119 2 view .LVU226
- 1120              		.loc 1 119 62 is_stmt 0 view .LVU227
+ 120:Core/Src/Motors.c **** 	PWM_offset_R = (target__speed_R > 0)? PWM_R_forward_min - 30: PWM_R_backward_min +30;
+ 1119              		.loc 1 120 2 view .LVU226
+ 1120              		.loc 1 120 62 is_stmt 0 view .LVU227
  1121 0000 B5EEC00A 		vcmpe.f32	s0, #0
  1122 0004 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  1123 0008 15DD     		ble	.L141
- 1124              		.loc 1 119 58 discriminator 1 view .LVU228
+ 1124              		.loc 1 120 58 discriminator 1 view .LVU228
  1125 000a 0F4B     		ldr	r3, .L143
  1126 000c 1B68     		ldr	r3, [r3]
- 1127              		.loc 1 119 62 discriminator 1 view .LVU229
+ 1127              		.loc 1 120 62 discriminator 1 view .LVU229
  1128 000e 1E3B     		subs	r3, r3, #30
  1129              	.L135:
- 1130              		.loc 1 119 15 discriminator 4 view .LVU230
+ 1130              		.loc 1 120 15 discriminator 4 view .LVU230
  1131 0010 0E4A     		ldr	r2, .L143+4
  1132 0012 1360     		str	r3, [r2]
- 120:Core/Src/Motors.c **** 	target_speed_R = target__speed_R;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 24
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 24
 
 
- 1133              		.loc 1 120 2 is_stmt 1 view .LVU231
- 1134              		.loc 1 120 17 is_stmt 0 view .LVU232
+ 121:Core/Src/Motors.c **** 	target_speed_R = target__speed_R;
+ 1133              		.loc 1 121 2 is_stmt 1 view .LVU231
+ 1134              		.loc 1 121 17 is_stmt 0 view .LVU232
  1135 0014 0E4B     		ldr	r3, .L143+8
  1136 0016 83ED000A 		vstr.32	s0, [r3]
- 121:Core/Src/Motors.c **** 	PWM_offset_L = (target__speed_L > 0)? PWM_L_forward_min - 30: PWM_L_backward_min +30;
- 1137              		.loc 1 121 2 is_stmt 1 view .LVU233
- 1138              		.loc 1 121 62 is_stmt 0 view .LVU234
+ 122:Core/Src/Motors.c **** 	PWM_offset_L = (target__speed_L > 0)? PWM_L_forward_min - 30: PWM_L_backward_min +30;
+ 1137              		.loc 1 122 2 is_stmt 1 view .LVU233
+ 1138              		.loc 1 122 62 is_stmt 0 view .LVU234
  1139 001a F5EEC00A 		vcmpe.f32	s1, #0
  1140 001e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  1141 0022 0CDD     		ble	.L142
- 1142              		.loc 1 121 58 discriminator 1 view .LVU235
+ 1142              		.loc 1 122 58 discriminator 1 view .LVU235
  1143 0024 0B4B     		ldr	r3, .L143+12
  1144 0026 1B68     		ldr	r3, [r3]
- 1145              		.loc 1 121 62 discriminator 1 view .LVU236
+ 1145              		.loc 1 122 62 discriminator 1 view .LVU236
  1146 0028 1E3B     		subs	r3, r3, #30
  1147              	.L138:
- 1148              		.loc 1 121 15 discriminator 4 view .LVU237
+ 1148              		.loc 1 122 15 discriminator 4 view .LVU237
  1149 002a 0B4A     		ldr	r2, .L143+16
  1150 002c 1360     		str	r3, [r2]
- 122:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
- 1151              		.loc 1 122 2 is_stmt 1 view .LVU238
- 1152              		.loc 1 122 17 is_stmt 0 view .LVU239
+ 123:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
+ 1151              		.loc 1 123 2 is_stmt 1 view .LVU238
+ 1152              		.loc 1 123 17 is_stmt 0 view .LVU239
  1153 002e 0B4B     		ldr	r3, .L143+20
  1154 0030 C3ED000A 		vstr.32	s1, [r3]
- 123:Core/Src/Motors.c **** }
- 1155              		.loc 1 123 1 view .LVU240
+ 124:Core/Src/Motors.c **** }
+ 1155              		.loc 1 124 1 view .LVU240
  1156 0034 7047     		bx	lr
  1157              	.L141:
- 119:Core/Src/Motors.c **** 	target_speed_R = target__speed_R;
- 1158              		.loc 1 119 83 discriminator 2 view .LVU241
+ 120:Core/Src/Motors.c **** 	target_speed_R = target__speed_R;
+ 1158              		.loc 1 120 83 discriminator 2 view .LVU241
  1159 0036 0A4B     		ldr	r3, .L143+24
  1160 0038 1B68     		ldr	r3, [r3]
- 119:Core/Src/Motors.c **** 	target_speed_R = target__speed_R;
- 1161              		.loc 1 119 62 discriminator 2 view .LVU242
+ 120:Core/Src/Motors.c **** 	target_speed_R = target__speed_R;
+ 1161              		.loc 1 120 62 discriminator 2 view .LVU242
  1162 003a 1E33     		adds	r3, r3, #30
  1163 003c E8E7     		b	.L135
  1164              	.L142:
- 121:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
- 1165              		.loc 1 121 83 discriminator 2 view .LVU243
+ 122:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
+ 1165              		.loc 1 122 83 discriminator 2 view .LVU243
  1166 003e 094B     		ldr	r3, .L143+28
  1167 0040 1B68     		ldr	r3, [r3]
- 121:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
- 1168              		.loc 1 121 62 discriminator 2 view .LVU244
+ 122:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
+ 1168              		.loc 1 122 62 discriminator 2 view .LVU244
  1169 0042 1E33     		adds	r3, r3, #30
  1170 0044 F1E7     		b	.L138
  1171              	.L144:
@@ -1437,10 +1438,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1179 005c 00000000 		.word	target_speed_L
  1180 0060 00000000 		.word	PWM_R_backward_min
  1181 0064 00000000 		.word	PWM_L_backward_min
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 25
+
+
  1182              		.cfi_endproc
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 25
-
-
  1183              	.LFE143:
  1185              		.section	.text.micros,"ax",%progbits
  1186              		.align	1
@@ -1450,19 +1451,19 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1190              		.thumb_func
  1192              	micros:
  1193              	.LFB144:
- 124:Core/Src/Motors.c **** int32_t micros(){
- 1194              		.loc 1 124 17 is_stmt 1 view -0
+ 125:Core/Src/Motors.c **** int32_t micros(){
+ 1194              		.loc 1 125 17 is_stmt 1 view -0
  1195              		.cfi_startproc
  1196              		@ args = 0, pretend = 0, frame = 0
  1197              		@ frame_needed = 0, uses_anonymous_args = 0
  1198              		@ link register save eliminated.
- 125:Core/Src/Motors.c **** 	return TIM5->CNT;
- 1199              		.loc 1 125 2 view .LVU246
- 1200              		.loc 1 125 13 is_stmt 0 view .LVU247
+ 126:Core/Src/Motors.c **** 	return TIM5->CNT;
+ 1199              		.loc 1 126 2 view .LVU246
+ 1200              		.loc 1 126 13 is_stmt 0 view .LVU247
  1201 0000 014B     		ldr	r3, .L146
  1202 0002 586A     		ldr	r0, [r3, #36]
- 126:Core/Src/Motors.c **** }
- 1203              		.loc 1 126 1 view .LVU248
+ 127:Core/Src/Motors.c **** }
+ 1203              		.loc 1 127 1 view .LVU248
  1204 0004 7047     		bx	lr
  1205              	.L147:
  1206 0006 00BF     		.align	2
@@ -1484,8 +1485,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1223              		.thumb_func
  1225              	update_speed:
  1226              	.LFB142:
- 102:Core/Src/Motors.c **** 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
- 1227              		.loc 1 102 20 is_stmt 1 view -0
+ 103:Core/Src/Motors.c **** 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
+ 1227              		.loc 1 103 20 is_stmt 1 view -0
  1228              		.cfi_startproc
  1229              		@ args = 0, pretend = 0, frame = 16
  1230              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1497,10 +1498,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1236              		.cfi_offset 6, -28
  1237              		.cfi_offset 7, -24
  1238              		.cfi_offset 8, -20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 26
+
+
  1239              		.cfi_offset 9, -16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 26
-
-
  1240              		.cfi_offset 10, -12
  1241              		.cfi_offset 11, -8
  1242              		.cfi_offset 14, -4
@@ -1514,54 +1515,54 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1250 0008 85B0     		sub	sp, sp, #20
  1251              	.LCFI9:
  1252              		.cfi_def_cfa_offset 72
- 103:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
- 1253              		.loc 1 103 2 view .LVU250
- 103:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
- 1254              		.loc 1 103 31 is_stmt 0 view .LVU251
+ 104:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
+ 1253              		.loc 1 104 2 view .LVU250
+ 104:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
+ 1254              		.loc 1 104 31 is_stmt 0 view .LVU251
  1255 000a FFF7FEFF 		bl	micros
  1256              	.LVL25:
- 103:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
- 1257              		.loc 1 103 42 discriminator 1 view .LVU252
+ 104:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
+ 1257              		.loc 1 104 42 discriminator 1 view .LVU252
  1258 000e 9A4B     		ldr	r3, .L150+48
  1259 0010 1B68     		ldr	r3, [r3]
- 103:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
- 1260              		.loc 1 103 40 discriminator 1 view .LVU253
+ 104:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
+ 1260              		.loc 1 104 40 discriminator 1 view .LVU253
  1261 0012 C01A     		subs	r0, r0, r3
- 103:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
- 1262              		.loc 1 103 8 discriminator 1 view .LVU254
+ 104:Core/Src/Motors.c **** 	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*10000
+ 1262              		.loc 1 104 8 discriminator 1 view .LVU254
  1263 0014 07EE900A 		vmov	s15, r0	@ int
  1264 0018 B8EEE78A 		vcvt.f32.s32	s16, s15
  1265              	.LVL26:
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1266              		.loc 1 104 2 is_stmt 1 view .LVU255
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1267              		.loc 1 104 39 is_stmt 0 view .LVU256
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1266              		.loc 1 105 2 is_stmt 1 view .LVU255
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1267              		.loc 1 105 39 is_stmt 0 view .LVU256
  1268 001c 974B     		ldr	r3, .L150+52
  1269 001e D3F80090 		ldr	r9, [r3]
  1270 0022 DFF87C82 		ldr	r8, .L150+88
  1271 0026 D8F80030 		ldr	r3, [r8]
  1272 002a A9EB0303 		sub	r3, r9, r3
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1273              		.loc 1 104 67 view .LVU257
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1273              		.loc 1 105 67 view .LVU257
  1274 002e 07EE903A 		vmov	s15, r3	@ int
  1275 0032 F8EEE77A 		vcvt.f32.s32	s15, s15
  1276 0036 C7EE887A 		vdiv.f32	s15, s15, s16
  1277 003a 17EE900A 		vmov	r0, s15
  1278 003e FFF7FEFF 		bl	__aeabi_f2d
  1279              	.LVL27:
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1280              		.loc 1 104 19 view .LVU258
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1280              		.loc 1 105 19 view .LVU258
  1281 0042 81A3     		adr	r3, .L150
  1282 0044 D3E90023 		ldrd	r2, [r3]
  1283 0048 FFF7FEFF 		bl	__aeabi_dmul
  1284              	.LVL28:
  1285 004c 0446     		mov	r4, r0
  1286 004e 0D46     		mov	r5, r1
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 27
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 27
 
 
- 1287              		.loc 1 104 91 view .LVU259
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1287              		.loc 1 105 91 view .LVU259
  1288 0050 8B4B     		ldr	r3, .L150+56
  1289 0052 1868     		ldr	r0, [r3]	@ float
  1290 0054 FFF7FEFF 		bl	__aeabi_f2d
@@ -1570,16 +1571,16 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1293 005a D3E90023 		ldrd	r2, [r3]
  1294 005e FFF7FEFF 		bl	__aeabi_dmul
  1295              	.LVL30:
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1296              		.loc 1 104 94 view .LVU260
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1296              		.loc 1 105 94 view .LVU260
  1297 0062 7DA3     		adr	r3, .L150+16
  1298 0064 D3E90023 		ldrd	r2, [r3]
  1299 0068 FFF7FEFF 		bl	__aeabi_dmul
  1300              	.LVL31:
  1301 006c 0646     		mov	r6, r0
  1302 006e 0F46     		mov	r7, r1
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1303              		.loc 1 104 102 view .LVU261
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1303              		.loc 1 105 102 view .LVU261
  1304 0070 844B     		ldr	r3, .L150+60
  1305 0072 1868     		ldr	r0, [r3]
  1306 0074 FFF7FEFF 		bl	__aeabi_i2d
@@ -1594,8 +1595,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1315              	.LVL33:
  1316 0088 0246     		mov	r2, r0
  1317 008a 0B46     		mov	r3, r1
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1318              		.loc 1 104 73 view .LVU262
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1318              		.loc 1 105 73 view .LVU262
  1319 008c 2046     		mov	r0, r4
  1320 008e 2946     		mov	r1, r5
  1321 0090 FFF7FEFF 		bl	__aeabi_dmul
@@ -1603,29 +1604,29 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1323 0094 FFF7FEFF 		bl	__aeabi_d2f
  1324              	.LVL35:
  1325 0098 0746     		mov	r7, r0	@ float
- 104:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1326              		.loc 1 104 13 view .LVU263
+ 105:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1326              		.loc 1 105 13 view .LVU263
  1327 009a 7B4B     		ldr	r3, .L150+64
  1328 009c 1860     		str	r0, [r3]	@ float
- 106:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
- 1329              		.loc 1 106 2 is_stmt 1 view .LVU264
- 106:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
- 1330              		.loc 1 106 35 is_stmt 0 view .LVU265
+ 107:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
+ 1329              		.loc 1 107 2 is_stmt 1 view .LVU264
+ 107:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
+ 1330              		.loc 1 107 35 is_stmt 0 view .LVU265
  1331 009e 7B4E     		ldr	r6, .L150+68
  1332 00a0 3068     		ldr	r0, [r6]	@ float
  1333 00a2 FFF7FEFF 		bl	__aeabi_f2d
  1334              	.LVL36:
  1335 00a6 6EA3     		adr	r3, .L150+24
  1336 00a8 D3E90023 		ldrd	r2, [r3]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 28
+
+
  1337 00ac FFF7FEFF 		bl	__aeabi_dmul
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 28
-
-
  1338              	.LVL37:
  1339 00b0 0446     		mov	r4, r0
  1340 00b2 0D46     		mov	r5, r1
- 106:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
- 1341              		.loc 1 106 40 view .LVU266
+ 107:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
+ 1341              		.loc 1 107 40 view .LVU266
  1342 00b4 3846     		mov	r0, r7	@ float
  1343 00b6 FFF7FEFF 		bl	__aeabi_f2d
  1344              	.LVL38:
@@ -1636,13 +1637,13 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1349 00c2 FFF7FEFF 		bl	__aeabi_d2f
  1350              	.LVL40:
  1351 00c6 09EE100A 		vmov	s18, r0
- 106:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
- 1352              		.loc 1 106 18 view .LVU267
+ 107:Core/Src/Motors.c **** 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*
+ 1352              		.loc 1 107 18 view .LVU267
  1353 00ca 3060     		str	r0, [r6]	@ float
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1354              		.loc 1 107 2 is_stmt 1 view .LVU268
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1355              		.loc 1 107 35 is_stmt 0 view .LVU269
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1354              		.loc 1 108 2 is_stmt 1 view .LVU268
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1355              		.loc 1 108 35 is_stmt 0 view .LVU269
  1356 00cc 704E     		ldr	r6, .L150+72
  1357 00ce 3068     		ldr	r0, [r6]	@ float
  1358 00d0 FFF7FEFF 		bl	__aeabi_f2d
@@ -1652,124 +1653,124 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1362 00da FFF7FEFF 		bl	__aeabi_dmul
  1363              	.LVL42:
  1364 00de CDE90001 		strd	r0, [sp]
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1365              		.loc 1 107 65 view .LVU270
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1365              		.loc 1 108 65 view .LVU270
  1366 00e2 6C4B     		ldr	r3, .L150+76
  1367 00e4 1D68     		ldr	r5, [r3]
  1368 00e6 6C4C     		ldr	r4, .L150+80
  1369 00e8 2368     		ldr	r3, [r4]
  1370 00ea EB1A     		subs	r3, r5, r3
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1371              		.loc 1 107 93 view .LVU271
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1371              		.loc 1 108 93 view .LVU271
  1372 00ec 07EE903A 		vmov	s15, r3	@ int
  1373 00f0 F8EEE77A 		vcvt.f32.s32	s15, s15
  1374 00f4 C7EE887A 		vdiv.f32	s15, s15, s16
  1375 00f8 17EE900A 		vmov	r0, s15
  1376 00fc FFF7FEFF 		bl	__aeabi_f2d
  1377              	.LVL43:
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1378              		.loc 1 107 45 view .LVU272
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1378              		.loc 1 108 45 view .LVU272
  1379 0100 51A3     		adr	r3, .L150
  1380 0102 D3E90023 		ldrd	r2, [r3]
  1381 0106 FFF7FEFF 		bl	__aeabi_dmul
  1382              	.LVL44:
  1383 010a CDE90201 		strd	r0, [sp, #8]
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1384              		.loc 1 107 117 view .LVU273
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1384              		.loc 1 108 117 view .LVU273
  1385 010e 634B     		ldr	r3, .L150+84
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 29
+
+
  1386 0110 1868     		ldr	r0, [r3]	@ float
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 29
-
-
  1387 0112 FFF7FEFF 		bl	__aeabi_f2d
  1388              	.LVL45:
  1389 0116 4EA3     		adr	r3, .L150+8
  1390 0118 D3E90023 		ldrd	r2, [r3]
  1391 011c FFF7FEFF 		bl	__aeabi_dmul
  1392              	.LVL46:
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1393              		.loc 1 107 120 view .LVU274
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1393              		.loc 1 108 120 view .LVU274
  1394 0120 4DA3     		adr	r3, .L150+16
  1395 0122 D3E90023 		ldrd	r2, [r3]
  1396 0126 FFF7FEFF 		bl	__aeabi_dmul
  1397              	.LVL47:
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1398              		.loc 1 107 128 view .LVU275
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1398              		.loc 1 108 128 view .LVU275
  1399 012a 5246     		mov	r2, r10
  1400 012c 5B46     		mov	r3, fp
  1401 012e FFF7FEFF 		bl	__aeabi_ddiv
  1402              	.LVL48:
  1403 0132 0246     		mov	r2, r0
  1404 0134 0B46     		mov	r3, r1
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1405              		.loc 1 107 99 view .LVU276
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1405              		.loc 1 108 99 view .LVU276
  1406 0136 DDE90201 		ldrd	r0, [sp, #8]
  1407 013a FFF7FEFF 		bl	__aeabi_dmul
  1408              	.LVL49:
  1409 013e 0246     		mov	r2, r0
  1410 0140 0B46     		mov	r3, r1
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1411              		.loc 1 107 40 view .LVU277
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1411              		.loc 1 108 40 view .LVU277
  1412 0142 DDE90001 		ldrd	r0, [sp]
  1413 0146 FFF7FEFF 		bl	__aeabi_dadd
  1414              	.LVL50:
  1415 014a FFF7FEFF 		bl	__aeabi_d2f
  1416              	.LVL51:
  1417 014e 08EE900A 		vmov	s17, r0
- 107:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
- 1418              		.loc 1 107 18 view .LVU278
+ 108:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
+ 1418              		.loc 1 108 18 view .LVU278
  1419 0152 3060     		str	r0, [r6]	@ float
- 108:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
- 1420              		.loc 1 108 2 is_stmt 1 view .LVU279
- 108:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
- 1421              		.loc 1 108 27 is_stmt 0 view .LVU280
+ 109:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
+ 1420              		.loc 1 109 2 is_stmt 1 view .LVU279
+ 109:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
+ 1421              		.loc 1 109 27 is_stmt 0 view .LVU280
  1422 0154 C8F80090 		str	r9, [r8]
- 109:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1423              		.loc 1 109 2 is_stmt 1 view .LVU281
- 109:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
- 1424              		.loc 1 109 27 is_stmt 0 view .LVU282
+ 110:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1423              		.loc 1 110 2 is_stmt 1 view .LVU281
+ 110:Core/Src/Motors.c **** 	// TODO: after setting up the constants in the following expression, calculate the second part and
+ 1424              		.loc 1 110 27 is_stmt 0 view .LVU282
  1425 0158 2560     		str	r5, [r4]
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1426              		.loc 1 111 2 is_stmt 1 view .LVU283
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1427              		.loc 1 111 50 is_stmt 0 view .LVU284
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1426              		.loc 1 112 2 is_stmt 1 view .LVU283
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1427              		.loc 1 112 50 is_stmt 0 view .LVU284
  1428 015a DFF848B1 		ldr	fp, .L150+92
  1429 015e DBF80000 		ldr	r0, [fp]	@ float
  1430 0162 FFF7FEFF 		bl	__aeabi_f2d
  1431              	.LVL52:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 30
+
+
  1432 0166 40A3     		adr	r3, .L150+32
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 30
-
-
  1433 0168 D3E90023 		ldrd	r2, [r3]
  1434 016c FFF7FEFF 		bl	__aeabi_dmul
  1435              	.LVL53:
  1436 0170 0646     		mov	r6, r0
  1437 0172 0F46     		mov	r7, r1
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1438              		.loc 1 111 84 view .LVU285
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1438              		.loc 1 112 84 view .LVU285
  1439 0174 DFF830A1 		ldr	r10, .L150+96
  1440 0178 DAED007A 		vldr.32	s15, [r10]
  1441 017c 79EE677A 		vsub.f32	s15, s18, s15
  1442 0180 17EE900A 		vmov	r0, s15
  1443 0184 FFF7FEFF 		bl	__aeabi_f2d
  1444              	.LVL54:
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1445              		.loc 1 111 65 view .LVU286
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1445              		.loc 1 112 65 view .LVU286
  1446 0188 39A3     		adr	r3, .L150+40
  1447 018a D3E90023 		ldrd	r2, [r3]
  1448 018e FFF7FEFF 		bl	__aeabi_dmul
  1449              	.LVL55:
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1450              		.loc 1 111 103 view .LVU287
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1450              		.loc 1 112 103 view .LVU287
  1451 0192 31A3     		adr	r3, .L150+16
  1452 0194 D3E90023 		ldrd	r2, [r3]
  1453 0198 FFF7FEFF 		bl	__aeabi_dmul
  1454              	.LVL56:
  1455 019c 8046     		mov	r8, r0
  1456 019e 8946     		mov	r9, r1
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1457              		.loc 1 111 112 view .LVU288
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1457              		.loc 1 112 112 view .LVU288
  1458 01a0 18EE100A 		vmov	r0, s16
  1459 01a4 FFF7FEFF 		bl	__aeabi_f2d
  1460              	.LVL57:
@@ -1783,24 +1784,24 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1468              	.LVL58:
  1469 01b8 0246     		mov	r2, r0
  1470 01ba 0B46     		mov	r3, r1
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1471              		.loc 1 111 58 view .LVU289
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1471              		.loc 1 112 58 view .LVU289
  1472 01bc 3046     		mov	r0, r6
  1473 01be 3946     		mov	r1, r7
  1474 01c0 FFF7FEFF 		bl	__aeabi_dadd
  1475              	.LVL59:
  1476 01c4 FFF7FEFF 		bl	__aeabi_d2f
  1477              	.LVL60:
- 111:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
- 1478              		.loc 1 111 25 view .LVU290
+ 112:Core/Src/Motors.c **** 	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed
+ 1478              		.loc 1 112 25 view .LVU290
  1479 01c8 CBF80000 		str	r0, [fp]	@ float
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1480              		.loc 1 112 2 is_stmt 1 view .LVU291
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1481              		.loc 1 112 50 is_stmt 0 view .LVU292
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 31
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1480              		.loc 1 113 2 is_stmt 1 view .LVU291
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 31
 
 
+ 1481              		.loc 1 113 50 is_stmt 0 view .LVU292
  1482 01cc DFF8DC90 		ldr	r9, .L150+100
  1483 01d0 D9F80000 		ldr	r0, [r9]	@ float
  1484 01d4 FFF7FEFF 		bl	__aeabi_f2d
@@ -1811,70 +1812,70 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1489              	.LVL62:
  1490 01e2 0646     		mov	r6, r0
  1491 01e4 0F46     		mov	r7, r1
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1492              		.loc 1 112 84 view .LVU293
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1492              		.loc 1 113 84 view .LVU293
  1493 01e6 DFF8C880 		ldr	r8, .L150+104
  1494 01ea D8ED007A 		vldr.32	s15, [r8]
  1495 01ee 78EEE77A 		vsub.f32	s15, s17, s15
  1496 01f2 17EE900A 		vmov	r0, s15
  1497 01f6 FFF7FEFF 		bl	__aeabi_f2d
  1498              	.LVL63:
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1499              		.loc 1 112 65 view .LVU294
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1499              		.loc 1 113 65 view .LVU294
  1500 01fa 1DA3     		adr	r3, .L150+40
  1501 01fc D3E90023 		ldrd	r2, [r3]
  1502 0200 FFF7FEFF 		bl	__aeabi_dmul
  1503              	.LVL64:
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1504              		.loc 1 112 103 view .LVU295
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1504              		.loc 1 113 103 view .LVU295
  1505 0204 14A3     		adr	r3, .L150+16
  1506 0206 D3E90023 		ldrd	r2, [r3]
  1507 020a FFF7FEFF 		bl	__aeabi_dmul
  1508              	.LVL65:
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1509              		.loc 1 112 112 view .LVU296
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1509              		.loc 1 113 112 view .LVU296
  1510 020e 2246     		mov	r2, r4
  1511 0210 2B46     		mov	r3, r5
  1512 0212 FFF7FEFF 		bl	__aeabi_ddiv
  1513              	.LVL66:
  1514 0216 0246     		mov	r2, r0
  1515 0218 0B46     		mov	r3, r1
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1516              		.loc 1 112 58 view .LVU297
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1516              		.loc 1 113 58 view .LVU297
  1517 021a 3046     		mov	r0, r6
  1518 021c 3946     		mov	r1, r7
  1519 021e FFF7FEFF 		bl	__aeabi_dadd
  1520              	.LVL67:
  1521 0222 FFF7FEFF 		bl	__aeabi_d2f
  1522              	.LVL68:
- 112:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
- 1523              		.loc 1 112 25 view .LVU298
+ 113:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
+ 1523              		.loc 1 113 25 view .LVU298
  1524 0226 C9F80000 		str	r0, [r9]	@ float
- 113:Core/Src/Motors.c **** 	previous_speed_L = current_speed_L;
- 1525              		.loc 1 113 2 is_stmt 1 view .LVU299
- 113:Core/Src/Motors.c **** 	previous_speed_L = current_speed_L;
- 1526              		.loc 1 113 19 is_stmt 0 view .LVU300
+ 114:Core/Src/Motors.c **** 	previous_speed_L = current_speed_L;
+ 1525              		.loc 1 114 2 is_stmt 1 view .LVU299
+ 114:Core/Src/Motors.c **** 	previous_speed_L = current_speed_L;
+ 1526              		.loc 1 114 19 is_stmt 0 view .LVU300
  1527 022a 8AED009A 		vstr.32	s18, [r10]
- 114:Core/Src/Motors.c **** 	previous_speed_calculation_time = micros();
- 1528              		.loc 1 114 2 is_stmt 1 view .LVU301
- 114:Core/Src/Motors.c **** 	previous_speed_calculation_time = micros();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 32
+ 115:Core/Src/Motors.c **** 	previous_speed_calculation_time = micros();
+ 1528              		.loc 1 115 2 is_stmt 1 view .LVU301
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 32
 
 
- 1529              		.loc 1 114 19 is_stmt 0 view .LVU302
+ 115:Core/Src/Motors.c **** 	previous_speed_calculation_time = micros();
+ 1529              		.loc 1 115 19 is_stmt 0 view .LVU302
  1530 022e C8ED008A 		vstr.32	s17, [r8]
- 115:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
- 1531              		.loc 1 115 2 is_stmt 1 view .LVU303
- 115:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
- 1532              		.loc 1 115 36 is_stmt 0 view .LVU304
+ 116:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
+ 1531              		.loc 1 116 2 is_stmt 1 view .LVU303
+ 116:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
+ 1532              		.loc 1 116 36 is_stmt 0 view .LVU304
  1533 0232 FFF7FEFF 		bl	micros
  1534              	.LVL69:
- 115:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
- 1535              		.loc 1 115 34 discriminator 1 view .LVU305
+ 116:Core/Src/Motors.c **** 	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's 
+ 1535              		.loc 1 116 34 discriminator 1 view .LVU305
  1536 0236 104B     		ldr	r3, .L150+48
  1537 0238 1860     		str	r0, [r3]
- 117:Core/Src/Motors.c **** void set_target_speeds(float target__speed_R, float target__speed_L){
- 1538              		.loc 1 117 1 view .LVU306
+ 118:Core/Src/Motors.c **** void set_target_speeds(float target__speed_R, float target__speed_L){
+ 1538              		.loc 1 118 1 view .LVU306
  1539 023a 05B0     		add	sp, sp, #20
  1540              	.LCFI10:
  1541              		.cfi_def_cfa_offset 52
@@ -1887,8 +1888,8 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1548              		.cfi_restore 81
  1549              		.cfi_def_cfa_offset 36
  1550              	.LVL70:
- 117:Core/Src/Motors.c **** void set_target_speeds(float target__speed_R, float target__speed_L){
- 1551              		.loc 1 117 1 view .LVU307
+ 118:Core/Src/Motors.c **** void set_target_speeds(float target__speed_R, float target__speed_L){
+ 1551              		.loc 1 118 1 view .LVU307
  1552 0240 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
  1553              	.L151:
  1554 0244 AFF30080 		.align	3
@@ -1917,10 +1918,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1577 029c 00000000 		.word	wheel_diameter_L
  1578 02a0 00000000 		.word	previous_encoder_count_R
  1579 02a4 00000000 		.word	current_acceleration_R
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 33
+
+
  1580 02a8 00000000 		.word	previous_speed_R
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 33
-
-
  1581 02ac 00000000 		.word	current_acceleration_L
  1582 02b0 00000000 		.word	previous_speed_L
  1583              		.cfi_endproc
@@ -1934,12 +1935,12 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1593              	send_values_to_usart:
  1594              	.LVL71:
  1595              	.LFB145:
- 127:Core/Src/Motors.c **** void send_values_to_usart(float value1, float value2, float value3, float value4){
- 1596              		.loc 1 127 82 is_stmt 1 view -0
+ 128:Core/Src/Motors.c **** void send_values_to_usart(float value1, float value2, float value3, float value4){
+ 1596              		.loc 1 128 82 is_stmt 1 view -0
  1597              		.cfi_startproc
  1598              		@ args = 0, pretend = 0, frame = 24
  1599              		@ frame_needed = 0, uses_anonymous_args = 0
- 1600              		.loc 1 127 82 is_stmt 0 view .LVU309
+ 1600              		.loc 1 128 82 is_stmt 0 view .LVU309
  1601 0000 10B5     		push	{r4, lr}
  1602              	.LCFI12:
  1603              		.cfi_def_cfa_offset 8
@@ -1952,449 +1953,496 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 1
  1610 0008 CDED020A 		vstr.32	s1, [sp, #8]
  1611 000c 8DED011A 		vstr.32	s2, [sp, #4]
  1612 0010 CDED001A 		vstr.32	s3, [sp]
- 128:Core/Src/Motors.c **** 	uint8_t header1 = 0xAA;
- 1613              		.loc 1 128 2 is_stmt 1 view .LVU310
- 1614              		.loc 1 128 10 is_stmt 0 view .LVU311
- 1615 0014 AA23     		movs	r3, #170
- 1616 0016 8DF81730 		strb	r3, [sp, #23]
- 129:Core/Src/Motors.c **** 	uint8_t header2 = 0xAB;
- 1617              		.loc 1 129 2 is_stmt 1 view .LVU312
- 1618              		.loc 1 129 10 is_stmt 0 view .LVU313
- 1619 001a AB23     		movs	r3, #171
- 1620 001c 8DF81630 		strb	r3, [sp, #22]
- 130:Core/Src/Motors.c **** 	uint8_t header3 = 0xAC;
- 1621              		.loc 1 130 2 is_stmt 1 view .LVU314
- 1622              		.loc 1 130 10 is_stmt 0 view .LVU315
- 1623 0020 AC23     		movs	r3, #172
- 1624 0022 8DF81530 		strb	r3, [sp, #21]
- 131:Core/Src/Motors.c **** 	uint8_t header4 = 0xAD;
- 1625              		.loc 1 131 2 is_stmt 1 view .LVU316
- 1626              		.loc 1 131 10 is_stmt 0 view .LVU317
- 1627 0026 AD23     		movs	r3, #173
- 1628 0028 8DF81430 		strb	r3, [sp, #20]
- 132:Core/Src/Motors.c **** 	uint8_t* bytes1 = (uint8_t*)&value1;
- 1629              		.loc 1 132 2 is_stmt 1 view .LVU318
- 1630              	.LVL72:
- 133:Core/Src/Motors.c **** 	uint8_t* bytes2 = (uint8_t*)&value2;
- 1631              		.loc 1 133 2 view .LVU319
- 134:Core/Src/Motors.c **** 	uint8_t* bytes3 = (uint8_t*)&value3;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 34
+ 129:Core/Src/Motors.c **** 	if (communication_state == PC){
+ 1613              		.loc 1 129 2 is_stmt 1 view .LVU310
+ 1614              		.loc 1 129 26 is_stmt 0 view .LVU311
+ 1615 0014 234B     		ldr	r3, .L156
+ 1616 0016 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1617              		.loc 1 129 5 view .LVU312
+ 1618 0018 0BB1     		cbz	r3, .L155
+ 1619              	.LVL72:
+ 1620              	.L152:
+ 130:Core/Src/Motors.c **** 		uint8_t header1 = 0xAA;
+ 131:Core/Src/Motors.c **** 		uint8_t header2 = 0xAB;
+ 132:Core/Src/Motors.c **** 		uint8_t header3 = 0xAC;
+ 133:Core/Src/Motors.c **** 		uint8_t header4 = 0xAD;
+ 134:Core/Src/Motors.c **** 		uint8_t* bytes1 = (uint8_t*)&value1;
+ 135:Core/Src/Motors.c **** 		uint8_t* bytes2 = (uint8_t*)&value2;
+ 136:Core/Src/Motors.c **** 		uint8_t* bytes3 = (uint8_t*)&value3;
+ 137:Core/Src/Motors.c **** 		uint8_t* bytes4 = (uint8_t*)&value4;
+ 138:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header1, 1, 10);
+ 139:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
+ 140:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header2, 1, 10);
+ 141:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
+ 142:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header3, 1, 10);
+ 143:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
+ 144:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header4, 1, 10);
+ 145:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 34
 
 
- 1632              		.loc 1 134 2 view .LVU320
- 135:Core/Src/Motors.c **** 	uint8_t* bytes4 = (uint8_t*)&value4;
- 1633              		.loc 1 135 2 view .LVU321
- 136:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, &header1, 1, 10);
- 1634              		.loc 1 136 2 view .LVU322
- 1635 002c 1B4C     		ldr	r4, .L154
- 1636 002e 0A23     		movs	r3, #10
- 1637 0030 0122     		movs	r2, #1
- 1638 0032 0DF11701 		add	r1, sp, #23
- 1639 0036 2046     		mov	r0, r4
- 1640 0038 FFF7FEFF 		bl	HAL_UART_Transmit
- 1641              	.LVL73:
- 137:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, bytes1, 4, 10);
- 1642              		.loc 1 137 2 view .LVU323
- 1643 003c 0A23     		movs	r3, #10
- 1644 003e 0422     		movs	r2, #4
- 1645 0040 03A9     		add	r1, sp, #12
- 1646              	.LVL74:
- 1647              		.loc 1 137 2 is_stmt 0 view .LVU324
- 1648 0042 2046     		mov	r0, r4
- 1649 0044 FFF7FEFF 		bl	HAL_UART_Transmit
- 1650              	.LVL75:
- 138:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, &header2, 1, 10);
- 1651              		.loc 1 138 2 is_stmt 1 view .LVU325
- 1652 0048 0A23     		movs	r3, #10
- 1653 004a 0122     		movs	r2, #1
- 1654 004c 0DF11601 		add	r1, sp, #22
- 1655 0050 2046     		mov	r0, r4
- 1656 0052 FFF7FEFF 		bl	HAL_UART_Transmit
- 1657              	.LVL76:
- 139:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, bytes2, 4, 10);
- 1658              		.loc 1 139 2 view .LVU326
- 1659 0056 0A23     		movs	r3, #10
- 1660 0058 0422     		movs	r2, #4
- 1661 005a 02A9     		add	r1, sp, #8
- 1662              	.LVL77:
- 1663              		.loc 1 139 2 is_stmt 0 view .LVU327
- 1664 005c 2046     		mov	r0, r4
- 1665 005e FFF7FEFF 		bl	HAL_UART_Transmit
- 1666              	.LVL78:
- 140:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, &header3, 1, 10);
- 1667              		.loc 1 140 2 is_stmt 1 view .LVU328
- 1668 0062 0A23     		movs	r3, #10
- 1669 0064 0122     		movs	r2, #1
- 1670 0066 0DF11501 		add	r1, sp, #21
- 1671 006a 2046     		mov	r0, r4
- 1672 006c FFF7FEFF 		bl	HAL_UART_Transmit
- 1673              	.LVL79:
- 141:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, bytes3, 4, 10);
- 1674              		.loc 1 141 2 view .LVU329
- 1675 0070 0A23     		movs	r3, #10
- 1676 0072 0422     		movs	r2, #4
- 1677 0074 0DEB0201 		add	r1, sp, r2
- 1678 0078 2046     		mov	r0, r4
- 1679 007a FFF7FEFF 		bl	HAL_UART_Transmit
- 1680              	.LVL80:
- 142:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, &header4, 1, 10);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 35
+ 146:Core/Src/Motors.c **** 	}
+ 147:Core/Src/Motors.c **** }
+ 1621              		.loc 1 147 1 view .LVU313
+ 1622 001a 06B0     		add	sp, sp, #24
+ 1623              	.LCFI14:
+ 1624              		.cfi_remember_state
+ 1625              		.cfi_def_cfa_offset 8
+ 1626              		@ sp needed
+ 1627 001c 10BD     		pop	{r4, pc}
+ 1628              	.LVL73:
+ 1629              	.L155:
+ 1630              	.LCFI15:
+ 1631              		.cfi_restore_state
+ 1632              	.LBB2:
+ 130:Core/Src/Motors.c **** 		uint8_t header1 = 0xAA;
+ 1633              		.loc 1 130 3 is_stmt 1 view .LVU314
+ 130:Core/Src/Motors.c **** 		uint8_t header1 = 0xAA;
+ 1634              		.loc 1 130 11 is_stmt 0 view .LVU315
+ 1635 001e AA23     		movs	r3, #170
+ 1636 0020 8DF81430 		strb	r3, [sp, #20]
+ 131:Core/Src/Motors.c **** 		uint8_t header3 = 0xAC;
+ 1637              		.loc 1 131 3 is_stmt 1 view .LVU316
+ 131:Core/Src/Motors.c **** 		uint8_t header3 = 0xAC;
+ 1638              		.loc 1 131 11 is_stmt 0 view .LVU317
+ 1639 0024 AB23     		movs	r3, #171
+ 1640 0026 8DF81530 		strb	r3, [sp, #21]
+ 132:Core/Src/Motors.c **** 		uint8_t header4 = 0xAD;
+ 1641              		.loc 1 132 3 is_stmt 1 view .LVU318
+ 132:Core/Src/Motors.c **** 		uint8_t header4 = 0xAD;
+ 1642              		.loc 1 132 11 is_stmt 0 view .LVU319
+ 1643 002a AC23     		movs	r3, #172
+ 1644 002c 8DF81630 		strb	r3, [sp, #22]
+ 133:Core/Src/Motors.c **** 		uint8_t* bytes1 = (uint8_t*)&value1;
+ 1645              		.loc 1 133 3 is_stmt 1 view .LVU320
+ 133:Core/Src/Motors.c **** 		uint8_t* bytes1 = (uint8_t*)&value1;
+ 1646              		.loc 1 133 11 is_stmt 0 view .LVU321
+ 1647 0030 AD23     		movs	r3, #173
+ 1648 0032 8DF81730 		strb	r3, [sp, #23]
+ 134:Core/Src/Motors.c **** 		uint8_t* bytes2 = (uint8_t*)&value2;
+ 1649              		.loc 1 134 3 is_stmt 1 view .LVU322
+ 1650              	.LVL74:
+ 135:Core/Src/Motors.c **** 		uint8_t* bytes3 = (uint8_t*)&value3;
+ 1651              		.loc 1 135 3 view .LVU323
+ 136:Core/Src/Motors.c **** 		uint8_t* bytes4 = (uint8_t*)&value4;
+ 1652              		.loc 1 136 3 view .LVU324
+ 137:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header1, 1, 10);
+ 1653              		.loc 1 137 3 view .LVU325
+ 138:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes1, 4, 10);
+ 1654              		.loc 1 138 3 view .LVU326
+ 1655 0036 1C4C     		ldr	r4, .L156+4
+ 1656 0038 0A23     		movs	r3, #10
+ 1657 003a 0122     		movs	r2, #1
+ 1658 003c 05A9     		add	r1, sp, #20
+ 1659 003e 2046     		mov	r0, r4
+ 1660 0040 FFF7FEFF 		bl	HAL_UART_Transmit
+ 1661              	.LVL75:
+ 139:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header2, 1, 10);
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 35
 
 
- 1681              		.loc 1 142 2 view .LVU330
- 1682 007e 0A23     		movs	r3, #10
- 1683 0080 0122     		movs	r2, #1
- 1684 0082 05A9     		add	r1, sp, #20
- 1685 0084 2046     		mov	r0, r4
- 1686 0086 FFF7FEFF 		bl	HAL_UART_Transmit
- 1687              	.LVL81:
- 143:Core/Src/Motors.c **** 	HAL_UART_Transmit(&huart2, bytes4, 4, 10);
- 1688              		.loc 1 143 2 view .LVU331
- 1689 008a 0A23     		movs	r3, #10
- 1690 008c 0422     		movs	r2, #4
- 1691 008e 6946     		mov	r1, sp
- 1692 0090 2046     		mov	r0, r4
- 1693 0092 FFF7FEFF 		bl	HAL_UART_Transmit
- 1694              	.LVL82:
- 144:Core/Src/Motors.c **** }
- 1695              		.loc 1 144 1 is_stmt 0 view .LVU332
- 1696 0096 06B0     		add	sp, sp, #24
- 1697              	.LCFI14:
- 1698              		.cfi_def_cfa_offset 8
- 1699              	.LVL83:
- 1700              		.loc 1 144 1 view .LVU333
- 1701              		@ sp needed
- 1702 0098 10BD     		pop	{r4, pc}
- 1703              	.LVL84:
- 1704              	.L155:
- 1705              		.loc 1 144 1 view .LVU334
- 1706 009a 00BF     		.align	2
- 1707              	.L154:
- 1708 009c 00000000 		.word	huart2
- 1709              		.cfi_endproc
- 1710              	.LFE145:
- 1712              		.global	debugger_2
- 1713              		.section	.bss.debugger_2,"aw",%nobits
- 1714              		.align	2
- 1717              	debugger_2:
- 1718 0000 00000000 		.space	4
- 1719              		.global	debugger
- 1720              		.section	.bss.debugger,"aw",%nobits
- 1721              		.align	2
- 1724              	debugger:
- 1725 0000 00000000 		.space	4
- 1726              		.global	wheel_diameter_L
- 1727              		.section	.bss.wheel_diameter_L,"aw",%nobits
+ 1662              		.loc 1 139 3 view .LVU327
+ 1663 0044 0A23     		movs	r3, #10
+ 1664 0046 0422     		movs	r2, #4
+ 1665 0048 03A9     		add	r1, sp, #12
+ 1666              	.LVL76:
+ 139:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header2, 1, 10);
+ 1667              		.loc 1 139 3 is_stmt 0 view .LVU328
+ 1668 004a 2046     		mov	r0, r4
+ 1669 004c FFF7FEFF 		bl	HAL_UART_Transmit
+ 1670              	.LVL77:
+ 140:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes2, 4, 10);
+ 1671              		.loc 1 140 3 is_stmt 1 view .LVU329
+ 1672 0050 0A23     		movs	r3, #10
+ 1673 0052 0122     		movs	r2, #1
+ 1674 0054 0DF11501 		add	r1, sp, #21
+ 1675 0058 2046     		mov	r0, r4
+ 1676 005a FFF7FEFF 		bl	HAL_UART_Transmit
+ 1677              	.LVL78:
+ 141:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header3, 1, 10);
+ 1678              		.loc 1 141 3 view .LVU330
+ 1679 005e 0A23     		movs	r3, #10
+ 1680 0060 0422     		movs	r2, #4
+ 1681 0062 02A9     		add	r1, sp, #8
+ 1682              	.LVL79:
+ 141:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header3, 1, 10);
+ 1683              		.loc 1 141 3 is_stmt 0 view .LVU331
+ 1684 0064 2046     		mov	r0, r4
+ 1685 0066 FFF7FEFF 		bl	HAL_UART_Transmit
+ 1686              	.LVL80:
+ 142:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
+ 1687              		.loc 1 142 3 is_stmt 1 view .LVU332
+ 1688 006a 0A23     		movs	r3, #10
+ 1689 006c 0122     		movs	r2, #1
+ 1690 006e 0DF11601 		add	r1, sp, #22
+ 1691 0072 2046     		mov	r0, r4
+ 1692 0074 FFF7FEFF 		bl	HAL_UART_Transmit
+ 1693              	.LVL81:
+ 143:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header4, 1, 10);
+ 1694              		.loc 1 143 3 view .LVU333
+ 1695 0078 0A23     		movs	r3, #10
+ 1696 007a 0422     		movs	r2, #4
+ 1697 007c 0DEB0201 		add	r1, sp, r2
+ 1698 0080 2046     		mov	r0, r4
+ 1699 0082 FFF7FEFF 		bl	HAL_UART_Transmit
+ 1700              	.LVL82:
+ 144:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+ 1701              		.loc 1 144 3 view .LVU334
+ 1702 0086 0A23     		movs	r3, #10
+ 1703 0088 0122     		movs	r2, #1
+ 1704 008a 0DF11701 		add	r1, sp, #23
+ 1705 008e 2046     		mov	r0, r4
+ 1706 0090 FFF7FEFF 		bl	HAL_UART_Transmit
+ 1707              	.LVL83:
+ 145:Core/Src/Motors.c **** 	}
+ 1708              		.loc 1 145 3 view .LVU335
+ 1709 0094 0A23     		movs	r3, #10
+ 1710 0096 0422     		movs	r2, #4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 36
+
+
+ 1711 0098 6946     		mov	r1, sp
+ 1712 009a 2046     		mov	r0, r4
+ 1713 009c FFF7FEFF 		bl	HAL_UART_Transmit
+ 1714              	.LVL84:
+ 1715              	.LBE2:
+ 1716              		.loc 1 147 1 is_stmt 0 view .LVU336
+ 1717 00a0 BBE7     		b	.L152
+ 1718              	.L157:
+ 1719 00a2 00BF     		.align	2
+ 1720              	.L156:
+ 1721 00a4 00000000 		.word	communication_state
+ 1722 00a8 00000000 		.word	huart2
+ 1723              		.cfi_endproc
+ 1724              	.LFE145:
+ 1726              		.global	debugger_2
+ 1727              		.section	.bss.debugger_2,"aw",%nobits
  1728              		.align	2
- 1731              	wheel_diameter_L:
+ 1731              	debugger_2:
  1732 0000 00000000 		.space	4
- 1733              		.global	wheel_diameter_R
- 1734              		.section	.bss.wheel_diameter_R,"aw",%nobits
+ 1733              		.global	debugger
+ 1734              		.section	.bss.debugger,"aw",%nobits
  1735              		.align	2
- 1738              	wheel_diameter_R:
+ 1738              	debugger:
  1739 0000 00000000 		.space	4
- 1740              		.global	CPR
- 1741              		.section	.bss.CPR,"aw",%nobits
+ 1740              		.global	wheel_diameter_L
+ 1741              		.section	.bss.wheel_diameter_L,"aw",%nobits
  1742              		.align	2
- 1745              	CPR:
+ 1745              	wheel_diameter_L:
  1746 0000 00000000 		.space	4
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 36
-
-
- 1747              		.global	encoder_timer_L
- 1748              		.section	.bss.encoder_timer_L,"aw",%nobits
+ 1747              		.global	wheel_diameter_R
+ 1748              		.section	.bss.wheel_diameter_R,"aw",%nobits
  1749              		.align	2
- 1752              	encoder_timer_L:
+ 1752              	wheel_diameter_R:
  1753 0000 00000000 		.space	4
- 1754              		.global	encoder_timer_R
- 1755              		.section	.bss.encoder_timer_R,"aw",%nobits
+ 1754              		.global	CPR
+ 1755              		.section	.bss.CPR,"aw",%nobits
  1756              		.align	2
- 1759              	encoder_timer_R:
+ 1759              	CPR:
  1760 0000 00000000 		.space	4
- 1761              		.global	previous_encoder_count_L
- 1762              		.section	.bss.previous_encoder_count_L,"aw",%nobits
+ 1761              		.global	encoder_timer_L
+ 1762              		.section	.bss.encoder_timer_L,"aw",%nobits
  1763              		.align	2
- 1766              	previous_encoder_count_L:
+ 1766              	encoder_timer_L:
  1767 0000 00000000 		.space	4
- 1768              		.global	previous_encoder_count_R
- 1769              		.section	.bss.previous_encoder_count_R,"aw",%nobits
+ 1768              		.global	encoder_timer_R
+ 1769              		.section	.bss.encoder_timer_R,"aw",%nobits
  1770              		.align	2
- 1773              	previous_encoder_count_R:
+ 1773              	encoder_timer_R:
  1774 0000 00000000 		.space	4
- 1775              		.global	previous_encoder_timer_CNT_L
- 1776              		.section	.bss.previous_encoder_timer_CNT_L,"aw",%nobits
- 1777              		.align	1
- 1780              	previous_encoder_timer_CNT_L:
- 1781 0000 0000     		.space	2
- 1782              		.global	previous_encoder_timer_CNT_R
- 1783              		.section	.bss.previous_encoder_timer_CNT_R,"aw",%nobits
- 1784              		.align	1
- 1787              	previous_encoder_timer_CNT_R:
- 1788 0000 0000     		.space	2
- 1789              		.global	encoder_count_L
- 1790              		.section	.bss.encoder_count_L,"aw",%nobits
- 1791              		.align	2
- 1794              	encoder_count_L:
- 1795 0000 00000000 		.space	4
- 1796              		.global	encoder_count_R
- 1797              		.section	.bss.encoder_count_R,"aw",%nobits
- 1798              		.align	2
- 1801              	encoder_count_R:
- 1802 0000 00000000 		.space	4
- 1803              		.global	previous_speed_calculation_time
- 1804              		.section	.bss.previous_speed_calculation_time,"aw",%nobits
+ 1775              		.global	previous_encoder_count_L
+ 1776              		.section	.bss.previous_encoder_count_L,"aw",%nobits
+ 1777              		.align	2
+ 1780              	previous_encoder_count_L:
+ 1781 0000 00000000 		.space	4
+ 1782              		.global	previous_encoder_count_R
+ 1783              		.section	.bss.previous_encoder_count_R,"aw",%nobits
+ 1784              		.align	2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 37
+
+
+ 1787              	previous_encoder_count_R:
+ 1788 0000 00000000 		.space	4
+ 1789              		.global	previous_encoder_timer_CNT_L
+ 1790              		.section	.bss.previous_encoder_timer_CNT_L,"aw",%nobits
+ 1791              		.align	1
+ 1794              	previous_encoder_timer_CNT_L:
+ 1795 0000 0000     		.space	2
+ 1796              		.global	previous_encoder_timer_CNT_R
+ 1797              		.section	.bss.previous_encoder_timer_CNT_R,"aw",%nobits
+ 1798              		.align	1
+ 1801              	previous_encoder_timer_CNT_R:
+ 1802 0000 0000     		.space	2
+ 1803              		.global	encoder_count_L
+ 1804              		.section	.bss.encoder_count_L,"aw",%nobits
  1805              		.align	2
- 1808              	previous_speed_calculation_time:
+ 1808              	encoder_count_L:
  1809 0000 00000000 		.space	4
- 1810              		.global	current_acceleration_L
- 1811              		.section	.bss.current_acceleration_L,"aw",%nobits
+ 1810              		.global	encoder_count_R
+ 1811              		.section	.bss.encoder_count_R,"aw",%nobits
  1812              		.align	2
- 1815              	current_acceleration_L:
+ 1815              	encoder_count_R:
  1816 0000 00000000 		.space	4
- 1817              		.global	current_acceleration_R
- 1818              		.section	.bss.current_acceleration_R,"aw",%nobits
+ 1817              		.global	previous_speed_calculation_time
+ 1818              		.section	.bss.previous_speed_calculation_time,"aw",%nobits
  1819              		.align	2
- 1822              	current_acceleration_R:
+ 1822              	previous_speed_calculation_time:
  1823 0000 00000000 		.space	4
- 1824              		.global	target_speed_L
- 1825              		.section	.bss.target_speed_L,"aw",%nobits
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 37
-
-
+ 1824              		.global	current_acceleration_L
+ 1825              		.section	.bss.current_acceleration_L,"aw",%nobits
  1826              		.align	2
- 1829              	target_speed_L:
+ 1829              	current_acceleration_L:
  1830 0000 00000000 		.space	4
- 1831              		.global	target_speed_R
- 1832              		.section	.bss.target_speed_R,"aw",%nobits
+ 1831              		.global	current_acceleration_R
+ 1832              		.section	.bss.current_acceleration_R,"aw",%nobits
  1833              		.align	2
- 1836              	target_speed_R:
+ 1836              	current_acceleration_R:
  1837 0000 00000000 		.space	4
- 1838              		.global	previous_speed_L
- 1839              		.section	.bss.previous_speed_L,"aw",%nobits
+ 1838              		.global	target_speed_L
+ 1839              		.section	.bss.target_speed_L,"aw",%nobits
  1840              		.align	2
- 1843              	previous_speed_L:
+ 1843              	target_speed_L:
  1844 0000 00000000 		.space	4
- 1845              		.global	previous_speed_R
- 1846              		.section	.bss.previous_speed_R,"aw",%nobits
+ 1845              		.global	target_speed_R
+ 1846              		.section	.bss.target_speed_R,"aw",%nobits
  1847              		.align	2
- 1850              	previous_speed_R:
+ 1850              	target_speed_R:
  1851 0000 00000000 		.space	4
- 1852              		.global	current_speed_L
- 1853              		.section	.bss.current_speed_L,"aw",%nobits
+ 1852              		.global	previous_speed_L
+ 1853              		.section	.bss.previous_speed_L,"aw",%nobits
  1854              		.align	2
- 1857              	current_speed_L:
+ 1857              	previous_speed_L:
  1858 0000 00000000 		.space	4
- 1859              		.global	current_speed_R
- 1860              		.section	.bss.current_speed_R,"aw",%nobits
+ 1859              		.global	previous_speed_R
+ 1860              		.section	.bss.previous_speed_R,"aw",%nobits
  1861              		.align	2
- 1864              	current_speed_R:
+ 1864              	previous_speed_R:
  1865 0000 00000000 		.space	4
- 1866              		.global	PWM_offset_L
- 1867              		.section	.bss.PWM_offset_L,"aw",%nobits
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 38
+
+
+ 1866              		.global	current_speed_L
+ 1867              		.section	.bss.current_speed_L,"aw",%nobits
  1868              		.align	2
- 1871              	PWM_offset_L:
+ 1871              	current_speed_L:
  1872 0000 00000000 		.space	4
- 1873              		.global	PWM_offset_R
- 1874              		.section	.bss.PWM_offset_R,"aw",%nobits
+ 1873              		.global	current_speed_R
+ 1874              		.section	.bss.current_speed_R,"aw",%nobits
  1875              		.align	2
- 1878              	PWM_offset_R:
+ 1878              	current_speed_R:
  1879 0000 00000000 		.space	4
- 1880              		.global	PWM_L_backward_min
- 1881              		.section	.bss.PWM_L_backward_min,"aw",%nobits
+ 1880              		.global	PWM_offset_L
+ 1881              		.section	.bss.PWM_offset_L,"aw",%nobits
  1882              		.align	2
- 1885              	PWM_L_backward_min:
+ 1885              	PWM_offset_L:
  1886 0000 00000000 		.space	4
- 1887              		.global	PWM_R_backward_min
- 1888              		.section	.bss.PWM_R_backward_min,"aw",%nobits
+ 1887              		.global	PWM_offset_R
+ 1888              		.section	.bss.PWM_offset_R,"aw",%nobits
  1889              		.align	2
- 1892              	PWM_R_backward_min:
+ 1892              	PWM_offset_R:
  1893 0000 00000000 		.space	4
- 1894              		.global	PWM_L_forward_min
- 1895              		.section	.bss.PWM_L_forward_min,"aw",%nobits
+ 1894              		.global	PWM_L_backward_min
+ 1895              		.section	.bss.PWM_L_backward_min,"aw",%nobits
  1896              		.align	2
- 1899              	PWM_L_forward_min:
+ 1899              	PWM_L_backward_min:
  1900 0000 00000000 		.space	4
- 1901              		.global	PWM_R_forward_min
- 1902              		.section	.bss.PWM_R_forward_min,"aw",%nobits
+ 1901              		.global	PWM_R_backward_min
+ 1902              		.section	.bss.PWM_R_backward_min,"aw",%nobits
  1903              		.align	2
- 1906              	PWM_R_forward_min:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 38
-
-
+ 1906              	PWM_R_backward_min:
  1907 0000 00000000 		.space	4
- 1908              		.global	PWM_max
- 1909              		.section	.bss.PWM_max,"aw",%nobits
+ 1908              		.global	PWM_L_forward_min
+ 1909              		.section	.bss.PWM_L_forward_min,"aw",%nobits
  1910              		.align	2
- 1913              	PWM_max:
+ 1913              	PWM_L_forward_min:
  1914 0000 00000000 		.space	4
- 1915              		.global	PWM_L
- 1916              		.section	.bss.PWM_L,"aw",%nobits
+ 1915              		.global	PWM_R_forward_min
+ 1916              		.section	.bss.PWM_R_forward_min,"aw",%nobits
  1917              		.align	2
- 1920              	PWM_L:
+ 1920              	PWM_R_forward_min:
  1921 0000 00000000 		.space	4
- 1922              		.global	PWM_R
- 1923              		.section	.bss.PWM_R,"aw",%nobits
+ 1922              		.global	PWM_max
+ 1923              		.section	.bss.PWM_max,"aw",%nobits
  1924              		.align	2
- 1927              	PWM_R:
+ 1927              	PWM_max:
  1928 0000 00000000 		.space	4
- 1929              		.global	left_backward
- 1930              		.section	.bss.left_backward,"aw",%nobits
+ 1929              		.global	PWM_L
+ 1930              		.section	.bss.PWM_L,"aw",%nobits
  1931              		.align	2
- 1934              	left_backward:
+ 1934              	PWM_L:
  1935 0000 00000000 		.space	4
- 1936              		.global	left_forward
- 1937              		.section	.bss.left_forward,"aw",%nobits
+ 1936              		.global	PWM_R
+ 1937              		.section	.bss.PWM_R,"aw",%nobits
  1938              		.align	2
- 1941              	left_forward:
+ 1941              	PWM_R:
  1942 0000 00000000 		.space	4
- 1943              		.global	right_backward
- 1944              		.section	.bss.right_backward,"aw",%nobits
- 1945              		.align	2
- 1948              	right_backward:
- 1949 0000 00000000 		.space	4
- 1950              		.global	right_forward
- 1951              		.section	.bss.right_forward,"aw",%nobits
- 1952              		.align	2
- 1955              	right_forward:
- 1956 0000 00000000 		.space	4
- 1957              		.global	htim_motors
- 1958              		.section	.bss.htim_motors,"aw",%nobits
- 1959              		.align	2
- 1962              	htim_motors:
- 1963 0000 00000000 		.space	4
- 1964              		.text
- 1965              	.Letext0:
- 1966              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 1967              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 1968              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
- 1969              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 1970              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 1971              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
- 1972              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 1973              		.file 9 "Core/Src/../Inc/Motors.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 39
+ 1943              		.global	communication_state
+ 1944              		.section	.bss.communication_state,"aw",%nobits
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 39
+
+
+ 1947              	communication_state:
+ 1948 0000 00       		.space	1
+ 1949              		.global	left_backward
+ 1950              		.section	.bss.left_backward,"aw",%nobits
+ 1951              		.align	2
+ 1954              	left_backward:
+ 1955 0000 00000000 		.space	4
+ 1956              		.global	left_forward
+ 1957              		.section	.bss.left_forward,"aw",%nobits
+ 1958              		.align	2
+ 1961              	left_forward:
+ 1962 0000 00000000 		.space	4
+ 1963              		.global	right_backward
+ 1964              		.section	.bss.right_backward,"aw",%nobits
+ 1965              		.align	2
+ 1968              	right_backward:
+ 1969 0000 00000000 		.space	4
+ 1970              		.global	right_forward
+ 1971              		.section	.bss.right_forward,"aw",%nobits
+ 1972              		.align	2
+ 1975              	right_forward:
+ 1976 0000 00000000 		.space	4
+ 1977              		.global	htim_motors
+ 1978              		.section	.bss.htim_motors,"aw",%nobits
+ 1979              		.align	2
+ 1982              	htim_motors:
+ 1983 0000 00000000 		.space	4
+ 1984              		.text
+ 1985              	.Letext0:
+ 1986              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 1987              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 1988              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 1989              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1990              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1991              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 1992              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 1993              		.file 9 "Core/Src/../Inc/Motors.h"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 40
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 Motors.c
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:21     .text.run_right_motor:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:27     .text.run_right_motor:00000000 run_right_motor
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:278    .text.run_right_motor:00000148 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1927   .bss.PWM_R:00000000 PWM_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1955   .bss.right_forward:00000000 right_forward
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1906   .bss.PWM_R_forward_min:00000000 PWM_R_forward_min
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1962   .bss.htim_motors:00000000 htim_motors
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1948   .bss.right_backward:00000000 right_backward
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1892   .bss.PWM_R_backward_min:00000000 PWM_R_backward_min
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:288    .text.run_left_motor:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:294    .text.run_left_motor:00000000 run_left_motor
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:545    .text.run_left_motor:00000148 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1920   .bss.PWM_L:00000000 PWM_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1941   .bss.left_forward:00000000 left_forward
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1899   .bss.PWM_L_forward_min:00000000 PWM_L_forward_min
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1934   .bss.left_backward:00000000 left_backward
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1885   .bss.PWM_L_backward_min:00000000 PWM_L_backward_min
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:555    .text.setup_motor_channels:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:561    .text.setup_motor_channels:00000000 setup_motor_channels
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:614    .text.setup_motor_channels:00000020 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:623    .text.setup_encoder_timers:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:629    .text.setup_encoder_timers:00000000 setup_encoder_timers
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:654    .text.setup_encoder_timers:00000010 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1759   .bss.encoder_timer_R:00000000 encoder_timer_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1752   .bss.encoder_timer_L:00000000 encoder_timer_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1745   .bss.CPR:00000000 CPR
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:661    .text.setup_wheel_diameters:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:667    .text.setup_wheel_diameters:00000000 setup_wheel_diameters
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:688    .text.setup_wheel_diameters:00000010 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1738   .bss.wheel_diameter_R:00000000 wheel_diameter_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1731   .bss.wheel_diameter_L:00000000 wheel_diameter_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:694    .text.setup_PWM_min_max:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:700    .text.setup_PWM_min_max:00000000 setup_PWM_min_max
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:753    .text.setup_PWM_min_max:00000020 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1913   .bss.PWM_max:00000000 PWM_max
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:762    .text.stop_motors:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:768    .text.stop_motors:00000000 stop_motors
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:957    .text.stop_motors:00000104 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1836   .bss.target_speed_R:00000000 target_speed_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1829   .bss.target_speed_L:00000000 target_speed_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:968    .text.update_encoder_counts:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:974    .text.update_encoder_counts:00000000 update_encoder_counts
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1094   .text.update_encoder_counts:00000074 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1787   .bss.previous_encoder_timer_CNT_R:00000000 previous_encoder_timer_CNT_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1801   .bss.encoder_count_R:00000000 encoder_count_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1780   .bss.previous_encoder_timer_CNT_L:00000000 previous_encoder_timer_CNT_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1794   .bss.encoder_count_L:00000000 encoder_count_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1105   .text.set_target_speeds:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1111   .text.set_target_speeds:00000000 set_target_speeds
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1174   .text.set_target_speeds:00000048 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1878   .bss.PWM_offset_R:00000000 PWM_offset_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1871   .bss.PWM_offset_L:00000000 PWM_offset_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1186   .text.micros:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1192   .text.micros:00000000 micros
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1208   .text.micros:00000008 $d
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 40
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:21     .text.run_right_motor:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:27     .text.run_right_motor:00000000 run_right_motor
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:278    .text.run_right_motor:00000148 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1941   .bss.PWM_R:00000000 PWM_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1975   .bss.right_forward:00000000 right_forward
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1920   .bss.PWM_R_forward_min:00000000 PWM_R_forward_min
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1982   .bss.htim_motors:00000000 htim_motors
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1968   .bss.right_backward:00000000 right_backward
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1906   .bss.PWM_R_backward_min:00000000 PWM_R_backward_min
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:288    .text.run_left_motor:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:294    .text.run_left_motor:00000000 run_left_motor
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:545    .text.run_left_motor:00000148 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1934   .bss.PWM_L:00000000 PWM_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1961   .bss.left_forward:00000000 left_forward
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1913   .bss.PWM_L_forward_min:00000000 PWM_L_forward_min
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1954   .bss.left_backward:00000000 left_backward
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1899   .bss.PWM_L_backward_min:00000000 PWM_L_backward_min
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:555    .text.setup_motor_channels:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:561    .text.setup_motor_channels:00000000 setup_motor_channels
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:614    .text.setup_motor_channels:00000020 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:623    .text.setup_encoder_timers:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:629    .text.setup_encoder_timers:00000000 setup_encoder_timers
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:654    .text.setup_encoder_timers:00000010 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1773   .bss.encoder_timer_R:00000000 encoder_timer_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1766   .bss.encoder_timer_L:00000000 encoder_timer_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1759   .bss.CPR:00000000 CPR
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:661    .text.setup_wheel_diameters:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:667    .text.setup_wheel_diameters:00000000 setup_wheel_diameters
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:688    .text.setup_wheel_diameters:00000010 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1752   .bss.wheel_diameter_R:00000000 wheel_diameter_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1745   .bss.wheel_diameter_L:00000000 wheel_diameter_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:694    .text.setup_PWM_min_max:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:700    .text.setup_PWM_min_max:00000000 setup_PWM_min_max
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:753    .text.setup_PWM_min_max:00000020 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1927   .bss.PWM_max:00000000 PWM_max
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:762    .text.stop_motors:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:768    .text.stop_motors:00000000 stop_motors
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:957    .text.stop_motors:00000104 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1850   .bss.target_speed_R:00000000 target_speed_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1843   .bss.target_speed_L:00000000 target_speed_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:968    .text.update_encoder_counts:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:974    .text.update_encoder_counts:00000000 update_encoder_counts
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1094   .text.update_encoder_counts:00000074 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1801   .bss.previous_encoder_timer_CNT_R:00000000 previous_encoder_timer_CNT_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1815   .bss.encoder_count_R:00000000 encoder_count_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1794   .bss.previous_encoder_timer_CNT_L:00000000 previous_encoder_timer_CNT_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1808   .bss.encoder_count_L:00000000 encoder_count_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1105   .text.set_target_speeds:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1111   .text.set_target_speeds:00000000 set_target_speeds
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1174   .text.set_target_speeds:00000048 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1892   .bss.PWM_offset_R:00000000 PWM_offset_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1885   .bss.PWM_offset_L:00000000 PWM_offset_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1186   .text.micros:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1192   .text.micros:00000000 micros
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1208   .text.micros:00000008 $d
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 41
 
 
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1219   .text.update_speed:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1225   .text.update_speed:00000000 update_speed
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1556   .text.update_speed:00000248 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1808   .bss.previous_speed_calculation_time:00000000 previous_speed_calculation_time
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1717   .bss.debugger_2:00000000 debugger_2
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1864   .bss.current_speed_R:00000000 current_speed_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1857   .bss.current_speed_L:00000000 current_speed_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1766   .bss.previous_encoder_count_L:00000000 previous_encoder_count_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1773   .bss.previous_encoder_count_R:00000000 previous_encoder_count_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1822   .bss.current_acceleration_R:00000000 current_acceleration_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1850   .bss.previous_speed_R:00000000 previous_speed_R
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1815   .bss.current_acceleration_L:00000000 current_acceleration_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1843   .bss.previous_speed_L:00000000 previous_speed_L
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1587   .text.send_values_to_usart:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1593   .text.send_values_to_usart:00000000 send_values_to_usart
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1708   .text.send_values_to_usart:0000009c $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1714   .bss.debugger_2:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1724   .bss.debugger:00000000 debugger
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1721   .bss.debugger:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1728   .bss.wheel_diameter_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1735   .bss.wheel_diameter_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1742   .bss.CPR:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1749   .bss.encoder_timer_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1756   .bss.encoder_timer_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1763   .bss.previous_encoder_count_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1770   .bss.previous_encoder_count_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1777   .bss.previous_encoder_timer_CNT_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1784   .bss.previous_encoder_timer_CNT_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1791   .bss.encoder_count_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1798   .bss.encoder_count_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1805   .bss.previous_speed_calculation_time:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1812   .bss.current_acceleration_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1819   .bss.current_acceleration_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1826   .bss.target_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1833   .bss.target_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1840   .bss.previous_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1847   .bss.previous_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1854   .bss.current_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1861   .bss.current_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1868   .bss.PWM_offset_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1875   .bss.PWM_offset_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1882   .bss.PWM_L_backward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1889   .bss.PWM_R_backward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1896   .bss.PWM_L_forward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1903   .bss.PWM_R_forward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1910   .bss.PWM_max:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1917   .bss.PWM_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1924   .bss.PWM_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1931   .bss.left_backward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1938   .bss.left_forward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1945   .bss.right_backward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1952   .bss.right_forward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s:1959   .bss.htim_motors:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1219   .text.update_speed:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1225   .text.update_speed:00000000 update_speed
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1556   .text.update_speed:00000248 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1822   .bss.previous_speed_calculation_time:00000000 previous_speed_calculation_time
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1731   .bss.debugger_2:00000000 debugger_2
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1878   .bss.current_speed_R:00000000 current_speed_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1871   .bss.current_speed_L:00000000 current_speed_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1780   .bss.previous_encoder_count_L:00000000 previous_encoder_count_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1787   .bss.previous_encoder_count_R:00000000 previous_encoder_count_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1836   .bss.current_acceleration_R:00000000 current_acceleration_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1864   .bss.previous_speed_R:00000000 previous_speed_R
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1829   .bss.current_acceleration_L:00000000 current_acceleration_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1857   .bss.previous_speed_L:00000000 previous_speed_L
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1587   .text.send_values_to_usart:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1593   .text.send_values_to_usart:00000000 send_values_to_usart
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1721   .text.send_values_to_usart:000000a4 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1947   .bss.communication_state:00000000 communication_state
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1728   .bss.debugger_2:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1738   .bss.debugger:00000000 debugger
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1735   .bss.debugger:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1742   .bss.wheel_diameter_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1749   .bss.wheel_diameter_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1756   .bss.CPR:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1763   .bss.encoder_timer_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1770   .bss.encoder_timer_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1777   .bss.previous_encoder_count_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1784   .bss.previous_encoder_count_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1791   .bss.previous_encoder_timer_CNT_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1798   .bss.previous_encoder_timer_CNT_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1805   .bss.encoder_count_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1812   .bss.encoder_count_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1819   .bss.previous_speed_calculation_time:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1826   .bss.current_acceleration_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1833   .bss.current_acceleration_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1840   .bss.target_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1847   .bss.target_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1854   .bss.previous_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1861   .bss.previous_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1868   .bss.current_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1875   .bss.current_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1882   .bss.PWM_offset_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1889   .bss.PWM_offset_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1896   .bss.PWM_L_backward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1903   .bss.PWM_R_backward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1910   .bss.PWM_L_forward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1917   .bss.PWM_R_forward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1924   .bss.PWM_max:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1931   .bss.PWM_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1938   .bss.PWM_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1948   .bss.communication_state:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1951   .bss.left_backward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1958   .bss.left_forward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1965   .bss.right_backward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1972   .bss.right_forward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\cc89NYT9.s:1979   .bss.htim_motors:00000000 $d
 
 UNDEFINED SYMBOLS
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc89NYT9.s 			page 42
+
+
 __aeabi_f2d
 __aeabi_dmul
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccbSUd6j.s 			page 41
-
-
 __aeabi_i2d
 __aeabi_ddiv
 __aeabi_d2f

@@ -24,8 +24,14 @@
 #include <stdlib.h>
 #include <math.h>
 
+enum Communication{
+	PC,
+	RASPBERRY
+};
+
 #define PI 3.141592653589
 
+extern enum Communication communication_state;
 extern TIM_HandleTypeDef* htim_motors;
 extern uint32_t right_forward, right_backward, left_forward, left_backward;
 extern int PWM_R, PWM_L;

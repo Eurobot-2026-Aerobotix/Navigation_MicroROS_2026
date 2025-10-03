@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -51,14 +51,14 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
   20:Core/Src/navigation.c **** float cruise_speed_L;
   21:Core/Src/navigation.c **** float starting_phi;
   22:Core/Src/navigation.c **** float turning_radius;
-  23:Core/Src/navigation.c **** int32_t target_encoder_count_R;
-  24:Core/Src/navigation.c **** int32_t target_encoder_count_L;
+  23:Core/Src/navigation.c **** int32_t target_encoder_count_R = 0;
+  24:Core/Src/navigation.c **** int32_t target_encoder_count_L = 0;
   25:Core/Src/navigation.c **** float position_integral_R = 0;
   26:Core/Src/navigation.c **** float position_derivative_R = 0;
   27:Core/Src/navigation.c **** float position_integral_L = 0;
   28:Core/Src/navigation.c **** float position_derivative_L = 0;
   29:Core/Src/navigation.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 2
 
 
   30:Core/Src/navigation.c **** int move_forward(float distance, float speed){
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
   84:Core/Src/navigation.c **** //			return 1;
   85:Core/Src/navigation.c **** //		}
   86:Core/Src/navigation.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 3
 
 
   87:Core/Src/navigation.c **** 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  141:Core/Src/navigation.c **** 	}
  142:Core/Src/navigation.c **** 
  143:Core/Src/navigation.c **** 	cruise_speed_R = -speed;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 4
 
 
  144:Core/Src/navigation.c **** 	cruise_speed_L = -speed;
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  198:Core/Src/navigation.c **** 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
  199:Core/Src/navigation.c **** 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * 20 ; // the c
  200:Core/Src/navigation.c **** 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 5
 
 
  201:Core/Src/navigation.c **** 		speed = MIN(speed*0.95, 0);
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
   58 0024 87EE810A 		vdiv.f32	s0, s15, s2
   59              	.LVL1:
   60              	.L8:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 6
 
 
  227:Core/Src/navigation.c **** 		if (direction_R == 1){
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  102              		.loc 1 234 3 is_stmt 1 view .LVU20
  103              		.loc 1 234 10 is_stmt 0 view .LVU21
  104 0066 2A4B     		ldr	r3, .L29+12
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 7
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 7
 
 
  105 0068 93ED000A 		vldr.32	s0, [r3]
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  245:Core/Src/navigation.c **** 			return MAX(target_speed_R + emergency_breaking_acceleration*x, 0);
  246:Core/Src/navigation.c **** 		}else{
  247:Core/Src/navigation.c **** 			return MIN(target_speed_R - emergency_breaking_acceleration*x, 0);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 8
 
 
  248:Core/Src/navigation.c **** 		}
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  184              		.loc 1 245 4 is_stmt 1 view .LVU47
  245:Core/Src/navigation.c **** 		}else{
  185              		.loc 1 245 11 is_stmt 0 view .LVU48
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 9
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 9
 
 
  186 00d8 0F4B     		ldr	r3, .L29+20
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  253:Core/Src/navigation.c **** 	if (wheel_state_L == ACCELERATING){
  236              		.loc 1 253 2 view .LVU55
  237              		.loc 1 253 20 is_stmt 0 view .LVU56
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 10
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 10
 
 
  238 0000 404B     		ldr	r3, .L59
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  256:Core/Src/navigation.c **** 			return MIN(ramping__acceleration*x, cruise_speed_L);
  287              		.loc 1 256 4 is_stmt 1 view .LVU69
  256:Core/Src/navigation.c **** 			return MIN(ramping__acceleration*x, cruise_speed_L);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 11
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 11
 
 
  288              		.loc 1 256 11 is_stmt 0 view .LVU70
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  329 0088 0BD4     		bmi	.L31
  330              		.loc 1 268 11 discriminator 2 view .LVU84
  331 008a 9FED220A 		vldr.32	s0, .L59+16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 12
 
 
  332              		.loc 1 268 11 view .LVU85
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  365              		.loc 1 275 11 is_stmt 0 view .LVU96
  366 00b4 184B     		ldr	r3, .L59+20
  367 00b6 D3ED007A 		vldr.32	s15, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 13
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 13
 
 
  368 00ba 20EE270A 		vmul.f32	s0, s0, s15
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  411              	.L59:
  412 0104 00000000 		.word	wheel_state_L
  413 0108 0000C842 		.word	1120403456
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 14
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 14
 
 
  414 010c 00000000 		.word	direction_L
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  469              	.LFB139:
  283:Core/Src/navigation.c **** float calculate_instant_target_speed_L(float x, float distance){
  470              		.loc 1 283 64 is_stmt 1 view -0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 15
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 15
 
 
  471              		.cfi_startproc
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  521 0006 022B     		cmp	r3, #2
  522 0008 06D0     		beq	.L74
  290:Core/Src/navigation.c **** 		return starting_phi - x/turning_radius;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 16
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 16
 
 
  291:Core/Src/navigation.c **** 	}
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  569              	.LVL54:
  570              	.LFB147:
  294:Core/Src/navigation.c **** int rotate(float angle, int8_t is_radian){
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 17
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 17
 
 
  295:Core/Src/navigation.c **** 	float rotating_breaking_acceleration = -2;
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  349:Core/Src/navigation.c **** 
  350:Core/Src/navigation.c **** 		distance_traveled_R = fabs(encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / 
  351:Core/Src/navigation.c **** 		distance_traveled_L = fabs(encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 18
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 18
 
 
  352:Core/Src/navigation.c **** 
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  406:Core/Src/navigation.c **** 	wheel_state_L = DEAD_STOP;
  407:Core/Src/navigation.c **** 	return 0;
  408:Core/Src/navigation.c **** }
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 19
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 19
 
 
  409:Core/Src/navigation.c **** int move_forward_with_deviation(float distance, float deviation, float speed){
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  463:Core/Src/navigation.c **** 		if (wheel_state_R == ACCELERATING && x > x1 ){
  464:Core/Src/navigation.c **** 			wheel_state_R = CRUISING;
  465:Core/Src/navigation.c **** 			wheel_state_L = CRUISING;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 20
 
 
  466:Core/Src/navigation.c **** 		}else if (wheel_state_R == CRUISING && x > x2){
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  520:Core/Src/navigation.c **** 	return 0;
  521:Core/Src/navigation.c **** }
  522:Core/Src/navigation.c **** int orientate(float orientation, int8_t is_radian){
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 21
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 21
 
 
  523:Core/Src/navigation.c **** 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  577:Core/Src/navigation.c **** 	float breaking_acceleration_L = breaking_acceleration * ( arc_length_L/arc_length );
  578:Core/Src/navigation.c **** 
  579:Core/Src/navigation.c **** 	wheel_state_R = ACCELERATING;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 22
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 22
 
 
  580:Core/Src/navigation.c **** 	wheel_state_L = ACCELERATING;
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  634:Core/Src/navigation.c **** 		}
  635:Core/Src/navigation.c **** //		if (distance_to_target >= previous_distance_to_target + 2){
  636:Core/Src/navigation.c **** //			stop_motors();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 23
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 23
 
 
  637:Core/Src/navigation.c **** //			return 1;
@@ -1337,7 +1337,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  650:Core/Src/navigation.c **** 	if ( orientate( get_angle_to(x, y), 1 ) ){
  651:Core/Src/navigation.c **** 		return 1;
  652:Core/Src/navigation.c **** 	}
- 653:Core/Src/navigation.c **** 	HAL_Delay(800);
+ 653:Core/Src/navigation.c **** 	HAL_Delay(1500);
  654:Core/Src/navigation.c **** 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
  655:Core/Src/navigation.c **** }
  656:Core/Src/navigation.c **** void emergency_break(){
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  581              		.loc 1 680 25 is_stmt 0 view .LVU137
  582 0004 084B     		ldr	r3, .L78+4
  583 0006 1960     		str	r1, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 24
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 24
 
 
  681:Core/Src/navigation.c **** 	position_integral_R = 0;
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  633              		.global	move_forward
  634              		.syntax unified
  635              		.thumb
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 25
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 25
 
 
  636              		.thumb_func
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  682              		.loc 1 35 8 view .LVU157
  683 001c C0EEA87A 		vdiv.f32	s15, s1, s17
  684 0020 17EE906A 		vmov	r6, s15
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 26
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 26
 
 
  685              	.LVL56:
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  724              	.LVL62:
  725 0062 00EE900A 		vmov	s1, r0
  726              	.LVL63:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 27
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 27
 
 
   42:Core/Src/navigation.c **** 		x2 = speed/breaking_acceleration + distance;
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  767              	.LVL69:
  768 00a6 53EC102B 		vmov	r2, r3, d0
   48:Core/Src/navigation.c **** 	float target_point_y = current_y + distance*sin(current_phi);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 28
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 28
 
 
  769              		.loc 1 48 45 discriminator 1 view .LVU187
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  814 00f6 FFF7FEFF 		bl	__aeabi_dadd
  815              	.LVL78:
   49:Core/Src/navigation.c **** 	float distance_to_target = distance;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 29
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 29
 
 
  816              		.loc 1 49 8 discriminator 1 view .LVU197
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  853              		.loc 1 50 8 is_stmt 0 view .LVU214
  854 0120 B0EE498A 		vmov.f32	s16, s18
   52:Core/Src/navigation.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 30
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 30
 
 
  855              		.loc 1 52 8 view .LVU215
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  896 015e B0EE680A 		vmov.f32	s0, s17
  897 0162 FFF7FEFF 		bl	calculate_instant_target_speed_R
  898              	.LVL84:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 31
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 31
 
 
   77:Core/Src/navigation.c **** 		HAL_Delay(4);
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  941 01bc FFF7FEFF 		bl	send_values_to_usart
  942              	.LVL91:
  943              	.L83:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 32
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 32
 
 
   61:Core/Src/navigation.c **** 		x = distance - distance_to_target;
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  984 01fe 28EE278A 		vmul.f32	s16, s16, s15
  985              	.LVL95:
   74:Core/Src/navigation.c **** 			lane_correction_term = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 33
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 33
 
 
  986              		.loc 1 74 3 is_stmt 1 view .LVU255
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1035 027c 00000000 		.word	absolute_phi
  1036 0280 00000000 		.word	starting_phi
  1037 0284 00000000 		.word	0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 34
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 34
 
 
  1038 0288 00000000 		.word	target_speed_R
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1085              	.LVL109:
  1086 02e8 0646     		mov	r6, r0
  1087 02ea 0F46     		mov	r7, r1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 35
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 35
 
 
   91:Core/Src/navigation.c **** 	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1135              		.loc 1 92 2 is_stmt 1 view .LVU274
   92:Core/Src/navigation.c **** 	speed = (target_speed_R + target_speed_L)/ 2;
  1136              		.loc 1 92 48 is_stmt 0 discriminator 1 view .LVU275
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 36
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 36
 
 
  1137 0346 7AEEE97A 		vsub.f32	s15, s21, s19
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1181 0398 93ED007A 		vldr.32	s14, [r3]
   94:Core/Src/navigation.c **** 		speed = - phase_two_distance * breaking_acceleration;
  1182              		.loc 1 94 38 view .LVU286
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 37
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 37
 
 
  1183 039c F3EE0E7A 		vmov.f32	s15, #3.0e+1
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1222 03d2 B3EE0E8A 		vmov.f32	s16, #3.0e+1
  1223              	.LVL134:
  1224              	.L95:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 38
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 38
 
 
  104:Core/Src/navigation.c **** 		HAL_Delay(2);
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1266              		.loc 1 100 28 is_stmt 0 view .LVU314
  1267 041c 19EE900A 		vmov	r0, s19
  1268 0420 FFF7FEFF 		bl	__aeabi_f2d
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 39
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 39
 
 
  1269              	.LVL141:
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1311 047a D3E90023 		ldrd	r2, [r3]
  1312 047e FFF7FEFF 		bl	__aeabi_dmul
  1313              	.LVL147:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 40
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 40
 
 
  1314 0482 0446     		mov	r4, r0
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1359              		.loc 1 120 148 discriminator 1 view .LVU335
  1360 04d6 304B     		ldr	r3, .L115+88
  1361 04d8 93ED007A 		vldr.32	s14, [r3]	@ int
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 41
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 41
 
 
  1362 04dc B8EEC77A 		vcvt.f32.s32	s14, s14
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1407              		.loc 1 122 16 is_stmt 0 view .LVU344
  1408 052c 1D4A     		ldr	r2, .L115+100
  1409 052e 1370     		strb	r3, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 42
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 42
 
 
  123:Core/Src/navigation.c **** }
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1461              		.section	.text.move_backward,"ax",%progbits
  1462              		.align	1
  1463              		.global	move_backward
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 43
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 43
 
 
  1464              		.syntax unified
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  128:Core/Src/navigation.c **** 	direction_L = -1;
  1513              		.loc 1 128 2 is_stmt 1 view .LVU354
  128:Core/Src/navigation.c **** 	direction_L = -1;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 44
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 44
 
 
  1514              		.loc 1 128 14 is_stmt 0 view .LVU355
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  138:Core/Src/navigation.c **** 		x1 = speed/ramping_acceleration;
  1553              		.loc 1 138 3 view .LVU371
  138:Core/Src/navigation.c **** 		x1 = speed/ramping_acceleration;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 45
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 45
 
 
  1554              		.loc 1 138 15 is_stmt 0 view .LVU372
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1594              		.loc 1 144 17 is_stmt 0 view .LVU386
  1595 0098 7A4B     		ldr	r3, .L159+36
  1596 009a C3ED000A 		vstr.32	s1, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 46
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 46
 
 
  145:Core/Src/navigation.c **** 	float target_point_y = current_y - distance*sin(current_phi);
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1642              	.LVL188:
  146:Core/Src/navigation.c **** 	float distance_to_target = distance;
  1643              		.loc 1 146 46 view .LVU396
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 47
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 47
 
 
  1644 00f6 53EC102B 		vmov	r2, r3, d0
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1684              		.loc 1 154 2 is_stmt 1 view .LVU410
  154:Core/Src/navigation.c **** 	starting_phi = absolute_phi;
  1685              		.loc 1 154 21 is_stmt 0 view .LVU411
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 48
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 48
 
 
  1686 012e 5C4B     		ldr	r3, .L159+64
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1726 0160 0423     		movs	r3, #4
  1727 0162 4C4A     		ldr	r2, .L159+52
  1728 0164 1370     		strb	r3, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 49
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 49
 
 
  163:Core/Src/navigation.c **** 		}else if (wheel_state_R == CRUISING && x > x2){
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  175:Core/Src/navigation.c **** 		HAL_Delay(4);
  1770              		.loc 1 175 3 discriminator 2 view .LVU439
  1771 01aa 60EE080A 		vmul.f32	s1, s0, s16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 50
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 50
 
 
  1772 01ae B0EE690A 		vmov.f32	s0, s19
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1814 01fc 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  161:Core/Src/navigation.c **** 			wheel_state_R = CRUISING;
  1815              		.loc 1 161 6 view .LVU452
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 51
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 51
 
 
  1816 01fe 012B     		cmp	r3, #1
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1859 0246 0246     		mov	r2, r0
  1860 0248 0B46     		mov	r3, r1
  172:Core/Src/navigation.c **** 			lane_correction_term = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 52
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 52
 
 
  1861              		.loc 1 172 6 view .LVU464
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1910 02ce FFF7FEFF 		bl	__aeabi_f2d
  1911              	.LVL219:
  1912 02d2 0646     		mov	r6, r0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 53
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 53
 
 
  1913              	.LVL220:
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  1961 0336 4246     		mov	r2, r8
  1962 0338 4B46     		mov	r3, r9
  1963 033a FFF7FEFF 		bl	__aeabi_dmul
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 54
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 54
 
 
  1964              	.LVL229:
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  189:Core/Src/navigation.c **** 	speed = (target_speed_R + target_speed_L)/ 2;
  2010              		.loc 1 189 61 discriminator 1 view .LVU484
  2011 038a 18EE100A 		vmov	r0, s16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 55
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 55
 
 
  2012 038e FFF7FEFF 		bl	__aeabi_f2d
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2054              	.L133:
  194:Core/Src/navigation.c **** 	previous_distance_to_target = distance_to_target;
  2055              		.loc 1 194 2 is_stmt 1 view .LVU497
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 56
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 56
 
 
  194:Core/Src/navigation.c **** 	previous_distance_to_target = distance_to_target;
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2096 0414 FFF7FEFF 		bl	get_distance_to
  2097              	.LVL253:
  2098 0418 10EE104A 		vmov	r4, s0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 57
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 57
 
 
  2099              	.LVL254:
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  199:Core/Src/navigation.c **** 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
  2142              		.loc 1 199 3 is_stmt 1 view .LVU523
  199:Core/Src/navigation.c **** 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 58
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 58
 
 
  2143              		.loc 1 199 27 is_stmt 0 view .LVU524
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  201:Core/Src/navigation.c **** 		previous_distance_to_target = distance_to_target;
  2188              		.loc 1 201 11 discriminator 2 view .LVU534
  2189 04c6 9EE7     		b	.L136
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 59
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 59
 
 
  2190              	.LVL268:
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2235              		.loc 1 218 10 discriminator 1 view .LVU543
  2236 0524 FFF7FEFF 		bl	__aeabi_d2iz
  2237              	.LVL275:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 60
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 60
 
 
  219:Core/Src/navigation.c **** 	wheel_state_R = DEAD_STOP;
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2279              		.cfi_restore 83
  2280              		.cfi_restore 80
  2281              		.cfi_restore 81
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 61
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 61
 
 
  2282              		.cfi_def_cfa_offset 32
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2335              		.cfi_def_cfa_offset 36
  2336              		.cfi_offset 4, -36
  2337              		.cfi_offset 5, -32
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 62
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 62
 
 
  2338              		.cfi_offset 6, -28
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  299:Core/Src/navigation.c **** 	direction_L = -direction_R;
  2383              		.loc 1 299 14 discriminator 4 view .LVU569
  2384 0030 CC4B     		ldr	r3, .L201+36
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 63
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 63
 
 
  2385 0032 1D70     		strb	r5, [r3]
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2423 0066 F8EE007A 		vmov.f32	s15, #-2.0e+0
  2424              	.LVL288:
  309:Core/Src/navigation.c **** 		float intersection_speed = ramping_acceleration * intersection_x;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 64
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 64
 
 
  2425              		.loc 1 309 57 view .LVU586
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2465              	.L167:
  313:Core/Src/navigation.c **** 	}
  2466              		.loc 1 313 6 view .LVU601
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 65
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 65
 
 
  2467              	.LBE4:
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2503              		.loc 1 329 16 is_stmt 0 view .LVU619
  2504 00d8 AA4B     		ldr	r3, .L201+68
  2505 00da D3F80080 		ldr	r8, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 66
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 66
 
 
  2506              	.LVL302:
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2543              		.loc 1 296 28 discriminator 1 view .LVU636
  2544 0104 85E7     		b	.L164
  2545              	.LVL307:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 67
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 67
 
 
  2546              	.L196:
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2587 013e 93ED001A 		vldr.32	s2, [r3]
  2588 0142 F0EE690A 		vmov.f32	s1, s19
  2589 0146 B0EE480A 		vmov.f32	s0, s16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 68
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 68
 
 
  2590 014a FFF7FEFF 		bl	calculate_instant_target_speed_R_full
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2630 018e D3ED001A 		vldr.32	s3, [r3]
  2631 0192 824B     		ldr	r3, .L201+92
  2632 0194 93ED001A 		vldr.32	s2, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 69
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 69
 
 
  2633 0198 814B     		ldr	r3, .L201+96
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2673              		.loc 1 346 12 is_stmt 0 view .LVU677
  2674 01d8 032B     		cmp	r3, #3
  2675 01da 00F00282 		beq	.L175
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 70
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 70
 
 
  2676              	.L172:
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2721 022e 554B     		ldr	r3, .L201+68
  2722 0230 1868     		ldr	r0, [r3]
  2723              	.LVL328:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 71
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 71
 
 
  351:Core/Src/navigation.c **** 
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2768 0280 FFF7FEFF 		bl	__aeabi_d2f
  2769              	.LVL339:
  2770 0284 08EE900A 		vmov	s17, r0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 72
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 72
 
 
  2771              	.LVL340:
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2814              		.loc 1 372 10 view .LVU707
  2815 02ce B0EEC88A 		vabs.f32	s16, s16
  372:Core/Src/navigation.c **** 	if (fabs(speed) < (deg_to_rad(phase_two_angle) * dead_wheels_spacing/2)*(-rotating_breaking_accele
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 73
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 73
 
 
  2816              		.loc 1 372 8 view .LVU708
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2857 031c B0EECAAA 		vabs.f32	s20, s20
  377:Core/Src/navigation.c **** 	previous_distance_to_target = distance_to_target;
  2858              		.loc 1 377 43 view .LVU722
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 74
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 74
 
 
  2859 0320 0F4B     		ldr	r3, .L201+32
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2903 0378 00000000 		.word	cruise_speed_L
  2904 037c 00000000 		.word	absolute_phi
  2905 0380 00000000 		.word	encoder_count_R
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 75
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 75
 
 
  2906 0384 00000000 		.word	encoder_count_L
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2951 03e8 93ED007A 		vldr.32	s14, [r3]
  390:Core/Src/navigation.c **** 
  2952              		.loc 1 390 22 view .LVU742
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 76
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 76
 
 
  2953 03ec 27EE878A 		vmul.f32	s16, s15, s14
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  2995 043a B4EEC08A 		vcmpe.f32	s16, s0
  2996 043e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2997 0442 40F39080 		ble	.L182
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 77
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 77
 
 
  381:Core/Src/navigation.c **** 		distance_traveled_R = (encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3044              	.LVL379:
  383:Core/Src/navigation.c **** 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
  3045              		.loc 1 383 3 is_stmt 1 view .LVU763
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 78
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 78
 
 
  383:Core/Src/navigation.c **** 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3090              	.LVL388:
  3091 0502 0246     		mov	r2, r0
  3092 0504 0B46     		mov	r3, r1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 79
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 79
 
 
  384:Core/Src/navigation.c **** 
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3137              		.loc 1 387 11 discriminator 2 view .LVU783
  3138 0560 0024     		movs	r4, #0
  3139 0562 374D     		ldr	r5, .L203+80
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 80
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 80
 
 
  3140 0564 28E7     		b	.L181
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3186 05bc 1868     		ldr	r0, [r3]
  3187 05be FFF7FEFF 		bl	__aeabi_i2d
  3188              	.LVL404:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 81
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 81
 
 
  3189 05c2 2246     		mov	r2, r4
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3235 05f4 FB210940 		.word	1074340347
  3236 05f8 9A999999 		.word	-1717986918
  3237 05fc 9999A93F 		.word	1068079513
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 82
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 82
 
 
  3238 0600 CDCCCCCC 		.word	-858993459
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3290 000a 98B1     		cbz	r0, .L220
  3291              	.LVL411:
  3292              	.L206:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 83
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 83
 
 
  524:Core/Src/navigation.c **** 		float angle = orientation - current_phi;
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  525:Core/Src/navigation.c **** 		if (angle > PI){
  3336              		.loc 1 525 29 is_stmt 0 view .LVU815
  3337 003e 224B     		ldr	r3, .L222+24
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 84
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 84
 
 
  3338 0040 D3ED007A 		vldr.32	s15, [r3]
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3382 008c FFF7FEFF 		bl	__aeabi_dcmplt
  3383              	.LVL425:
  3384 0090 0028     		cmp	r0, #0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 85
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 85
 
 
  3385 0092 F0D0     		beq	.L211
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3436              		.cfi_def_cfa_offset 24
  3437              		.cfi_offset 80, -24
  3438              		.cfi_offset 81, -20
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 86
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 86
 
 
  3439              		.cfi_offset 82, -16
@@ -5144,7 +5144,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3472              		.cfi_restore_state
  653:Core/Src/navigation.c **** 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
  3473              		.loc 1 653 2 is_stmt 1 view .LVU838
- 3474 0026 4FF44870 		mov	r0, #800
+ 3474 0026 40F2DC50 		movw	r0, #1500
  3475 002a FFF7FEFF 		bl	HAL_Delay
  3476              	.LVL434:
  654:Core/Src/navigation.c **** }
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  654:Core/Src/navigation.c **** }
  3483              		.loc 1 654 9 discriminator 1 view .LVU841
  3484 003a F0EE480A 		vmov.f32	s1, s16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 87
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 87
 
 
  3485 003e FFF7FEFF 		bl	move_forward
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3537              		.cfi_offset 92, -56
  3538              		.cfi_offset 93, -52
  3539              		.cfi_offset 94, -48
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 88
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 88
 
 
  3540              		.cfi_offset 95, -44
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3582 005e 3946     		mov	r1, r7
  3583 0060 FFF7FEFF 		bl	__aeabi_dsub
  3584              	.LVL442:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 89
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 89
 
 
  3585 0064 0246     		mov	r2, r0
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3627 00b2 67EE877A 		vmul.f32	s15, s15, s14
  414:Core/Src/navigation.c **** 	float arc_length_L = fabs( 2 * alpha * ( radius + dead_wheels_spacing/2) );
  3628              		.loc 1 414 50 view .LVU870
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 90
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 90
 
 
  3629 00b6 7BEEE7AA 		vsub.f32	s21, s23, s15
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3671 00fe 53EC102B 		vmov	r2, r3, d0
  417:Core/Src/navigation.c **** 	float target_point_y = current_y + distance*sin(current_phi);
  3672              		.loc 1 417 45 discriminator 1 view .LVU883
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 91
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 91
 
 
  3673 0102 3046     		mov	r0, r6
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3718 014e FFF7FEFF 		bl	__aeabi_d2f
  3719              	.LVL466:
  3720 0152 0CEE900A 		vmov	s25, r0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 92
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 92
 
 
  3721              	.LVL467:
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  423:Core/Src/navigation.c **** 	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
  3765              		.loc 1 423 43 discriminator 1 view .LVU903
  3766 01ae 3046     		mov	r0, r6
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 93
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 93
 
 
  3767 01b0 3946     		mov	r1, r7
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3811 01f8 B0EE480A 		vmov.f32	s0, s16
  3812 01fc FFF7FEFF 		bl	rotate
  3813              	.LVL484:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 94
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 94
 
 
  427:Core/Src/navigation.c **** 
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3851              		.loc 1 435 2 is_stmt 1 view .LVU930
  435:Core/Src/navigation.c **** 
  3852              		.loc 1 435 18 is_stmt 0 view .LVU931
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 95
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 95
 
 
  3853 0236 464B     		ldr	r3, .L270+64
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  3894              	.LVL495:
  440:Core/Src/navigation.c **** 		x1 = speed/ramping_acceleration;
  3895              		.loc 1 440 9 view .LVU945
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 96
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 96
 
 
  3896 0274 FFF7FEFF 		bl	__aeabi_d2f
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  447:Core/Src/navigation.c **** 	float ramping_acceleration_L = ramping_acceleration * ( arc_length_L/arc_length );
  3935              		.loc 1 447 8 view .LVU961
  3936 02ac 6BEE0EEA 		vmul.f32	s29, s22, s28
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 97
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 97
 
 
  3937              	.LVL502:
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  460:Core/Src/navigation.c **** 	while (distance_to_target > phase_two_distance){
  3973              		.loc 1 460 2 view .LVU980
  461:Core/Src/navigation.c **** 		x = arc_length - distance_to_target;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 98
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 98
 
 
  3974              		.loc 1 461 2 view .LVU981
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4014              	.L270:
  4015 0310 1E264454 		.word	1413752350
  4016 0314 FB21F93F 		.word	1073291771
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 99
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 99
 
 
  4017 0318 CDCCCCCC 		.word	-858993459
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4064 03a8 60EE0F0A 		vmul.f32	s1, s0, s30
  4065 03ac B0EE6F0A 		vmov.f32	s0, s31
  4066 03b0 FFF7FEFF 		bl	set_target_speeds
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 100
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 100
 
 
  4067              	.LVL511:
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4109              		.loc 1 463 21 is_stmt 0 view .LVU1013
  4110 0404 A44B     		ldr	r3, .L272+40
  4111 0406 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 101
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 101
 
 
  463:Core/Src/navigation.c **** 			wheel_state_R = CRUISING;
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4154 0452 FFF7FEFF 		bl	__aeabi_dmul
  4155              	.LVL523:
  4156 0456 0246     		mov	r2, r0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 102
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 102
 
 
  4157 0458 0B46     		mov	r3, r1
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4200 04a8 F0EE680A 		vmov.f32	s1, s17
  4201 04ac B0EE490A 		vmov.f32	s0, s18
  4202              	.LVL532:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 103
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 103
 
 
  494:Core/Src/navigation.c **** 	int32_t phase_two_start_time = micros();
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4243              		.loc 1 503 24 is_stmt 0 view .LVU1050
  4244 04dc B0EE6B2A 		vmov.f32	s4, s23
  4245 04e0 F0EE6D1A 		vmov.f32	s3, s27
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 104
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 104
 
 
  4246 04e4 B0EE4D1A 		vmov.f32	s2, s26
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  497:Core/Src/navigation.c **** 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
  4290              		.loc 1 497 27 is_stmt 0 view .LVU1061
  4291 0540 F0EE680A 		vmov.f32	s1, s17
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 105
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 105
 
 
  4292 0544 B0EE490A 		vmov.f32	s0, s18
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4337              	.LVL555:
  4338              	.L244:
  500:Core/Src/navigation.c **** 		previous_distance_to_target = distance_to_target;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 106
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 106
 
 
  4339              		.loc 1 500 3 is_stmt 1 view .LVU1071
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4385              	.LVL564:
  517:Core/Src/navigation.c **** 	wheel_state_R = DEAD_STOP;
  4386              		.loc 1 517 117 discriminator 1 view .LVU1080
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 107
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 107
 
 
  4387 05f6 294B     		ldr	r3, .L272+44
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4434 0656 FFF7FEFF 		bl	set_target_encoder_counts
  4435              	.LVL572:
  518:Core/Src/navigation.c **** 	wheel_state_L = DEAD_STOP;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 108
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 108
 
 
  4436              		.loc 1 518 2 is_stmt 1 view .LVU1088
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4484 0694 00000000 		.word	current_speed_L
  4485 0698 00000000 		.word	wheel_state_R
  4486 069c 00000000 		.word	absolute_phi
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 109
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 109
 
 
  4487 06a0 00000000 		.word	0
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4541              		.cfi_offset 95, -28
  4542 0008 B0EE40CA 		vmov.f32	s24, s0
  4543 000c F0EE60CA 		vmov.f32	s25, s1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 110
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 110
 
 
  4544 0010 F0EE419A 		vmov.f32	s19, s2
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4585 0060 18EE100A 		vmov	r0, s16
  4586 0064 FFF7FEFF 		bl	__aeabi_f2d
  4587              	.LVL583:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 111
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 111
 
 
  4588 0068 41EC100B 		vmov	d0, r0, r1
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4630 00b4 2AEE08AA 		vmul.f32	s20, s20, s16
  542:Core/Src/navigation.c **** 	float arc_length_L = 2 * fabs( alpha * ( radius + dead_wheels_spacing/2) );
  4631              		.loc 1 542 27 view .LVU1122
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 112
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 112
 
 
  4632 00b8 B0EECAAA 		vabs.f32	s20, s20
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4670              	.LVL594:
  550:Core/Src/navigation.c **** 	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
  4671              		.loc 1 550 42 view .LVU1139
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 113
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 113
 
 
  4672 00fa 0446     		mov	r4, r0
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4717              		.loc 1 551 43 view .LVU1148
  4718 0154 53EC102B 		vmov	r2, r3, d0
  551:Core/Src/navigation.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 114
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 114
 
 
  4719              		.loc 1 551 42 discriminator 1 view .LVU1149
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4761              		.loc 1 558 41 is_stmt 0 view .LVU1161
  4762 0198 8AEE28BA 		vdiv.f32	s22, s20, s17
  558:Core/Src/navigation.c **** 	cruise_speed_L = speed * ( arc_length_L/arc_length );
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 115
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 115
 
 
  4763              		.loc 1 558 25 view .LVU1162
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4801              		.loc 1 565 84 view .LVU1178
  4802 01d0 7D4B     		ldr	r3, .L309+72
  4803 01d2 93ED008A 		vldr.32	s16, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 116
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 116
 
 
  4804 01d6 79EE486A 		vsub.f32	s13, s18, s16
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4843 020e 83ED007A 		vstr.32	s14, [r3]
  571:Core/Src/navigation.c **** 	}
  4844              		.loc 1 571 3 is_stmt 1 view .LVU1194
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 117
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 117
 
 
  571:Core/Src/navigation.c **** 	}
@@ -7018,7 +7018,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  580:Core/Src/navigation.c **** 	trajectory = CIRCLE_CURVE;
  4883              		.loc 1 580 16 is_stmt 0 view .LVU1211
  4884 0242 634A     		ldr	r2, .L309+80
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 118
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 118
 
 
  4885 0244 1370     		strb	r3, [r2]
@@ -7078,7 +7078,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4921 026a 594A     		ldr	r2, .L309+80
  4922 026c 1370     		strb	r3, [r2]
  4923 026e 5DE0     		b	.L280
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 119
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 119
 
 
  4924              	.L307:
@@ -7138,7 +7138,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  4966 02c6 FFF7FEFF 		bl	set_target_speeds
  4967              	.LVL637:
  605:Core/Src/navigation.c **** 		previous_distance_to_target = distance_to_target;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 120
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 120
 
 
  4968              		.loc 1 605 3 is_stmt 1 view .LVU1242
@@ -7198,7 +7198,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5011 031c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  590:Core/Src/navigation.c **** 			wheel_state_R = CRUISING;
  5012              		.loc 1 590 6 view .LVU1254
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 121
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 121
 
 
  5013 031e 012B     		cmp	r3, #1
@@ -7258,7 +7258,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5056 0368 0246     		mov	r2, r0
  5057 036a 0B46     		mov	r3, r1
  601:Core/Src/navigation.c **** 			lane_correction_term = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 122
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 122
 
 
  5058              		.loc 1 601 6 view .LVU1266
@@ -7318,7 +7318,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5108 03fc F0EE6C0A 		vmov.f32	s1, s25
  5109 0400 B0EE4C0A 		vmov.f32	s0, s24
  5110 0404 FFF7FEFF 		bl	get_arc_distance_to
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 123
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 123
 
 
  5111              	.LVL653:
@@ -7378,7 +7378,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5152              	.L302:
  626:Core/Src/navigation.c **** 		speed_L = MAX(speed_L*0.996, 0);
  5153              		.loc 1 626 13 discriminator 2 view .LVU1284
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 124
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 124
 
 
  5154 0448 5FED189A 		vldr.32	s19, .L309+108
@@ -7438,7 +7438,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5197 048e 5E4B     		ldr	r3, .L311+24
  5198 0490 93ED001A 		vldr.32	s2, [r3]
  5199 0494 5D4B     		ldr	r3, .L311+28
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 125
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 125
 
 
  5200 0496 D3ED000A 		vldr.32	s1, [r3]
@@ -7498,7 +7498,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5242 04f2 20EE290A 		vmul.f32	s0, s0, s19
  5243 04f6 FFF7FEFF 		bl	set_target_speeds
  5244              	.LVL676:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 126
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 126
 
 
  626:Core/Src/navigation.c **** 		speed_L = MAX(speed_L*0.996, 0);
@@ -7558,7 +7558,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5292              	.LVL686:
  5293              	.L291:
  642:Core/Src/navigation.c **** 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(arc_len
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 127
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 127
 
 
  5294              		.loc 1 642 2 is_stmt 1 view .LVU1315
@@ -7618,7 +7618,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5340              	.LVL693:
  5341 05b2 0246     		mov	r2, r0
  5342 05b4 0B46     		mov	r3, r1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 128
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 128
 
 
  643:Core/Src/navigation.c **** 	wheel_state_R = DEAD_STOP;
@@ -7678,7 +7678,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5388              		.cfi_restore 84
  5389              		.cfi_restore 85
  5390              		.cfi_restore 82
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 129
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 129
 
 
  5391              		.cfi_restore 83
@@ -7738,7 +7738,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5442              		.loc 1 657 16 is_stmt 0 view .LVU1336
  5443 0002 0323     		movs	r3, #3
  5444 0004 054A     		ldr	r2, .L315
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 130
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 130
 
 
  5445 0006 1370     		strb	r3, [r2]
@@ -7798,7 +7798,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5506              		.align	2
  5509              	target_encoder_count_R:
  5510 0000 00000000 		.space	4
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 131
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 131
 
 
  5511              		.global	turning_radius
@@ -7858,7 +7858,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5589              	trajectory:
  5590 0000 00       		.space	1
  5591              		.global	wheel_state_L
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 132
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 132
 
 
  5592              		.section	.bss.wheel_state_L,"aw",%nobits
@@ -7877,109 +7877,109 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 1
  5609              		.file 6 "Core/Inc/navigation.h"
  5610              		.file 7 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
  5611              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 133
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 133
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 navigation.c
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:21     .text.calculate_instant_target_speed_R_full:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:27     .text.calculate_instant_target_speed_R_full:00000000 calculate_instant_target_speed_R_full
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:44     .text.calculate_instant_target_speed_R_full:0000000e $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:48     .text.calculate_instant_target_speed_R_full:00000012 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:211    .text.calculate_instant_target_speed_R_full:00000104 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5601   .bss.wheel_state_R:00000000 wheel_state_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5549   .bss.direction_R:00000000 direction_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5537   .bss.cruise_speed_R:00000000 cruise_speed_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5563   .data.emergency_breaking_acceleration:00000000 emergency_breaking_acceleration
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:222    .text.calculate_instant_target_speed_L_full:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:228    .text.calculate_instant_target_speed_L_full:00000000 calculate_instant_target_speed_L_full
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:245    .text.calculate_instant_target_speed_L_full:0000000e $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:249    .text.calculate_instant_target_speed_L_full:00000012 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:412    .text.calculate_instant_target_speed_L_full:00000104 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5595   .bss.wheel_state_L:00000000 wheel_state_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5543   .bss.direction_L:00000000 direction_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5530   .bss.cruise_speed_L:00000000 cruise_speed_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:423    .text.calculate_instant_target_speed_R:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:429    .text.calculate_instant_target_speed_R:00000000 calculate_instant_target_speed_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:455    .text.calculate_instant_target_speed_R:00000014 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5570   .data.breaking_acceleration:00000000 breaking_acceleration
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5577   .data.ramping_acceleration:00000000 ramping_acceleration
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:461    .text.calculate_instant_target_speed_L:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:467    .text.calculate_instant_target_speed_L:00000000 calculate_instant_target_speed_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:493    .text.calculate_instant_target_speed_L:00000014 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:499    .text.calculate_instant_target_phi:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:505    .text.calculate_instant_target_phi:00000000 calculate_instant_target_phi
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:554    .text.calculate_instant_target_phi:00000030 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5589   .bss.trajectory:00000000 trajectory
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5523   .bss.starting_phi:00000000 starting_phi
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5516   .bss.turning_radius:00000000 turning_radius
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:562    .text.set_target_encoder_counts:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:568    .text.set_target_encoder_counts:00000000 set_target_encoder_counts
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:611    .text.set_target_encoder_counts:00000024 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5509   .bss.target_encoder_count_R:00000000 target_encoder_count_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5502   .bss.target_encoder_count_L:00000000 target_encoder_count_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5495   .bss.position_integral_R:00000000 position_integral_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5488   .bss.position_derivative_R:00000000 position_derivative_R
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5481   .bss.position_integral_L:00000000 position_integral_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5474   .bss.position_derivative_L:00000000 position_derivative_L
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5583   .bss.control_loop_state:00000000 control_loop_state
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:632    .text.move_forward:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:638    .text.move_forward:00000000 move_forward
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1018   .text.move_forward:00000238 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1046   .text.move_forward:00000298 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1432   .text.move_forward:00000540 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1462   .text.move_backward:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1468   .text.move_backward:00000000 move_backward
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1876   .text.move_backward:00000260 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:1904   .text.move_backward:000002c0 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:2289   .text.move_backward:00000558 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:2319   .text.rotate:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:2325   .text.rotate:00000000 rotate
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:2889   .text.rotate:00000340 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5556   .data.rotating_speed:00000000 rotating_speed
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 134
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:21     .text.calculate_instant_target_speed_R_full:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:27     .text.calculate_instant_target_speed_R_full:00000000 calculate_instant_target_speed_R_full
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:44     .text.calculate_instant_target_speed_R_full:0000000e $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:48     .text.calculate_instant_target_speed_R_full:00000012 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:211    .text.calculate_instant_target_speed_R_full:00000104 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5601   .bss.wheel_state_R:00000000 wheel_state_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5549   .bss.direction_R:00000000 direction_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5537   .bss.cruise_speed_R:00000000 cruise_speed_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5563   .data.emergency_breaking_acceleration:00000000 emergency_breaking_acceleration
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:222    .text.calculate_instant_target_speed_L_full:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:228    .text.calculate_instant_target_speed_L_full:00000000 calculate_instant_target_speed_L_full
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:245    .text.calculate_instant_target_speed_L_full:0000000e $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:249    .text.calculate_instant_target_speed_L_full:00000012 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:412    .text.calculate_instant_target_speed_L_full:00000104 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5595   .bss.wheel_state_L:00000000 wheel_state_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5543   .bss.direction_L:00000000 direction_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5530   .bss.cruise_speed_L:00000000 cruise_speed_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:423    .text.calculate_instant_target_speed_R:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:429    .text.calculate_instant_target_speed_R:00000000 calculate_instant_target_speed_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:455    .text.calculate_instant_target_speed_R:00000014 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5570   .data.breaking_acceleration:00000000 breaking_acceleration
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5577   .data.ramping_acceleration:00000000 ramping_acceleration
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:461    .text.calculate_instant_target_speed_L:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:467    .text.calculate_instant_target_speed_L:00000000 calculate_instant_target_speed_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:493    .text.calculate_instant_target_speed_L:00000014 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:499    .text.calculate_instant_target_phi:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:505    .text.calculate_instant_target_phi:00000000 calculate_instant_target_phi
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:554    .text.calculate_instant_target_phi:00000030 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5589   .bss.trajectory:00000000 trajectory
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5523   .bss.starting_phi:00000000 starting_phi
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5516   .bss.turning_radius:00000000 turning_radius
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:562    .text.set_target_encoder_counts:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:568    .text.set_target_encoder_counts:00000000 set_target_encoder_counts
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:611    .text.set_target_encoder_counts:00000024 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5509   .bss.target_encoder_count_R:00000000 target_encoder_count_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5502   .bss.target_encoder_count_L:00000000 target_encoder_count_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5495   .bss.position_integral_R:00000000 position_integral_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5488   .bss.position_derivative_R:00000000 position_derivative_R
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5481   .bss.position_integral_L:00000000 position_integral_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5474   .bss.position_derivative_L:00000000 position_derivative_L
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5583   .bss.control_loop_state:00000000 control_loop_state
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:632    .text.move_forward:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:638    .text.move_forward:00000000 move_forward
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1018   .text.move_forward:00000238 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1046   .text.move_forward:00000298 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1432   .text.move_forward:00000540 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1462   .text.move_backward:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1468   .text.move_backward:00000000 move_backward
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1876   .text.move_backward:00000260 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:1904   .text.move_backward:000002c0 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:2289   .text.move_backward:00000558 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:2319   .text.rotate:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:2325   .text.rotate:00000000 rotate
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:2889   .text.rotate:00000340 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5556   .data.rotating_speed:00000000 rotating_speed
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 134
 
 
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:2922   .text.rotate:000003b8 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3234   .text.rotate:000005f0 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3261   .text.orientate:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3267   .text.orientate:00000000 orientate
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3403   .text.orientate:000000b0 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3415   .text.go_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3421   .text.go_to:00000000 go_to
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3495   .text.move_forward_with_deviation:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:3501   .text.move_forward_with_deviation:00000000 move_forward_with_deviation
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:4015   .text.move_forward_with_deviation:00000310 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:4043   .text.move_forward_with_deviation:00000370 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:4475   .text.move_forward_with_deviation:00000670 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:4500   .text.circle_curve:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:4506   .text.circle_curve:00000000 circle_curve
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5073   .text.circle_curve:00000380 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5105   .text.circle_curve:000003f0 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5401   .text.circle_curve:000005f0 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5424   .text.emergency_break:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5430   .text.emergency_break:00000000 emergency_break
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5462   .text.emergency_break:0000001c $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5471   .bss.position_derivative_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5478   .bss.position_integral_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5485   .bss.position_derivative_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5492   .bss.position_integral_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5499   .bss.target_encoder_count_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5506   .bss.target_encoder_count_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5513   .bss.turning_radius:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5520   .bss.starting_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5527   .bss.cruise_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5534   .bss.cruise_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5544   .bss.direction_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5550   .bss.direction_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5553   .data.rotating_speed:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5560   .data.emergency_breaking_acceleration:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5567   .data.breaking_acceleration:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5574   .data.ramping_acceleration:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5584   .bss.control_loop_state:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5590   .bss.trajectory:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5596   .bss.wheel_state_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s:5602   .bss.wheel_state_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:2922   .text.rotate:000003b8 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3234   .text.rotate:000005f0 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3261   .text.orientate:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3267   .text.orientate:00000000 orientate
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3403   .text.orientate:000000b0 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3415   .text.go_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3421   .text.go_to:00000000 go_to
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3495   .text.move_forward_with_deviation:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:3501   .text.move_forward_with_deviation:00000000 move_forward_with_deviation
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:4015   .text.move_forward_with_deviation:00000310 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:4043   .text.move_forward_with_deviation:00000370 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:4475   .text.move_forward_with_deviation:00000670 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:4500   .text.circle_curve:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:4506   .text.circle_curve:00000000 circle_curve
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5073   .text.circle_curve:00000380 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5105   .text.circle_curve:000003f0 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5401   .text.circle_curve:000005f0 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5424   .text.emergency_break:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5430   .text.emergency_break:00000000 emergency_break
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5462   .text.emergency_break:0000001c $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5471   .bss.position_derivative_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5478   .bss.position_integral_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5485   .bss.position_derivative_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5492   .bss.position_integral_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5499   .bss.target_encoder_count_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5506   .bss.target_encoder_count_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5513   .bss.turning_radius:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5520   .bss.starting_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5527   .bss.cruise_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5534   .bss.cruise_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5544   .bss.direction_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5550   .bss.direction_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5553   .data.rotating_speed:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5560   .data.emergency_breaking_acceleration:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5567   .data.breaking_acceleration:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5574   .data.ramping_acceleration:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5584   .bss.control_loop_state:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5590   .bss.trajectory:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5596   .bss.wheel_state_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s:5602   .bss.wheel_state_R:00000000 $d
 
 UNDEFINED SYMBOLS
 target_speed_R
@@ -7997,7 +7997,7 @@ __aeabi_d2iz
 cos
 sin
 set_target_speeds
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccG5xoxU.s 			page 135
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccgbJWdD.s 			page 135
 
 
 HAL_Delay
