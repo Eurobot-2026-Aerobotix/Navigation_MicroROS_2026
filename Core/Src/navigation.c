@@ -6,14 +6,15 @@
  */
 #include "navigation.h"
 
+robot_state robot_status;
 enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
-float ramping_acceleration = 3.5;
+float ramping_acceleration = 7;
 float breaking_acceleration = -4;
 float emergency_breaking_acceleration = -10;
-float rotating_speed = 300;
+float rotating_speed = 400;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;
@@ -28,6 +29,7 @@ float position_integral_L = 0;
 float position_derivative_L = 0;
 
 int move_forward(float distance, float speed){
+	reset_speed_control_variables();
 	direction_R = 1;
 	direction_L = 1;
 
@@ -123,6 +125,7 @@ int move_forward(float distance, float speed){
 	return 0;
 }
 int move_backward(float distance, float speed){
+	reset_speed_control_variables();
 	speed = (speed < 0)? -speed: speed;
 	distance = (distance < 0)? -distance: distance;
 	direction_R = -1;
@@ -292,6 +295,7 @@ float calculate_instant_target_phi(float x, float distance){
 	return 0;
 }
 int rotate(float angle, int8_t is_radian){
+	reset_speed_control_variables();
 	float rotating_breaking_acceleration = -2;
 	angle = is_radian? angle: deg_to_rad(angle);
 	float arc_length = (dead_wheels_spacing/2) * angle;
@@ -407,6 +411,7 @@ int rotate(float angle, int8_t is_radian){
 	return 0;
 }
 int move_forward_with_deviation(float distance, float deviation, float speed){
+	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
 	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
 	float alpha = atan( (distance/2) / ( fabs(radius) - fabs(deviation) ) ) * SGN(deviation);
@@ -528,6 +533,7 @@ int orientate(float orientation, int8_t is_radian){
 		}else if (angle < -PI){
 			angle += 2*PI;
 		}
+		previous_speed_control_time = micros();
 		return rotate(angle, 1);
 	}
 	return 0;
@@ -651,6 +657,7 @@ int go_to(float x, float y, float speed){
 		return 1;
 	}
 	delay(1500);
+	previous_speed_control_time = micros();
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
 }
 void emergency_break(){

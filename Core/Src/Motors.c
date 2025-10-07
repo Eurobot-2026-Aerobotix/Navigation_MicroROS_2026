@@ -40,6 +40,13 @@ float wheel_diameter_L;
 int32_t debugger = 0;
 float debugger_2 = 0.0f;
 extern UART_HandleTypeDef huart2;
+int32_t previous_speed_control_time = 0;
+float speed_integral_R = 0;
+float speed_derivative_R = 0;
+float previous_speed_error_R = 0;
+float speed_integral_L = 0;
+float speed_derivative_L = 0;
+float previous_speed_error_L = 0;
 
 void run_right_motor(){
 	if (PWM_R>0){
@@ -153,4 +160,17 @@ void delay(int ms){
 	}else{
 		vTaskDelay(pdMS_TO_TICKS(ms));
 	}
+}
+
+
+void reset_speed_control_variables(){
+	previous_speed_control_time = micros()-999;
+	speed_integral_L = 0;
+	speed_integral_R = 0;
+	speed_derivative_L = 0;
+	speed_derivative_R = 0;
+	PWM_L = 0;
+	PWM_R = 0;
+	previous_speed_error_L = 0;
+	previous_speed_error_R = 0;
 }

@@ -84,19 +84,13 @@ int8_t first_forward_recieved = 0;
 float kpS_R = 5; // 1.5 3
 float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
 float kiS_R = 15; // 8 13.5
-float speed_integral_R = 0;
-float speed_derivative_R = 0;
-float previous_speed_error_R = 0;
 
 float kpS_L = 5; // 3.5 5
 float kdS_L = 0; // 0.00 0
 float kiS_L = 15; // 20 15.5
-float speed_integral_L = 0;
-float speed_derivative_L = 0;
-float previous_speed_error_L = 0;
 
-float speed_integral_limit = 10000;
-int32_t previous_speed_control_time = 0;
+int timer_flag = 0;
+
 
 // position control parameters
 //float kpP_R = 25;
@@ -277,6 +271,7 @@ void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -288,6 +283,7 @@ void StartDefaultTask(void *argument);
   * @brief  The application entry point.
   * @retval int
   */
+
 int main(void)
 {
 
@@ -370,26 +366,21 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  communication_state = RASPBERRY;
+  communication_state = PC;
 
   control_loop_state = DISACTIVATED;
-//  //while(step == 0);
-//  move_forward(100.0, 400.0);
-//  HAL_Delay(1500);
-//  //while(step == 1);
-//  go_to(100.0, 250.0, 400.0);
-//  HAL_Delay(1500);
-//  //while(step == 2);
+//  HAL_Delay(2000);
+//  move_forward(100.0, 500.0);
+//  HAL_Delay(2000);
+//  go_to(100.0, 250.0, 500.0);
+//  HAL_Delay(2000);
 //  orientate(0.0, 0.0);
-//  HAL_Delay(1500);
-//  //while(step == 3);
-//  go_to(100.0, -500.0, 400.0);
-//  HAL_Delay(1500);
-//  //while(step == 4);
+//  HAL_Delay(2000);
+//  go_to(100.0, -500.0, 500.0);
+//  HAL_Delay(2000);
 //  orientate(62.0,0.0);
-//  HAL_Delay(1500);
-//  //while(step == 5);
-//  go_to(456.0, -710.0, 400.0);
+//  HAL_Delay(2000);
+//  go_to(456.0, -710.0, 500.0);
 
   /* USER CODE END 2 */
 
@@ -969,6 +960,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			update_position(); // will also update the speed internally
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);
+				timer_flag = MAX(tmp, timer_flag);
 				// right motor speed control
 				float error = target_speed_R - current_speed_R;
 

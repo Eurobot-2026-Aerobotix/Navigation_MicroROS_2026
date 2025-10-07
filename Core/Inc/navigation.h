@@ -32,6 +32,23 @@ enum Control_loop {
 	POSITION
 };
 
+enum Robot_state_enum{
+	IDLE,
+	MOVIN_FORWARD,
+	MOVIN_BACKWARD,
+	GOIN_TO,
+	ROTATIN,
+	ORIENTATIN,
+	MOVIN_FORWARD_WITH_DEVIATION,
+	CIRCLE_CURVIN
+};
+
+typedef struct{
+	enum Robot_state_enum status;
+	float arguments[9];
+}robot_state;
+
+extern robot_state robot_status;
 extern enum Wheel_state wheel_state_R;
 extern enum Wheel_state wheel_state_L;
 extern enum Control_loop control_loop_state;

@@ -62,6 +62,13 @@ extern float wheel_diameter_L;
 extern int32_t debugger;
 extern float debugger_2;
 extern UART_HandleTypeDef huart2;
+extern int32_t previous_speed_control_time;
+extern float speed_integral_R;
+extern float speed_derivative_R;
+extern float previous_speed_error_R;
+extern float speed_integral_L;
+extern float speed_derivative_L;
+extern float previous_speed_error_L;
 
 void run_right_motor();
 void run_left_motor();
@@ -76,5 +83,6 @@ void set_target_speeds(float target_speed_R, float target_speed_L);
 void send_values_to_usart(float value1, float value2, float value3, float value4); // hedhi ma3andheech 3ale9a b motors ama ma3andi win n7ottha, aslan for debugging
 int32_t micros();
 void delay(int ms);
+void reset_speed_control_variables();
 
 #endif /* __MOTORS_H */
