@@ -191,6 +191,11 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = circle_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5)? false : true;  // target_x, target_y, target_phi, speed
 										break;
 
+									 case 10:
+										emergency_break();
+										res_out->result = true;
+										break;
+
 									 default:
 										  res_out->result = false;
 										  break;
@@ -252,6 +257,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 3000 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for executor */
+osThreadId_t executorHandle;
+const osThreadAttr_t executor_attributes = {
+  .name = "executor",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityHigh3,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -268,6 +280,7 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM14_Init(void);
 static void MX_TIM5_Init(void);
 void StartDefaultTask(void *argument);
+void executor_function(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -283,7 +296,6 @@ void StartDefaultTask(void *argument);
   * @brief  The application entry point.
   * @retval int
   */
-
 int main(void)
 {
 
@@ -309,7 +321,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM1_Init();
@@ -319,7 +330,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   MX_TIM5_Init();
-
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
@@ -366,9 +376,15 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  communication_state = PC;
+  communication_state = RASPBERRY;
 
   control_loop_state = DISACTIVATED;
+
+  robot_status.status = IDLE;
+
+  robot_status.status = MOVIN_FORWARD;
+  robot_status.arguments[0] = 1000.0;
+  robot_status.arguments[1] = 200.0;
 //  HAL_Delay(2000);
 //  move_forward(100.0, 500.0);
 //  HAL_Delay(2000);
@@ -407,6 +423,9 @@ int main(void)
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
+  /* creation of executor */
+  executorHandle = osThreadNew(executor_function, NULL, &executor_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -416,7 +435,6 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
-
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
@@ -716,7 +734,6 @@ static void MX_TIM7_Init(void)
   /* USER CODE BEGIN TIM7_Init 1 */
   __HAL_RCC_TIM7_CLK_ENABLE();
   /* USER CODE END TIM7_Init 1 */
-
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 83;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -922,12 +939,12 @@ void StartDefaultTask(void *argument)
 	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
 	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
 
-	    const osThreadAttr_t pubTask_attributes = {
-	        .name = "posePubTask",
-	        .stack_size = 256 * 4,  // Adjust if needed
-	        .priority = (osPriority_t) osPriorityNormal,
-	    };
-	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
+//	    const osThreadAttr_t pubTask_attributes = {
+//	        .name = "posePubTask",
+//	        .stack_size = 256 * 4,  // Adjust if needed
+//	        .priority = (osPriority_t) osPriorityNormal,
+//	    };
+//	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
 
 
 	    //  Keep ROS 2 Running
@@ -938,6 +955,31 @@ void StartDefaultTask(void *argument)
 	 osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_executor_function */
+/**
+* @brief Function implementing the executor thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_executor_function */
+void executor_function(void *argument)
+{
+  /* USER CODE BEGIN executor_function */
+  /* Infinite loop */
+  for(;;)
+  {
+	timer_flag++;
+	if ( robot_status.status != IDLE){
+		if ( robot_status.status == MOVIN_FORWARD){
+			move_forward(robot_status.arguments[0], robot_status.arguments[1]);
+			robot_status.status = IDLE;
+		}
+	}
+    osDelay(1);
+  }
+  /* USER CODE END executor_function */
 }
 
 /**
@@ -960,7 +1002,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			update_position(); // will also update the speed internally
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);
-				timer_flag = MAX(tmp, timer_flag);
 				// right motor speed control
 				float error = target_speed_R - current_speed_R;
 
