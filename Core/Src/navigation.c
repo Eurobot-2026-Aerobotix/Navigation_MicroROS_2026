@@ -75,7 +75,7 @@ int move_forward(float distance, float speed){
 			lane_correction_term = 0;
 		}
 		set_target_speeds(calculate_instant_target_speed_R(x, distance)*(1 + lane_correction_term) ,calculate_instant_target_speed_L(x, distance)* (1 - lane_correction_term));
-		HAL_Delay(4);
+		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 
@@ -102,7 +102,7 @@ int move_forward(float distance, float speed){
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
 		speed = MAX(speed*0.95, 30);
 		previous_distance_to_target = distance_to_target;
-		HAL_Delay(2);
+		delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
 
 		if(micros() - phase_two_start_time> 4000000){
@@ -173,7 +173,7 @@ int move_backward(float distance, float speed){
 			lane_correction_term = 0;
 		}
 		set_target_speeds(calculate_instant_target_speed_R(x, distance)*(1 - lane_correction_term) ,calculate_instant_target_speed_L(x, distance)* (1 + lane_correction_term));
-		HAL_Delay(4);
+		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 //		if (distance_to_target >= previous_distance_to_target + 2){
@@ -200,7 +200,7 @@ int move_backward(float distance, float speed){
 		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
 		speed = MIN(speed*0.95, 0);
 		previous_distance_to_target = distance_to_target;
-		HAL_Delay(2);
+		delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
 
 		if(micros() - phase_two_start_time> 4000000){
@@ -356,7 +356,7 @@ int rotate(float angle, int8_t is_radian){
 		}
 		speed = calculate_instant_target_speed_R_full(x, distance, ramping_acceleration, rotating_breaking_acceleration);
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		HAL_Delay(4);
+		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
@@ -386,7 +386,7 @@ int rotate(float angle, int8_t is_radian){
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
 		speed = MAX(fabs(speed)*0.9, 30) * direction_R;
 		previous_distance_to_target = distance_to_target;
-		HAL_Delay(2);
+		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 
 		if(micros() - phase_two_start_time> 2000000){
@@ -424,7 +424,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
 
 	rotate(alpha, 1);
-	HAL_Delay(500);
+	delay(500);
 
 	direction_R = 1;
 	direction_L = 1;
@@ -475,7 +475,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 			lane_correction_term = 0;
 		}
 		set_target_speeds(calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R)*(1 + lane_correction_term) ,calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L)* (1 - lane_correction_term));
-		HAL_Delay(4);
+		delay(4);
 		previous_distance_to_target = distance_to_target;
 
 		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
@@ -499,7 +499,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 		speed_R = MAX(speed_R*0.995, 0);
 		speed_L = MAX(speed_L*0.995, 0);
 		previous_distance_to_target = distance_to_target;
-		HAL_Delay(2);
+		delay(2);
 		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
 
 		if(micros() - phase_two_start_time> 4000000){
@@ -551,7 +551,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
 
 	orientate( 2*trajectory_phi - target_phi , 1);
-	HAL_Delay(500);
+	delay(500);
 
 	direction_R = 1;
 	direction_L = 1;
@@ -602,7 +602,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			lane_correction_term = 0;
 		}
 		set_target_speeds(calculate_instant_target_speed_R_full(x, arc_length, ramping_acceleration_R, breaking_acceleration_R)*(1 + lane_correction_term) ,calculate_instant_target_speed_L_full(x, arc_length, ramping_acceleration_L, breaking_acceleration_L)* (1 - lane_correction_term));
-		HAL_Delay(4);
+		delay(4);
 		previous_distance_to_target = distance_to_target;
 
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
@@ -626,7 +626,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		speed_R = MAX(speed_R*0.996, 0);
 		speed_L = MAX(speed_L*0.996, 0);
 		previous_distance_to_target = distance_to_target;
-		HAL_Delay(2);
+		delay(2);
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 
 		if(micros() - phase_two_start_time> 4000000){
@@ -650,7 +650,7 @@ int go_to(float x, float y, float speed){
 	if ( orientate( get_angle_to(x, y), 1 ) ){
 		return 1;
 	}
-	HAL_Delay(1500);
+	delay(1500);
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
 }
 void emergency_break(){
@@ -659,7 +659,7 @@ void emergency_break(){
 //	control_loop_state = SPEED;
 //	int32_t last_encoder_count_R = encoder_count_R;
 //	int32_t last_encoder_count_L = encoder_count_L;
-//	HAL_Delay(4);
+//	delay(4);
 //	while (current_speed_R > 0.5 || current_speed_L > 0.5){
 //		float dx_R = ticks_to_distance(fabs(encoder_count_R - last_encoder_count_R), wheel_diameter_R);
 //		float dx_L = ticks_to_distance(fabs(encoder_count_L - last_encoder_count_L), wheel_diameter_L);
@@ -668,7 +668,7 @@ void emergency_break(){
 //
 //		last_encoder_count_R = encoder_count_R;
 //		last_encoder_count_L = encoder_count_L;
-//		HAL_Delay(4);
+//		delay(4);
 //	}
 //	stop_motors();
 	set_target_encoder_counts(encoder_count_R, encoder_count_L);

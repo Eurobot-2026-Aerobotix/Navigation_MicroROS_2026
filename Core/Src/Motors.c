@@ -6,6 +6,8 @@
  */
 
 #include "../Inc/Motors.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 TIM_HandleTypeDef* htim_motors;
 uint32_t right_forward, right_backward, left_forward, left_backward;
@@ -143,5 +145,12 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 		HAL_UART_Transmit(&huart2, bytes3, 4, 10);
 		HAL_UART_Transmit(&huart2, &header4, 1, 10);
 		HAL_UART_Transmit(&huart2, bytes4, 4, 10);
+	}
+}
+void delay(int ms){
+	if(communication_state == PC){
+		HAL_Delay(ms);
+	}else{
+		vTaskDelay(pdMS_TO_TICKS(ms));
 	}
 }
