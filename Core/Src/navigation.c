@@ -500,19 +500,6 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	wheel_state_L = DEAD_STOP;
 	return 0;
 }
-int orientate(float orientation, int8_t is_radian){
-	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	if (orientation != current_phi){
-		float angle = orientation - current_phi;
-		if (angle > PI){
-			angle -= 2*PI;
-		}else if (angle < -PI){
-			angle += 2*PI;
-		}
-		return rotate(angle, 1);
-	}
-	return 0;
-}
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	// there is a lotta math going on here, can't explain it in code
 	float trajectory_phi = atan( (target_x - current_x) / (target_y - current_y) );
@@ -623,12 +610,230 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	return 0;
 }
 
+static inline float d_acc_for_v(float v, float amax, float jerk) {
+    return 0.5f * v * (amax * amax + jerk * v) / (amax * jerk);
+}
+
+int move_distance_2(float distance, float vmax, float amax, float jerk) {
+    const float eps = 1e-8f;
+    if (fabsf(distance) < eps) return;
+    float dir = (distance >= 0.0f) ? 1.0f : -1.0f;
+    float D = fabsf(distance);
+    if (amax <= eps || jerk <= eps) {
+        set_target_speeds(dir * vmax, dir * vmax);
+        return;
+    }
+    float v_thresh = (amax * amax) / jerk;
+    float dacc_vmax = d_acc_for_v(vmax, amax, jerk);
+    float dmin = 2.0f * dacc_vmax;
+    float v_peak = vmax;
+    float t_cruise = 0.0f;
+    if (D >= dmin) {
+        v_peak = vmax;
+        t_cruise = (D - dmin) / vmax;
+    } else {
+        float a_q = jerk;
+        float b_q = amax * amax;
+        float c_q = -amax * jerk * D;
+        float disc = b_q * b_q - 4.0f * a_q * c_q;
+        if (disc < 0.0f) disc = 0.0f;
+        float v_cand = (-b_q + sqrtf(disc)) / (2.0f * a_q);
+        if (v_cand >= v_thresh) {
+            v_peak = v_cand;
+            t_cruise = 0.0f;
+        } else {
+            v_peak = powf((D * sqrtf(jerk) / 2.0f), 2.0f / 3.0f);
+            t_cruise = 0.0f;
+        }
+    }
+    int branchA = (v_peak >= v_thresh) ? 1 : 0;
+    float dt = 0.038f;
+    if (dt <= 0.0f) dt = 0.03f;
+    float T_total = 0.0f;
+    float ta = amax / jerk;
+    float t_const = 0.0f;
+    float t1=0,t2=0,t3=0,t4=0,t5=0,t6=0,t7=0;
+    if (branchA) {
+        t_const = v_peak / amax - ta;
+    if (t_const < 0.0f) t_const = 0.0f;
+        t1 = ta;
+        t2 = t1 + t_const;
+        t3 = t2 + ta;
+        t4 = t3 + t_cruise;
+        t5 = t4 + ta;
+        t6 = t5 + t_const;
+        t7 = t6 + ta;
+        T_total = t7;
+    } else {
+        ta = powf(v_peak / jerk, 0.5f);
+        t1 = ta;
+        t2 = t1;
+        t3 = 2*ta;
+        t4 = t3 + t_cruise;
+        t5 = t4 + ta;
+        t6 = t5;
+        t7 = t5 + ta;
+        T_total = t7;
+    }
+    float x = 0.0f;
+    float v = 0.0f;
+    float acc = 0.0f;
+    int steps = (int)ceil(T_total / dt);
+    float target_phi = current_phi;
+
+    for (int i = 0; i < steps; ++i) {
+
+        float t = i * dt;
+        if (t < t1) acc = jerk * t;
+        else if (t < t2) acc = amax;
+        else if (t < t3) acc = amax - jerk * (t - t2);
+        else if (t < t4) acc = 0.0f;
+        else if (t < t5) acc = -jerk * (t - t4);
+        else if (t < t6) acc = -amax;
+        else if (t < t7) acc = -amax + jerk * (t - t6);
+        else acc = 0.0f;
+        v += acc * dt;
+        if (v > v_peak) v = v_peak;
+        x += v * dt;
+
+        if (x >= D) {
+            x = D;
+            v = 0.0f;
+            acc = 0.0f;
+            set_target_speeds(0.0f, 0.0f);
+            break;
+        }
+
+        set_target_speeds(dir * v, dir * v);
+
+        send_values_to_usart(v, current_speed_R, current_speed_L, current_x);
+
+        HAL_Delay((uint32_t)(dt * 1000));
+    }
+    stop_motors();
+    return 1;
+}
+
+static inline float d_acc_for_omega(float omega, float amax, float jerk) {
+    return 0.5f * omega * (amax*amax + jerk*omega) / (amax * jerk);
+}
+
+int rotate_2(float angle_deg, float vmax, float amax, float jerk) {
+
+    const float eps = 1e-8f;
+    if (fabsf(angle_deg) < eps) return;
+
+    float dir = (angle_deg >= 0.0f) ? 1.0f : -1.0f;
+    angle_deg = fabsf(angle_deg);
+    float angle_rad = angle_deg * (M_PI / 180.0f);
+    float D = angle_rad * (driven_wheels_spacing/ 2.0f);;
+
+    float v_thresh = (amax * amax) / jerk;
+    float dacc_vmax = d_acc_for_v(vmax, amax, jerk);
+    float dmin = 2.0f * dacc_vmax;
+    float v_peak = vmax;
+    float t_cruise = 0.0f;
+
+    if (D >= dmin) {
+        v_peak = vmax;
+        t_cruise = (D - dmin) / vmax;
+    } else {
+        float a_q = jerk;
+        float b_q = amax * amax;
+        float c_q = -amax * jerk * D;
+        float disc = b_q * b_q - 4.0f * a_q * c_q;
+        if (disc < 0.0f) disc = 0.0f;
+        float v_cand = (-b_q + sqrtf(disc)) / (2.0f * a_q);
+        if (v_cand >= v_thresh) v_peak = v_cand;
+        else v_peak = powf((D * sqrtf(jerk) / 2.0f), 2.0f / 3.0f);
+        t_cruise = 0.0f;
+    }
+
+    int branchA = (v_peak >= v_thresh) ? 1 : 0;
+    float ta = amax / jerk;
+    float t_const = 0.0f;
+    float t1=0,t2=0,t3=0,t4=0,t5=0,t6=0,t7=0;
+
+    if (branchA) {
+        t_const = v_peak / amax - ta;
+        if (t_const < 0.0f) t_const = 0.0f;
+        t1 = ta; t2 = t1 + t_const; t3 = t2 + ta;
+        t4 = t3 + t_cruise; t5 = t4 + ta; t6 = t5 + t_const; t7 = t6 + ta;
+    } else {
+        ta = sqrtf(v_peak / jerk);
+        t1 = ta; t2 = t1; t3 = 2*ta; t4 = t3 + t_cruise; t5 = t4 + ta; t6 = t5; t7 = t5 + ta;
+    }
+
+    float dt = 0.0021f;
+    int steps = (int)ceil(t7 / dt);
+    float x = 0.0f;
+    float v = 0.0f;
+    float acc = 0.0f;
+
+    for (int i = 0; i < steps; ++i) {
+        float t = i * dt;
+        if (t < t1) acc = jerk * t;
+        else if (t < t2) acc = amax;
+        else if (t < t3) acc = amax - jerk * (t - t2);
+        else if (t < t4) acc = 0.0f;
+        else if (t < t5) acc = -jerk * (t - t4);
+        else if (t < t6) acc = -amax;
+        else if (t < t7) acc = -amax + jerk * (t - t6);
+        else acc = 0.0f;
+        v += acc * dt;
+        if (v > v_peak) v = v_peak;
+        if(v < 0) v = 0.0f;
+        x += v * dt;
+        set_target_speeds(dir * v, -dir * v);
+        HAL_Delay((uint32_t)(dt * 1000));
+
+		send_values_to_usart(v, current_speed_R, current_speed_L, acc);
+    }
+    stop_motors();
+    return 1;
+}
+
 int go_to(float x, float y, float speed){
 	if ( orientate( get_angle_to(x, y), 1 ) ){
 		return 1;
 	}
 	HAL_Delay(500);
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
+}
+
+int go_to_2(float x, float y, float speed){
+	if ( orientate_2( get_angle_to(x, y), 1 ) ){
+		return 1;
+	}
+	HAL_Delay(500);
+	return move_distance_2(get_distance_to(x, y), speed, 500, 1000) * 2; // why *2 ? view in .h file
+}
+
+int orientate(float orientation, int8_t is_radian){
+	orientation = (is_radian)? orientation : deg_to_rad(orientation);
+	if (orientation != current_phi){
+		float angle = orientation - current_phi;
+		if (angle > PI){
+			angle -= 2*PI;
+		}else if (angle < -PI){
+			angle += 2*PI;
+		}
+		return rotate(angle, 1);
+	}
+	return 0;
+}
+int orientate_2(float orientation, int8_t is_radian){
+	orientation = (is_radian)? orientation : deg_to_rad(orientation);
+	if (orientation != current_phi){
+		float angle = orientation - current_phi;
+		if (angle > PI){
+			angle -= 2*PI;
+		}else if (angle < -PI){
+			angle += 2*PI;
+		}
+		return rotate_2(rad_to_deg(angle), 300, 400, 1000);
+	}
+	return 0;
 }
 void emergency_break(){
 	wheel_state_R = EMERGENCY_BREAK;

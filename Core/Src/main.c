@@ -337,6 +337,18 @@ int main(void)
   activated = 0;
 
 //  activated = 1;
+//
+//  move_distance_2(100, 300, 500, 1000);
+//  HAL_Delay(1000);
+//  go_to(100, 250, 300);
+//  HAL_Delay(1000);
+//  go_to(100, -500, 300);
+//  HAL_Delay(1000);
+//  orientate(62, 0);
+//  HAL_Delay(1000);
+//  go_to(456, -710, 400);
+//  HAL_Delay(1000);
+
 //  circle_curve(500, -500, -PI/1.5, 300);
 //  HAL_Delay(1500);
 //  orientate(90, 0);

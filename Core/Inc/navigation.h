@@ -53,4 +53,9 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed);
 int go_to(float x, float y, float speed);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 void emergency_break();
 
+int move_distance_2(float distance, float vmax, float amax, float jerk); // move forward and backward with S curve and more control
+int rotate_2(float distance, float vmax, float amax, float jerk); // rotate with S curve and more control
+int orientate_2(float orientation, int8_t is_radian);
+int go_to_2(float x, float y, float speed);
+
 #endif /* INC_NAVIGATION_H_ */
