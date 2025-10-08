@@ -80,5 +80,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed);
 int go_to(float x, float y, float speed);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 void emergency_break();
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
+int8_t is_idle();
 
 #endif /* INC_NAVIGATION_H_ */

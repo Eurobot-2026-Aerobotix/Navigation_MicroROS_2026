@@ -163,11 +163,7 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 	}
 }
 void delay(int ms){
-	if(communication_state == PC){
-		HAL_Delay(ms);
-	}else{
-		vTaskDelay(pdMS_TO_TICKS(ms));
-	}
+	vTaskDelay(pdMS_TO_TICKS(ms));
 }
 
 

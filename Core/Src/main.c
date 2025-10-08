@@ -217,9 +217,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < 20) && (fabs(PWM_R) < 700) && (fabs(previous_position_error_R) < 20);
-										int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < 20) && (fabs(PWM_L) < 700) && (fabs(previous_position_error_L) < 20);
-										res_out->result = right_wheel_idle && left_wheel_idle;
+										res_out->result = (is_idle())? true: false;
 										break;
 
 									 default:
@@ -402,15 +400,20 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  communication_state = RASPBERRY;
+  communication_state = PC;
 
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
 //
 //  robot_status.status = MOVIN_FORWARD;
-//  robot_status.arguments[0] = 1000.0;
-//  robot_status.arguments[1] = 200.0;
+//  robot_status.arguments[0] = 500.0;
+//  robot_status.arguments[1] = 1000.0;
+
+  	robot_status.status = GOIN_TO;
+	robot_status.arguments[0] = 500.0;
+	robot_status.arguments[1] = -500.0;
+	robot_status.arguments[2] = 500.0;
 
 
 

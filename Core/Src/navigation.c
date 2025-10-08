@@ -14,7 +14,7 @@ enum Control_loop control_loop_state = DISACTIVATED;
 float ramping_acceleration = 7;
 float breaking_acceleration = -4;
 float emergency_breaking_acceleration = -10;
-float rotating_speed = 400;
+float rotating_speed = 500;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;
@@ -77,11 +77,6 @@ int move_forward(float distance, float speed){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
-
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -106,10 +101,6 @@ int move_forward(float distance, float speed){
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -175,10 +166,6 @@ int move_backward(float distance, float speed){
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -205,11 +192,6 @@ int move_backward(float distance, float speed){
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -292,7 +274,7 @@ float calculate_instant_target_phi(float x, float distance){
 }
 int rotate(float angle, int8_t is_radian){
 	reset_speed_control_variables();
-	float rotating_breaking_acceleration = -2;
+	float rotating_breaking_acceleration = -4;
 	angle = is_radian? angle: deg_to_rad(angle);
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
@@ -329,7 +311,7 @@ int rotate(float angle, int8_t is_radian){
 	const int32_t starting_encoder_count_L = encoder_count_L;
 	float yaw_centering_term;
 
-	float phase_two_angle = 10;
+	float phase_two_angle = 3;
 
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
@@ -360,11 +342,6 @@ int rotate(float angle, int8_t is_radian){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
-
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -392,11 +369,6 @@ int rotate(float angle, int8_t is_radian){
 		if(micros() - phase_two_start_time> 2000000){
 			break;
 		}
-
-//		if (distance_to_target >= previous_distance_to_target+2){
-//			stop_motors();
-//			return 1;
-//		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -481,11 +453,6 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 
 		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
 
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
-
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -506,10 +473,6 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -610,11 +573,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
-
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -635,11 +593,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-//		if (distance_to_target >= previous_distance_to_target + 2){
-//			stop_motors();
-//			return 1;
-//		}
-
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
@@ -653,7 +606,9 @@ int go_to(float x, float y, float speed){
 	if ( orientate( get_angle_to(x, y), 1 ) ){
 		return 1;
 	}
-	delay(1500);
+	while(!is_idle()){
+		delay(50);
+	}
 	previous_speed_control_time = micros();
 	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
 }
@@ -673,4 +628,10 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 	position_integral_L = 0;
 	position_derivative_L = 0;
 	control_loop_state = POSITION;
+}
+
+int8_t is_idle(){
+	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < 20) && (fabs(PWM_R) < 700) && (fabs(previous_position_error_R) < 20);
+	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < 20) && (fabs(PWM_L) < 700) && (fabs(previous_position_error_L) < 20);
+	return right_wheel_idle && left_wheel_idle;
 }
