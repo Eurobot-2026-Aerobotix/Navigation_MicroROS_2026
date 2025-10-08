@@ -124,7 +124,7 @@ void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
 
     switch ((int)req_in->arg1) {
-    			    	  		    case 0 :
+    			    	  		    case 0 : // chihemmek feha test
     			    	  		    	for (int i = 0; i < 5; i++)  // Blink 10 times
     			    	  		    	{
     			    	  		    	    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
@@ -132,28 +132,28 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    	}
     			    	  		    	res_out->result = true;
     			    	  			    break;
-									 case 1:
+									 case 1: // chihemmek feha test
 										first_forward_recieved = 1;
 										res_out->result = move_forward(req_in->arg2, req_in->arg3)? false : true;// distance, speed
 										break;
 
-									 case 2:
+									 case 2: // move backward
 										res_out->result = move_backward(req_in->arg2, req_in->arg3)? false : true;  // distance, speed
 										break;
 
-									 case 3:
+									 case 3: // rotate
 										res_out->result = rotate(req_in->arg2, req_in->arg3)? false : true;  // angle, is_radian
 										break;
 
-									 case 4:
+									 case 4: //orientate
 										res_out->result = orientate(req_in->arg2, req_in->arg3)? false : true;  // orientation, is_radian
 										break;
 
-									 case 5:
+									 case 5: // go to
 										res_out->result = go_to(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // x, y, speed
 										break;
 
-									 case 6:
+									 case 6: // Reset
 										current_speed_R = 0;
 										current_speed_L = 0;
 										previous_speed_R = 0;
@@ -178,22 +178,28 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = (control_loop_state == ACTIVATED)? true: false; // activate/deactivate STM
 										break;
 
-									 case 7:
-										HAL_Delay(req_in->arg2);
+									 case 7: // Delay on the STM
+										delay(req_in->arg2);
 										res_out->result = (first_forward_recieved)? true: false;
 										break;
 
-									 case 8:
+									 case 8: // move forward wtih deviation
 										res_out->result = move_forward_with_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
 										break;
 
-									 case 9:
+									 case 9: // circle curve
 										res_out->result = circle_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5)? false : true;  // target_x, target_y, target_phi, speed
 										break;
 
-									 case 10:
+									 case 10: // emergency break
 										emergency_break();
 										res_out->result = true;
+										break;
+
+									 case 11: // is the robot idle
+										int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < 20) && (fabs(PWM_R) < 700) && (fabs(previous_position_error_R) < 20);
+										int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < 20) && (fabs(PWM_L) < 700) && (fabs(previous_position_error_L) < 20);
+										res_out->result = right_wheel_idle && left_wheel_idle;
 										break;
 
 									 default:
