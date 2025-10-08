@@ -65,10 +65,6 @@ extern float starting_phi;
 extern float turning_radius;
 extern int32_t target_encoder_count_R;
 extern int32_t target_encoder_count_L;
-extern float position_integral_R;
-extern float position_derivative_R;
-extern float position_integral_L;
-extern float position_derivative_L;
 
 int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_backward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached

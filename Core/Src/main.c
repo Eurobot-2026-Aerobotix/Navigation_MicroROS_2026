@@ -106,15 +106,10 @@ int timer_flag = 0;
 float kpP_R = 25;
 float kdP_R = 6;
 float kiP_R = 100;
-float previous_position_error_R = 0;
 
 float kpP_L = 25;
 float kdP_L = 6;
 float kiP_L = 100;
-float previous_position_error_L = 0;
-
-int32_t previous_position_control_time = 0;
-float position_max_response = 500;
 
 int step = 0;
 
@@ -387,10 +382,13 @@ int main(void)
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
+//
+//  robot_status.status = MOVIN_FORWARD;
+//  robot_status.arguments[0] = 1000.0;
+//  robot_status.arguments[1] = 200.0;
 
-  robot_status.status = MOVIN_FORWARD;
-  robot_status.arguments[0] = 1000.0;
-  robot_status.arguments[1] = 200.0;
+
+
 //  HAL_Delay(2000);
 //  move_forward(100.0, 500.0);
 //  HAL_Delay(2000);

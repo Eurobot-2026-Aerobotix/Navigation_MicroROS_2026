@@ -23,10 +23,6 @@ float starting_phi;
 float turning_radius;
 int32_t target_encoder_count_R = 0;
 int32_t target_encoder_count_L = 0;
-float position_integral_R = 0;
-float position_derivative_R = 0;
-float position_integral_L = 0;
-float position_derivative_L = 0;
 
 int move_forward(float distance, float speed){
 	reset_speed_control_variables();
@@ -539,6 +535,7 @@ int orientate(float orientation, int8_t is_radian){
 	return 0;
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
+	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
 	float trajectory_phi = atan( (target_y - current_y) / (target_x - current_x) ); // -30
 	float alpha = trajectory_phi - target_phi;
@@ -663,26 +660,12 @@ int go_to(float x, float y, float speed){
 void emergency_break(){
 	wheel_state_R = EMERGENCY_BREAK;
 	wheel_state_L = EMERGENCY_BREAK;
-//	control_loop_state = SPEED;
-//	int32_t last_encoder_count_R = encoder_count_R;
-//	int32_t last_encoder_count_L = encoder_count_L;
-//	delay(4);
-//	while (current_speed_R > 0.5 || current_speed_L > 0.5){
-//		float dx_R = ticks_to_distance(fabs(encoder_count_R - last_encoder_count_R), wheel_diameter_R);
-//		float dx_L = ticks_to_distance(fabs(encoder_count_L - last_encoder_count_L), wheel_diameter_L);
-//
-//		set_target_speeds(calculate_instant_target_speed_R(dx_R, 0), calculate_instant_target_speed_L(dx_L, 0));
-//
-//		last_encoder_count_R = encoder_count_R;
-//		last_encoder_count_L = encoder_count_L;
-//		delay(4);
-//	}
-//	stop_motors();
 	set_target_encoder_counts(encoder_count_R, encoder_count_L);
 
 }
 
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){
+	reset_position_control_variables();
 	target_encoder_count_R = encoder__count_R;
 	target_encoder_count_L = encoder__count_L;
 	position_integral_R = 0;

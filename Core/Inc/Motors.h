@@ -69,6 +69,15 @@ extern float previous_speed_error_R;
 extern float speed_integral_L;
 extern float speed_derivative_L;
 extern float previous_speed_error_L;
+extern float previous_position_error_R;
+extern float previous_position_error_L;
+extern int32_t previous_position_control_time;
+extern float position_max_response;
+extern float position_integral_R;
+extern float position_derivative_R;
+extern float position_integral_L;
+extern float position_derivative_L;
+
 
 void run_right_motor();
 void run_left_motor();
@@ -84,5 +93,6 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 int32_t micros();
 void delay(int ms);
 void reset_speed_control_variables();
+void reset_position_control_variables();
 
 #endif /* __MOTORS_H */

@@ -47,6 +47,14 @@ float previous_speed_error_R = 0;
 float speed_integral_L = 0;
 float speed_derivative_L = 0;
 float previous_speed_error_L = 0;
+float previous_position_error_R = 0;
+float previous_position_error_L = 0;
+int32_t previous_position_control_time = 0;
+float position_max_response = 500;
+float position_integral_R = 0;
+float position_derivative_R = 0;
+float position_integral_L = 0;
+float position_derivative_L = 0;
 
 void run_right_motor(){
 	if (PWM_R>0){
@@ -173,4 +181,16 @@ void reset_speed_control_variables(){
 	PWM_R = 0;
 	previous_speed_error_L = 0;
 	previous_speed_error_R = 0;
+}
+
+void reset_position_control_variables(){
+	previous_position_control_time = micros()-999;
+	position_integral_L = 0;
+	position_integral_R = 0;
+	position_derivative_L = 0;
+	position_derivative_R = 0;
+	PWM_L = 0;
+	PWM_R = 0;
+	previous_position_error_L = 0;
+	previous_position_error_R = 0;
 }
