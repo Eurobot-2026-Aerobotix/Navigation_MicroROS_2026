@@ -129,23 +129,39 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  			    break;
 									 case 1: // chihemmek feha test
 										first_forward_recieved = 1;
-										res_out->result = move_forward(req_in->arg2, req_in->arg3)? false : true;// distance, speed
+										robot_status.status = MOVIN_FORWARD;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										res_out->result = true;// distance, speed
 										break;
 
 									 case 2: // move backward
-										res_out->result = move_backward(req_in->arg2, req_in->arg3)? false : true;  // distance, speed
+										robot_status.status = MOVIN_BACKWARD;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										res_out->result = true;  // distance, speed
 										break;
 
 									 case 3: // rotate
-										res_out->result = rotate(req_in->arg2, req_in->arg3)? false : true;  // angle, is_radian
+										robot_status.status = ROTATIN;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										res_out->result = true; // angle, is_radian
 										break;
 
 									 case 4: //orientate
-										res_out->result = orientate(req_in->arg2, req_in->arg3)? false : true;  // orientation, is_radian
+										robot_status.status = ORIENTATIN;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										res_out->result = true;  // orientation, is_radian
 										break;
 
 									 case 5: // go to
-										res_out->result = go_to(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // x, y, speed
+										robot_status.status = GOIN_TO;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
+										res_out->result = true;  // x, y, speed
 										break;
 
 									 case 6: // Reset
@@ -179,11 +195,20 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 8: // move forward wtih deviation
-										res_out->result = move_forward_with_deviation(req_in->arg2, req_in->arg3, req_in->arg4)? false : true;  // distance, deviation, speed
+										robot_status.status = MOVIN_FORWARD_WITH_DEVIATION;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
+										res_out->result = true; // distance, deviation, speed
 										break;
 
 									 case 9: // circle curve
-										res_out->result = circle_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5)? false : true;  // target_x, target_y, target_phi, speed
+										robot_status.status = CIRCLE_CURVIN;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
+										robot_status.arguments[3] = req_in->arg5;
+										res_out->result = true;  // target_x, target_y, target_phi, speed
 										break;
 
 									 case 10: // emergency break
@@ -978,6 +1003,30 @@ void executor_function(void *argument)
 	if ( robot_status.status != IDLE){
 		if ( robot_status.status == MOVIN_FORWARD){
 			move_forward(robot_status.arguments[0], robot_status.arguments[1]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == MOVIN_BACKWARD){
+			move_backward(robot_status.arguments[0], robot_status.arguments[1]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == ROTATIN){
+			rotate(robot_status.arguments[0], robot_status.arguments[1]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == ORIENTATIN){
+			orientate(robot_status.arguments[0], robot_status.arguments[1]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == GOIN_TO){
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == MOVIN_FORWARD_WITH_DEVIATION){
+			move_forward_with_deviation(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == CIRCLE_CURVIN){
+			circle_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3]);
 			robot_status.status = IDLE;
 		}
 	}
