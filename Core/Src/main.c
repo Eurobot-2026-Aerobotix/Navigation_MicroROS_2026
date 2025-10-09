@@ -406,14 +406,20 @@ int main(void)
 
   robot_status.status = IDLE;
 //
+//  	robot_status.status = CIRCLE_CURVIN;
+//	robot_status.arguments[0] = 0;
+//	robot_status.arguments[1] = -600;
+//	robot_status.arguments[2] = -225;
+//	robot_status.arguments[3] = 600;
+
 //  robot_status.status = MOVIN_FORWARD;
 //  robot_status.arguments[0] = 500.0;
 //  robot_status.arguments[1] = 1000.0;
 
-  	robot_status.status = GOIN_TO;
-	robot_status.arguments[0] = 500.0;
-	robot_status.arguments[1] = -500.0;
-	robot_status.arguments[2] = 500.0;
+//  	robot_status.status = GOIN_TO;
+//	robot_status.arguments[0] = 500.0;
+//	robot_status.arguments[1] = -500.0;
+//	robot_status.arguments[2] = 500.0;
 
 
 

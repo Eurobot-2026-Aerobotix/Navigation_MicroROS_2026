@@ -397,7 +397,9 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
 
 	rotate(alpha, 1);
-	delay(500);
+	while(!is_idle()){
+		delay(50);
+	}
 
 	direction_R = 1;
 	direction_L = 1;
@@ -498,6 +500,7 @@ int orientate(float orientation, int8_t is_radian){
 	return 0;
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
+	target_phi = deg_to_rad(target_phi);
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
 	float trajectory_phi = atan( (target_y - current_y) / (target_x - current_x) ); // -30
@@ -517,7 +520,9 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
 
 	orientate( 2*trajectory_phi - target_phi , 1);
-	delay(500);
+	while(!is_idle()){
+		delay(50);
+	}
 
 	direction_R = 1;
 	direction_L = 1;
