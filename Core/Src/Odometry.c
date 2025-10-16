@@ -41,12 +41,22 @@ void reset_position(){
 	current_y = 0;
 	current_phi = 0;
 	absolute_phi = 0;
+	encoder_count_R = 0;
+	encoder_count_L = 0;
+	previous_encoder_count_L = 0;
+	previous_encoder_count_R = 0;
 }
 void set_position(float current__x, float current__y, float current__phi, float absolute__phi){
+	current__phi = deg_to_rad(current__phi);
+	absolute__phi = deg_to_rad(absolute__phi);
 	current_x = current__x;
 	current_y = current__y;
 	current_phi = current__phi;
 	absolute_phi = absolute__phi;
+	encoder_count_R = (CPR * absolute__phi * dead_wheels_spacing/2) / (wheel_diameter_R * PI);
+	encoder_count_L = -(CPR * absolute__phi * dead_wheels_spacing/2) / (wheel_diameter_L * PI);
+	previous_encoder_count_L = encoder_count_L;
+	previous_encoder_count_R = encoder_count_R;
 }
 float get_distance_to(float x, float y){
 	return sqrt(SQR(current_x - x) + SQR(current_y - y));

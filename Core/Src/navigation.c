@@ -636,7 +636,7 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < 20) && (fabs(PWM_R) < 700) && (fabs(previous_position_error_R) < 20);
-	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < 20) && (fabs(PWM_L) < 700) && (fabs(previous_position_error_L) < 20);
+	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < 20) && (fabs(PWM_R) < 500) && (fabs(previous_position_error_R) < 20);
+	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < 20) && (fabs(PWM_L) < 500) && (fabs(previous_position_error_L) < 20);
 	return right_wheel_idle && left_wheel_idle;
 }

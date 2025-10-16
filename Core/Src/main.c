@@ -103,7 +103,7 @@ int timer_flag = 0;
 //float kiP_L = 100;
 //float previous_position_error_L = 0;
 
-float kpP_R = 25;
+float kpP_R = 60;
 float kdP_R = 6;
 float kiP_R = 100;
 
@@ -405,36 +405,13 @@ int main(void)
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
-//
-//  	robot_status.status = CIRCLE_CURVIN;
-//	robot_status.arguments[0] = 0;
-//	robot_status.arguments[1] = -600;
-//	robot_status.arguments[2] = -225;
-//	robot_status.arguments[3] = 600;
 
-//  robot_status.status = MOVIN_FORWARD;
+  set_position(0, 0, -90, -90);
+
+//  robot_status.status = GOIN_TO;
 //  robot_status.arguments[0] = 500.0;
-//  robot_status.arguments[1] = 1000.0;
-
-//  	robot_status.status = GOIN_TO;
-//	robot_status.arguments[0] = 500.0;
-//	robot_status.arguments[1] = -500.0;
-//	robot_status.arguments[2] = 500.0;
-
-
-
-//  HAL_Delay(2000);
-//  move_forward(100.0, 500.0);
-//  HAL_Delay(2000);
-//  go_to(100.0, 250.0, 500.0);
-//  HAL_Delay(2000);
-//  orientate(0.0, 0.0);
-//  HAL_Delay(2000);
-//  go_to(100.0, -500.0, 500.0);
-//  HAL_Delay(2000);
-//  orientate(62.0,0.0);
-//  HAL_Delay(2000);
-//  go_to(456.0, -710.0, 500.0);
+//  robot_status.arguments[1] = 0.0;
+//  robot_status.arguments[2] = 200.0;
 
   /* USER CODE END 2 */
 
