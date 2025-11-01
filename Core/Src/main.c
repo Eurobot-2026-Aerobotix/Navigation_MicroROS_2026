@@ -406,6 +406,14 @@ int main(void)
 
   robot_status.status = IDLE;
 
+  move_forward(500, 600);
+  HAL_Delay(1000);
+  move_forward(100, 500);
+  HAL_Delay(1000);
+  move_forward(200, 600);
+  HAL_Delay(1000);
+  // TODO: integral is overshooting when the target speed is not constant, need to constrain it with a dynamic threshold
+
   //control_loop_state = POSITION;
   /*
   set_target_encoder_counts(200, 200);
