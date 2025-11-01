@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
   28:Core/Src/Motors.c **** uint32_t previous_speed_calculation_time = 0;
   29:Core/Src/Motors.c **** int32_t encoder_count_R;
   30:Core/Src/Motors.c **** int32_t encoder_count_L;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 2
 
 
   31:Core/Src/Motors.c **** uint16_t previous_encoder_timer_CNT_R;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
   52              	.L4:
   53              		.loc 1 61 3 discriminator 6 view .LVU7
   54 0018 4E4B     		ldr	r3, .L40+12
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 3
 
 
   55 001a 1B68     		ldr	r3, [r3]
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  100              		.loc 1 61 3 discriminator 12 view .LVU17
  101 0058 3E4A     		ldr	r2, .L40+12
  102 005a 1268     		ldr	r2, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 4
 
 
  103 005c 1268     		ldr	r2, [r2]
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  152              		.loc 1 64 3 is_stmt 1 view .LVU26
  153 00a2 2A4A     		ldr	r2, .L40+4
  154 00a4 1268     		ldr	r2, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 5
 
 
  155 00a6 8AB9     		cbnz	r2, .L15
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
   64:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, right_backward, (PWM_R > PWM_R_backward_min)? 0 : -PWM_R );
  204              		.loc 1 64 3 discriminator 6 view .LVU36
  205 00ec 194A     		ldr	r2, .L40+12
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 6
 
 
  206 00ee 1268     		ldr	r2, [r2]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  253              		.loc 1 65 3 discriminator 14 view .LVU47
  254 012c 0B4A     		ldr	r2, .L40+20
  255 012e 1268     		ldr	r2, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 7
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 7
 
 
  256 0130 9342     		cmp	r3, r2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  306 0004 002B     		cmp	r3, #0
  307 0006 4CDD     		ble	.L43
   70:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 8
 
 
  308              		.loc 1 70 3 is_stmt 1 view .LVU56
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  356 004a 1364     		str	r3, [r2, #64]
  357 004c E8E7     		b	.L46
  358              	.L73:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 9
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 9
 
 
   70:Core/Src/Motors.c **** 		__HAL_TIM_SET_COMPARE(htim_motors, left_forward, (PWM_L < PWM_L_forward_min)? 0 : PWM_L );
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  407 0090 0022     		movs	r2, #0
  408 0092 9A63     		str	r2, [r3, #56]
  409 0094 7047     		bx	lr
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 10
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 10
 
 
  410              	.L76:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  458 00d8 1268     		ldr	r2, [r2]
  459 00da 0021     		movs	r1, #0
  460 00dc 1164     		str	r1, [r2, #64]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 11
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 11
 
 
  461 00de E8E7     		b	.L57
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
   74:Core/Src/Motors.c **** 	}
  509              		.loc 1 74 3 discriminator 12 view .LVU97
  510 011e 0D4A     		ldr	r2, .L81+12
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 12
 
 
  511 0120 1268     		ldr	r2, [r2]
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  561              	setup_motor_channels:
  562              	.LVL0:
  563              	.LFB140:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 13
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 13
 
 
   77:Core/Src/Motors.c **** void setup_motor_channels(TIM_HandleTypeDef* motors_timer, uint32_t right__forward, uint32_t right_
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  611              	.L86:
  612 001e 00BF     		.align	2
  613              	.L85:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 14
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 14
 
 
  614 0020 00000000 		.word	htim_motors
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  667              	setup_wheel_diameters:
  668              	.LVL7:
  669              	.LFB142:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 15
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 15
 
 
   89:Core/Src/Motors.c **** void setup_wheel_diameters(float right_wheel, float left_wheel){
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  719 0006 0748     		ldr	r0, .L95+4
  720              	.LVL9:
  721              		.loc 1 95 20 view .LVU142
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 16
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 16
 
 
  722 0008 0160     		str	r1, [r0]
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  773              		@ frame_needed = 0, uses_anonymous_args = 0
  774              		@ link register save eliminated.
  101:Core/Src/Motors.c **** 	__HAL_TIM_SET_COMPARE(htim_motors, right_forward, 0);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 17
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 17
 
 
  775              		.loc 1 101 2 view .LVU155
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  825 0048 0023     		movs	r3, #0
  826 004a 334A     		ldr	r2, .L122+20
  827 004c 1360     		str	r3, [r2]	@ float
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 18
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 18
 
 
  106:Core/Src/Motors.c **** 	target_speed_L = 0;
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  872 0088 1F4B     		ldr	r3, .L122+4
  873 008a 1B68     		ldr	r3, [r3]
  874 008c 1B68     		ldr	r3, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 19
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 19
 
 
  875 008e 0022     		movs	r2, #0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  922 00d4 DA63     		str	r2, [r3, #60]
  923 00d6 AEE7     		b	.L107
  924              	.L110:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 20
 
 
  104:Core/Src/Motors.c **** 	target_speed_R = 0;
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  108:Core/Src/Motors.c **** void update_encoder_counts(){ // ISR safe, takes approximately 250ns
  976              		.loc 1 108 29 is_stmt 1 view -0
  977              		.cfi_startproc
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 21
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 21
 
 
  978              		@ args = 0, pretend = 0, frame = 0
@@ -1232,7 +1232,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1004 0018 A3F58033 		sub	r3, r3, #65536
  1005              	.LVL15:
  1006              	.L126:
- 111:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 111:Core/Src/Motors.c **** 	encoder_count_R -= delta; // it was + not - but the encoder phase pins were inverted
  1007              		.loc 1 111 2 is_stmt 1 view .LVU197
  1008              		.loc 1 111 18 is_stmt 0 view .LVU198
  1009 001c 1749     		ldr	r1, .L130+8
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1027              	.LVL17:
  114:Core/Src/Motors.c **** 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
  1028              		.loc 1 114 2 is_stmt 1 view .LVU205
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 22
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 22
 
 
  1029              		.loc 1 114 37 is_stmt 0 view .LVU206
@@ -1269,12 +1269,12 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1034 003a A3F58033 		sub	r3, r3, #65536
  1035              	.LVL18:
  1036              	.L128:
- 115:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 115:Core/Src/Motors.c **** 	encoder_count_L -= delta; // it was + not - but the encoder phase pins were inverted
  1037              		.loc 1 115 2 is_stmt 1 view .LVU208
  1038              		.loc 1 115 18 is_stmt 0 view .LVU209
  1039 003e 124C     		ldr	r4, .L130+20
  1040 0040 2268     		ldr	r2, [r4]
- 1041 0042 1A44     		add	r2, r2, r3
+ 1041 0042 D21A     		subs	r2, r2, r3
  1042 0044 2260     		str	r2, [r4]
  116:Core/Src/Motors.c **** 
  117:Core/Src/Motors.c **** 	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
@@ -1308,33 +1308,33 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1068              	.L125:
  1069              	.LCFI6:
  1070              		.cfi_restore_state
- 110:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 110:Core/Src/Motors.c **** 	encoder_count_R -= delta; // it was + not - but the encoder phase pins were inverted
  1071              		.loc 1 110 67 discriminator 2 view .LVU219
  1072 005c 0B4A     		ldr	r2, .L130+24
  1073 005e 9342     		cmp	r3, r2
  1074 0060 DCDA     		bge	.L126
- 110:Core/Src/Motors.c **** 	encoder_count_R -= delta;
+ 110:Core/Src/Motors.c **** 	encoder_count_R -= delta; // it was + not - but the encoder phase pins were inverted
  1075              		.loc 1 110 67 discriminator 4 view .LVU220
  1076 0062 03F58033 		add	r3, r3, #65536
  1077              	.LVL21:
- 110:Core/Src/Motors.c **** 	encoder_count_R -= delta;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 23
+ 110:Core/Src/Motors.c **** 	encoder_count_R -= delta; // it was + not - but the encoder phase pins were inverted
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 23
 
 
  1078              		.loc 1 110 67 discriminator 4 view .LVU221
  1079 0066 D9E7     		b	.L126
  1080              	.LVL22:
  1081              	.L127:
- 114:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 114:Core/Src/Motors.c **** 	encoder_count_L -= delta; // it was + not - but the encoder phase pins were inverted
  1082              		.loc 1 114 67 discriminator 2 view .LVU222
  1083 0068 084A     		ldr	r2, .L130+24
  1084 006a 9342     		cmp	r3, r2
  1085 006c E7DA     		bge	.L128
- 114:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 114:Core/Src/Motors.c **** 	encoder_count_L -= delta; // it was + not - but the encoder phase pins were inverted
  1086              		.loc 1 114 67 discriminator 4 view .LVU223
  1087 006e 03F58033 		add	r3, r3, #65536
  1088              	.LVL23:
- 114:Core/Src/Motors.c **** 	encoder_count_L += delta;
+ 114:Core/Src/Motors.c **** 	encoder_count_L -= delta; // it was + not - but the encoder phase pins were inverted
  1089              		.loc 1 114 67 discriminator 4 view .LVU224
  1090 0072 E4E7     		b	.L128
  1091              	.L131:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1114              		.loc 1 136 69 is_stmt 1 view -0
  1115              		.cfi_startproc
  1116              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 24
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 24
 
 
  1117              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1164              	.L142:
  139:Core/Src/Motors.c **** 	target_speed_L = target__speed_L;
  1165              		.loc 1 139 83 discriminator 2 view .LVU243
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 25
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 25
 
 
  1166 003e 094B     		ldr	r3, .L143+28
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1219              		.align	1
  1220              		.global	update_speed
  1221              		.syntax unified
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 26
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 26
 
 
  1222              		.thumb
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1269 001e D3F80090 		ldr	r9, [r3]
  1270 0022 DFF87C82 		ldr	r8, .L150+88
  1271 0026 D8F80030 		ldr	r3, [r8]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 27
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 27
 
 
  1272 002a A9EB0303 		sub	r3, r9, r3
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1320 008e 2946     		mov	r1, r5
  1321 0090 FFF7FEFF 		bl	__aeabi_dmul
  1322              	.LVL34:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 28
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 28
 
 
  1323 0094 FFF7FEFF 		bl	__aeabi_d2f
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1369 00e8 2368     		ldr	r3, [r4]
  1370 00ea EB1A     		subs	r3, r5, r3
  125:Core/Src/Motors.c **** 	previous_encoder_count_R = encoder_count_R;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 29
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 29
 
 
  1371              		.loc 1 125 93 view .LVU271
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1418              		.loc 1 125 18 view .LVU278
  1419 0152 3060     		str	r0, [r6]	@ float
  126:Core/Src/Motors.c **** 	previous_encoder_count_L = encoder_count_L;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 30
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 30
 
 
  1420              		.loc 1 126 2 is_stmt 1 view .LVU279
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1465 01b0 4046     		mov	r0, r8
  1466 01b2 4946     		mov	r1, r9
  1467 01b4 FFF7FEFF 		bl	__aeabi_ddiv
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 31
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 31
 
 
  1468              	.LVL58:
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1514 0216 0246     		mov	r2, r0
  1515 0218 0B46     		mov	r3, r1
  130:Core/Src/Motors.c **** 	previous_speed_R = current_speed_R;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 32
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 32
 
 
  1516              		.loc 1 130 58 view .LVU297
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1560 0258 00000000 		.word	0
  1561 025c 80842E41 		.word	1093567616
  1562 0260 66666666 		.word	1717986918
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 33
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 33
 
 
  1563 0264 6666E63F 		.word	1072064102
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1617              		.loc 1 146 5 view .LVU312
  1618 0018 0BB1     		cbz	r3, .L155
  1619              	.LVL72:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 34
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 34
 
 
  1620              	.L152:
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1648 0032 8DF81730 		strb	r3, [sp, #23]
  151:Core/Src/Motors.c **** 		uint8_t* bytes2 = (uint8_t*)&value2;
  1649              		.loc 1 151 3 is_stmt 1 view .LVU322
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 35
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 35
 
 
  1650              	.LVL74:
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  160:Core/Src/Motors.c **** 		HAL_UART_Transmit(&huart2, &header4, 1, 10);
  1694              		.loc 1 160 3 view .LVU333
  1695 0078 0A23     		movs	r3, #10
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 36
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 36
 
 
  1696 007a 0422     		movs	r2, #4
@@ -2152,662 +2152,646 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 1
  1743              		.cfi_def_cfa_offset 8
  1744              		.cfi_offset 3, -8
  1745              		.cfi_offset 14, -4
- 166:Core/Src/Motors.c **** 	vTaskDelay(pdMS_TO_TICKS(ms));
- 1746              		.loc 1 166 2 is_stmt 1 view .LVU339
- 1747              		.loc 1 166 13 is_stmt 0 view .LVU340
- 1748 0002 4FF47A73 		mov	r3, #1000
- 1749 0006 03FB00F0 		mul	r0, r3, r0
- 1750              	.LVL86:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 37
+ 166:Core/Src/Motors.c **** 	//vTaskDelay(pdMS_TO_TICKS(ms));
+ 167:Core/Src/Motors.c **** 	HAL_Delay(ms);
+ 1746              		.loc 1 167 2 is_stmt 1 view .LVU339
+ 1747 0002 FFF7FEFF 		bl	HAL_Delay
+ 1748              	.LVL86:
+ 168:Core/Src/Motors.c **** }
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 37
 
 
- 1751              		.loc 1 166 2 view .LVU341
- 1752 000a 034B     		ldr	r3, .L160
- 1753 000c A3FB0030 		umull	r3, r0, r3, r0
- 1754 0010 8009     		lsrs	r0, r0, #6
- 1755 0012 FFF7FEFF 		bl	vTaskDelay
- 1756              	.LVL87:
- 167:Core/Src/Motors.c **** }
- 1757              		.loc 1 167 1 view .LVU342
- 1758 0016 08BD     		pop	{r3, pc}
- 1759              	.L161:
- 1760              		.align	2
- 1761              	.L160:
- 1762 0018 D34D6210 		.word	274877907
- 1763              		.cfi_endproc
- 1764              	.LFE150:
- 1766              		.section	.text.reset_speed_control_variables,"ax",%progbits
- 1767              		.align	1
- 1768              		.global	reset_speed_control_variables
- 1769              		.syntax unified
- 1770              		.thumb
- 1771              		.thumb_func
- 1773              	reset_speed_control_variables:
- 1774              	.LFB151:
- 168:Core/Src/Motors.c **** 
+ 1749              		.loc 1 168 1 is_stmt 0 view .LVU340
+ 1750 0006 08BD     		pop	{r3, pc}
+ 1751              		.cfi_endproc
+ 1752              	.LFE150:
+ 1754              		.section	.text.reset_speed_control_variables,"ax",%progbits
+ 1755              		.align	1
+ 1756              		.global	reset_speed_control_variables
+ 1757              		.syntax unified
+ 1758              		.thumb
+ 1759              		.thumb_func
+ 1761              	reset_speed_control_variables:
+ 1762              	.LFB151:
  169:Core/Src/Motors.c **** 
- 170:Core/Src/Motors.c **** void reset_speed_control_variables(){
- 1775              		.loc 1 170 37 is_stmt 1 view -0
- 1776              		.cfi_startproc
- 1777              		@ args = 0, pretend = 0, frame = 0
- 1778              		@ frame_needed = 0, uses_anonymous_args = 0
- 1779 0000 08B5     		push	{r3, lr}
- 1780              	.LCFI17:
- 1781              		.cfi_def_cfa_offset 8
- 1782              		.cfi_offset 3, -8
- 1783              		.cfi_offset 14, -4
- 171:Core/Src/Motors.c **** 	previous_speed_control_time = micros()-999;
- 1784              		.loc 1 171 2 view .LVU344
- 1785              		.loc 1 171 32 is_stmt 0 view .LVU345
- 1786 0002 FFF7FEFF 		bl	micros
- 1787              	.LVL88:
- 1788              		.loc 1 171 40 discriminator 1 view .LVU346
- 1789 0006 A0F2E730 		subw	r0, r0, #999
- 1790              		.loc 1 171 30 discriminator 1 view .LVU347
- 1791 000a 0A4B     		ldr	r3, .L164
- 1792 000c 1860     		str	r0, [r3]
- 172:Core/Src/Motors.c **** 	speed_integral_L = 0;
- 1793              		.loc 1 172 2 is_stmt 1 view .LVU348
- 1794              		.loc 1 172 19 is_stmt 0 view .LVU349
- 1795 000e 0023     		movs	r3, #0
- 1796 0010 094A     		ldr	r2, .L164+4
- 1797 0012 1360     		str	r3, [r2]	@ float
- 173:Core/Src/Motors.c **** 	speed_integral_R = 0;
- 1798              		.loc 1 173 2 is_stmt 1 view .LVU350
- 1799              		.loc 1 173 19 is_stmt 0 view .LVU351
- 1800 0014 094A     		ldr	r2, .L164+8
- 1801 0016 1360     		str	r3, [r2]	@ float
- 174:Core/Src/Motors.c **** 	speed_derivative_L = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 38
+ 170:Core/Src/Motors.c **** 
+ 171:Core/Src/Motors.c **** void reset_speed_control_variables(){
+ 1763              		.loc 1 171 37 is_stmt 1 view -0
+ 1764              		.cfi_startproc
+ 1765              		@ args = 0, pretend = 0, frame = 0
+ 1766              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1767 0000 08B5     		push	{r3, lr}
+ 1768              	.LCFI17:
+ 1769              		.cfi_def_cfa_offset 8
+ 1770              		.cfi_offset 3, -8
+ 1771              		.cfi_offset 14, -4
+ 172:Core/Src/Motors.c **** 	previous_speed_control_time = micros()-999;
+ 1772              		.loc 1 172 2 view .LVU342
+ 1773              		.loc 1 172 32 is_stmt 0 view .LVU343
+ 1774 0002 FFF7FEFF 		bl	micros
+ 1775              	.LVL87:
+ 1776              		.loc 1 172 40 discriminator 1 view .LVU344
+ 1777 0006 A0F2E730 		subw	r0, r0, #999
+ 1778              		.loc 1 172 30 discriminator 1 view .LVU345
+ 1779 000a 0A4B     		ldr	r3, .L162
+ 1780 000c 1860     		str	r0, [r3]
+ 173:Core/Src/Motors.c **** 	speed_integral_L = 0;
+ 1781              		.loc 1 173 2 is_stmt 1 view .LVU346
+ 1782              		.loc 1 173 19 is_stmt 0 view .LVU347
+ 1783 000e 0023     		movs	r3, #0
+ 1784 0010 094A     		ldr	r2, .L162+4
+ 1785 0012 1360     		str	r3, [r2]	@ float
+ 174:Core/Src/Motors.c **** 	speed_integral_R = 0;
+ 1786              		.loc 1 174 2 is_stmt 1 view .LVU348
+ 1787              		.loc 1 174 19 is_stmt 0 view .LVU349
+ 1788 0014 094A     		ldr	r2, .L162+8
+ 1789 0016 1360     		str	r3, [r2]	@ float
+ 175:Core/Src/Motors.c **** 	speed_derivative_L = 0;
+ 1790              		.loc 1 175 2 is_stmt 1 view .LVU350
+ 1791              		.loc 1 175 21 is_stmt 0 view .LVU351
+ 1792 0018 094A     		ldr	r2, .L162+12
+ 1793 001a 1360     		str	r3, [r2]	@ float
+ 176:Core/Src/Motors.c **** 	speed_derivative_R = 0;
+ 1794              		.loc 1 176 2 is_stmt 1 view .LVU352
+ 1795              		.loc 1 176 21 is_stmt 0 view .LVU353
+ 1796 001c 094A     		ldr	r2, .L162+16
+ 1797 001e 1360     		str	r3, [r2]	@ float
+ 177:Core/Src/Motors.c **** 	PWM_L = 0;
+ 1798              		.loc 1 177 2 is_stmt 1 view .LVU354
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 38
 
 
- 1802              		.loc 1 174 2 is_stmt 1 view .LVU352
- 1803              		.loc 1 174 21 is_stmt 0 view .LVU353
- 1804 0018 094A     		ldr	r2, .L164+12
- 1805 001a 1360     		str	r3, [r2]	@ float
- 175:Core/Src/Motors.c **** 	speed_derivative_R = 0;
- 1806              		.loc 1 175 2 is_stmt 1 view .LVU354
- 1807              		.loc 1 175 21 is_stmt 0 view .LVU355
- 1808 001c 094A     		ldr	r2, .L164+16
- 1809 001e 1360     		str	r3, [r2]	@ float
- 176:Core/Src/Motors.c **** 	PWM_L = 0;
- 1810              		.loc 1 176 2 is_stmt 1 view .LVU356
- 1811              		.loc 1 176 8 is_stmt 0 view .LVU357
- 1812 0020 0022     		movs	r2, #0
- 1813 0022 0949     		ldr	r1, .L164+20
- 1814 0024 0A60     		str	r2, [r1]
- 177:Core/Src/Motors.c **** 	PWM_R = 0;
- 1815              		.loc 1 177 2 is_stmt 1 view .LVU358
- 1816              		.loc 1 177 8 is_stmt 0 view .LVU359
- 1817 0026 0949     		ldr	r1, .L164+24
- 1818 0028 0A60     		str	r2, [r1]
- 178:Core/Src/Motors.c **** 	previous_speed_error_L = 0;
- 1819              		.loc 1 178 2 is_stmt 1 view .LVU360
- 1820              		.loc 1 178 25 is_stmt 0 view .LVU361
- 1821 002a 094A     		ldr	r2, .L164+28
- 1822 002c 1360     		str	r3, [r2]	@ float
- 179:Core/Src/Motors.c **** 	previous_speed_error_R = 0;
- 1823              		.loc 1 179 2 is_stmt 1 view .LVU362
- 1824              		.loc 1 179 25 is_stmt 0 view .LVU363
- 1825 002e 094A     		ldr	r2, .L164+32
- 1826 0030 1360     		str	r3, [r2]	@ float
- 180:Core/Src/Motors.c **** }
- 1827              		.loc 1 180 1 view .LVU364
- 1828 0032 08BD     		pop	{r3, pc}
- 1829              	.L165:
- 1830              		.align	2
- 1831              	.L164:
- 1832 0034 00000000 		.word	previous_speed_control_time
- 1833 0038 00000000 		.word	speed_integral_L
- 1834 003c 00000000 		.word	speed_integral_R
- 1835 0040 00000000 		.word	speed_derivative_L
- 1836 0044 00000000 		.word	speed_derivative_R
- 1837 0048 00000000 		.word	PWM_L
- 1838 004c 00000000 		.word	PWM_R
- 1839 0050 00000000 		.word	previous_speed_error_L
- 1840 0054 00000000 		.word	previous_speed_error_R
- 1841              		.cfi_endproc
- 1842              	.LFE151:
- 1844              		.section	.text.reset_position_control_variables,"ax",%progbits
- 1845              		.align	1
- 1846              		.global	reset_position_control_variables
- 1847              		.syntax unified
- 1848              		.thumb
- 1849              		.thumb_func
- 1851              	reset_position_control_variables:
- 1852              	.LFB152:
- 181:Core/Src/Motors.c **** 
- 182:Core/Src/Motors.c **** void reset_position_control_variables(){
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 39
+ 1799              		.loc 1 177 8 is_stmt 0 view .LVU355
+ 1800 0020 0022     		movs	r2, #0
+ 1801 0022 0949     		ldr	r1, .L162+20
+ 1802 0024 0A60     		str	r2, [r1]
+ 178:Core/Src/Motors.c **** 	PWM_R = 0;
+ 1803              		.loc 1 178 2 is_stmt 1 view .LVU356
+ 1804              		.loc 1 178 8 is_stmt 0 view .LVU357
+ 1805 0026 0949     		ldr	r1, .L162+24
+ 1806 0028 0A60     		str	r2, [r1]
+ 179:Core/Src/Motors.c **** 	previous_speed_error_L = 0;
+ 1807              		.loc 1 179 2 is_stmt 1 view .LVU358
+ 1808              		.loc 1 179 25 is_stmt 0 view .LVU359
+ 1809 002a 094A     		ldr	r2, .L162+28
+ 1810 002c 1360     		str	r3, [r2]	@ float
+ 180:Core/Src/Motors.c **** 	previous_speed_error_R = 0;
+ 1811              		.loc 1 180 2 is_stmt 1 view .LVU360
+ 1812              		.loc 1 180 25 is_stmt 0 view .LVU361
+ 1813 002e 094A     		ldr	r2, .L162+32
+ 1814 0030 1360     		str	r3, [r2]	@ float
+ 181:Core/Src/Motors.c **** }
+ 1815              		.loc 1 181 1 view .LVU362
+ 1816 0032 08BD     		pop	{r3, pc}
+ 1817              	.L163:
+ 1818              		.align	2
+ 1819              	.L162:
+ 1820 0034 00000000 		.word	previous_speed_control_time
+ 1821 0038 00000000 		.word	speed_integral_L
+ 1822 003c 00000000 		.word	speed_integral_R
+ 1823 0040 00000000 		.word	speed_derivative_L
+ 1824 0044 00000000 		.word	speed_derivative_R
+ 1825 0048 00000000 		.word	PWM_L
+ 1826 004c 00000000 		.word	PWM_R
+ 1827 0050 00000000 		.word	previous_speed_error_L
+ 1828 0054 00000000 		.word	previous_speed_error_R
+ 1829              		.cfi_endproc
+ 1830              	.LFE151:
+ 1832              		.section	.text.reset_position_control_variables,"ax",%progbits
+ 1833              		.align	1
+ 1834              		.global	reset_position_control_variables
+ 1835              		.syntax unified
+ 1836              		.thumb
+ 1837              		.thumb_func
+ 1839              	reset_position_control_variables:
+ 1840              	.LFB152:
+ 182:Core/Src/Motors.c **** 
+ 183:Core/Src/Motors.c **** void reset_position_control_variables(){
+ 1841              		.loc 1 183 40 is_stmt 1 view -0
+ 1842              		.cfi_startproc
+ 1843              		@ args = 0, pretend = 0, frame = 0
+ 1844              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1845 0000 08B5     		push	{r3, lr}
+ 1846              	.LCFI18:
+ 1847              		.cfi_def_cfa_offset 8
+ 1848              		.cfi_offset 3, -8
+ 1849              		.cfi_offset 14, -4
+ 184:Core/Src/Motors.c **** 	previous_position_control_time = micros()-999;
+ 1850              		.loc 1 184 2 view .LVU364
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 39
 
 
- 1853              		.loc 1 182 40 is_stmt 1 view -0
- 1854              		.cfi_startproc
- 1855              		@ args = 0, pretend = 0, frame = 0
- 1856              		@ frame_needed = 0, uses_anonymous_args = 0
- 1857 0000 08B5     		push	{r3, lr}
- 1858              	.LCFI18:
- 1859              		.cfi_def_cfa_offset 8
- 1860              		.cfi_offset 3, -8
- 1861              		.cfi_offset 14, -4
- 183:Core/Src/Motors.c **** 	previous_position_control_time = micros()-999;
- 1862              		.loc 1 183 2 view .LVU366
- 1863              		.loc 1 183 35 is_stmt 0 view .LVU367
- 1864 0002 FFF7FEFF 		bl	micros
- 1865              	.LVL89:
- 1866              		.loc 1 183 43 discriminator 1 view .LVU368
- 1867 0006 A0F2E730 		subw	r0, r0, #999
- 1868              		.loc 1 183 33 discriminator 1 view .LVU369
- 1869 000a 0A4B     		ldr	r3, .L168
- 1870 000c 1860     		str	r0, [r3]
- 184:Core/Src/Motors.c **** 	position_integral_L = 0;
- 1871              		.loc 1 184 2 is_stmt 1 view .LVU370
- 1872              		.loc 1 184 22 is_stmt 0 view .LVU371
- 1873 000e 0023     		movs	r3, #0
- 1874 0010 094A     		ldr	r2, .L168+4
- 1875 0012 1360     		str	r3, [r2]	@ float
- 185:Core/Src/Motors.c **** 	position_integral_R = 0;
- 1876              		.loc 1 185 2 is_stmt 1 view .LVU372
- 1877              		.loc 1 185 22 is_stmt 0 view .LVU373
- 1878 0014 094A     		ldr	r2, .L168+8
- 1879 0016 1360     		str	r3, [r2]	@ float
- 186:Core/Src/Motors.c **** 	position_derivative_L = 0;
- 1880              		.loc 1 186 2 is_stmt 1 view .LVU374
- 1881              		.loc 1 186 24 is_stmt 0 view .LVU375
- 1882 0018 094A     		ldr	r2, .L168+12
- 1883 001a 1360     		str	r3, [r2]	@ float
- 187:Core/Src/Motors.c **** 	position_derivative_R = 0;
- 1884              		.loc 1 187 2 is_stmt 1 view .LVU376
- 1885              		.loc 1 187 24 is_stmt 0 view .LVU377
- 1886 001c 094A     		ldr	r2, .L168+16
- 1887 001e 1360     		str	r3, [r2]	@ float
- 188:Core/Src/Motors.c **** 	PWM_L = 0;
- 1888              		.loc 1 188 2 is_stmt 1 view .LVU378
- 1889              		.loc 1 188 8 is_stmt 0 view .LVU379
- 1890 0020 0022     		movs	r2, #0
- 1891 0022 0949     		ldr	r1, .L168+20
- 1892 0024 0A60     		str	r2, [r1]
- 189:Core/Src/Motors.c **** 	PWM_R = 0;
- 1893              		.loc 1 189 2 is_stmt 1 view .LVU380
- 1894              		.loc 1 189 8 is_stmt 0 view .LVU381
- 1895 0026 0949     		ldr	r1, .L168+24
- 1896 0028 0A60     		str	r2, [r1]
- 190:Core/Src/Motors.c **** 	previous_position_error_L = 0;
- 1897              		.loc 1 190 2 is_stmt 1 view .LVU382
- 1898              		.loc 1 190 28 is_stmt 0 view .LVU383
- 1899 002a 094A     		ldr	r2, .L168+28
- 1900 002c 1360     		str	r3, [r2]	@ float
- 191:Core/Src/Motors.c **** 	previous_position_error_R = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 40
+ 1851              		.loc 1 184 35 is_stmt 0 view .LVU365
+ 1852 0002 FFF7FEFF 		bl	micros
+ 1853              	.LVL88:
+ 1854              		.loc 1 184 43 discriminator 1 view .LVU366
+ 1855 0006 A0F2E730 		subw	r0, r0, #999
+ 1856              		.loc 1 184 33 discriminator 1 view .LVU367
+ 1857 000a 0A4B     		ldr	r3, .L166
+ 1858 000c 1860     		str	r0, [r3]
+ 185:Core/Src/Motors.c **** 	position_integral_L = 0;
+ 1859              		.loc 1 185 2 is_stmt 1 view .LVU368
+ 1860              		.loc 1 185 22 is_stmt 0 view .LVU369
+ 1861 000e 0023     		movs	r3, #0
+ 1862 0010 094A     		ldr	r2, .L166+4
+ 1863 0012 1360     		str	r3, [r2]	@ float
+ 186:Core/Src/Motors.c **** 	position_integral_R = 0;
+ 1864              		.loc 1 186 2 is_stmt 1 view .LVU370
+ 1865              		.loc 1 186 22 is_stmt 0 view .LVU371
+ 1866 0014 094A     		ldr	r2, .L166+8
+ 1867 0016 1360     		str	r3, [r2]	@ float
+ 187:Core/Src/Motors.c **** 	position_derivative_L = 0;
+ 1868              		.loc 1 187 2 is_stmt 1 view .LVU372
+ 1869              		.loc 1 187 24 is_stmt 0 view .LVU373
+ 1870 0018 094A     		ldr	r2, .L166+12
+ 1871 001a 1360     		str	r3, [r2]	@ float
+ 188:Core/Src/Motors.c **** 	position_derivative_R = 0;
+ 1872              		.loc 1 188 2 is_stmt 1 view .LVU374
+ 1873              		.loc 1 188 24 is_stmt 0 view .LVU375
+ 1874 001c 094A     		ldr	r2, .L166+16
+ 1875 001e 1360     		str	r3, [r2]	@ float
+ 189:Core/Src/Motors.c **** 	PWM_L = 0;
+ 1876              		.loc 1 189 2 is_stmt 1 view .LVU376
+ 1877              		.loc 1 189 8 is_stmt 0 view .LVU377
+ 1878 0020 0022     		movs	r2, #0
+ 1879 0022 0949     		ldr	r1, .L166+20
+ 1880 0024 0A60     		str	r2, [r1]
+ 190:Core/Src/Motors.c **** 	PWM_R = 0;
+ 1881              		.loc 1 190 2 is_stmt 1 view .LVU378
+ 1882              		.loc 1 190 8 is_stmt 0 view .LVU379
+ 1883 0026 0949     		ldr	r1, .L166+24
+ 1884 0028 0A60     		str	r2, [r1]
+ 191:Core/Src/Motors.c **** 	previous_position_error_L = 0;
+ 1885              		.loc 1 191 2 is_stmt 1 view .LVU380
+ 1886              		.loc 1 191 28 is_stmt 0 view .LVU381
+ 1887 002a 094A     		ldr	r2, .L166+28
+ 1888 002c 1360     		str	r3, [r2]	@ float
+ 192:Core/Src/Motors.c **** 	previous_position_error_R = 0;
+ 1889              		.loc 1 192 2 is_stmt 1 view .LVU382
+ 1890              		.loc 1 192 28 is_stmt 0 view .LVU383
+ 1891 002e 094A     		ldr	r2, .L166+32
+ 1892 0030 1360     		str	r3, [r2]	@ float
+ 193:Core/Src/Motors.c **** }
+ 1893              		.loc 1 193 1 view .LVU384
+ 1894 0032 08BD     		pop	{r3, pc}
+ 1895              	.L167:
+ 1896              		.align	2
+ 1897              	.L166:
+ 1898 0034 00000000 		.word	previous_position_control_time
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 40
 
 
- 1901              		.loc 1 191 2 is_stmt 1 view .LVU384
- 1902              		.loc 1 191 28 is_stmt 0 view .LVU385
- 1903 002e 094A     		ldr	r2, .L168+32
- 1904 0030 1360     		str	r3, [r2]	@ float
- 192:Core/Src/Motors.c **** }
- 1905              		.loc 1 192 1 view .LVU386
- 1906 0032 08BD     		pop	{r3, pc}
- 1907              	.L169:
- 1908              		.align	2
- 1909              	.L168:
- 1910 0034 00000000 		.word	previous_position_control_time
- 1911 0038 00000000 		.word	position_integral_L
- 1912 003c 00000000 		.word	position_integral_R
- 1913 0040 00000000 		.word	position_derivative_L
- 1914 0044 00000000 		.word	position_derivative_R
- 1915 0048 00000000 		.word	PWM_L
- 1916 004c 00000000 		.word	PWM_R
- 1917 0050 00000000 		.word	previous_position_error_L
- 1918 0054 00000000 		.word	previous_position_error_R
- 1919              		.cfi_endproc
- 1920              	.LFE152:
- 1922              		.global	position_derivative_L
- 1923              		.section	.bss.position_derivative_L,"aw",%nobits
- 1924              		.align	2
- 1927              	position_derivative_L:
- 1928 0000 00000000 		.space	4
- 1929              		.global	position_integral_L
- 1930              		.section	.bss.position_integral_L,"aw",%nobits
- 1931              		.align	2
- 1934              	position_integral_L:
- 1935 0000 00000000 		.space	4
- 1936              		.global	position_derivative_R
- 1937              		.section	.bss.position_derivative_R,"aw",%nobits
- 1938              		.align	2
- 1941              	position_derivative_R:
- 1942 0000 00000000 		.space	4
- 1943              		.global	position_integral_R
- 1944              		.section	.bss.position_integral_R,"aw",%nobits
- 1945              		.align	2
- 1948              	position_integral_R:
- 1949 0000 00000000 		.space	4
- 1950              		.global	position_max_response
- 1951              		.section	.data.position_max_response,"aw"
- 1952              		.align	2
- 1955              	position_max_response:
- 1956 0000 0000FA43 		.word	1140457472
- 1957              		.global	previous_position_control_time
- 1958              		.section	.bss.previous_position_control_time,"aw",%nobits
- 1959              		.align	2
- 1962              	previous_position_control_time:
- 1963 0000 00000000 		.space	4
- 1964              		.global	previous_position_error_L
- 1965              		.section	.bss.previous_position_error_L,"aw",%nobits
- 1966              		.align	2
- 1969              	previous_position_error_L:
- 1970 0000 00000000 		.space	4
- 1971              		.global	previous_position_error_R
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 41
+ 1899 0038 00000000 		.word	position_integral_L
+ 1900 003c 00000000 		.word	position_integral_R
+ 1901 0040 00000000 		.word	position_derivative_L
+ 1902 0044 00000000 		.word	position_derivative_R
+ 1903 0048 00000000 		.word	PWM_L
+ 1904 004c 00000000 		.word	PWM_R
+ 1905 0050 00000000 		.word	previous_position_error_L
+ 1906 0054 00000000 		.word	previous_position_error_R
+ 1907              		.cfi_endproc
+ 1908              	.LFE152:
+ 1910              		.global	position_derivative_L
+ 1911              		.section	.bss.position_derivative_L,"aw",%nobits
+ 1912              		.align	2
+ 1915              	position_derivative_L:
+ 1916 0000 00000000 		.space	4
+ 1917              		.global	position_integral_L
+ 1918              		.section	.bss.position_integral_L,"aw",%nobits
+ 1919              		.align	2
+ 1922              	position_integral_L:
+ 1923 0000 00000000 		.space	4
+ 1924              		.global	position_derivative_R
+ 1925              		.section	.bss.position_derivative_R,"aw",%nobits
+ 1926              		.align	2
+ 1929              	position_derivative_R:
+ 1930 0000 00000000 		.space	4
+ 1931              		.global	position_integral_R
+ 1932              		.section	.bss.position_integral_R,"aw",%nobits
+ 1933              		.align	2
+ 1936              	position_integral_R:
+ 1937 0000 00000000 		.space	4
+ 1938              		.global	position_max_response
+ 1939              		.section	.data.position_max_response,"aw"
+ 1940              		.align	2
+ 1943              	position_max_response:
+ 1944 0000 0000FA43 		.word	1140457472
+ 1945              		.global	previous_position_control_time
+ 1946              		.section	.bss.previous_position_control_time,"aw",%nobits
+ 1947              		.align	2
+ 1950              	previous_position_control_time:
+ 1951 0000 00000000 		.space	4
+ 1952              		.global	previous_position_error_L
+ 1953              		.section	.bss.previous_position_error_L,"aw",%nobits
+ 1954              		.align	2
+ 1957              	previous_position_error_L:
+ 1958 0000 00000000 		.space	4
+ 1959              		.global	previous_position_error_R
+ 1960              		.section	.bss.previous_position_error_R,"aw",%nobits
+ 1961              		.align	2
+ 1964              	previous_position_error_R:
+ 1965 0000 00000000 		.space	4
+ 1966              		.global	previous_speed_error_L
+ 1967              		.section	.bss.previous_speed_error_L,"aw",%nobits
+ 1968              		.align	2
+ 1971              	previous_speed_error_L:
+ 1972 0000 00000000 		.space	4
+ 1973              		.global	speed_derivative_L
+ 1974              		.section	.bss.speed_derivative_L,"aw",%nobits
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 41
 
 
- 1972              		.section	.bss.previous_position_error_R,"aw",%nobits
- 1973              		.align	2
- 1976              	previous_position_error_R:
- 1977 0000 00000000 		.space	4
- 1978              		.global	previous_speed_error_L
- 1979              		.section	.bss.previous_speed_error_L,"aw",%nobits
- 1980              		.align	2
- 1983              	previous_speed_error_L:
- 1984 0000 00000000 		.space	4
- 1985              		.global	speed_derivative_L
- 1986              		.section	.bss.speed_derivative_L,"aw",%nobits
- 1987              		.align	2
- 1990              	speed_derivative_L:
- 1991 0000 00000000 		.space	4
- 1992              		.global	speed_integral_L
- 1993              		.section	.bss.speed_integral_L,"aw",%nobits
- 1994              		.align	2
- 1997              	speed_integral_L:
- 1998 0000 00000000 		.space	4
- 1999              		.global	previous_speed_error_R
- 2000              		.section	.bss.previous_speed_error_R,"aw",%nobits
- 2001              		.align	2
- 2004              	previous_speed_error_R:
- 2005 0000 00000000 		.space	4
- 2006              		.global	speed_derivative_R
- 2007              		.section	.bss.speed_derivative_R,"aw",%nobits
- 2008              		.align	2
- 2011              	speed_derivative_R:
- 2012 0000 00000000 		.space	4
- 2013              		.global	speed_integral_R
- 2014              		.section	.bss.speed_integral_R,"aw",%nobits
- 2015              		.align	2
- 2018              	speed_integral_R:
- 2019 0000 00000000 		.space	4
- 2020              		.global	previous_speed_control_time
- 2021              		.section	.bss.previous_speed_control_time,"aw",%nobits
- 2022              		.align	2
- 2025              	previous_speed_control_time:
- 2026 0000 00000000 		.space	4
- 2027              		.global	debugger_2
- 2028              		.section	.bss.debugger_2,"aw",%nobits
- 2029              		.align	2
- 2032              	debugger_2:
- 2033 0000 00000000 		.space	4
- 2034              		.global	debugger
- 2035              		.section	.bss.debugger,"aw",%nobits
- 2036              		.align	2
- 2039              	debugger:
- 2040 0000 00000000 		.space	4
- 2041              		.global	wheel_diameter_L
- 2042              		.section	.bss.wheel_diameter_L,"aw",%nobits
- 2043              		.align	2
- 2046              	wheel_diameter_L:
- 2047 0000 00000000 		.space	4
- 2048              		.global	wheel_diameter_R
- 2049              		.section	.bss.wheel_diameter_R,"aw",%nobits
- 2050              		.align	2
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 42
+ 1975              		.align	2
+ 1978              	speed_derivative_L:
+ 1979 0000 00000000 		.space	4
+ 1980              		.global	speed_integral_L
+ 1981              		.section	.bss.speed_integral_L,"aw",%nobits
+ 1982              		.align	2
+ 1985              	speed_integral_L:
+ 1986 0000 00000000 		.space	4
+ 1987              		.global	previous_speed_error_R
+ 1988              		.section	.bss.previous_speed_error_R,"aw",%nobits
+ 1989              		.align	2
+ 1992              	previous_speed_error_R:
+ 1993 0000 00000000 		.space	4
+ 1994              		.global	speed_derivative_R
+ 1995              		.section	.bss.speed_derivative_R,"aw",%nobits
+ 1996              		.align	2
+ 1999              	speed_derivative_R:
+ 2000 0000 00000000 		.space	4
+ 2001              		.global	speed_integral_R
+ 2002              		.section	.bss.speed_integral_R,"aw",%nobits
+ 2003              		.align	2
+ 2006              	speed_integral_R:
+ 2007 0000 00000000 		.space	4
+ 2008              		.global	previous_speed_control_time
+ 2009              		.section	.bss.previous_speed_control_time,"aw",%nobits
+ 2010              		.align	2
+ 2013              	previous_speed_control_time:
+ 2014 0000 00000000 		.space	4
+ 2015              		.global	debugger_2
+ 2016              		.section	.bss.debugger_2,"aw",%nobits
+ 2017              		.align	2
+ 2020              	debugger_2:
+ 2021 0000 00000000 		.space	4
+ 2022              		.global	debugger
+ 2023              		.section	.bss.debugger,"aw",%nobits
+ 2024              		.align	2
+ 2027              	debugger:
+ 2028 0000 00000000 		.space	4
+ 2029              		.global	wheel_diameter_L
+ 2030              		.section	.bss.wheel_diameter_L,"aw",%nobits
+ 2031              		.align	2
+ 2034              	wheel_diameter_L:
+ 2035 0000 00000000 		.space	4
+ 2036              		.global	wheel_diameter_R
+ 2037              		.section	.bss.wheel_diameter_R,"aw",%nobits
+ 2038              		.align	2
+ 2041              	wheel_diameter_R:
+ 2042 0000 00000000 		.space	4
+ 2043              		.global	CPR
+ 2044              		.section	.bss.CPR,"aw",%nobits
+ 2045              		.align	2
+ 2048              	CPR:
+ 2049 0000 00000000 		.space	4
+ 2050              		.global	encoder_timer_L
+ 2051              		.section	.bss.encoder_timer_L,"aw",%nobits
+ 2052              		.align	2
+ 2055              	encoder_timer_L:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 42
 
 
- 2053              	wheel_diameter_R:
- 2054 0000 00000000 		.space	4
- 2055              		.global	CPR
- 2056              		.section	.bss.CPR,"aw",%nobits
- 2057              		.align	2
- 2060              	CPR:
- 2061 0000 00000000 		.space	4
- 2062              		.global	encoder_timer_L
- 2063              		.section	.bss.encoder_timer_L,"aw",%nobits
- 2064              		.align	2
- 2067              	encoder_timer_L:
- 2068 0000 00000000 		.space	4
- 2069              		.global	encoder_timer_R
- 2070              		.section	.bss.encoder_timer_R,"aw",%nobits
- 2071              		.align	2
- 2074              	encoder_timer_R:
- 2075 0000 00000000 		.space	4
- 2076              		.global	previous_encoder_count_L
- 2077              		.section	.bss.previous_encoder_count_L,"aw",%nobits
- 2078              		.align	2
- 2081              	previous_encoder_count_L:
- 2082 0000 00000000 		.space	4
- 2083              		.global	previous_encoder_count_R
- 2084              		.section	.bss.previous_encoder_count_R,"aw",%nobits
- 2085              		.align	2
- 2088              	previous_encoder_count_R:
- 2089 0000 00000000 		.space	4
- 2090              		.global	previous_encoder_timer_CNT_L
- 2091              		.section	.bss.previous_encoder_timer_CNT_L,"aw",%nobits
- 2092              		.align	1
- 2095              	previous_encoder_timer_CNT_L:
- 2096 0000 0000     		.space	2
- 2097              		.global	previous_encoder_timer_CNT_R
- 2098              		.section	.bss.previous_encoder_timer_CNT_R,"aw",%nobits
- 2099              		.align	1
- 2102              	previous_encoder_timer_CNT_R:
- 2103 0000 0000     		.space	2
- 2104              		.global	encoder_count_L
- 2105              		.section	.bss.encoder_count_L,"aw",%nobits
- 2106              		.align	2
- 2109              	encoder_count_L:
- 2110 0000 00000000 		.space	4
- 2111              		.global	encoder_count_R
- 2112              		.section	.bss.encoder_count_R,"aw",%nobits
- 2113              		.align	2
- 2116              	encoder_count_R:
- 2117 0000 00000000 		.space	4
- 2118              		.global	previous_speed_calculation_time
- 2119              		.section	.bss.previous_speed_calculation_time,"aw",%nobits
- 2120              		.align	2
- 2123              	previous_speed_calculation_time:
- 2124 0000 00000000 		.space	4
- 2125              		.global	current_acceleration_L
- 2126              		.section	.bss.current_acceleration_L,"aw",%nobits
- 2127              		.align	2
- 2130              	current_acceleration_L:
- 2131 0000 00000000 		.space	4
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 43
+ 2056 0000 00000000 		.space	4
+ 2057              		.global	encoder_timer_R
+ 2058              		.section	.bss.encoder_timer_R,"aw",%nobits
+ 2059              		.align	2
+ 2062              	encoder_timer_R:
+ 2063 0000 00000000 		.space	4
+ 2064              		.global	previous_encoder_count_L
+ 2065              		.section	.bss.previous_encoder_count_L,"aw",%nobits
+ 2066              		.align	2
+ 2069              	previous_encoder_count_L:
+ 2070 0000 00000000 		.space	4
+ 2071              		.global	previous_encoder_count_R
+ 2072              		.section	.bss.previous_encoder_count_R,"aw",%nobits
+ 2073              		.align	2
+ 2076              	previous_encoder_count_R:
+ 2077 0000 00000000 		.space	4
+ 2078              		.global	previous_encoder_timer_CNT_L
+ 2079              		.section	.bss.previous_encoder_timer_CNT_L,"aw",%nobits
+ 2080              		.align	1
+ 2083              	previous_encoder_timer_CNT_L:
+ 2084 0000 0000     		.space	2
+ 2085              		.global	previous_encoder_timer_CNT_R
+ 2086              		.section	.bss.previous_encoder_timer_CNT_R,"aw",%nobits
+ 2087              		.align	1
+ 2090              	previous_encoder_timer_CNT_R:
+ 2091 0000 0000     		.space	2
+ 2092              		.global	encoder_count_L
+ 2093              		.section	.bss.encoder_count_L,"aw",%nobits
+ 2094              		.align	2
+ 2097              	encoder_count_L:
+ 2098 0000 00000000 		.space	4
+ 2099              		.global	encoder_count_R
+ 2100              		.section	.bss.encoder_count_R,"aw",%nobits
+ 2101              		.align	2
+ 2104              	encoder_count_R:
+ 2105 0000 00000000 		.space	4
+ 2106              		.global	previous_speed_calculation_time
+ 2107              		.section	.bss.previous_speed_calculation_time,"aw",%nobits
+ 2108              		.align	2
+ 2111              	previous_speed_calculation_time:
+ 2112 0000 00000000 		.space	4
+ 2113              		.global	current_acceleration_L
+ 2114              		.section	.bss.current_acceleration_L,"aw",%nobits
+ 2115              		.align	2
+ 2118              	current_acceleration_L:
+ 2119 0000 00000000 		.space	4
+ 2120              		.global	current_acceleration_R
+ 2121              		.section	.bss.current_acceleration_R,"aw",%nobits
+ 2122              		.align	2
+ 2125              	current_acceleration_R:
+ 2126 0000 00000000 		.space	4
+ 2127              		.global	target_speed_L
+ 2128              		.section	.bss.target_speed_L,"aw",%nobits
+ 2129              		.align	2
+ 2132              	target_speed_L:
+ 2133 0000 00000000 		.space	4
+ 2134              		.global	target_speed_R
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 43
 
 
- 2132              		.global	current_acceleration_R
- 2133              		.section	.bss.current_acceleration_R,"aw",%nobits
- 2134              		.align	2
- 2137              	current_acceleration_R:
- 2138 0000 00000000 		.space	4
- 2139              		.global	target_speed_L
- 2140              		.section	.bss.target_speed_L,"aw",%nobits
- 2141              		.align	2
- 2144              	target_speed_L:
- 2145 0000 00000000 		.space	4
- 2146              		.global	target_speed_R
- 2147              		.section	.bss.target_speed_R,"aw",%nobits
- 2148              		.align	2
- 2151              	target_speed_R:
- 2152 0000 00000000 		.space	4
- 2153              		.global	previous_speed_L
- 2154              		.section	.bss.previous_speed_L,"aw",%nobits
- 2155              		.align	2
- 2158              	previous_speed_L:
- 2159 0000 00000000 		.space	4
- 2160              		.global	previous_speed_R
- 2161              		.section	.bss.previous_speed_R,"aw",%nobits
- 2162              		.align	2
- 2165              	previous_speed_R:
- 2166 0000 00000000 		.space	4
- 2167              		.global	current_speed_L
- 2168              		.section	.bss.current_speed_L,"aw",%nobits
- 2169              		.align	2
- 2172              	current_speed_L:
- 2173 0000 00000000 		.space	4
- 2174              		.global	current_speed_R
- 2175              		.section	.bss.current_speed_R,"aw",%nobits
- 2176              		.align	2
- 2179              	current_speed_R:
- 2180 0000 00000000 		.space	4
- 2181              		.global	PWM_offset_L
- 2182              		.section	.bss.PWM_offset_L,"aw",%nobits
- 2183              		.align	2
- 2186              	PWM_offset_L:
- 2187 0000 00000000 		.space	4
- 2188              		.global	PWM_offset_R
- 2189              		.section	.bss.PWM_offset_R,"aw",%nobits
- 2190              		.align	2
- 2193              	PWM_offset_R:
- 2194 0000 00000000 		.space	4
- 2195              		.global	PWM_L_backward_min
- 2196              		.section	.bss.PWM_L_backward_min,"aw",%nobits
- 2197              		.align	2
- 2200              	PWM_L_backward_min:
- 2201 0000 00000000 		.space	4
- 2202              		.global	PWM_R_backward_min
- 2203              		.section	.bss.PWM_R_backward_min,"aw",%nobits
- 2204              		.align	2
- 2207              	PWM_R_backward_min:
- 2208 0000 00000000 		.space	4
- 2209              		.global	PWM_L_forward_min
- 2210              		.section	.bss.PWM_L_forward_min,"aw",%nobits
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 44
+ 2135              		.section	.bss.target_speed_R,"aw",%nobits
+ 2136              		.align	2
+ 2139              	target_speed_R:
+ 2140 0000 00000000 		.space	4
+ 2141              		.global	previous_speed_L
+ 2142              		.section	.bss.previous_speed_L,"aw",%nobits
+ 2143              		.align	2
+ 2146              	previous_speed_L:
+ 2147 0000 00000000 		.space	4
+ 2148              		.global	previous_speed_R
+ 2149              		.section	.bss.previous_speed_R,"aw",%nobits
+ 2150              		.align	2
+ 2153              	previous_speed_R:
+ 2154 0000 00000000 		.space	4
+ 2155              		.global	current_speed_L
+ 2156              		.section	.bss.current_speed_L,"aw",%nobits
+ 2157              		.align	2
+ 2160              	current_speed_L:
+ 2161 0000 00000000 		.space	4
+ 2162              		.global	current_speed_R
+ 2163              		.section	.bss.current_speed_R,"aw",%nobits
+ 2164              		.align	2
+ 2167              	current_speed_R:
+ 2168 0000 00000000 		.space	4
+ 2169              		.global	PWM_offset_L
+ 2170              		.section	.bss.PWM_offset_L,"aw",%nobits
+ 2171              		.align	2
+ 2174              	PWM_offset_L:
+ 2175 0000 00000000 		.space	4
+ 2176              		.global	PWM_offset_R
+ 2177              		.section	.bss.PWM_offset_R,"aw",%nobits
+ 2178              		.align	2
+ 2181              	PWM_offset_R:
+ 2182 0000 00000000 		.space	4
+ 2183              		.global	PWM_L_backward_min
+ 2184              		.section	.bss.PWM_L_backward_min,"aw",%nobits
+ 2185              		.align	2
+ 2188              	PWM_L_backward_min:
+ 2189 0000 00000000 		.space	4
+ 2190              		.global	PWM_R_backward_min
+ 2191              		.section	.bss.PWM_R_backward_min,"aw",%nobits
+ 2192              		.align	2
+ 2195              	PWM_R_backward_min:
+ 2196 0000 00000000 		.space	4
+ 2197              		.global	PWM_L_forward_min
+ 2198              		.section	.bss.PWM_L_forward_min,"aw",%nobits
+ 2199              		.align	2
+ 2202              	PWM_L_forward_min:
+ 2203 0000 00000000 		.space	4
+ 2204              		.global	PWM_R_forward_min
+ 2205              		.section	.bss.PWM_R_forward_min,"aw",%nobits
+ 2206              		.align	2
+ 2209              	PWM_R_forward_min:
+ 2210 0000 00000000 		.space	4
+ 2211              		.global	PWM_max
+ 2212              		.section	.bss.PWM_max,"aw",%nobits
+ 2213              		.align	2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 44
 
 
- 2211              		.align	2
- 2214              	PWM_L_forward_min:
- 2215 0000 00000000 		.space	4
- 2216              		.global	PWM_R_forward_min
- 2217              		.section	.bss.PWM_R_forward_min,"aw",%nobits
- 2218              		.align	2
- 2221              	PWM_R_forward_min:
- 2222 0000 00000000 		.space	4
- 2223              		.global	PWM_max
- 2224              		.section	.bss.PWM_max,"aw",%nobits
- 2225              		.align	2
- 2228              	PWM_max:
- 2229 0000 00000000 		.space	4
- 2230              		.global	PWM_L
- 2231              		.section	.bss.PWM_L,"aw",%nobits
- 2232              		.align	2
- 2235              	PWM_L:
- 2236 0000 00000000 		.space	4
- 2237              		.global	PWM_R
- 2238              		.section	.bss.PWM_R,"aw",%nobits
- 2239              		.align	2
- 2242              	PWM_R:
- 2243 0000 00000000 		.space	4
- 2244              		.global	communication_state
- 2245              		.section	.bss.communication_state,"aw",%nobits
- 2248              	communication_state:
- 2249 0000 00       		.space	1
- 2250              		.global	left_backward
- 2251              		.section	.bss.left_backward,"aw",%nobits
- 2252              		.align	2
- 2255              	left_backward:
- 2256 0000 00000000 		.space	4
- 2257              		.global	left_forward
- 2258              		.section	.bss.left_forward,"aw",%nobits
- 2259              		.align	2
- 2262              	left_forward:
- 2263 0000 00000000 		.space	4
- 2264              		.global	right_backward
- 2265              		.section	.bss.right_backward,"aw",%nobits
- 2266              		.align	2
- 2269              	right_backward:
- 2270 0000 00000000 		.space	4
- 2271              		.global	right_forward
- 2272              		.section	.bss.right_forward,"aw",%nobits
- 2273              		.align	2
- 2276              	right_forward:
- 2277 0000 00000000 		.space	4
- 2278              		.global	htim_motors
- 2279              		.section	.bss.htim_motors,"aw",%nobits
- 2280              		.align	2
- 2283              	htim_motors:
- 2284 0000 00000000 		.space	4
- 2285              		.text
- 2286              	.Letext0:
- 2287              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 2288              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 2289              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 45
-
-
- 2290              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 2291              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 2292              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
- 2293              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 2294              		.file 9 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
- 2295              		.file 10 "Core/Src/../Inc/Motors.h"
- 2296              		.file 11 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 46
+ 2216              	PWM_max:
+ 2217 0000 00000000 		.space	4
+ 2218              		.global	PWM_L
+ 2219              		.section	.bss.PWM_L,"aw",%nobits
+ 2220              		.align	2
+ 2223              	PWM_L:
+ 2224 0000 00000000 		.space	4
+ 2225              		.global	PWM_R
+ 2226              		.section	.bss.PWM_R,"aw",%nobits
+ 2227              		.align	2
+ 2230              	PWM_R:
+ 2231 0000 00000000 		.space	4
+ 2232              		.global	communication_state
+ 2233              		.section	.bss.communication_state,"aw",%nobits
+ 2236              	communication_state:
+ 2237 0000 00       		.space	1
+ 2238              		.global	left_backward
+ 2239              		.section	.bss.left_backward,"aw",%nobits
+ 2240              		.align	2
+ 2243              	left_backward:
+ 2244 0000 00000000 		.space	4
+ 2245              		.global	left_forward
+ 2246              		.section	.bss.left_forward,"aw",%nobits
+ 2247              		.align	2
+ 2250              	left_forward:
+ 2251 0000 00000000 		.space	4
+ 2252              		.global	right_backward
+ 2253              		.section	.bss.right_backward,"aw",%nobits
+ 2254              		.align	2
+ 2257              	right_backward:
+ 2258 0000 00000000 		.space	4
+ 2259              		.global	right_forward
+ 2260              		.section	.bss.right_forward,"aw",%nobits
+ 2261              		.align	2
+ 2264              	right_forward:
+ 2265 0000 00000000 		.space	4
+ 2266              		.global	htim_motors
+ 2267              		.section	.bss.htim_motors,"aw",%nobits
+ 2268              		.align	2
+ 2271              	htim_motors:
+ 2272 0000 00000000 		.space	4
+ 2273              		.text
+ 2274              	.Letext0:
+ 2275              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 2276              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 2277              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 2278              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 2279              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 2280              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 2281              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 2282              		.file 9 "Core/Src/../Inc/Motors.h"
+ 2283              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 45
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 Motors.c
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:21     .text.run_right_motor:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:27     .text.run_right_motor:00000000 run_right_motor
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:278    .text.run_right_motor:00000148 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2242   .bss.PWM_R:00000000 PWM_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2276   .bss.right_forward:00000000 right_forward
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2221   .bss.PWM_R_forward_min:00000000 PWM_R_forward_min
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2283   .bss.htim_motors:00000000 htim_motors
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2269   .bss.right_backward:00000000 right_backward
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2207   .bss.PWM_R_backward_min:00000000 PWM_R_backward_min
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:288    .text.run_left_motor:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:294    .text.run_left_motor:00000000 run_left_motor
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:545    .text.run_left_motor:00000148 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2235   .bss.PWM_L:00000000 PWM_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2262   .bss.left_forward:00000000 left_forward
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2214   .bss.PWM_L_forward_min:00000000 PWM_L_forward_min
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2255   .bss.left_backward:00000000 left_backward
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2200   .bss.PWM_L_backward_min:00000000 PWM_L_backward_min
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:555    .text.setup_motor_channels:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:561    .text.setup_motor_channels:00000000 setup_motor_channels
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:614    .text.setup_motor_channels:00000020 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:623    .text.setup_encoder_timers:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:629    .text.setup_encoder_timers:00000000 setup_encoder_timers
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:654    .text.setup_encoder_timers:00000010 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2074   .bss.encoder_timer_R:00000000 encoder_timer_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2067   .bss.encoder_timer_L:00000000 encoder_timer_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2060   .bss.CPR:00000000 CPR
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:661    .text.setup_wheel_diameters:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:667    .text.setup_wheel_diameters:00000000 setup_wheel_diameters
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:688    .text.setup_wheel_diameters:00000010 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2053   .bss.wheel_diameter_R:00000000 wheel_diameter_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2046   .bss.wheel_diameter_L:00000000 wheel_diameter_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:694    .text.setup_PWM_min_max:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:700    .text.setup_PWM_min_max:00000000 setup_PWM_min_max
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:753    .text.setup_PWM_min_max:00000020 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2228   .bss.PWM_max:00000000 PWM_max
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:762    .text.stop_motors:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:768    .text.stop_motors:00000000 stop_motors
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:957    .text.stop_motors:00000104 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2151   .bss.target_speed_R:00000000 target_speed_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2144   .bss.target_speed_L:00000000 target_speed_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:968    .text.update_encoder_counts:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:974    .text.update_encoder_counts:00000000 update_encoder_counts
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1094   .text.update_encoder_counts:00000074 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2102   .bss.previous_encoder_timer_CNT_R:00000000 previous_encoder_timer_CNT_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2116   .bss.encoder_count_R:00000000 encoder_count_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2095   .bss.previous_encoder_timer_CNT_L:00000000 previous_encoder_timer_CNT_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2109   .bss.encoder_count_L:00000000 encoder_count_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1105   .text.set_target_speeds:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1111   .text.set_target_speeds:00000000 set_target_speeds
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1174   .text.set_target_speeds:00000048 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2193   .bss.PWM_offset_R:00000000 PWM_offset_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2186   .bss.PWM_offset_L:00000000 PWM_offset_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1186   .text.micros:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1192   .text.micros:00000000 micros
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1208   .text.micros:00000008 $d
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 47
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:21     .text.run_right_motor:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:27     .text.run_right_motor:00000000 run_right_motor
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:278    .text.run_right_motor:00000148 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2230   .bss.PWM_R:00000000 PWM_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2264   .bss.right_forward:00000000 right_forward
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2209   .bss.PWM_R_forward_min:00000000 PWM_R_forward_min
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2271   .bss.htim_motors:00000000 htim_motors
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2257   .bss.right_backward:00000000 right_backward
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2195   .bss.PWM_R_backward_min:00000000 PWM_R_backward_min
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:288    .text.run_left_motor:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:294    .text.run_left_motor:00000000 run_left_motor
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:545    .text.run_left_motor:00000148 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2223   .bss.PWM_L:00000000 PWM_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2250   .bss.left_forward:00000000 left_forward
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2202   .bss.PWM_L_forward_min:00000000 PWM_L_forward_min
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2243   .bss.left_backward:00000000 left_backward
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2188   .bss.PWM_L_backward_min:00000000 PWM_L_backward_min
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:555    .text.setup_motor_channels:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:561    .text.setup_motor_channels:00000000 setup_motor_channels
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:614    .text.setup_motor_channels:00000020 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:623    .text.setup_encoder_timers:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:629    .text.setup_encoder_timers:00000000 setup_encoder_timers
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:654    .text.setup_encoder_timers:00000010 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2062   .bss.encoder_timer_R:00000000 encoder_timer_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2055   .bss.encoder_timer_L:00000000 encoder_timer_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2048   .bss.CPR:00000000 CPR
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:661    .text.setup_wheel_diameters:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:667    .text.setup_wheel_diameters:00000000 setup_wheel_diameters
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:688    .text.setup_wheel_diameters:00000010 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2041   .bss.wheel_diameter_R:00000000 wheel_diameter_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2034   .bss.wheel_diameter_L:00000000 wheel_diameter_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:694    .text.setup_PWM_min_max:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:700    .text.setup_PWM_min_max:00000000 setup_PWM_min_max
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:753    .text.setup_PWM_min_max:00000020 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2216   .bss.PWM_max:00000000 PWM_max
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:762    .text.stop_motors:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:768    .text.stop_motors:00000000 stop_motors
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:957    .text.stop_motors:00000104 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2139   .bss.target_speed_R:00000000 target_speed_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2132   .bss.target_speed_L:00000000 target_speed_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:968    .text.update_encoder_counts:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:974    .text.update_encoder_counts:00000000 update_encoder_counts
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1094   .text.update_encoder_counts:00000074 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2090   .bss.previous_encoder_timer_CNT_R:00000000 previous_encoder_timer_CNT_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2104   .bss.encoder_count_R:00000000 encoder_count_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2083   .bss.previous_encoder_timer_CNT_L:00000000 previous_encoder_timer_CNT_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2097   .bss.encoder_count_L:00000000 encoder_count_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1105   .text.set_target_speeds:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1111   .text.set_target_speeds:00000000 set_target_speeds
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1174   .text.set_target_speeds:00000048 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2181   .bss.PWM_offset_R:00000000 PWM_offset_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2174   .bss.PWM_offset_L:00000000 PWM_offset_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1186   .text.micros:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1192   .text.micros:00000000 micros
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1208   .text.micros:00000008 $d
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 46
 
 
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1219   .text.update_speed:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1225   .text.update_speed:00000000 update_speed
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1556   .text.update_speed:00000248 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2123   .bss.previous_speed_calculation_time:00000000 previous_speed_calculation_time
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2032   .bss.debugger_2:00000000 debugger_2
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2179   .bss.current_speed_R:00000000 current_speed_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2172   .bss.current_speed_L:00000000 current_speed_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2081   .bss.previous_encoder_count_L:00000000 previous_encoder_count_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2088   .bss.previous_encoder_count_R:00000000 previous_encoder_count_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2137   .bss.current_acceleration_R:00000000 current_acceleration_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2165   .bss.previous_speed_R:00000000 previous_speed_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2130   .bss.current_acceleration_L:00000000 current_acceleration_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2158   .bss.previous_speed_L:00000000 previous_speed_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1587   .text.send_values_to_usart:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1593   .text.send_values_to_usart:00000000 send_values_to_usart
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1721   .text.send_values_to_usart:000000a4 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2248   .bss.communication_state:00000000 communication_state
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1727   .text.delay:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1733   .text.delay:00000000 delay
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1762   .text.delay:00000018 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1767   .text.reset_speed_control_variables:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1773   .text.reset_speed_control_variables:00000000 reset_speed_control_variables
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1832   .text.reset_speed_control_variables:00000034 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2025   .bss.previous_speed_control_time:00000000 previous_speed_control_time
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1997   .bss.speed_integral_L:00000000 speed_integral_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2018   .bss.speed_integral_R:00000000 speed_integral_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1990   .bss.speed_derivative_L:00000000 speed_derivative_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2011   .bss.speed_derivative_R:00000000 speed_derivative_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1983   .bss.previous_speed_error_L:00000000 previous_speed_error_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2004   .bss.previous_speed_error_R:00000000 previous_speed_error_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1845   .text.reset_position_control_variables:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1851   .text.reset_position_control_variables:00000000 reset_position_control_variables
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1910   .text.reset_position_control_variables:00000034 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1962   .bss.previous_position_control_time:00000000 previous_position_control_time
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1934   .bss.position_integral_L:00000000 position_integral_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1948   .bss.position_integral_R:00000000 position_integral_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1927   .bss.position_derivative_L:00000000 position_derivative_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1941   .bss.position_derivative_R:00000000 position_derivative_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1969   .bss.previous_position_error_L:00000000 previous_position_error_L
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1976   .bss.previous_position_error_R:00000000 previous_position_error_R
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1924   .bss.position_derivative_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1931   .bss.position_integral_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1938   .bss.position_derivative_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1945   .bss.position_integral_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1955   .data.position_max_response:00000000 position_max_response
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1952   .data.position_max_response:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1959   .bss.previous_position_control_time:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1966   .bss.previous_position_error_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1973   .bss.previous_position_error_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1980   .bss.previous_speed_error_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1987   .bss.speed_derivative_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:1994   .bss.speed_integral_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2001   .bss.previous_speed_error_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2008   .bss.speed_derivative_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2015   .bss.speed_integral_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2022   .bss.previous_speed_control_time:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2029   .bss.debugger_2:00000000 $d
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccug6GhT.s 			page 48
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1219   .text.update_speed:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1225   .text.update_speed:00000000 update_speed
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1556   .text.update_speed:00000248 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2111   .bss.previous_speed_calculation_time:00000000 previous_speed_calculation_time
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2020   .bss.debugger_2:00000000 debugger_2
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2167   .bss.current_speed_R:00000000 current_speed_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2160   .bss.current_speed_L:00000000 current_speed_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2069   .bss.previous_encoder_count_L:00000000 previous_encoder_count_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2076   .bss.previous_encoder_count_R:00000000 previous_encoder_count_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2125   .bss.current_acceleration_R:00000000 current_acceleration_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2153   .bss.previous_speed_R:00000000 previous_speed_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2118   .bss.current_acceleration_L:00000000 current_acceleration_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2146   .bss.previous_speed_L:00000000 previous_speed_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1587   .text.send_values_to_usart:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1593   .text.send_values_to_usart:00000000 send_values_to_usart
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1721   .text.send_values_to_usart:000000a4 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2236   .bss.communication_state:00000000 communication_state
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1727   .text.delay:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1733   .text.delay:00000000 delay
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1755   .text.reset_speed_control_variables:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1761   .text.reset_speed_control_variables:00000000 reset_speed_control_variables
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1820   .text.reset_speed_control_variables:00000034 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2013   .bss.previous_speed_control_time:00000000 previous_speed_control_time
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1985   .bss.speed_integral_L:00000000 speed_integral_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2006   .bss.speed_integral_R:00000000 speed_integral_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1978   .bss.speed_derivative_L:00000000 speed_derivative_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1999   .bss.speed_derivative_R:00000000 speed_derivative_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1971   .bss.previous_speed_error_L:00000000 previous_speed_error_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1992   .bss.previous_speed_error_R:00000000 previous_speed_error_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1833   .text.reset_position_control_variables:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1839   .text.reset_position_control_variables:00000000 reset_position_control_variables
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1898   .text.reset_position_control_variables:00000034 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1950   .bss.previous_position_control_time:00000000 previous_position_control_time
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1922   .bss.position_integral_L:00000000 position_integral_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1936   .bss.position_integral_R:00000000 position_integral_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1915   .bss.position_derivative_L:00000000 position_derivative_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1929   .bss.position_derivative_R:00000000 position_derivative_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1957   .bss.previous_position_error_L:00000000 previous_position_error_L
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1964   .bss.previous_position_error_R:00000000 previous_position_error_R
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1912   .bss.position_derivative_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1919   .bss.position_integral_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1926   .bss.position_derivative_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1933   .bss.position_integral_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1943   .data.position_max_response:00000000 position_max_response
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1940   .data.position_max_response:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1947   .bss.previous_position_control_time:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1954   .bss.previous_position_error_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1961   .bss.previous_position_error_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1968   .bss.previous_speed_error_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1975   .bss.speed_derivative_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1982   .bss.speed_integral_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1989   .bss.previous_speed_error_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:1996   .bss.speed_derivative_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2003   .bss.speed_integral_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2010   .bss.previous_speed_control_time:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2017   .bss.debugger_2:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2027   .bss.debugger:00000000 debugger
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s 			page 47
 
 
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2039   .bss.debugger:00000000 debugger
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2036   .bss.debugger:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2043   .bss.wheel_diameter_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2050   .bss.wheel_diameter_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2057   .bss.CPR:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2064   .bss.encoder_timer_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2071   .bss.encoder_timer_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2078   .bss.previous_encoder_count_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2085   .bss.previous_encoder_count_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2092   .bss.previous_encoder_timer_CNT_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2099   .bss.previous_encoder_timer_CNT_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2106   .bss.encoder_count_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2113   .bss.encoder_count_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2120   .bss.previous_speed_calculation_time:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2127   .bss.current_acceleration_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2134   .bss.current_acceleration_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2141   .bss.target_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2148   .bss.target_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2155   .bss.previous_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2162   .bss.previous_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2169   .bss.current_speed_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2176   .bss.current_speed_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2183   .bss.PWM_offset_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2190   .bss.PWM_offset_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2197   .bss.PWM_L_backward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2204   .bss.PWM_R_backward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2211   .bss.PWM_L_forward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2218   .bss.PWM_R_forward_min:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2225   .bss.PWM_max:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2232   .bss.PWM_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2239   .bss.PWM_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2249   .bss.communication_state:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2252   .bss.left_backward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2259   .bss.left_forward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2266   .bss.right_backward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2273   .bss.right_forward:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccug6GhT.s:2280   .bss.htim_motors:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2024   .bss.debugger:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2031   .bss.wheel_diameter_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2038   .bss.wheel_diameter_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2045   .bss.CPR:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2052   .bss.encoder_timer_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2059   .bss.encoder_timer_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2066   .bss.previous_encoder_count_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2073   .bss.previous_encoder_count_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2080   .bss.previous_encoder_timer_CNT_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2087   .bss.previous_encoder_timer_CNT_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2094   .bss.encoder_count_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2101   .bss.encoder_count_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2108   .bss.previous_speed_calculation_time:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2115   .bss.current_acceleration_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2122   .bss.current_acceleration_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2129   .bss.target_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2136   .bss.target_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2143   .bss.previous_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2150   .bss.previous_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2157   .bss.current_speed_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2164   .bss.current_speed_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2171   .bss.PWM_offset_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2178   .bss.PWM_offset_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2185   .bss.PWM_L_backward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2192   .bss.PWM_R_backward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2199   .bss.PWM_L_forward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2206   .bss.PWM_R_forward_min:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2213   .bss.PWM_max:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2220   .bss.PWM_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2227   .bss.PWM_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2237   .bss.communication_state:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2240   .bss.left_backward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2247   .bss.left_forward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2254   .bss.right_backward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2261   .bss.right_forward:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccPWM2OE.s:2268   .bss.htim_motors:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d
@@ -2818,4 +2802,4 @@ __aeabi_d2f
 __aeabi_dadd
 HAL_UART_Transmit
 huart2
-vTaskDelay
+HAL_Delay

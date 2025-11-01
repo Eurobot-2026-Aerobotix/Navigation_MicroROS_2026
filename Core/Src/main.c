@@ -83,11 +83,11 @@ int8_t first_forward_recieved = 0;
 // TODO: don't forget to make sure the center of gravity is on the roll axis
 float kpS_R = 5; // 1.5 3
 float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
-float kiS_R = 15; // 8 13.5
+float kiS_R = 90; // 8 13.5
 
 float kpS_L = 5; // 3.5 5
 float kdS_L = 0; // 0.00 0
-float kiS_L = 15; // 20 15.5
+float kiS_L = 90; // 20 15.5
 
 int timer_flag = 0;
 
@@ -103,13 +103,13 @@ int timer_flag = 0;
 //float kiP_L = 100;
 //float previous_position_error_L = 0;
 
-float kpP_R = 60;
-float kdP_R = 6;
+float kpP_R = 15;
+float kdP_R = 0.8;
 float kiP_R = 100;
 
-float kpP_L = 25;
-float kdP_L = 6;
-float kiP_L = 100;
+float kpP_L = 18;
+float kdP_L = 1;
+float kiP_L = 90;
 
 int step = 0;
 
@@ -357,14 +357,14 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
-  setup_motor_channels(&htim1, TIM_CHANNEL_3, TIM_CHANNEL_4, TIM_CHANNEL_2, TIM_CHANNEL_1);
+  setup_motor_channels(&htim1, TIM_CHANNEL_2, TIM_CHANNEL_1, TIM_CHANNEL_3, TIM_CHANNEL_4);
   setup_encoder_timers(&htim4, &htim3, 4000);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(80.677778549896687536965, 80.107963379862647517991419120495);
+  setup_wheel_diameters(61.047125366876906799635773069208, 60.969172134165810988878057796334);
 
-  setup_wheels_spacing(188.5, 339.50835142717724915667004269125);
+  setup_wheels_spacing(188.5, 293.38713913895300766466587419031);
   //setup_wheels_spacing(188.5, 342.5);
-  setup_PWM_min_max(4499, 1080, 1280, -1180, -1480);
+  setup_PWM_min_max(4499, 800, 800, -800, -800);
 
   // starting timers
   HAL_TIM_Base_Start_IT(&htim7); // interrupt timer
@@ -402,11 +402,35 @@ int main(void)
   PWM_L = 0;
   communication_state = PC;
 
-  control_loop_state = DISACTIVATED;
+  control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
 
-  set_position(0, 0, -90, -90);
+  //control_loop_state = POSITION;
+  /*
+  set_target_encoder_counts(200, 200);
+  while(1){
+	  send_values_to_usart(encoder_count_R, encoder_count_L, target_encoder_count_R, target_encoder_count_L);
+	  HAL_Delay(1);
+	  if(is_idle()){
+		  control_loop_state = DISACTIVATED;
+	  }
+  }
+  */
+//  while(1){
+//	  if (micros() > 1000000 && micros() < 3000000){
+//		  target_speed_R = 200;
+//		  target_speed_L = 200;
+//	  }else{
+//		  target_speed_R = 0;
+//		  target_speed_L = 0;
+//	  }
+//	  send_values_to_usart(current_speed_R, current_speed_L, target_speed_R, target_speed_L);
+//	  HAL_Delay(1);
+//  }
+
+
+  //set_position(0, 0, -90, -90);
 
 //  robot_status.status = GOIN_TO;
 //  robot_status.arguments[0] = 500.0;

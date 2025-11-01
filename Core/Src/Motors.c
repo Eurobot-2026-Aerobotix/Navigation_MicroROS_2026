@@ -108,11 +108,11 @@ void stop_motors(){
 void update_encoder_counts(){ // ISR safe, takes approximately 250ns
 	int32_t delta = (int32_t)(encoder_timer_R->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_R;
 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta; // handling overflow
-	encoder_count_R -= delta;
+	encoder_count_R -= delta; // it was + not - but the encoder phase pins were inverted
 
 	delta = (int32_t)(encoder_timer_L->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_L;
 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
-	encoder_count_L += delta;
+	encoder_count_L -= delta; // it was + not - but the encoder phase pins were inverted
 
 	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
 	previous_encoder_timer_CNT_L = encoder_timer_L->Instance->CNT;
@@ -163,7 +163,8 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 	}
 }
 void delay(int ms){
-	vTaskDelay(pdMS_TO_TICKS(ms));
+	//vTaskDelay(pdMS_TO_TICKS(ms));
+	HAL_Delay(ms);
 }
 
 
