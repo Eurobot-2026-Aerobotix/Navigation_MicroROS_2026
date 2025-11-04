@@ -406,11 +406,7 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  move_forward(500, 600);
-  HAL_Delay(1000);
-  move_forward(100, 500);
-  HAL_Delay(1000);
-  move_forward(200, 600);
+  move_forward(1000, 800);
   HAL_Delay(1000);
   // TODO: integral is overshooting when the target speed is not constant, need to constrain it with a dynamic threshold
 
@@ -1089,7 +1085,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
 				PWM_R = (target_speed_R == 0)?0: PWM_R;
 
-				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
+				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) || (fabs(speed_integral_R*kiS_R) > PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
 
 				// left motor speed control
 				error = target_speed_L - current_speed_L;
@@ -1106,7 +1102,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
 				PWM_L = (target_speed_L == 0)?0: PWM_L;
 
-				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
+				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) || (fabs(speed_integral_L*kiS_L) > PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
 
 			}else if (control_loop_state == POSITION){
 				float tmp = (micros() - previous_position_control_time);
