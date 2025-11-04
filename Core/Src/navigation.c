@@ -11,8 +11,9 @@ enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
-float ramping_acceleration = 5;
-float breaking_acceleration = -1.5;
+float ramping_acceleration = 2.5;
+float acc_linearization_coef = 20;
+float breaking_acceleration = -2;
 float emergency_breaking_acceleration = -10;
 float rotating_speed = 500;
 int8_t direction_R;
@@ -39,7 +40,7 @@ int move_forward(float distance, float speed){
 	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
 		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
 		float intersection_speed = ramping_acceleration * intersection_x;
-		speed = 0.9 * intersection_speed;
+		speed = 0.95 * intersection_speed;
 		x1 = speed/ramping_acceleration;
 		x2 = speed/breaking_acceleration + distance;
 	}
@@ -64,6 +65,9 @@ int move_forward(float distance, float speed){
 		if (wheel_state_R == ACCELERATING && x > x1 ){
 			wheel_state_R = CRUISING;
 			wheel_state_L = CRUISING;
+			cruise_speed_R = calculate_instant_target_speed_R(x, distance);
+			cruise_speed_L = calculate_instant_target_speed_L(x, distance);
+			x2 = cruise_speed_L/breaking_acceleration + distance;
 		}else if (wheel_state_R == CRUISING && x > x2){
 			wheel_state_R = CONTROLLED_BREAK;
 			wheel_state_L = CONTROLLED_BREAK;
@@ -209,10 +213,10 @@ int move_backward(float distance, float speed){
 float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
 	if (wheel_state_R == ACCELERATING){
 		if (direction_R == 1){
-			filtered_target_speed_R = MAX(filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(ramping__acceleration*x, cruise_speed_R), 20);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(ramping__acceleration*sqrt(x)*acc_linearization_coef, cruise_speed_R), 20);
 			return filtered_target_speed_R;
 		}else{
-			filtered_target_speed_R = MIN(filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(-ramping__acceleration*x, cruise_speed_R), -20);;
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(-ramping__acceleration*x, cruise_speed_R), -20);;
 			return filtered_target_speed_R;
 		}
 
@@ -222,7 +226,7 @@ float calculate_instant_target_speed_R_full(float x, float distance, float rampi
 
 	}else if (wheel_state_R == CONTROLLED_BREAK){
 		if (direction_R == 1){
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(breaking__acceleration*(x-distance), 150);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-distance), 150), cruise_speed_R);
 			return filtered_target_speed_R;
 		}else{
 			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(-breaking__acceleration*(x-distance), -150);
@@ -241,10 +245,10 @@ float calculate_instant_target_speed_R_full(float x, float distance, float rampi
 float calculate_instant_target_speed_L_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
 	if (wheel_state_L == ACCELERATING){
 		if (direction_L == 1){
-			filtered_target_speed_L = MAX(filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(ramping__acceleration*x, cruise_speed_L), 20);;
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(ramping__acceleration*sqrt(x)*acc_linearization_coef, cruise_speed_L), 20);;
 			return filtered_target_speed_L;
 		}else{
-			filtered_target_speed_L = MIN(filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(-ramping__acceleration*x, cruise_speed_L), -20);
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(-ramping__acceleration*x, cruise_speed_L), -20);
 			return filtered_target_speed_L;
 		}
 
@@ -254,7 +258,7 @@ float calculate_instant_target_speed_L_full(float x, float distance, float rampi
 
 	}else if (wheel_state_L == CONTROLLED_BREAK){
 		if (direction_L == 1){
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(breaking__acceleration*(x-distance), 150);
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-distance), 150), cruise_speed_L);
 			return filtered_target_speed_L;
 		}else{
 			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(-breaking__acceleration*(x-distance), -150);
