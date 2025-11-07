@@ -80,7 +80,6 @@ service__srv__NaviStm_Response response_msg;
 //  Service Callback
 int8_t first_forward_recieved = 0;
 // speed control parameters
-// TODO: don't forget to make sure the center of gravity is on the roll axis
 float kpS_R = 5; // 1.5 3
 float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
 float kiS_R = 90; // 8 13.5
@@ -93,22 +92,12 @@ int timer_flag = 0;
 
 
 // position control parameters
-//float kpP_R = 25;
-//float kdP_R = 2;
-//float kiP_R = 100;
-//float previous_position_error_R = 0;
-//
-//float kpP_L = 25;
-//float kdP_L = 2;
-//float kiP_L = 100;
-//float previous_position_error_L = 0;
-
-float kpP_R = 15;
+float kpP_R = 10;
 float kdP_R = 0.8;
-float kiP_R = 100;
+float kiP_R = 90;
 
-float kpP_L = 18;
-float kdP_L = 1;
+float kpP_L = 10;
+float kdP_L = 0.8;
 float kiP_L = 90;
 
 int step = 0;
@@ -406,10 +395,7 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  move_backward(100, 500);
-  move_backward(100, 500);
-  move_backward(100, 500);
-  move_backward(100, 500);
+  go_to_backwards(300, -300, 1000);
   HAL_Delay(1000);
   // TODO: integral is overshooting when the target speed is not constant, need to constrain it with a dynamic threshold
 
