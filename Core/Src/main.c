@@ -406,7 +406,10 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  move_forward(10, 500);
+  move_backward(100, 500);
+  move_backward(100, 500);
+  move_backward(100, 500);
+  move_backward(100, 500);
   HAL_Delay(1000);
   // TODO: integral is overshooting when the target speed is not constant, need to constrain it with a dynamic threshold
 
@@ -1072,7 +1075,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				// right motor speed control
 				float error = target_speed_R - current_speed_R;
 
-				debugger_2 = error;
 				speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
 				speed_integral_R += error*(tmp/1000000);
 				//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;

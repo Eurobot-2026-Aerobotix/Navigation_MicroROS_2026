@@ -81,5 +81,6 @@ int go_to(float x, float y, float speed);// will return 0 if target has been rea
 void emergency_break();
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
 int8_t is_idle();
+void reset_speed_control_variables();
 
 #endif /* INC_NAVIGATION_H_ */

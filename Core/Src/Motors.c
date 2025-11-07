@@ -119,9 +119,8 @@ void update_encoder_counts(){ // ISR safe, takes approximately 250ns
 }
 void update_speed(){ // ISR safe, takes approximately 350ns
 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
-	debugger_2 = 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR);
 	// TODO: after setting up the constants in the following expression, calculate the second part and paste it as is to save on CPU cycles
-	current_speed_R = current_speed_R*0.7 + debugger_2; // unit = mm/s // the first part is a filter that reduces jitter
+	current_speed_R = current_speed_R*0.7 + 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR); // unit = mm/s // the first part is a filter that reduces jitter
 	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*(wheel_diameter_L*PI*1000000/CPR);
 	previous_encoder_count_R = encoder_count_R;
 	previous_encoder_count_L = encoder_count_L;
@@ -165,19 +164,6 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 void delay(int ms){
 	//vTaskDelay(pdMS_TO_TICKS(ms));
 	HAL_Delay(ms);
-}
-
-
-void reset_speed_control_variables(){
-	previous_speed_control_time = micros()-999;
-	speed_integral_L = 0;
-	speed_integral_R = 0;
-	speed_derivative_L = 0;
-	speed_derivative_R = 0;
-	PWM_L = 0;
-	PWM_R = 0;
-	previous_speed_error_L = 0;
-	previous_speed_error_R = 0;
 }
 
 void reset_position_control_variables(){
