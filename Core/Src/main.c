@@ -395,9 +395,8 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  circle_curve(600, -300, -45, 1000);
+  circle_curve(0, 100, 180, 500);
   HAL_Delay(1000);
-  // TODO: integral is overshooting when the target speed is not constant, need to constrain it with a dynamic threshold
 
   //control_loop_state = POSITION;
   /*

@@ -236,10 +236,10 @@ float calculate_instant_target_speed_R_full(float x, float distance, float rampi
 
 	}else if (wheel_state_R == CONTROLLED_BREAK){
 		if (direction_R == 1){
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING)?0:deceleration_offset)-distance), 150), cruise_speed_R);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), 150), cruise_speed_R);
 			return filtered_target_speed_R;
 		}else{
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING)?0:deceleration_offset)-distance), -150), cruise_speed_R);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -150), cruise_speed_R);
 			return filtered_target_speed_R;
 		}
 
@@ -268,10 +268,10 @@ float calculate_instant_target_speed_L_full(float x, float distance, float rampi
 
 	}else if (wheel_state_L == CONTROLLED_BREAK){
 		if (direction_L == 1){
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING)?0:deceleration_offset)-distance), 150), cruise_speed_L);
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), 150), cruise_speed_L);
 			return filtered_target_speed_L;
 		}else{
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING)?0:deceleration_offset)-distance), -150), cruise_speed_L);
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -150), cruise_speed_L);
 			return filtered_target_speed_L;
 		}
 
@@ -538,17 +538,28 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	target_phi = deg_to_rad(target_phi);
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
-	float trajectory_phi = atan( (target_y - current_y) / (target_x - current_x) ); // -30
+	float trajectory_phi = atan2(target_y - current_y, target_x - current_x);
 	float alpha = trajectory_phi - target_phi;
 	float distance = get_distance_to(target_x, target_y);
+	if (fabs(sin(alpha)) < 1e-3){// almost straight line
+		return go_to(target_x, target_y, speed);
+	}
 	float radius = distance / ( 2*sin(alpha) );
 	float arc_length = 2 * fabs( alpha * radius);
-	float arc_length_R = 2 * fabs( alpha * ( radius - dead_wheels_spacing/2) );
-	float arc_length_L = 2 * fabs( alpha * ( radius + dead_wheels_spacing/2) );
+	float arc_length_R;
+	float arc_length_L;
+	if (radius > 0){
+		arc_length_R = 2 * fabs(alpha) * ( radius - dead_wheels_spacing/2);
+		arc_length_L = 2 * fabs(alpha) * ( radius + dead_wheels_spacing/2);
+	}else{
+		arc_length_R = -2 * fabs(alpha) * ( radius - dead_wheels_spacing/2);
+		arc_length_L = -2 * fabs(alpha) * ( radius + dead_wheels_spacing/2);
+	}
 
-	starting_phi = 2*trajectory_phi - target_phi + (absolute_phi - current_phi); // the part between paratheses is to offset the phi to make it in the prespective of absolute phi not current_phi
+	speed = speed*arc_length/MAX(fabs(arc_length_R), fabs(arc_length_L));
 
-	// !!!!!!!!!!!!!! el mochkla men starting phi, 9a3da tabda fi blasa bi 7aythou l get instant phi mahich s7i7a
+	//starting_phi = 2*trajectory_phi - target_phi + (absolute_phi - current_phi); // the part between paratheses is to offset the phi to make it in the prespective of absolute phi not current_phi
+
 	turning_radius = radius;
 
 	float center_point_x = target_x + radius*cos(target_phi - PI/2 );
@@ -559,23 +570,27 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		delay(10);
 	};
 	delay(200);
+	reset_speed_control_variables();
+	starting_phi = absolute_phi;
 	direction_R = 1;
 	direction_L = 1;
-	cruise_speed_R = speed * ( arc_length_R/arc_length );
-	cruise_speed_L = speed * ( arc_length_L/arc_length );
+	cruise_speed_R = speed;
+	cruise_speed_L = speed * ( arc_length_L/arc_length ); // not used
 
 	float x1 = speed/ramping_acceleration;
-	float x2 = speed/breaking_acceleration + arc_length  + deceleration_offset;
+	float x2 = speed/breaking_acceleration + arc_length;
+	debugger = (int)x1;
 
-	while (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
-		float intersection_x = (breaking_acceleration*(arc_length + deceleration_offset))/(breaking_acceleration - ramping_acceleration);
+	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
+		float intersection_x = (breaking_acceleration*(arc_length))/(breaking_acceleration - ramping_acceleration);
 		float intersection_speed = ramping_acceleration * intersection_x;
 		speed = intersection_speed;
 		x1 = speed/ramping_acceleration;
-		x2 = speed/breaking_acceleration + arc_length + deceleration_offset;
+		x2 = speed/breaking_acceleration + arc_length;
 		cruise_speed_R = speed; // we will use this as the center speed not the R, i have put it there to not create other stuff
 		cruise_speed_L = speed * ( arc_length_L/arc_length ); // not used
 	}
+	debugger_2 = x1;
 
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
@@ -593,7 +608,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			wheel_state_L = CRUISING;
 			cruise_speed_R = calculate_instant_target_speed_R(x, arc_length);
 			cruise_speed_L = calculate_instant_target_speed_L(x, arc_length);// not used
-			x2 = abs(cruise_speed_R)/breaking_acceleration + arc_length + deceleration_offset;
+			x2 = abs(cruise_speed_R)/breaking_acceleration + arc_length;
 		}else if (wheel_state_R == CRUISING && x > x2){
 			wheel_state_R = CONTROLLED_BREAK;
 			wheel_state_L = CONTROLLED_BREAK;
@@ -601,12 +616,12 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			return 0;
 		}
 
-		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * ( 2 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) );; // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * ( 0.7 / ( MAX( MIN( abs(target_speed_R) , abs(target_speed_L)), 100.0) /500.0) ); // the coefficient is tunable
 		if (x < 0.1*x1){
 			lane_correction_term = 0;
 		}
 		float sp = calculate_instant_target_speed_R(x, arc_length);
-		set_target_speeds(sp * (1 + lane_correction_term)*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term)*( arc_length_L/arc_length ));
+		set_target_speeds(sp * (1 + lane_correction_term*SGN(arc_length_R))*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term*SGN(arc_length_L))*( arc_length_L/arc_length ));
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 
@@ -621,8 +636,8 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	sp = MAX(sp, 150);
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * 50 ; // the coefficient is tunable
-		set_target_speeds(sp * (1 + lane_correction_term)*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term)*( arc_length_L/arc_length ));
+		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * ( 0.7 / ( MAX( MIN( abs(target_speed_R) , abs(target_speed_L)), 100.0) /500.0) ) ; // the coefficient is tunable
+		set_target_speeds(sp * (1 + lane_correction_term*SGN(arc_length_R))*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term*SGN(arc_length_L))*( arc_length_L/arc_length ));
 		sp = MAX(sp*0.995, 150);
 		previous_distance_to_target = distance_to_target;
 		delay(2);
