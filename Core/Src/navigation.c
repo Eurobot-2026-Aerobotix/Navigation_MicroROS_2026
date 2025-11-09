@@ -535,7 +535,16 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		delay(10);
 	};
 	delay(200);
+
 	target_phi = deg_to_rad(target_phi);
+	// projecting a sub_plane
+	set_new_plane();
+	target_phi = convert_phi_to_inner(target_phi);
+	float result[2];
+	convert_point_coordinates_to_inner(target_x, target_y, result);
+	target_x = result[0];
+	target_y = result[1];
+
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
 	float trajectory_phi = atan2(target_y - current_y, target_x - current_x);
@@ -613,6 +622,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			wheel_state_R = CONTROLLED_BREAK;
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
+			revert_to_original_plane();
 			return 0;
 		}
 
@@ -652,6 +662,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(arc_length, arc_length) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
+	revert_to_original_plane();
 	return 0;
 }
 

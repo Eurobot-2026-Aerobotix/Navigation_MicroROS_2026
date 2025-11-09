@@ -209,6 +209,14 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = (is_idle())? true: false;
 										break;
 
+									 case 5: // go to
+										robot_status.status = GOIN_TO_BACKWARDS;
+										robot_status.arguments[0] = req_in->arg2;
+										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
+										res_out->result = true;  // x, y, speed
+										break;
+
 									 default:
 										  res_out->result = false;
 										  break;
@@ -1021,6 +1029,10 @@ void executor_function(void *argument)
 		}
 		else if ( robot_status.status == GOIN_TO){
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == GOIN_TO_BACKWARDS){
+			go_to_backwards(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_FORWARD_WITH_DEVIATION){

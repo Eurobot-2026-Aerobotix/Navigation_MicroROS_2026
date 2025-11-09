@@ -21,6 +21,10 @@ extern float current_x;
 extern float current_y;
 extern float current_phi; // angle between x axis and the robot's center axis, in radians
 extern float absolute_phi; // phi without modulo 2PI
+extern float inner_plane_x;
+extern float inner_plane_y;
+extern float inner_plane_phi;
+extern float inner_plane_absolute_phi;
 
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
 void update_position();
@@ -33,6 +37,10 @@ float ticks_to_distance(int32_t ticks, float wheel_diameter);
 float distance_to_ticks(int32_t distance, float wheel_diameter);
 float rad_to_deg(float radian);
 float deg_to_rad(float degrees);
+void set_new_plane();
+void revert_to_original_plane();
+void convert_point_coordinates_to_inner(float x, float y, float* result);
+float convert_phi_to_inner(float phi);
 
 
 #endif /* INC_ODOMETRY_H_ */

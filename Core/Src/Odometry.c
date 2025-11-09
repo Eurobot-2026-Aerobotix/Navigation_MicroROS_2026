@@ -13,6 +13,10 @@ float current_x = 0;
 float current_y = 0;
 float current_phi = 0;
 float absolute_phi = 0;
+float inner_plane_x = 0;
+float inner_plane_y = 0;
+float inner_plane_phi = 0;
+float inner_plane_absolute_phi = 0;
 
 void update_position(){
 
@@ -84,4 +88,44 @@ float rad_to_deg(float radian){
 }
 float deg_to_rad(float degrees){
 	return ((degrees*PI)/180);
+}
+void set_new_plane(){
+	inner_plane_x = current_x;
+	inner_plane_y = current_y;
+	inner_plane_phi = current_phi;
+	inner_plane_absolute_phi = absolute_phi;
+	set_position(0, 0, 0, 0);
+}
+void revert_to_original_plane(){
+	float c = cos(inner_plane_phi);
+	float s = sin(inner_plane_phi);
+	float new_absolute_phi = inner_plane_absolute_phi + absolute_phi;
+	float new_phi = new_absolute_phi;
+	while (new_phi > PI){
+		new_phi -= 2*PI;
+	}
+	while (new_phi <= -PI){
+		new_phi += 2*PI;
+	}
+	set_position(inner_plane_x + c*current_x - s*current_y, inner_plane_y + s*current_x + c*current_y, new_phi, new_absolute_phi);
+}
+
+void convert_point_coordinates_to_inner(float x, float y, float* result){
+	float dx = x - inner_plane_x;
+	float dy = y - inner_plane_y;
+	float c = cos(inner_plane_phi);
+	float s = sin(inner_plane_phi);
+	result[0] = c*dx + s*dy;
+	result[1] = -s*dx + c*dy;
+}
+
+float convert_phi_to_inner(float phi){
+	float new_phi = phi - inner_plane_phi;
+	while (new_phi > PI){
+		new_phi -= 2*PI;
+	}
+	while (new_phi <= -PI){
+		new_phi += 2*PI;
+	}
+	return new_phi;
 }
