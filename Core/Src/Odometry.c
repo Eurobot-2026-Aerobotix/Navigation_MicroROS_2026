@@ -111,7 +111,7 @@ void revert_to_original_plane(){
 	float c = cos(inner_plane_phi);
 	float s = sin(inner_plane_phi);
 	float new_absolute_phi = inner_plane_absolute_phi + absolute_phi;
-	set_position(inner_plane_x + c*current_x - s*current_y, inner_plane_y + s*current_x + c*current_y, normalize_angle(new_absolute_phi), new_absolute_phi);
+	set_position(inner_plane_x + c*current_x - s*current_y, inner_plane_y + s*current_x + c*current_y, rad_to_deg(normalize_angle(new_absolute_phi)), rad_to_deg(new_absolute_phi));
 }
 
 void convert_point_coordinates_to_inner(float x, float y, float* result){
@@ -124,5 +124,8 @@ void convert_point_coordinates_to_inner(float x, float y, float* result){
 }
 
 float convert_phi_to_inner(float phi){
-	return normalize_angle(phi - inner_plane_phi);
+	return phi - inner_plane_phi;
+}
+float convert_phi_to_original(float phi){
+	return normalize_angle(phi + inner_plane_phi);
 }

@@ -403,8 +403,12 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  circle_curve(300, -300, -90, 500);
+  //circle_curve(50, 300, -180, 700); // TODO: edge case
+  //circle_curve(50, 300, 180, 700); // TODO: edge case
   //move_forward(500, 300);
+
+  //set_position(0, 0, -90, -90); // TODO: edge case AAAAAA
+  //circle_curve(-300, 300, 0, 700);
   HAL_Delay(1000);
 
   //control_loop_state = POSITION;

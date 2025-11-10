@@ -538,14 +538,20 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 
 	target_phi = deg_to_rad(target_phi);
 	// projecting a sub_plane
-//	set_new_plane();
-//	target_phi = convert_phi_to_inner(target_phi);
-//	float result[2];
-//	convert_point_coordinates_to_inner(target_x, target_y, result);
-//	target_x = result[0];
-//	target_y = result[1];
-
-	// TODO: see if the problem with the target_phi sign is only when 180 is involved, if not apply left right thingy
+	set_new_plane();
+	target_phi = convert_phi_to_inner(target_phi);
+	float result[2];
+	convert_point_coordinates_to_inner(target_x, target_y, result);
+	target_x = result[0];
+	target_y = result[1];
+	//edge cases
+	if (target_y > 0 && fabs(target_phi + PI) <= 0.001){
+		target_phi = PI;
+	}else if (target_y < 0 && fabs(target_phi - PI) <= 0.001){
+		target_phi = -PI;
+	}else if (!(fabs(target_phi - PI) <= 0.001 || fabs(target_phi + PI) <= 0.001)){
+		target_phi = normalize_angle(target_phi);
+	}
 
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
@@ -625,6 +631,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			revert_to_original_plane();
+			emergency_break();
 			return 0;
 		}
 
@@ -659,14 +666,20 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
+		if (wheel_state_R == EMERGENCY_BREAK){
+			revert_to_original_plane();
+			emergency_break();
+			return 0;
+		}
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
 	}
 	stop_motors();
-	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(arc_length, arc_length) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
+	target_phi = calculate_instant_target_phi(arc_length, arc_length) + inner_plane_absolute_phi;
+	revert_to_original_plane();
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
-	//revert_to_original_plane();
 	return 0;
 }
 
