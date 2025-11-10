@@ -18,6 +18,17 @@ float inner_plane_y = 0;
 float inner_plane_phi = 0;
 float inner_plane_absolute_phi = 0;
 
+float normalize_angle(float angle){
+	float a = angle;
+	while (a > PI){
+		a -= 2*PI;
+	}
+	while (a <= -PI){
+		a += 2*PI;
+	}
+	return a;
+}
+
 void update_position(){
 
 	float dR = ticks_to_distance(encoder_count_R - previous_encoder_count_R, wheel_diameter_R);
@@ -100,14 +111,7 @@ void revert_to_original_plane(){
 	float c = cos(inner_plane_phi);
 	float s = sin(inner_plane_phi);
 	float new_absolute_phi = inner_plane_absolute_phi + absolute_phi;
-	float new_phi = new_absolute_phi;
-	while (new_phi > PI){
-		new_phi -= 2*PI;
-	}
-	while (new_phi <= -PI){
-		new_phi += 2*PI;
-	}
-	set_position(inner_plane_x + c*current_x - s*current_y, inner_plane_y + s*current_x + c*current_y, new_phi, new_absolute_phi);
+	set_position(inner_plane_x + c*current_x - s*current_y, inner_plane_y + s*current_x + c*current_y, normalize_angle(new_absolute_phi), new_absolute_phi);
 }
 
 void convert_point_coordinates_to_inner(float x, float y, float* result){
@@ -120,12 +124,5 @@ void convert_point_coordinates_to_inner(float x, float y, float* result){
 }
 
 float convert_phi_to_inner(float phi){
-	float new_phi = phi - inner_plane_phi;
-	while (new_phi > PI){
-		new_phi -= 2*PI;
-	}
-	while (new_phi <= -PI){
-		new_phi += 2*PI;
-	}
-	return new_phi;
+	return normalize_angle(phi - inner_plane_phi);
 }

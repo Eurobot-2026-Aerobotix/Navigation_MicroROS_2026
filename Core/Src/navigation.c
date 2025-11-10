@@ -538,12 +538,14 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 
 	target_phi = deg_to_rad(target_phi);
 	// projecting a sub_plane
-	set_new_plane();
-	target_phi = convert_phi_to_inner(target_phi);
-	float result[2];
-	convert_point_coordinates_to_inner(target_x, target_y, result);
-	target_x = result[0];
-	target_y = result[1];
+//	set_new_plane();
+//	target_phi = convert_phi_to_inner(target_phi);
+//	float result[2];
+//	convert_point_coordinates_to_inner(target_x, target_y, result);
+//	target_x = result[0];
+//	target_y = result[1];
+
+	// TODO: see if the problem with the target_phi sign is only when 180 is involved, if not apply left right thingy
 
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code

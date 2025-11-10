@@ -209,7 +209,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = (is_idle())? true: false;
 										break;
 
-									 case 5: // go to
+									 case 12: // go to backwards
 										robot_status.status = GOIN_TO_BACKWARDS;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -403,7 +403,8 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  circle_curve(0, 100, 180, 500);
+  //circle_curve(300, -300, -90, 300);
+  move_forward(200, 500);
   HAL_Delay(1000);
 
   //control_loop_state = POSITION;

@@ -41,6 +41,7 @@ void set_new_plane();
 void revert_to_original_plane();
 void convert_point_coordinates_to_inner(float x, float y, float* result);
 float convert_phi_to_inner(float phi);
+float normalize_angle(float angle);
 
 
 #endif /* INC_ODOMETRY_H_ */
