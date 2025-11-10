@@ -639,7 +639,8 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
@@ -658,13 +659,14 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(arc_length, arc_length) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
-	revert_to_original_plane();
+	//revert_to_original_plane();
 	return 0;
 }
 
