@@ -530,8 +530,15 @@ int orientate(float orientation, int8_t is_radian){
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	while(!is_idle()){
-		delay(10);
-	};
+			delay(10);
+		};
+
+	if( fabs(atan2(target_y - current_y, target_x - current_x) - current_phi ) > PI/2){ // if the target point is behind the robot, it will turn 180 then project the plane and do the rest
+		rotate(180, 0);
+		while(!is_idle()){
+			delay(10);
+		};
+	}
 
 	target_phi = deg_to_rad(target_phi);
 	// projecting a sub_plane
@@ -641,8 +648,8 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 		distance_to_target = MIN(distance_to_target, arc_length);
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(distance_to_target, x, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(distance_to_target, x, arc_length, alpha*100);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
@@ -667,8 +674,8 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			emergency_break();
 			return 0;
 		}
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	target_phi = calculate_instant_target_phi(arc_length, arc_length) + inner_plane_absolute_phi;

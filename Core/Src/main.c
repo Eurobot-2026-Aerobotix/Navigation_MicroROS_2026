@@ -399,12 +399,12 @@ int main(void)
   PWM_L = 0;
   communication_state = PC;
 
-  //set_position(300, 300, 90, 90);
+  //set_position(50, 400, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
 
-  circle_curve(-300, 0, -90, 500); // TODO: edge case fennegative ta3 ezzouz
+  //circle_curve(400, 600, 0, 800);
   //move_forward(500, 300);
 
   //set_position(0, 0, -90, -90);
@@ -415,7 +415,7 @@ int main(void)
   //circle_curve(0, 0, 90, 500); // te5dem sayee
 
   //set_position(300, 300, 90, 90);
-  //circle_curve(300, 0, 0, 500);
+  //circle_curve(300, 0, 0, 500); //te5dem sayee
 
   //circle_curve(-300, 0, -90, 500);
 
