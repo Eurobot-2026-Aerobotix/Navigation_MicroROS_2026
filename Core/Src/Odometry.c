@@ -72,6 +72,13 @@ void set_position(float current__x, float current__y, float current__phi, float 
 	encoder_count_L = -(CPR * absolute__phi * dead_wheels_spacing/2) / (wheel_diameter_L * PI);
 	previous_encoder_count_L = encoder_count_L;
 	previous_encoder_count_R = encoder_count_R;
+	reset_position_control_variables();
+	target_encoder_count_R = encoder_count_R;
+	target_encoder_count_L = encoder_count_L;
+	position_integral_R = 0;
+	position_derivative_R = 0;
+	position_integral_L = 0;
+	position_derivative_L = 0;
 }
 float get_distance_to(float x, float y){
 	return sqrt(SQR(current_x - x) + SQR(current_y - y));
@@ -79,7 +86,16 @@ float get_distance_to(float x, float y){
 float get_arc_distance_to(float target_point__x, float target_point__y, float center_point__x, float center_point__y, float R){
 	float projection_angle = atan2(current_y - center_point__y , current_x - center_point__x);
 	float target_angle = atan2(target_point__y - center_point__y , target_point__x - center_point__x);
-	return fabs(R * (projection_angle - target_angle));
+	float robot_to_target_angle = atan2(target_point__y - current_y , target_point__x - current_x);
+
+	float delta = projection_angle - target_angle;
+	if (delta > PI) delta -= 2 * PI;
+	if (delta < -PI) delta += 2 * PI;
+
+	if (fabs(normalize_angle(current_phi - robot_to_target_angle)) > PI/2){
+		delta = 2*PI - fabs(delta);
+	}
+	return fabs(R * delta);
 }
 float get_angle_to(float x, float y){
 	return atan2(y - current_y, x - current_x);

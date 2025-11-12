@@ -55,6 +55,8 @@ float position_integral_R = 0;
 float position_derivative_R = 0;
 float position_integral_L = 0;
 float position_derivative_L = 0;
+int32_t target_encoder_count_R = 0;
+int32_t target_encoder_count_L = 0;
 
 void run_right_motor(){
 	if (PWM_R>0){

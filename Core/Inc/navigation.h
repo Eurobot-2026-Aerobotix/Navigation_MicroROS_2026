@@ -64,8 +64,6 @@ extern float cruise_speed_R; // the speed which the right wheel is accelerating 
 extern float cruise_speed_L;
 extern float starting_phi;
 extern float turning_radius;
-extern int32_t target_encoder_count_R;
-extern int32_t target_encoder_count_L;
 
 int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_backward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached

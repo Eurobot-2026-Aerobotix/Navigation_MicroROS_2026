@@ -77,6 +77,8 @@ extern float position_integral_R;
 extern float position_derivative_R;
 extern float position_integral_L;
 extern float position_derivative_L;
+extern int32_t target_encoder_count_R;
+extern int32_t target_encoder_count_L;
 
 
 void run_right_motor();

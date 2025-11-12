@@ -23,8 +23,6 @@ float cruise_speed_R;
 float cruise_speed_L;
 float starting_phi;
 float turning_radius;
-int32_t target_encoder_count_R = 0;
-int32_t target_encoder_count_L = 0;
 float filtered_target_speed_R = 0;
 float filtered_target_speed_L = 0;
 float speed_filter = 0.95;
@@ -534,7 +532,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	while(!is_idle()){
 		delay(10);
 	};
-	delay(200);
 
 	target_phi = deg_to_rad(target_phi);
 	// projecting a sub_plane
@@ -575,7 +572,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 
 	speed = speed*arc_length/MAX(fabs(arc_length_R), fabs(arc_length_L));
 
-	//starting_phi = 2*trajectory_phi - target_phi + (absolute_phi - current_phi); // the part between paratheses is to offset the phi to make it in the prespective of absolute phi not current_phi
+	starting_phi = 2*trajectory_phi - target_phi + (absolute_phi - current_phi); // the part between paratheses is to offset the phi to make it in the prespective of absolute phi not current_phi
 
 	turning_radius = radius;
 
@@ -586,9 +583,8 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	while(!is_idle()){
 		delay(10);
 	};
-	delay(200);
 	reset_speed_control_variables();
-	starting_phi = absolute_phi;
+	//starting_phi = absolute_phi;
 	direction_R = 1;
 	direction_L = 1;
 	cruise_speed_R = speed;
@@ -596,7 +592,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 
 	float x1 = speed/ramping_acceleration;
 	float x2 = speed/breaking_acceleration + arc_length;
-	debugger = (int)x1;
 
 	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
 		float intersection_x = (breaking_acceleration*(arc_length))/(breaking_acceleration - ramping_acceleration);
@@ -607,7 +602,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		cruise_speed_R = speed; // we will use this as the center speed not the R, i have put it there to not create other stuff
 		cruise_speed_L = speed * ( arc_length_L/arc_length ); // not used
 	}
-	debugger_2 = x1;
 
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
@@ -645,9 +639,10 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		previous_distance_to_target = distance_to_target;
 
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
+		distance_to_target = MIN(distance_to_target, arc_length);
 
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
+		send_values_to_usart(distance_to_target, x, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
@@ -662,6 +657,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
+		distance_to_target = MIN(distance_to_target, arc_length);
 
 		if(micros() - phase_two_start_time> 4000000){
 			break;
@@ -677,6 +673,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	stop_motors();
 	target_phi = calculate_instant_target_phi(arc_length, arc_length) + inner_plane_absolute_phi;
 	revert_to_original_plane();
+	debugger_2 = target_phi - absolute_phi;
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
