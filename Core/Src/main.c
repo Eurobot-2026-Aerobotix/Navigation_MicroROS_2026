@@ -404,7 +404,9 @@ int main(void)
 
   robot_status.status = IDLE;
 
+  move_backward(1000, 800);
   //circle_curve(400, 600, 0, 800);
+  //go_to(50, 400, 800);
   //move_forward(500, 300);
 
   //set_position(0, 0, -90, -90);

@@ -11,7 +11,7 @@ enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
-float ramping_acceleration = 5;
+float ramping_acceleration = 6.5;
 float acc_linearization_coef = 12;
 float breaking_acceleration = -2;
 float deceleration_offset = 40;
@@ -43,7 +43,7 @@ int move_forward(float distance, float speed){
 	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
 		float intersection_x = (breaking_acceleration*(distance+deceleration_offset))/(breaking_acceleration - ramping_acceleration);
 		float intersection_speed = ramping_acceleration * intersection_x;
-		speed = intersection_speed*1.1;
+		speed = intersection_speed*0.9;
 		x1 = speed/ramping_acceleration;
 		x2 = speed/breaking_acceleration + distance + deceleration_offset;
 	}
@@ -78,7 +78,7 @@ int move_forward(float distance, float speed){
 			return 0;
 		}
 
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 		if (x < 0.1*x1){
 			lane_correction_term = 0;
 		}
@@ -101,7 +101,7 @@ int move_forward(float distance, float speed){
 	previous_distance_to_target = distance_to_target;
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
+		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
 		speed = MAX(speed*0.99, 150);
 		previous_distance_to_target = distance_to_target;
