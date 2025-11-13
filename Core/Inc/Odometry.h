@@ -25,9 +25,12 @@ extern float inner_plane_x;
 extern float inner_plane_y;
 extern float inner_plane_phi;
 extern float inner_plane_absolute_phi;
+extern int8_t skip_position_update;
+extern int8_t block_get_position;
+extern int8_t is_inside_inner_plane;
 
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
-void update_position();
+void update_position(int skip);
 void reset_position();
 void set_position(float current__x, float current__y, float current__phi, float absolute__phi);
 float get_distance_to(float x, float y);
@@ -43,6 +46,6 @@ void convert_point_coordinates_to_inner(float x, float y, float* result);
 float convert_phi_to_inner(float phi);
 float convert_phi_to_original(float phi);
 float normalize_angle(float angle);
-
+void get_position(float* position);
 
 #endif /* INC_ODOMETRY_H_ */

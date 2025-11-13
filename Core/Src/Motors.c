@@ -121,18 +121,18 @@ void update_encoder_counts(){ // ISR safe, takes approximately 250ns
 }
 void update_speed(){ // ISR safe, takes approximately 350ns
 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
-	// TODO: after setting up the constants in the following expression, calculate the second part and paste it as is to save on CPU cycles
-	current_speed_R = current_speed_R*0.7 + 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR); // unit = mm/s // the first part is a filter that reduces jitter
-	current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*(wheel_diameter_L*PI*1000000/CPR);
-	previous_encoder_count_R = encoder_count_R;
-	previous_encoder_count_L = encoder_count_L;
-	// TODO: after setting up the constants in the following expression, calculate the second part and paste it as is to save on CPU cycles
-	current_acceleration_R = current_acceleration_R * 0.998 + 0.002* (current_speed_R - previous_speed_R)*1000000 / tmp;// unit = mm/s² // the first part is a filter that reduces jitter
-	current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed_L)*1000000 / tmp;
-	previous_speed_R = current_speed_R;
-	previous_speed_L = current_speed_L;
-	previous_speed_calculation_time = micros();
-	// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's speed does not exactly match the driven wheel's speed, no problem for now
+	if (tmp > 100){
+		current_speed_R = current_speed_R*0.7 + 0.3 * ((encoder_count_R - previous_encoder_count_R) / tmp)*(wheel_diameter_R*PI*1000000/CPR); // unit = mm/s // the first part is a filter that reduces jitter
+		current_speed_L = current_speed_L*0.7 + 0.3* ((encoder_count_L - previous_encoder_count_L) / tmp)*(wheel_diameter_L*PI*1000000/CPR);
+		previous_encoder_count_R = encoder_count_R;
+		previous_encoder_count_L = encoder_count_L;
+		current_acceleration_R = current_acceleration_R * 0.998 + 0.002* (current_speed_R - previous_speed_R)*1000000 / tmp;// unit = mm/s² // the first part is a filter that reduces jitter
+		current_acceleration_L = current_acceleration_L * 0.998 + 0.002* (current_speed_L - previous_speed_L)*1000000 / tmp;
+		previous_speed_R = current_speed_R;
+		previous_speed_L = current_speed_L;
+		previous_speed_calculation_time = micros();
+		// TODO: this speed is the dead wheel's speed, if the robot is following a curve the dead wheel's speed does not exactly match the driven wheel's speed, no problem for now
+	}
 }
 void set_target_speeds(float target__speed_R, float target__speed_L){
 	PWM_offset_R = (target__speed_R > 0)? PWM_R_forward_min - 30: PWM_R_backward_min +30;

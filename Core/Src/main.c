@@ -206,7 +206,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle())? true: false;
+										res_out->result = (is_idle() && !complex_movement)? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -404,7 +404,32 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  move_backward(1000, 800);
+  go_to(500, 0, 800);
+//  HAL_Delay(1000);
+//  for(int i=0; i<10; i++){
+//	  send_values_to_usart(current_x, current_y, current_phi, 0);
+//	  HAL_Delay(10);
+//  }
+  circle_curve(500, 500, 180, 800);
+//  HAL_Delay(1000);
+//  for(int i=0; i<10; i++){
+//  	  send_values_to_usart(current_x, current_y, current_phi, 0);
+//  	  HAL_Delay(10);
+//  }
+  //go_to(500, 500, 800);
+  go_to(0, 0, 800);
+//  HAL_Delay(1000);
+//  for(int i=0; i<10; i++){
+//  	  send_values_to_usart(current_x, current_y, current_phi, 0);
+//  	  HAL_Delay(10);
+//  }
+  orientate(0, 0);
+//  HAL_Delay(1000);
+//  for(int i=0; i<10; i++){
+//  	  send_values_to_usart(current_x, current_y, current_phi, 0);
+//  	  HAL_Delay(10);
+//  }
+
   //circle_curve(400, 600, 0, 800);
   //go_to(50, 400, 800);
   //move_forward(500, 300);
@@ -1082,8 +1107,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = 0;
 			PWM_R = 0;
 		}else{
-			update_encoder_counts();
-			update_position(); // will also update the speed internally
+			update_position(skip_position_update); // will also update the speed internally
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);
 				// right motor speed control
