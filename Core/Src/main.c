@@ -228,12 +228,14 @@ void publisher_task(void *argument) {
 
     for (;;) {
         // Get pose data
-        pose_msg.x = current_x;       // Replace with actual function
-        pose_msg.y = current_y;
-        pose_msg.z =current_phi;   // Store θ in z
+    	float pos[3];
+    	get_position(pos);
+    	pose_msg.x = pos[0];
+    	pose_msg.y = pos[1];
+    	pose_msg.z = pos[2];   // θ
 
         rcl_publish(&pose_publisher, &pose_msg, NULL);
-        osDelay(1500);  // Adjust as needed
+        vTaskDelay(pdMS_TO_TICKS(70));  // Adjust as needed
     }
 }
 
@@ -397,14 +399,14 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  communication_state = PC;
+  communication_state = RASPBERRY;
 
   //set_position(50, 400, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
 
-  go_to(500, 0, 800);
+  /*go_to(500, 0, 800);
 //  HAL_Delay(1000);
 //  for(int i=0; i<10; i++){
 //	  send_values_to_usart(current_x, current_y, current_phi, 0);
@@ -428,7 +430,7 @@ int main(void)
 //  for(int i=0; i<10; i++){
 //  	  send_values_to_usart(current_x, current_y, current_phi, 0);
 //  	  HAL_Delay(10);
-//  }
+//  }*/
 
   //circle_curve(400, 600, 0, 800);
   //go_to(50, 400, 800);
@@ -1020,12 +1022,12 @@ void StartDefaultTask(void *argument)
 	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
 	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
 
-//	    const osThreadAttr_t pubTask_attributes = {
-//	        .name = "posePubTask",
-//	        .stack_size = 256 * 4,  // Adjust if needed
-//	        .priority = (osPriority_t) osPriorityNormal,
-//	    };
-//	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
+	    const osThreadAttr_t pubTask_attributes = {
+	        .name = "posePubTask",
+	        .stack_size = 256 * 4,  // Adjust if needed
+	        .priority = (osPriority_t) osPriorityNormal2,
+	    };
+	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
 
 
 	    //  Keep ROS 2 Running
