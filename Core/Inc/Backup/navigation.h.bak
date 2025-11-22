@@ -37,6 +37,7 @@ enum Robot_state_enum{
 	MOVIN_FORWARD,
 	MOVIN_BACKWARD,
 	GOIN_TO,
+	GOIN_TO_BACKWARDS,
 	ROTATIN,
 	ORIENTATIN,
 	MOVIN_FORWARD_WITH_DEVIATION,
@@ -63,12 +64,7 @@ extern float cruise_speed_R; // the speed which the right wheel is accelerating 
 extern float cruise_speed_L;
 extern float starting_phi;
 extern float turning_radius;
-extern int32_t target_encoder_count_R;
-extern int32_t target_encoder_count_L;
-extern float position_integral_R;
-extern float position_derivative_R;
-extern float position_integral_L;
-extern float position_derivative_L;
+extern int complex_movement;
 
 int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_backward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
@@ -82,7 +78,10 @@ int orientate(float orientation, int8_t is_radian);// will return 0 if target ha
 int move_forward_with_deviation(float distance, float deviation, float speed); // follows an arc to the target, that deviates at its max from the straight line "deviation" millimeters will deviate left if deviation is positive, will deviate right otherwise
 int circle_curve(float target_x, float target_y, float target_phi, float speed);
 int go_to(float x, float y, float speed);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
+int go_to_backwards(float x, float y, float speed);
 void emergency_break();
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
+int8_t is_idle();
+void reset_speed_control_variables();
 
 #endif /* INC_NAVIGATION_H_ */
