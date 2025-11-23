@@ -1,0 +1,913 @@
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"IMU.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/IMU.c"
+  20              		.section	.text.read16,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	read16:
+  27              	.LVL0:
+  28              	.LFB140:
+   1:Core/Src/IMU.c **** /*
+   2:Core/Src/IMU.c ****  * IMU.c
+   3:Core/Src/IMU.c ****  *
+   4:Core/Src/IMU.c ****  *  Created on: Oct 21, 2025
+   5:Core/Src/IMU.c ****  *      Author: khalsi, lee mankhalsch
+   6:Core/Src/IMU.c ****  */
+   7:Core/Src/IMU.c **** #include "IMU.h"
+   8:Core/Src/IMU.c **** #include <string.h>
+   9:Core/Src/IMU.c **** 
+  10:Core/Src/IMU.c **** static I2C_HandleTypeDef *bno_i2c;
+  11:Core/Src/IMU.c **** static uint8_t bno_addr;
+  12:Core/Src/IMU.c **** 
+  13:Core/Src/IMU.c **** static void delay_ms(uint16_t t) {
+  14:Core/Src/IMU.c ****     HAL_Delay(t);
+  15:Core/Src/IMU.c **** }
+  16:Core/Src/IMU.c **** 
+  17:Core/Src/IMU.c **** uint8_t bno055_read8(uint8_t reg)
+  18:Core/Src/IMU.c **** {
+  19:Core/Src/IMU.c ****     uint8_t val;
+  20:Core/Src/IMU.c ****     HAL_I2C_Mem_Read(bno_i2c, bno_addr, reg, 1, &val, 1, 100);
+  21:Core/Src/IMU.c ****     return val;
+  22:Core/Src/IMU.c **** }
+  23:Core/Src/IMU.c **** 
+  24:Core/Src/IMU.c **** void bno055_write8(uint8_t reg, uint8_t value)
+  25:Core/Src/IMU.c **** {
+  26:Core/Src/IMU.c ****     HAL_I2C_Mem_Write(bno_i2c, bno_addr, reg, 1, &value, 1, 100);
+  27:Core/Src/IMU.c **** }
+  28:Core/Src/IMU.c **** 
+  29:Core/Src/IMU.c **** static int16_t read16(uint8_t reg)
+  30:Core/Src/IMU.c **** {
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 2
+
+
+  29              		.loc 1 30 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 30 1 is_stmt 0 view .LVU1
+  34 0000 00B5     		push	{lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  38 0002 87B0     		sub	sp, sp, #28
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 32
+  41 0004 0246     		mov	r2, r0
+  31:Core/Src/IMU.c ****     uint8_t buf[2];
+  42              		.loc 1 31 5 is_stmt 1 view .LVU2
+  32:Core/Src/IMU.c ****     HAL_I2C_Mem_Read(bno_i2c, bno_addr, reg, 1, buf, 2, 100);
+  43              		.loc 1 32 5 view .LVU3
+  44 0006 6423     		movs	r3, #100
+  45 0008 0293     		str	r3, [sp, #8]
+  46 000a 0223     		movs	r3, #2
+  47 000c 0193     		str	r3, [sp, #4]
+  48 000e 05AB     		add	r3, sp, #20
+  49 0010 0093     		str	r3, [sp]
+  50 0012 0123     		movs	r3, #1
+  51 0014 0749     		ldr	r1, .L3
+  52 0016 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+  53 0018 0748     		ldr	r0, .L3+4
+  54              	.LVL1:
+  55              		.loc 1 32 5 is_stmt 0 view .LVU4
+  56 001a 0068     		ldr	r0, [r0]
+  57 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+  58              	.LVL2:
+  33:Core/Src/IMU.c ****     return (int16_t)((buf[1] << 8) | buf[0]);
+  59              		.loc 1 33 5 is_stmt 1 view .LVU5
+  60              		.loc 1 33 26 is_stmt 0 view .LVU6
+  61 0020 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
+  62              		.loc 1 33 41 view .LVU7
+  63 0024 9DF81400 		ldrb	r0, [sp, #20]	@ zero_extendqisi2
+  64              		.loc 1 33 12 view .LVU8
+  65 0028 40EA0320 		orr	r0, r0, r3, lsl #8
+  34:Core/Src/IMU.c **** }
+  66              		.loc 1 34 1 view .LVU9
+  67 002c 00B2     		sxth	r0, r0
+  68 002e 07B0     		add	sp, sp, #28
+  69              	.LCFI2:
+  70              		.cfi_def_cfa_offset 4
+  71              		@ sp needed
+  72 0030 5DF804FB 		ldr	pc, [sp], #4
+  73              	.L4:
+  74              		.align	2
+  75              	.L3:
+  76 0034 00000000 		.word	bno_addr
+  77 0038 00000000 		.word	bno_i2c
+  78              		.cfi_endproc
+  79              	.LFE140:
+  81              		.section	.text.delay_ms,"ax",%progbits
+  82              		.align	1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 3
+
+
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  87              	delay_ms:
+  88              	.LVL3:
+  89              	.LFB137:
+  13:Core/Src/IMU.c ****     HAL_Delay(t);
+  90              		.loc 1 13 34 is_stmt 1 view -0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+  13:Core/Src/IMU.c ****     HAL_Delay(t);
+  94              		.loc 1 13 34 is_stmt 0 view .LVU11
+  95 0000 08B5     		push	{r3, lr}
+  96              	.LCFI3:
+  97              		.cfi_def_cfa_offset 8
+  98              		.cfi_offset 3, -8
+  99              		.cfi_offset 14, -4
+  14:Core/Src/IMU.c **** }
+ 100              		.loc 1 14 5 is_stmt 1 view .LVU12
+ 101 0002 FFF7FEFF 		bl	HAL_Delay
+ 102              	.LVL4:
+  15:Core/Src/IMU.c **** 
+ 103              		.loc 1 15 1 is_stmt 0 view .LVU13
+ 104 0006 08BD     		pop	{r3, pc}
+ 105              		.cfi_endproc
+ 106              	.LFE137:
+ 108              		.section	.text.bno055_read8,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	bno055_read8
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	bno055_read8:
+ 116              	.LVL5:
+ 117              	.LFB138:
+  18:Core/Src/IMU.c ****     uint8_t val;
+ 118              		.loc 1 18 1 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 8
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+  18:Core/Src/IMU.c ****     uint8_t val;
+ 122              		.loc 1 18 1 is_stmt 0 view .LVU15
+ 123 0000 00B5     		push	{lr}
+ 124              	.LCFI4:
+ 125              		.cfi_def_cfa_offset 4
+ 126              		.cfi_offset 14, -4
+ 127 0002 87B0     		sub	sp, sp, #28
+ 128              	.LCFI5:
+ 129              		.cfi_def_cfa_offset 32
+ 130 0004 0246     		mov	r2, r0
+  19:Core/Src/IMU.c ****     HAL_I2C_Mem_Read(bno_i2c, bno_addr, reg, 1, &val, 1, 100);
+ 131              		.loc 1 19 5 is_stmt 1 view .LVU16
+  20:Core/Src/IMU.c ****     return val;
+ 132              		.loc 1 20 5 view .LVU17
+ 133 0006 6423     		movs	r3, #100
+ 134 0008 0293     		str	r3, [sp, #8]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 4
+
+
+ 135 000a 0123     		movs	r3, #1
+ 136 000c 0193     		str	r3, [sp, #4]
+ 137 000e 0DF11701 		add	r1, sp, #23
+ 138 0012 0091     		str	r1, [sp]
+ 139 0014 0549     		ldr	r1, .L9
+ 140 0016 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 141 0018 0548     		ldr	r0, .L9+4
+ 142              	.LVL6:
+  20:Core/Src/IMU.c ****     return val;
+ 143              		.loc 1 20 5 is_stmt 0 view .LVU18
+ 144 001a 0068     		ldr	r0, [r0]
+ 145 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 146              	.LVL7:
+  21:Core/Src/IMU.c **** }
+ 147              		.loc 1 21 5 is_stmt 1 view .LVU19
+  22:Core/Src/IMU.c **** 
+ 148              		.loc 1 22 1 is_stmt 0 view .LVU20
+ 149 0020 9DF81700 		ldrb	r0, [sp, #23]	@ zero_extendqisi2
+ 150 0024 07B0     		add	sp, sp, #28
+ 151              	.LCFI6:
+ 152              		.cfi_def_cfa_offset 4
+ 153              		@ sp needed
+ 154 0026 5DF804FB 		ldr	pc, [sp], #4
+ 155              	.L10:
+ 156 002a 00BF     		.align	2
+ 157              	.L9:
+ 158 002c 00000000 		.word	bno_addr
+ 159 0030 00000000 		.word	bno_i2c
+ 160              		.cfi_endproc
+ 161              	.LFE138:
+ 163              		.section	.text.bno055_write8,"ax",%progbits
+ 164              		.align	1
+ 165              		.global	bno055_write8
+ 166              		.syntax unified
+ 167              		.thumb
+ 168              		.thumb_func
+ 170              	bno055_write8:
+ 171              	.LVL8:
+ 172              	.LFB139:
+  25:Core/Src/IMU.c ****     HAL_I2C_Mem_Write(bno_i2c, bno_addr, reg, 1, &value, 1, 100);
+ 173              		.loc 1 25 1 is_stmt 1 view -0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 8
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+  25:Core/Src/IMU.c ****     HAL_I2C_Mem_Write(bno_i2c, bno_addr, reg, 1, &value, 1, 100);
+ 177              		.loc 1 25 1 is_stmt 0 view .LVU22
+ 178 0000 00B5     		push	{lr}
+ 179              	.LCFI7:
+ 180              		.cfi_def_cfa_offset 4
+ 181              		.cfi_offset 14, -4
+ 182 0002 87B0     		sub	sp, sp, #28
+ 183              	.LCFI8:
+ 184              		.cfi_def_cfa_offset 32
+ 185 0004 0246     		mov	r2, r0
+ 186 0006 8DF81710 		strb	r1, [sp, #23]
+  26:Core/Src/IMU.c **** }
+ 187              		.loc 1 26 5 is_stmt 1 view .LVU23
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 5
+
+
+ 188 000a 6423     		movs	r3, #100
+ 189 000c 0293     		str	r3, [sp, #8]
+ 190 000e 0123     		movs	r3, #1
+ 191 0010 0193     		str	r3, [sp, #4]
+ 192 0012 0DF11701 		add	r1, sp, #23
+ 193              	.LVL9:
+  26:Core/Src/IMU.c **** }
+ 194              		.loc 1 26 5 is_stmt 0 view .LVU24
+ 195 0016 0091     		str	r1, [sp]
+ 196 0018 0449     		ldr	r1, .L13
+ 197              	.LVL10:
+  26:Core/Src/IMU.c **** }
+ 198              		.loc 1 26 5 view .LVU25
+ 199 001a 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 200 001c 0448     		ldr	r0, .L13+4
+ 201              	.LVL11:
+  26:Core/Src/IMU.c **** }
+ 202              		.loc 1 26 5 view .LVU26
+ 203 001e 0068     		ldr	r0, [r0]
+ 204 0020 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 205              	.LVL12:
+  27:Core/Src/IMU.c **** 
+ 206              		.loc 1 27 1 view .LVU27
+ 207 0024 07B0     		add	sp, sp, #28
+ 208              	.LCFI9:
+ 209              		.cfi_def_cfa_offset 4
+ 210              		@ sp needed
+ 211 0026 5DF804FB 		ldr	pc, [sp], #4
+ 212              	.L14:
+ 213 002a 00BF     		.align	2
+ 214              	.L13:
+ 215 002c 00000000 		.word	bno_addr
+ 216 0030 00000000 		.word	bno_i2c
+ 217              		.cfi_endproc
+ 218              	.LFE139:
+ 220              		.section	.text.bno055_setMode,"ax",%progbits
+ 221              		.align	1
+ 222              		.global	bno055_setMode
+ 223              		.syntax unified
+ 224              		.thumb
+ 225              		.thumb_func
+ 227              	bno055_setMode:
+ 228              	.LVL13:
+ 229              	.LFB141:
+  35:Core/Src/IMU.c **** 
+  36:Core/Src/IMU.c **** void bno055_setMode(uint8_t mode)
+  37:Core/Src/IMU.c **** {
+ 230              		.loc 1 37 1 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 0
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234              		.loc 1 37 1 is_stmt 0 view .LVU29
+ 235 0000 08B5     		push	{r3, lr}
+ 236              	.LCFI10:
+ 237              		.cfi_def_cfa_offset 8
+ 238              		.cfi_offset 3, -8
+ 239              		.cfi_offset 14, -4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 6
+
+
+ 240 0002 0146     		mov	r1, r0
+  38:Core/Src/IMU.c ****     bno055_write8(BNO055_OPR_MODE, mode);
+ 241              		.loc 1 38 5 is_stmt 1 view .LVU30
+ 242 0004 3D20     		movs	r0, #61
+ 243              	.LVL14:
+ 244              		.loc 1 38 5 is_stmt 0 view .LVU31
+ 245 0006 FFF7FEFF 		bl	bno055_write8
+ 246              	.LVL15:
+  39:Core/Src/IMU.c ****     delay_ms(30);
+ 247              		.loc 1 39 5 is_stmt 1 view .LVU32
+ 248 000a 1E20     		movs	r0, #30
+ 249 000c FFF7FEFF 		bl	delay_ms
+ 250              	.LVL16:
+  40:Core/Src/IMU.c **** }
+ 251              		.loc 1 40 1 is_stmt 0 view .LVU33
+ 252 0010 08BD     		pop	{r3, pc}
+ 253              		.cfi_endproc
+ 254              	.LFE141:
+ 256              		.section	.text.bno055_init,"ax",%progbits
+ 257              		.align	1
+ 258              		.global	bno055_init
+ 259              		.syntax unified
+ 260              		.thumb
+ 261              		.thumb_func
+ 263              	bno055_init:
+ 264              	.LVL17:
+ 265              	.LFB142:
+  41:Core/Src/IMU.c **** 
+  42:Core/Src/IMU.c **** void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address)
+  43:Core/Src/IMU.c **** {
+ 266              		.loc 1 43 1 is_stmt 1 view -0
+ 267              		.cfi_startproc
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              		.loc 1 43 1 is_stmt 0 view .LVU35
+ 271 0000 08B5     		push	{r3, lr}
+ 272              	.LCFI11:
+ 273              		.cfi_def_cfa_offset 8
+ 274              		.cfi_offset 3, -8
+ 275              		.cfi_offset 14, -4
+  44:Core/Src/IMU.c ****     bno_i2c = hi2c;
+ 276              		.loc 1 44 5 is_stmt 1 view .LVU36
+ 277              		.loc 1 44 13 is_stmt 0 view .LVU37
+ 278 0002 164B     		ldr	r3, .L19
+ 279 0004 1860     		str	r0, [r3]
+  45:Core/Src/IMU.c ****     bno_addr = address;
+ 280              		.loc 1 45 5 is_stmt 1 view .LVU38
+ 281              		.loc 1 45 14 is_stmt 0 view .LVU39
+ 282 0006 164B     		ldr	r3, .L19+4
+ 283 0008 1970     		strb	r1, [r3]
+  46:Core/Src/IMU.c **** 
+  47:Core/Src/IMU.c ****     delay_ms(700);  // required after power-up
+ 284              		.loc 1 47 5 is_stmt 1 view .LVU40
+ 285 000a 4FF42F70 		mov	r0, #700
+ 286              	.LVL18:
+ 287              		.loc 1 47 5 is_stmt 0 view .LVU41
+ 288 000e FFF7FEFF 		bl	delay_ms
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 7
+
+
+ 289              	.LVL19:
+  48:Core/Src/IMU.c **** 
+  49:Core/Src/IMU.c ****     // CONFIG MODE
+  50:Core/Src/IMU.c ****     bno055_setMode(OPERATION_MODE_CONFIG);
+ 290              		.loc 1 50 5 is_stmt 1 view .LVU42
+ 291 0012 0020     		movs	r0, #0
+ 292 0014 FFF7FEFF 		bl	bno055_setMode
+ 293              	.LVL20:
+  51:Core/Src/IMU.c **** 
+  52:Core/Src/IMU.c ****     // reset
+  53:Core/Src/IMU.c ****     bno055_write8(BNO055_SYS_TRIGGER, 0x20);
+ 294              		.loc 1 53 5 view .LVU43
+ 295 0018 2021     		movs	r1, #32
+ 296 001a 3F20     		movs	r0, #63
+ 297 001c FFF7FEFF 		bl	bno055_write8
+ 298              	.LVL21:
+  54:Core/Src/IMU.c ****     delay_ms(700);
+ 299              		.loc 1 54 5 view .LVU44
+ 300 0020 4FF42F70 		mov	r0, #700
+ 301 0024 FFF7FEFF 		bl	delay_ms
+ 302              	.LVL22:
+  55:Core/Src/IMU.c **** 
+  56:Core/Src/IMU.c ****     // enter config mode again
+  57:Core/Src/IMU.c ****     bno055_setMode(OPERATION_MODE_CONFIG);
+ 303              		.loc 1 57 5 view .LVU45
+ 304 0028 0020     		movs	r0, #0
+ 305 002a FFF7FEFF 		bl	bno055_setMode
+ 306              	.LVL23:
+  58:Core/Src/IMU.c **** 
+  59:Core/Src/IMU.c ****     // page 0
+  60:Core/Src/IMU.c ****     bno055_write8(BNO055_PAGE_ID, 0x00);
+ 307              		.loc 1 60 5 view .LVU46
+ 308 002e 0021     		movs	r1, #0
+ 309 0030 0720     		movs	r0, #7
+ 310 0032 FFF7FEFF 		bl	bno055_write8
+ 311              	.LVL24:
+  61:Core/Src/IMU.c **** 
+  62:Core/Src/IMU.c ****     // external crystal
+  63:Core/Src/IMU.c ****     bno055_write8(BNO055_SYS_TRIGGER, 0x80);
+ 312              		.loc 1 63 5 view .LVU47
+ 313 0036 8021     		movs	r1, #128
+ 314 0038 3F20     		movs	r0, #63
+ 315 003a FFF7FEFF 		bl	bno055_write8
+ 316              	.LVL25:
+  64:Core/Src/IMU.c ****     delay_ms(10);
+ 317              		.loc 1 64 5 view .LVU48
+ 318 003e 0A20     		movs	r0, #10
+ 319 0040 FFF7FEFF 		bl	delay_ms
+ 320              	.LVL26:
+  65:Core/Src/IMU.c **** 
+  66:Core/Src/IMU.c ****     // set units (deg/sec, degrees)
+  67:Core/Src/IMU.c ****     bno055_write8(BNO055_UNIT_SEL, 0x00);
+ 321              		.loc 1 67 5 view .LVU49
+ 322 0044 0021     		movs	r1, #0
+ 323 0046 3B20     		movs	r0, #59
+ 324 0048 FFF7FEFF 		bl	bno055_write8
+ 325              	.LVL27:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 8
+
+
+  68:Core/Src/IMU.c **** 
+  69:Core/Src/IMU.c ****     // NORMAL FUSION MODE
+  70:Core/Src/IMU.c ****     bno055_setMode(OPERATION_MODE_NDOF);
+ 326              		.loc 1 70 5 view .LVU50
+ 327 004c 0C20     		movs	r0, #12
+ 328 004e FFF7FEFF 		bl	bno055_setMode
+ 329              	.LVL28:
+  71:Core/Src/IMU.c ****     delay_ms(50);
+ 330              		.loc 1 71 5 view .LVU51
+ 331 0052 3220     		movs	r0, #50
+ 332 0054 FFF7FEFF 		bl	delay_ms
+ 333              	.LVL29:
+  72:Core/Src/IMU.c **** }
+ 334              		.loc 1 72 1 is_stmt 0 view .LVU52
+ 335 0058 08BD     		pop	{r3, pc}
+ 336              	.L20:
+ 337 005a 00BF     		.align	2
+ 338              	.L19:
+ 339 005c 00000000 		.word	bno_i2c
+ 340 0060 00000000 		.word	bno_addr
+ 341              		.cfi_endproc
+ 342              	.LFE142:
+ 344              		.section	.text.bno055_readGyro,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	bno055_readGyro
+ 347              		.syntax unified
+ 348              		.thumb
+ 349              		.thumb_func
+ 351              	bno055_readGyro:
+ 352              	.LFB143:
+  73:Core/Src/IMU.c **** 
+  74:Core/Src/IMU.c **** bno055_vector_t bno055_readGyro(void) // returns angular velocity around each axis in rad/s
+  75:Core/Src/IMU.c **** {
+ 353              		.loc 1 75 1 is_stmt 1 view -0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 40
+ 356              		@ frame_needed = 0, uses_anonymous_args = 0
+ 357 0000 00B5     		push	{lr}
+ 358              	.LCFI12:
+ 359              		.cfi_def_cfa_offset 4
+ 360              		.cfi_offset 14, -4
+ 361 0002 2DED028B 		vpush.64	{d8}
+ 362              	.LCFI13:
+ 363              		.cfi_def_cfa_offset 12
+ 364              		.cfi_offset 80, -12
+ 365              		.cfi_offset 81, -8
+ 366 0006 8BB0     		sub	sp, sp, #44
+ 367              	.LCFI14:
+ 368              		.cfi_def_cfa_offset 56
+  76:Core/Src/IMU.c ****     bno055_vector_t v;
+ 369              		.loc 1 76 5 view .LVU54
+  77:Core/Src/IMU.c ****     v.x = (float)read16(0x14) / 16.0f;
+ 370              		.loc 1 77 5 view .LVU55
+ 371              		.loc 1 77 18 is_stmt 0 view .LVU56
+ 372 0008 1420     		movs	r0, #20
+ 373 000a FFF7FEFF 		bl	read16
+ 374              	.LVL30:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 9
+
+
+ 375 000e 07EE900A 		vmov	s15, r0	@ int
+ 376              		.loc 1 77 11 discriminator 1 view .LVU57
+ 377 0012 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 378              		.loc 1 77 31 discriminator 1 view .LVU58
+ 379 0016 9FED168A 		vldr.32	s16, .L23
+ 380 001a 67EE887A 		vmul.f32	s15, s15, s16
+ 381              		.loc 1 77 9 discriminator 1 view .LVU59
+ 382 001e CDED047A 		vstr.32	s15, [sp, #16]
+  78:Core/Src/IMU.c ****     v.y = (float)read16(0x16) / 16.0f;
+ 383              		.loc 1 78 5 is_stmt 1 view .LVU60
+ 384              		.loc 1 78 18 is_stmt 0 view .LVU61
+ 385 0022 1620     		movs	r0, #22
+ 386 0024 FFF7FEFF 		bl	read16
+ 387              	.LVL31:
+ 388 0028 07EE900A 		vmov	s15, r0	@ int
+ 389              		.loc 1 78 11 discriminator 1 view .LVU62
+ 390 002c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 391              		.loc 1 78 31 discriminator 1 view .LVU63
+ 392 0030 67EE887A 		vmul.f32	s15, s15, s16
+ 393              		.loc 1 78 9 discriminator 1 view .LVU64
+ 394 0034 CDED057A 		vstr.32	s15, [sp, #20]
+  79:Core/Src/IMU.c ****     v.z = (float)read16(0x18) / 16.0f;
+ 395              		.loc 1 79 5 is_stmt 1 view .LVU65
+ 396              		.loc 1 79 18 is_stmt 0 view .LVU66
+ 397 0038 1820     		movs	r0, #24
+ 398 003a FFF7FEFF 		bl	read16
+ 399              	.LVL32:
+ 400 003e 07EE900A 		vmov	s15, r0	@ int
+ 401              		.loc 1 79 11 discriminator 1 view .LVU67
+ 402 0042 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 403              		.loc 1 79 31 discriminator 1 view .LVU68
+ 404 0046 67EE887A 		vmul.f32	s15, s15, s16
+ 405              		.loc 1 79 9 discriminator 1 view .LVU69
+ 406 004a CDED067A 		vstr.32	s15, [sp, #24]
+  80:Core/Src/IMU.c ****     return v;
+ 407              		.loc 1 80 5 is_stmt 1 view .LVU70
+ 408              		.loc 1 80 12 is_stmt 0 view .LVU71
+ 409 004e 04AB     		add	r3, sp, #16
+ 410 0050 93E80700 		ldm	r3, {r0, r1, r2}
+ 411 0054 0AAB     		add	r3, sp, #40
+ 412 0056 03E90700 		stmdb	r3, {r0, r1, r2}
+  81:Core/Src/IMU.c **** }
+ 413              		.loc 1 81 1 view .LVU72
+ 414 005a 9DED070A 		vldr.32	s0, [sp, #28]
+ 415 005e DDED080A 		vldr.32	s1, [sp, #32]
+ 416 0062 9DED091A 		vldr.32	s2, [sp, #36]
+ 417 0066 0BB0     		add	sp, sp, #44
+ 418              	.LCFI15:
+ 419              		.cfi_def_cfa_offset 12
+ 420              		@ sp needed
+ 421 0068 BDEC028B 		vldm	sp!, {d8}
+ 422              	.LCFI16:
+ 423              		.cfi_restore 80
+ 424              		.cfi_restore 81
+ 425              		.cfi_def_cfa_offset 4
+ 426 006c 5DF804FB 		ldr	pc, [sp], #4
+ 427              	.L24:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 10
+
+
+ 428              		.align	2
+ 429              	.L23:
+ 430 0070 0000803D 		.word	1031798784
+ 431              		.cfi_endproc
+ 432              	.LFE143:
+ 434              		.section	.text.bno055_readAccel,"ax",%progbits
+ 435              		.align	1
+ 436              		.global	bno055_readAccel
+ 437              		.syntax unified
+ 438              		.thumb
+ 439              		.thumb_func
+ 441              	bno055_readAccel:
+ 442              	.LFB144:
+  82:Core/Src/IMU.c **** 
+  83:Core/Src/IMU.c **** bno055_vector_t bno055_readAccel(void) // returns linear acceleration with respect to each axis in 
+  84:Core/Src/IMU.c **** {
+ 443              		.loc 1 84 1 is_stmt 1 view -0
+ 444              		.cfi_startproc
+ 445              		@ args = 0, pretend = 0, frame = 40
+ 446              		@ frame_needed = 0, uses_anonymous_args = 0
+ 447 0000 00B5     		push	{lr}
+ 448              	.LCFI17:
+ 449              		.cfi_def_cfa_offset 4
+ 450              		.cfi_offset 14, -4
+ 451 0002 2DED028B 		vpush.64	{d8}
+ 452              	.LCFI18:
+ 453              		.cfi_def_cfa_offset 12
+ 454              		.cfi_offset 80, -12
+ 455              		.cfi_offset 81, -8
+ 456 0006 8BB0     		sub	sp, sp, #44
+ 457              	.LCFI19:
+ 458              		.cfi_def_cfa_offset 56
+  85:Core/Src/IMU.c ****     bno055_vector_t v;
+ 459              		.loc 1 85 5 view .LVU74
+  86:Core/Src/IMU.c ****     v.x = (float)read16(0x08) / 100.0f;
+ 460              		.loc 1 86 5 view .LVU75
+ 461              		.loc 1 86 18 is_stmt 0 view .LVU76
+ 462 0008 0820     		movs	r0, #8
+ 463 000a FFF7FEFF 		bl	read16
+ 464              	.LVL33:
+ 465 000e 07EE900A 		vmov	s15, r0	@ int
+ 466              		.loc 1 86 11 discriminator 1 view .LVU77
+ 467 0012 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 468              		.loc 1 86 31 discriminator 1 view .LVU78
+ 469 0016 9FED168A 		vldr.32	s16, .L27
+ 470 001a 87EE887A 		vdiv.f32	s14, s15, s16
+ 471              		.loc 1 86 9 discriminator 1 view .LVU79
+ 472 001e 8DED047A 		vstr.32	s14, [sp, #16]
+  87:Core/Src/IMU.c ****     v.y = (float)read16(0x0A) / 100.0f;
+ 473              		.loc 1 87 5 is_stmt 1 view .LVU80
+ 474              		.loc 1 87 18 is_stmt 0 view .LVU81
+ 475 0022 0A20     		movs	r0, #10
+ 476 0024 FFF7FEFF 		bl	read16
+ 477              	.LVL34:
+ 478 0028 07EE900A 		vmov	s15, r0	@ int
+ 479              		.loc 1 87 11 discriminator 1 view .LVU82
+ 480 002c F8EEE77A 		vcvt.f32.s32	s15, s15
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 11
+
+
+ 481              		.loc 1 87 31 discriminator 1 view .LVU83
+ 482 0030 87EE887A 		vdiv.f32	s14, s15, s16
+ 483              		.loc 1 87 9 discriminator 1 view .LVU84
+ 484 0034 8DED057A 		vstr.32	s14, [sp, #20]
+  88:Core/Src/IMU.c ****     v.z = (float)read16(0x0C) / 100.0f;
+ 485              		.loc 1 88 5 is_stmt 1 view .LVU85
+ 486              		.loc 1 88 18 is_stmt 0 view .LVU86
+ 487 0038 0C20     		movs	r0, #12
+ 488 003a FFF7FEFF 		bl	read16
+ 489              	.LVL35:
+ 490 003e 07EE900A 		vmov	s15, r0	@ int
+ 491              		.loc 1 88 11 discriminator 1 view .LVU87
+ 492 0042 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 493              		.loc 1 88 31 discriminator 1 view .LVU88
+ 494 0046 87EE887A 		vdiv.f32	s14, s15, s16
+ 495              		.loc 1 88 9 discriminator 1 view .LVU89
+ 496 004a 8DED067A 		vstr.32	s14, [sp, #24]
+  89:Core/Src/IMU.c ****     return v;
+ 497              		.loc 1 89 5 is_stmt 1 view .LVU90
+ 498              		.loc 1 89 12 is_stmt 0 view .LVU91
+ 499 004e 04AB     		add	r3, sp, #16
+ 500 0050 93E80700 		ldm	r3, {r0, r1, r2}
+ 501 0054 0AAB     		add	r3, sp, #40
+ 502 0056 03E90700 		stmdb	r3, {r0, r1, r2}
+  90:Core/Src/IMU.c **** }
+ 503              		.loc 1 90 1 view .LVU92
+ 504 005a 9DED070A 		vldr.32	s0, [sp, #28]
+ 505 005e DDED080A 		vldr.32	s1, [sp, #32]
+ 506 0062 9DED091A 		vldr.32	s2, [sp, #36]
+ 507 0066 0BB0     		add	sp, sp, #44
+ 508              	.LCFI20:
+ 509              		.cfi_def_cfa_offset 12
+ 510              		@ sp needed
+ 511 0068 BDEC028B 		vldm	sp!, {d8}
+ 512              	.LCFI21:
+ 513              		.cfi_restore 80
+ 514              		.cfi_restore 81
+ 515              		.cfi_def_cfa_offset 4
+ 516 006c 5DF804FB 		ldr	pc, [sp], #4
+ 517              	.L28:
+ 518              		.align	2
+ 519              	.L27:
+ 520 0070 0000C842 		.word	1120403456
+ 521              		.cfi_endproc
+ 522              	.LFE144:
+ 524              		.section	.text.bno055_readMag,"ax",%progbits
+ 525              		.align	1
+ 526              		.global	bno055_readMag
+ 527              		.syntax unified
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	bno055_readMag:
+ 532              	.LFB145:
+  91:Core/Src/IMU.c **** 
+  92:Core/Src/IMU.c **** bno055_vector_t bno055_readMag(void) // returns absolute orientation with respect to the earth's ma
+  93:Core/Src/IMU.c **** {
+ 533              		.loc 1 93 1 is_stmt 1 view -0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 12
+
+
+ 534              		.cfi_startproc
+ 535              		@ args = 0, pretend = 0, frame = 40
+ 536              		@ frame_needed = 0, uses_anonymous_args = 0
+ 537 0000 00B5     		push	{lr}
+ 538              	.LCFI22:
+ 539              		.cfi_def_cfa_offset 4
+ 540              		.cfi_offset 14, -4
+ 541 0002 2DED028B 		vpush.64	{d8}
+ 542              	.LCFI23:
+ 543              		.cfi_def_cfa_offset 12
+ 544              		.cfi_offset 80, -12
+ 545              		.cfi_offset 81, -8
+ 546 0006 8BB0     		sub	sp, sp, #44
+ 547              	.LCFI24:
+ 548              		.cfi_def_cfa_offset 56
+  94:Core/Src/IMU.c ****     bno055_vector_t v;
+ 549              		.loc 1 94 5 view .LVU94
+  95:Core/Src/IMU.c ****     v.x = (float)read16(0x0E) / 16.0f;
+ 550              		.loc 1 95 5 view .LVU95
+ 551              		.loc 1 95 18 is_stmt 0 view .LVU96
+ 552 0008 0E20     		movs	r0, #14
+ 553 000a FFF7FEFF 		bl	read16
+ 554              	.LVL36:
+ 555 000e 07EE900A 		vmov	s15, r0	@ int
+ 556              		.loc 1 95 11 discriminator 1 view .LVU97
+ 557 0012 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 558              		.loc 1 95 31 discriminator 1 view .LVU98
+ 559 0016 9FED168A 		vldr.32	s16, .L31
+ 560 001a 67EE887A 		vmul.f32	s15, s15, s16
+ 561              		.loc 1 95 9 discriminator 1 view .LVU99
+ 562 001e CDED047A 		vstr.32	s15, [sp, #16]
+  96:Core/Src/IMU.c ****     v.y = (float)read16(0x10) / 16.0f;
+ 563              		.loc 1 96 5 is_stmt 1 view .LVU100
+ 564              		.loc 1 96 18 is_stmt 0 view .LVU101
+ 565 0022 1020     		movs	r0, #16
+ 566 0024 FFF7FEFF 		bl	read16
+ 567              	.LVL37:
+ 568 0028 07EE900A 		vmov	s15, r0	@ int
+ 569              		.loc 1 96 11 discriminator 1 view .LVU102
+ 570 002c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 571              		.loc 1 96 31 discriminator 1 view .LVU103
+ 572 0030 67EE887A 		vmul.f32	s15, s15, s16
+ 573              		.loc 1 96 9 discriminator 1 view .LVU104
+ 574 0034 CDED057A 		vstr.32	s15, [sp, #20]
+  97:Core/Src/IMU.c ****     v.z = (float)read16(0x12) / 16.0f;
+ 575              		.loc 1 97 5 is_stmt 1 view .LVU105
+ 576              		.loc 1 97 18 is_stmt 0 view .LVU106
+ 577 0038 1220     		movs	r0, #18
+ 578 003a FFF7FEFF 		bl	read16
+ 579              	.LVL38:
+ 580 003e 07EE900A 		vmov	s15, r0	@ int
+ 581              		.loc 1 97 11 discriminator 1 view .LVU107
+ 582 0042 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 583              		.loc 1 97 31 discriminator 1 view .LVU108
+ 584 0046 67EE887A 		vmul.f32	s15, s15, s16
+ 585              		.loc 1 97 9 discriminator 1 view .LVU109
+ 586 004a CDED067A 		vstr.32	s15, [sp, #24]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 13
+
+
+  98:Core/Src/IMU.c ****     return v;
+ 587              		.loc 1 98 5 is_stmt 1 view .LVU110
+ 588              		.loc 1 98 12 is_stmt 0 view .LVU111
+ 589 004e 04AB     		add	r3, sp, #16
+ 590 0050 93E80700 		ldm	r3, {r0, r1, r2}
+ 591 0054 0AAB     		add	r3, sp, #40
+ 592 0056 03E90700 		stmdb	r3, {r0, r1, r2}
+  99:Core/Src/IMU.c **** }
+ 593              		.loc 1 99 1 view .LVU112
+ 594 005a 9DED070A 		vldr.32	s0, [sp, #28]
+ 595 005e DDED080A 		vldr.32	s1, [sp, #32]
+ 596 0062 9DED091A 		vldr.32	s2, [sp, #36]
+ 597 0066 0BB0     		add	sp, sp, #44
+ 598              	.LCFI25:
+ 599              		.cfi_def_cfa_offset 12
+ 600              		@ sp needed
+ 601 0068 BDEC028B 		vldm	sp!, {d8}
+ 602              	.LCFI26:
+ 603              		.cfi_restore 80
+ 604              		.cfi_restore 81
+ 605              		.cfi_def_cfa_offset 4
+ 606 006c 5DF804FB 		ldr	pc, [sp], #4
+ 607              	.L32:
+ 608              		.align	2
+ 609              	.L31:
+ 610 0070 0000803D 		.word	1031798784
+ 611              		.cfi_endproc
+ 612              	.LFE145:
+ 614              		.section	.text.bno055_readEuler,"ax",%progbits
+ 615              		.align	1
+ 616              		.global	bno055_readEuler
+ 617              		.syntax unified
+ 618              		.thumb
+ 619              		.thumb_func
+ 621              	bno055_readEuler:
+ 622              	.LFB146:
+ 100:Core/Src/IMU.c **** 
+ 101:Core/Src/IMU.c **** bno055_vector_t bno055_readEuler(void) // returns integrated roll pitch and yaw values in degrees d
+ 102:Core/Src/IMU.c **** {
+ 623              		.loc 1 102 1 is_stmt 1 view -0
+ 624              		.cfi_startproc
+ 625              		@ args = 0, pretend = 0, frame = 40
+ 626              		@ frame_needed = 0, uses_anonymous_args = 0
+ 627 0000 00B5     		push	{lr}
+ 628              	.LCFI27:
+ 629              		.cfi_def_cfa_offset 4
+ 630              		.cfi_offset 14, -4
+ 631 0002 2DED028B 		vpush.64	{d8}
+ 632              	.LCFI28:
+ 633              		.cfi_def_cfa_offset 12
+ 634              		.cfi_offset 80, -12
+ 635              		.cfi_offset 81, -8
+ 636 0006 8BB0     		sub	sp, sp, #44
+ 637              	.LCFI29:
+ 638              		.cfi_def_cfa_offset 56
+ 103:Core/Src/IMU.c ****     bno055_vector_t v;
+ 639              		.loc 1 103 5 view .LVU114
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 14
+
+
+ 104:Core/Src/IMU.c ****     v.x = (float)read16(0x1A) / 16.0f;
+ 640              		.loc 1 104 5 view .LVU115
+ 641              		.loc 1 104 18 is_stmt 0 view .LVU116
+ 642 0008 1A20     		movs	r0, #26
+ 643 000a FFF7FEFF 		bl	read16
+ 644              	.LVL39:
+ 645 000e 07EE900A 		vmov	s15, r0	@ int
+ 646              		.loc 1 104 11 discriminator 1 view .LVU117
+ 647 0012 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 648              		.loc 1 104 31 discriminator 1 view .LVU118
+ 649 0016 9FED168A 		vldr.32	s16, .L35
+ 650 001a 67EE887A 		vmul.f32	s15, s15, s16
+ 651              		.loc 1 104 9 discriminator 1 view .LVU119
+ 652 001e CDED047A 		vstr.32	s15, [sp, #16]
+ 105:Core/Src/IMU.c ****     v.y = (float)read16(0x1C) / 16.0f;
+ 653              		.loc 1 105 5 is_stmt 1 view .LVU120
+ 654              		.loc 1 105 18 is_stmt 0 view .LVU121
+ 655 0022 1C20     		movs	r0, #28
+ 656 0024 FFF7FEFF 		bl	read16
+ 657              	.LVL40:
+ 658 0028 07EE900A 		vmov	s15, r0	@ int
+ 659              		.loc 1 105 11 discriminator 1 view .LVU122
+ 660 002c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 661              		.loc 1 105 31 discriminator 1 view .LVU123
+ 662 0030 67EE887A 		vmul.f32	s15, s15, s16
+ 663              		.loc 1 105 9 discriminator 1 view .LVU124
+ 664 0034 CDED057A 		vstr.32	s15, [sp, #20]
+ 106:Core/Src/IMU.c ****     v.z = (float)read16(0x1E) / 16.0f;
+ 665              		.loc 1 106 5 is_stmt 1 view .LVU125
+ 666              		.loc 1 106 18 is_stmt 0 view .LVU126
+ 667 0038 1E20     		movs	r0, #30
+ 668 003a FFF7FEFF 		bl	read16
+ 669              	.LVL41:
+ 670 003e 07EE900A 		vmov	s15, r0	@ int
+ 671              		.loc 1 106 11 discriminator 1 view .LVU127
+ 672 0042 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 673              		.loc 1 106 31 discriminator 1 view .LVU128
+ 674 0046 67EE887A 		vmul.f32	s15, s15, s16
+ 675              		.loc 1 106 9 discriminator 1 view .LVU129
+ 676 004a CDED067A 		vstr.32	s15, [sp, #24]
+ 107:Core/Src/IMU.c ****     return v;
+ 677              		.loc 1 107 5 is_stmt 1 view .LVU130
+ 678              		.loc 1 107 12 is_stmt 0 view .LVU131
+ 679 004e 04AB     		add	r3, sp, #16
+ 680 0050 93E80700 		ldm	r3, {r0, r1, r2}
+ 681 0054 0AAB     		add	r3, sp, #40
+ 682 0056 03E90700 		stmdb	r3, {r0, r1, r2}
+ 108:Core/Src/IMU.c **** }
+ 683              		.loc 1 108 1 view .LVU132
+ 684 005a 9DED070A 		vldr.32	s0, [sp, #28]
+ 685 005e DDED080A 		vldr.32	s1, [sp, #32]
+ 686 0062 9DED091A 		vldr.32	s2, [sp, #36]
+ 687 0066 0BB0     		add	sp, sp, #44
+ 688              	.LCFI30:
+ 689              		.cfi_def_cfa_offset 12
+ 690              		@ sp needed
+ 691 0068 BDEC028B 		vldm	sp!, {d8}
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 15
+
+
+ 692              	.LCFI31:
+ 693              		.cfi_restore 80
+ 694              		.cfi_restore 81
+ 695              		.cfi_def_cfa_offset 4
+ 696 006c 5DF804FB 		ldr	pc, [sp], #4
+ 697              	.L36:
+ 698              		.align	2
+ 699              	.L35:
+ 700 0070 0000803D 		.word	1031798784
+ 701              		.cfi_endproc
+ 702              	.LFE146:
+ 704              		.section	.bss.bno_addr,"aw",%nobits
+ 707              	bno_addr:
+ 708 0000 00       		.space	1
+ 709              		.section	.bss.bno_i2c,"aw",%nobits
+ 710              		.align	2
+ 713              	bno_i2c:
+ 714 0000 00000000 		.space	4
+ 715              		.text
+ 716              	.Letext0:
+ 717              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 718              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 719              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 720              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 721              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 722              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 723              		.file 8 "Core/Inc/IMU.h"
+ 724              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 IMU.c
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:21     .text.read16:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:26     .text.read16:00000000 read16
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:76     .text.read16:00000034 $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:707    .bss.bno_addr:00000000 bno_addr
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:713    .bss.bno_i2c:00000000 bno_i2c
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:82     .text.delay_ms:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:87     .text.delay_ms:00000000 delay_ms
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:109    .text.bno055_read8:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:115    .text.bno055_read8:00000000 bno055_read8
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:158    .text.bno055_read8:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:164    .text.bno055_write8:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:170    .text.bno055_write8:00000000 bno055_write8
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:215    .text.bno055_write8:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:221    .text.bno055_setMode:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:227    .text.bno055_setMode:00000000 bno055_setMode
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:257    .text.bno055_init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:263    .text.bno055_init:00000000 bno055_init
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:339    .text.bno055_init:0000005c $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:345    .text.bno055_readGyro:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:351    .text.bno055_readGyro:00000000 bno055_readGyro
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:430    .text.bno055_readGyro:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:435    .text.bno055_readAccel:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:441    .text.bno055_readAccel:00000000 bno055_readAccel
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:520    .text.bno055_readAccel:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:525    .text.bno055_readMag:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:531    .text.bno055_readMag:00000000 bno055_readMag
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:610    .text.bno055_readMag:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:615    .text.bno055_readEuler:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:621    .text.bno055_readEuler:00000000 bno055_readEuler
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:700    .text.bno055_readEuler:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:708    .bss.bno_addr:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:710    .bss.bno_i2c:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_I2C_Mem_Read
+HAL_Delay
+HAL_I2C_Mem_Write

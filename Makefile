@@ -46,6 +46,8 @@ Core/Src/sysmem.c \
 Core/Src/syscalls.c \
 Core/Src/navigation.c \
 Core/Src/Motors.c \
+Core/Src/IMU.c \
+Core/Src/EKF.c \
 Core/Src/Odometry.c \
 Core/Src/freertos.c \
 Middlewares/Third_Party/FreeRTOS/Source/croutine.c \

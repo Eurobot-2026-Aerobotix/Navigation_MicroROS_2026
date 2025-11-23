@@ -383,6 +383,8 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // encoder timer
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // encoder timer
 
+  set_IMU_I2C_channel(&hi2c2);
+
   // hedhom lezem ykounou hnee, tes2elch 3leech
   current_speed_R = 0;
   current_speed_L = 0;
@@ -403,87 +405,17 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
-  communication_state = RASPBERRY;
+  communication_state = PC;
 
   //set_position(50, 400, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
 
-  /*go_to(500, 0, 800);
-//  HAL_Delay(1000);
-//  for(int i=0; i<10; i++){
-//	  send_values_to_usart(current_x, current_y, current_phi, 0);
-//	  HAL_Delay(10);
-//  }
-  circle_curve(500, 500, 180, 800);
-//  HAL_Delay(1000);
-//  for(int i=0; i<10; i++){
-//  	  send_values_to_usart(current_x, current_y, current_phi, 0);
-//  	  HAL_Delay(10);
-//  }
-  //go_to(500, 500, 800);
-  go_to(0, 0, 800);
-//  HAL_Delay(1000);
-//  for(int i=0; i<10; i++){
-//  	  send_values_to_usart(current_x, current_y, current_phi, 0);
-//  	  HAL_Delay(10);
-//  }
-  orientate(0, 0);
-//  HAL_Delay(1000);
-//  for(int i=0; i<10; i++){
-//  	  send_values_to_usart(current_x, current_y, current_phi, 0);
-//  	  HAL_Delay(10);
-//  }*/
-
-  //circle_curve(400, 600, 0, 800);
-  //go_to(50, 400, 800);
-  //move_forward(500, 300);
-
-  //set_position(0, 0, -90, -90);
-  //circle_curve(50, -300, -90, 500);
-
-  // TODO: edge cases
-  //set_position(300, -50, 135, 135);
-  //circle_curve(0, 0, 90, 500); // te5dem sayee
-
-  //set_position(300, 300, 90, 90);
-  //circle_curve(300, 0, 0, 500); //te5dem sayee
-
-  //circle_curve(-300, 0, -90, 500);
-
-  HAL_Delay(1000);
-
-  //control_loop_state = POSITION;
-  /*
-  set_target_encoder_counts(200, 200);
   while(1){
-	  send_values_to_usart(encoder_count_R, encoder_count_L, target_encoder_count_R, target_encoder_count_L);
-	  HAL_Delay(1);
-	  if(is_idle()){
-		  control_loop_state = DISACTIVATED;
-	  }
+	  update_position_EKF();
+	  HAL_Delay(10);
   }
-  */
-//  while(1){
-//	  if (micros() > 1000000 && micros() < 3000000){
-//		  target_speed_R = 200;
-//		  target_speed_L = 200;
-//	  }else{
-//		  target_speed_R = 0;
-//		  target_speed_L = 0;
-//	  }
-//	  send_values_to_usart(current_speed_R, current_speed_L, target_speed_R, target_speed_L);
-//	  HAL_Delay(1);
-//  }
-
-
-  //set_position(0, 0, -90, -90);
-
-//  robot_status.status = GOIN_TO;
-//  robot_status.arguments[0] = 500.0;
-//  robot_status.arguments[1] = 0.0;
-//  robot_status.arguments[2] = 200.0;
 
   /* USER CODE END 2 */
 

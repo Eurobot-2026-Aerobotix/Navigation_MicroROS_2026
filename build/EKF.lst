@@ -1,0 +1,150 @@
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"EKF.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/EKF.c"
+  20              		.section	.text.set_IMU_I2C_channel,"ax",%progbits
+  21              		.align	1
+  22              		.global	set_IMU_I2C_channel
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	set_IMU_I2C_channel:
+  28              	.LVL0:
+  29              	.LFB141:
+   1:Core/Src/EKF.c **** /*
+   2:Core/Src/EKF.c ****  * EKF.c
+   3:Core/Src/EKF.c ****  *
+   4:Core/Src/EKF.c ****  *  Created on: Nov 23, 2025
+   5:Core/Src/EKF.c ****  *      Author: monji
+   6:Core/Src/EKF.c ****  */
+   7:Core/Src/EKF.c **** 
+   8:Core/Src/EKF.c **** 
+   9:Core/Src/EKF.c **** #include "EKF.h"
+  10:Core/Src/EKF.c **** 
+  11:Core/Src/EKF.c **** void set_IMU_I2C_channel(I2C_HandleTypeDef *hi2c){
+  30              		.loc 1 11 50 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 11 50 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  12:Core/Src/EKF.c **** 	bno055_init(hi2c, BNO055_I2C_ADDR_LO);
+  40              		.loc 1 12 2 is_stmt 1 view .LVU2
+  41 0002 5021     		movs	r1, #80
+  42 0004 FFF7FEFF 		bl	bno055_init
+  43              	.LVL1:
+  13:Core/Src/EKF.c **** }
+  44              		.loc 1 13 1 is_stmt 0 view .LVU3
+  45 0008 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s 			page 2
+
+
+  46              		.cfi_endproc
+  47              	.LFE141:
+  49              		.section	.text.update_position_EKF,"ax",%progbits
+  50              		.align	1
+  51              		.global	update_position_EKF
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  56              	update_position_EKF:
+  57              	.LFB142:
+  14:Core/Src/EKF.c **** 
+  15:Core/Src/EKF.c **** void update_position_EKF(){
+  58              		.loc 1 15 27 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 16
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62 0000 00B5     		push	{lr}
+  63              	.LCFI1:
+  64              		.cfi_def_cfa_offset 4
+  65              		.cfi_offset 14, -4
+  66 0002 85B0     		sub	sp, sp, #20
+  67              	.LCFI2:
+  68              		.cfi_def_cfa_offset 24
+  16:Core/Src/EKF.c **** 	bno055_vector_t v = bno055_readEuler();
+  69              		.loc 1 16 2 view .LVU5
+  70              		.loc 1 16 22 is_stmt 0 view .LVU6
+  71 0004 FFF7FEFF 		bl	bno055_readEuler
+  72              	.LVL2:
+  73 0008 8DED010A 		vstr.32	s0, [sp, #4]
+  74 000c CDED020A 		vstr.32	s1, [sp, #8]
+  75 0010 8DED031A 		vstr.32	s2, [sp, #12]
+  17:Core/Src/EKF.c **** 	debugger = v.z;
+  76              		.loc 1 17 2 is_stmt 1 view .LVU7
+  77              		.loc 1 17 11 is_stmt 0 view .LVU8
+  78 0014 BDEEC11A 		vcvt.s32.f32	s2, s2
+  79 0018 064B     		ldr	r3, .L5
+  80 001a 83ED001A 		vstr.32	s2, [r3]	@ int
+  18:Core/Src/EKF.c **** 	send_values_to_usart(v.x, 0, 0, 0);
+  81              		.loc 1 18 2 is_stmt 1 view .LVU9
+  82 001e DFED060A 		vldr.32	s1, .L5+4
+  83 0022 F0EE601A 		vmov.f32	s3, s1
+  84 0026 B0EE601A 		vmov.f32	s2, s1
+  85 002a FFF7FEFF 		bl	send_values_to_usart
+  86              	.LVL3:
+  19:Core/Src/EKF.c **** }
+  87              		.loc 1 19 1 is_stmt 0 view .LVU10
+  88 002e 05B0     		add	sp, sp, #20
+  89              	.LCFI3:
+  90              		.cfi_def_cfa_offset 4
+  91              		@ sp needed
+  92 0030 5DF804FB 		ldr	pc, [sp], #4
+  93              	.L6:
+  94              		.align	2
+  95              	.L5:
+  96 0034 00000000 		.word	debugger
+  97 0038 00000000 		.word	0
+  98              		.cfi_endproc
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s 			page 3
+
+
+  99              	.LFE142:
+ 101              		.text
+ 102              	.Letext0:
+ 103              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 104              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 105              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 106              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 107              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 108              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 109              		.file 8 "Core/Inc/IMU.h"
+ 110              		.file 9 "Core/Inc/Motors.h"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 EKF.c
+C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s:21     .text.set_IMU_I2C_channel:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s:27     .text.set_IMU_I2C_channel:00000000 set_IMU_I2C_channel
+C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s:50     .text.update_position_EKF:00000000 $t
+C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s:56     .text.update_position_EKF:00000000 update_position_EKF
+C:\Users\monji\AppData\Local\Temp\cc2MFPM3.s:96     .text.update_position_EKF:00000034 $d
+
+UNDEFINED SYMBOLS
+bno055_init
+bno055_readEuler
+send_values_to_usart
+debugger
