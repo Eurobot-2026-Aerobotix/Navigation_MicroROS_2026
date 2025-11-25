@@ -17,9 +17,9 @@ float inner_plane_x = 0;
 float inner_plane_y = 0;
 float inner_plane_phi = 0;
 float inner_plane_absolute_phi = 0;
-extern int8_t skip_position_update = 0; // for synchronization reasons
-extern int8_t block_get_position = 0;
-extern int8_t is_inside_inner_plane = 0;
+int8_t skip_position_update = 0; // for synchronization reasons
+int8_t block_get_position = 0;
+int8_t is_inside_inner_plane = 0;
 
 float normalize_angle(float angle){
 	float a = angle;
@@ -58,14 +58,7 @@ void update_position(int skip){
 	}
 }
 void reset_position(){
-	current_x = 0;
-	current_y = 0;
-	current_phi = 0;
-	absolute_phi = 0;
-	encoder_count_R = 0;
-	encoder_count_L = 0;
-	previous_encoder_count_L = 0;
-	previous_encoder_count_R = 0;
+	set_position(0, 0, 0, 0);
 }
 void set_position(float current__x, float current__y, float current__phi, float absolute__phi){
 	current__phi = deg_to_rad(current__phi);

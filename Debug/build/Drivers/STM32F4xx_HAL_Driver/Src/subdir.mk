@@ -14,6 +14,8 @@ O_SRCS += \
 ../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o \
 ../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o \
 ../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o \
+../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o \
+../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o \
 ../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o \
 ../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o \
 ../build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o \

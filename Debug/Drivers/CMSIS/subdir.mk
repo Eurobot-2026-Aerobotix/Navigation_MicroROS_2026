@@ -12,7 +12,7 @@ OBJS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Drivers/CMSIS/system_stm32f4xx.o: C:/Users/monji/OneDrive/Bureau/R/STM/stm32_microros/Core/Src/system_stm32f4xx.c Drivers/CMSIS/subdir.mk
+Drivers/CMSIS/system_stm32f4xx.o: C:/Users/monji/OneDrive/Bureau/R/STM/Navigation_MicroROS_2026/Core/Src/system_stm32f4xx.c Drivers/CMSIS/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../../Core/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc -I../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../../Middlewares/Third_Party/FreeRTOS/Source/include -I../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
 clean: clean-Drivers-2f-CMSIS

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
   28:Core/Src/IMU.c **** 
   29:Core/Src/IMU.c **** static int16_t read16(uint8_t reg)
   30:Core/Src/IMU.c **** {
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 2
 
 
   29              		.loc 1 30 1 view -0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
   79              	.LFE140:
   81              		.section	.text.delay_ms,"ax",%progbits
   82              		.align	1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 3
 
 
   83              		.syntax unified
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  132              		.loc 1 20 5 view .LVU17
  133 0006 6423     		movs	r3, #100
  134 0008 0293     		str	r3, [sp, #8]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 4
 
 
  135 000a 0123     		movs	r3, #1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  186 0006 8DF81710 		strb	r1, [sp, #23]
   26:Core/Src/IMU.c **** }
  187              		.loc 1 26 5 is_stmt 1 view .LVU23
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 5
 
 
  188 000a 6423     		movs	r3, #100
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  237              		.cfi_def_cfa_offset 8
  238              		.cfi_offset 3, -8
  239              		.cfi_offset 14, -4
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 6
 
 
  240 0002 0146     		mov	r1, r0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  286              	.LVL18:
  287              		.loc 1 47 5 is_stmt 0 view .LVU41
  288 000e FFF7FEFF 		bl	delay_ms
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 7
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 7
 
 
  289              	.LVL19:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  323 0046 3B20     		movs	r0, #59
  324 0048 FFF7FEFF 		bl	bno055_write8
  325              	.LVL27:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 8
 
 
   68:Core/Src/IMU.c **** 
@@ -452,7 +452,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  351              	bno055_readGyro:
  352              	.LFB143:
   73:Core/Src/IMU.c **** 
-  74:Core/Src/IMU.c **** bno055_vector_t bno055_readGyro(void) // returns angular velocity around each axis in rad/s
+  74:Core/Src/IMU.c **** bno055_vector_t bno055_readGyro(void) // returns angular velocity around each axis in degrees/s
   75:Core/Src/IMU.c **** {
  353              		.loc 1 75 1 is_stmt 1 view -0
  354              		.cfi_startproc
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  372 0008 1420     		movs	r0, #20
  373 000a FFF7FEFF 		bl	read16
  374              	.LVL30:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 9
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 9
 
 
  375 000e 07EE900A 		vmov	s15, r0	@ int
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  425              		.cfi_def_cfa_offset 4
  426 006c 5DF804FB 		ldr	pc, [sp], #4
  427              	.L24:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 10
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 10
 
 
  428              		.align	2
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  478 0028 07EE900A 		vmov	s15, r0	@ int
  479              		.loc 1 87 11 discriminator 1 view .LVU82
  480 002c F8EEE77A 		vcvt.f32.s32	s15, s15
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 11
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 11
 
 
  481              		.loc 1 87 31 discriminator 1 view .LVU83
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
   92:Core/Src/IMU.c **** bno055_vector_t bno055_readMag(void) // returns absolute orientation with respect to the earth's ma
   93:Core/Src/IMU.c **** {
  533              		.loc 1 93 1 is_stmt 1 view -0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 12
 
 
  534              		.cfi_startproc
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  584 0046 67EE887A 		vmul.f32	s15, s15, s16
  585              		.loc 1 97 9 discriminator 1 view .LVU109
  586 004a CDED067A 		vstr.32	s15, [sp, #24]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 13
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 13
 
 
   98:Core/Src/IMU.c ****     return v;
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  638              		.cfi_def_cfa_offset 56
  103:Core/Src/IMU.c ****     bno055_vector_t v;
  639              		.loc 1 103 5 view .LVU114
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 14
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 14
 
 
  104:Core/Src/IMU.c ****     v.x = (float)read16(0x1A) / 16.0f;
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  689              		.cfi_def_cfa_offset 12
  690              		@ sp needed
  691 0068 BDEC028B 		vldm	sp!, {d8}
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 15
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 15
 
 
  692              	.LCFI31:
@@ -869,43 +869,43 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 1
  722              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
  723              		.file 8 "Core/Inc/IMU.h"
  724              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccCn7t71.s 			page 16
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccohXdQC.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 IMU.c
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:21     .text.read16:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:26     .text.read16:00000000 read16
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:76     .text.read16:00000034 $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:707    .bss.bno_addr:00000000 bno_addr
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:713    .bss.bno_i2c:00000000 bno_i2c
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:82     .text.delay_ms:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:87     .text.delay_ms:00000000 delay_ms
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:109    .text.bno055_read8:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:115    .text.bno055_read8:00000000 bno055_read8
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:158    .text.bno055_read8:0000002c $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:164    .text.bno055_write8:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:170    .text.bno055_write8:00000000 bno055_write8
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:215    .text.bno055_write8:0000002c $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:221    .text.bno055_setMode:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:227    .text.bno055_setMode:00000000 bno055_setMode
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:257    .text.bno055_init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:263    .text.bno055_init:00000000 bno055_init
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:339    .text.bno055_init:0000005c $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:345    .text.bno055_readGyro:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:351    .text.bno055_readGyro:00000000 bno055_readGyro
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:430    .text.bno055_readGyro:00000070 $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:435    .text.bno055_readAccel:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:441    .text.bno055_readAccel:00000000 bno055_readAccel
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:520    .text.bno055_readAccel:00000070 $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:525    .text.bno055_readMag:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:531    .text.bno055_readMag:00000000 bno055_readMag
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:610    .text.bno055_readMag:00000070 $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:615    .text.bno055_readEuler:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:621    .text.bno055_readEuler:00000000 bno055_readEuler
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:700    .text.bno055_readEuler:00000070 $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:708    .bss.bno_addr:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccCn7t71.s:710    .bss.bno_i2c:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:21     .text.read16:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:26     .text.read16:00000000 read16
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:76     .text.read16:00000034 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:707    .bss.bno_addr:00000000 bno_addr
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:713    .bss.bno_i2c:00000000 bno_i2c
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:82     .text.delay_ms:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:87     .text.delay_ms:00000000 delay_ms
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:109    .text.bno055_read8:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:115    .text.bno055_read8:00000000 bno055_read8
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:158    .text.bno055_read8:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:164    .text.bno055_write8:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:170    .text.bno055_write8:00000000 bno055_write8
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:215    .text.bno055_write8:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:221    .text.bno055_setMode:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:227    .text.bno055_setMode:00000000 bno055_setMode
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:257    .text.bno055_init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:263    .text.bno055_init:00000000 bno055_init
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:339    .text.bno055_init:0000005c $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:345    .text.bno055_readGyro:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:351    .text.bno055_readGyro:00000000 bno055_readGyro
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:430    .text.bno055_readGyro:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:435    .text.bno055_readAccel:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:441    .text.bno055_readAccel:00000000 bno055_readAccel
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:520    .text.bno055_readAccel:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:525    .text.bno055_readMag:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:531    .text.bno055_readMag:00000000 bno055_readMag
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:610    .text.bno055_readMag:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:615    .text.bno055_readEuler:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:621    .text.bno055_readEuler:00000000 bno055_readEuler
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:700    .text.bno055_readEuler:00000070 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:708    .bss.bno_addr:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccohXdQC.s:710    .bss.bno_i2c:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Mem_Read

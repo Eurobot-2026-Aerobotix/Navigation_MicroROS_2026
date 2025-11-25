@@ -9,6 +9,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include libmicroros/uros_include/visualization_msgs/visualization_msgs/srv/detail/subdir.mk
+-include libmicroros/uros_include/visualization_msgs/visualization_msgs/msg/detail/subdir.mk
 -include libmicroros/uros_include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/subdir.mk
 -include libmicroros/uros_include/trajectory_msgs/trajectory_msgs/msg/detail/subdir.mk
 -include libmicroros/uros_include/test_msgs/test_msgs/srv/detail/subdir.mk
@@ -224,34 +226,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := stm32_microros
+BUILD_ARTIFACT_NAME := Navigation_MicroROS_2026
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-stm32_microros.elf \
+Navigation_MicroROS_2026.elf \
 
 MAP_FILES += \
-stm32_microros.map \
+Navigation_MicroROS_2026.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-stm32_microros.list \
+Navigation_MicroROS_2026.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: stm32_microros.elf secondary-outputs
+main-build: Navigation_MicroROS_2026.elf secondary-outputs
 
 # Tool invocations
-stm32_microros.elf stm32_microros.map: $(OBJS) $(USER_OBJS) fail-specified-linker-script-missing makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "stm32_microros.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 --specs=nosys.specs -Wl,-Map="stm32_microros.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Navigation_MicroROS_2026.elf Navigation_MicroROS_2026.map: $(OBJS) $(USER_OBJS) fail-specified-linker-script-missing makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "Navigation_MicroROS_2026.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 --specs=nosys.specs -Wl,-Map="Navigation_MicroROS_2026.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -260,14 +262,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-stm32_microros.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "stm32_microros.list"
+Navigation_MicroROS_2026.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Navigation_MicroROS_2026.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout stm32_microros.elf stm32_microros.list stm32_microros.map
+	-$(RM) Navigation_MicroROS_2026.elf Navigation_MicroROS_2026.list Navigation_MicroROS_2026.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

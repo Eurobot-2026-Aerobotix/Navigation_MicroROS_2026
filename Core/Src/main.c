@@ -38,6 +38,7 @@
 #include "Motors.h"
 #include "Odometry.h"
 #include "navigation.h"
+#include "EKF.h"
 
 /* USER CODE END Includes */
 
@@ -262,7 +263,7 @@ void publisher_task(void *argument) {
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c2;
+I2C_HandleTypeDef hi2c1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim3;
@@ -304,7 +305,7 @@ static void MX_TIM7_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM14_Init(void);
 static void MX_TIM5_Init(void);
-static void MX_I2C2_Init(void);
+static void MX_I2C1_Init(void);
 void StartDefaultTask(void *argument);
 void executor_function(void *argument);
 
@@ -356,7 +357,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   MX_TIM5_Init();
-  MX_I2C2_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
@@ -383,7 +384,7 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // encoder timer
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // encoder timer
 
-  set_IMU_I2C_channel(&hi2c2);
+  set_IMU_I2C_channel(&hi2c1);
 
   // hedhom lezem ykounou hnee, tes2elch 3leech
   current_speed_R = 0;
@@ -407,7 +408,8 @@ int main(void)
   PWM_L = 0;
   communication_state = PC;
 
-  //set_position(50, 400, 90, 90);
+  reset_position_IMU();
+  //set_position_IMU(0, 0, 180, 180);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -517,36 +519,36 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief I2C2 Initialization Function
+  * @brief I2C1 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_I2C2_Init(void)
+static void MX_I2C1_Init(void)
 {
 
-  /* USER CODE BEGIN I2C2_Init 0 */
+  /* USER CODE BEGIN I2C1_Init 0 */
 
-  /* USER CODE END I2C2_Init 0 */
+  /* USER CODE END I2C1_Init 0 */
 
-  /* USER CODE BEGIN I2C2_Init 1 */
+  /* USER CODE BEGIN I2C1_Init 1 */
 
-  /* USER CODE END I2C2_Init 1 */
-  hi2c2.Instance = I2C2;
-  hi2c2.Init.ClockSpeed = 400000;
-  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c2.Init.OwnAddress1 = 0;
-  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c2.Init.OwnAddress2 = 0;
-  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 400000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN I2C2_Init 2 */
+  /* USER CODE BEGIN I2C1_Init 2 */
 
-  /* USER CODE END I2C2_Init 2 */
+  /* USER CODE END I2C1_Init 2 */
 
 }
 
@@ -933,12 +935,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
