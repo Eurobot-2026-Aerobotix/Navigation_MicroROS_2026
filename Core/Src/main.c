@@ -280,14 +280,21 @@ DMA_HandleTypeDef hdma_usart2_tx;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 3000 * 4,
+  .stack_size = 2000 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for executor */
 osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
-  .stack_size = 650 * 4,
+  .stack_size = 500 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
+/* Definitions for IMU_update_task */
+osThreadId_t IMU_update_taskHandle;
+const osThreadAttr_t IMU_update_task_attributes = {
+  .name = "IMU_update_task",
+  .stack_size = 500 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* USER CODE BEGIN PV */
@@ -308,6 +315,7 @@ static void MX_TIM5_Init(void);
 static void MX_I2C1_Init(void);
 void StartDefaultTask(void *argument);
 void executor_function(void *argument);
+void IMU_update_function(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -414,11 +422,6 @@ int main(void)
 
   robot_status.status = IDLE;
 
-  while(1){
-	  update_position_EKF();
-	  HAL_Delay(10);
-  }
-
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -446,6 +449,9 @@ int main(void)
 
   /* creation of executor */
   executorHandle = osThreadNew(executor_function, NULL, &executor_attributes);
+
+  /* creation of IMU_update_task */
+  IMU_update_taskHandle = osThreadNew(IMU_update_function, NULL, &IMU_update_task_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -1019,7 +1025,6 @@ void executor_function(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	timer_flag++;
 	if ( robot_status.status != IDLE){
 		if ( robot_status.status == MOVIN_FORWARD){
 			move_forward(robot_status.arguments[0], robot_status.arguments[1]);
@@ -1054,9 +1059,32 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 	}
-    osDelay(1);
+
+	//send_values_to_usart(debugger, 500, 0, 0);
+    osDelay(10);
   }
   /* USER CODE END executor_function */
+}
+
+/* USER CODE BEGIN Header_IMU_update_function */
+/**
+* @brief Function implementing the IMU_update_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_IMU_update_function */
+void IMU_update_function(void *argument)
+{
+  /* USER CODE BEGIN IMU_update_function */
+  /* Infinite loop */
+  for(;;)
+  {
+	update_current_yaw();//TODO: skip sometimes for synchronization issues
+	update_current_z_angular_velocity();
+	send_values_to_usart(current_imu_yaw, current_imu_gyro_z, 0, 0);
+	osDelay(6);
+  }
+  /* USER CODE END IMU_update_function */
 }
 
 /**

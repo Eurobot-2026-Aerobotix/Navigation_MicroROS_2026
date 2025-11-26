@@ -71,7 +71,7 @@ void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address)
     delay_ms(50);
 }
 
-bno055_vector_t bno055_readGyro(void) // returns angular velocity around each axis in rad/s
+bno055_vector_t bno055_readGyro(void) // returns angular velocity around each axis in degrees/s
 {
     bno055_vector_t v;
     v.x = (float)read16(0x14) / 16.0f;
