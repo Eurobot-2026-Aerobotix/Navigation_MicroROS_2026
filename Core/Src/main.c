@@ -974,7 +974,7 @@ void StartDefaultTask(void *argument)
 	        &pose_publisher,
 	        &node,
 	        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
-	        "/robot_pose"
+	        "/robot_pose_raw"
 	    );
 	   /* //  Initialize the Subscriber
 	        rclc_subscription_init_default(
