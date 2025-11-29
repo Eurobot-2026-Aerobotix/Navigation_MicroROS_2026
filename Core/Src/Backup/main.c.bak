@@ -288,14 +288,14 @@ osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
   .stack_size = 600 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for IMU_update_task */
 osThreadId_t IMU_update_taskHandle;
 const osThreadAttr_t IMU_update_task_attributes = {
   .name = "IMU_update_task",
   .stack_size = 600 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
 
@@ -421,6 +421,14 @@ int main(void)
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
+
+  while(1){
+	  send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
+	  HAL_Delay(10);
+  }
+//  robot_status.status = ROTATIN;
+//  robot_status.arguments[0] = 90.0;
+//  robot_status.arguments[1] = 0.0;
 
   /* USER CODE END 2 */
 
@@ -974,7 +982,7 @@ void StartDefaultTask(void *argument)
 	        &pose_publisher,
 	        &node,
 	        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
-	        "/robot_pose"
+	        "/robot_pose_raw"
 	    );
 	   /* //  Initialize the Subscriber
 	        rclc_subscription_init_default(
@@ -1059,8 +1067,6 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 	}
-
-	send_values_to_usart(debugger, 500, 0, 0);
     osDelay(10);
   }
   /* USER CODE END executor_function */
@@ -1079,11 +1085,11 @@ void IMU_update_function(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	//update_current_yaw();//TODO: skip sometimes for synchronization issues
-	//update_current_z_angular_velocity();
-	//send_values_to_usart(100, 500, 0, 0);
-	debugger++;
-    osDelay(6);
+	update_current_yaw();//TODO: skip sometimes for synchronization issues
+	update_current_z_angular_velocity();
+	send_values_to_usart(current_imu_yaw*100, current_imu_gyro_z*100, 0, 0);
+	//send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
+	osDelay(10);
   }
   /* USER CODE END IMU_update_function */
 }

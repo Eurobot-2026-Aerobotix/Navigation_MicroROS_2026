@@ -280,22 +280,22 @@ DMA_HandleTypeDef hdma_usart2_tx;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 2000 * 4,
+  .stack_size = 2500 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for executor */
 osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
-  .stack_size = 500 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 600 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for IMU_update_task */
 osThreadId_t IMU_update_taskHandle;
 const osThreadAttr_t IMU_update_task_attributes = {
   .name = "IMU_update_task",
-  .stack_size = 500 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 600 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
 
@@ -370,11 +370,11 @@ int main(void)
   // setting up timers and stuff
   // TODO: configure correct parameters
   setup_motor_channels(&htim1, TIM_CHANNEL_2, TIM_CHANNEL_1, TIM_CHANNEL_3, TIM_CHANNEL_4);
-  setup_encoder_timers(&htim4, &htim3, 4000);
+  setup_encoder_timers(&htim4, &htim3, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(61.047125366876906799635773069208, 60.969172134165810988878057796334);
+  setup_wheel_diameters(61.194030486412037716988166615536, 61.290175146455206273129785022359);
 
-  setup_wheels_spacing(188.5, 293.38713913895300766466587419031);
+  setup_wheels_spacing(188.5, 295.66289813189084913246820560862);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 800, 800, -800, -800);
 
@@ -421,6 +421,23 @@ int main(void)
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
+
+//  while(1){
+//	  send_values_to_usart(absolute_phi*1000, 0, 0, 0);
+//	  HAL_Delay(10);
+//  }
+//  robot_status.status = ROTATIN;
+//  robot_status.arguments[0] = 90.0;
+//  robot_status.arguments[1] = 0.0;
+
+//  robot_status.status = GOIN_TO;
+//	robot_status.arguments[0] = 400;
+//	robot_status.arguments[1] = -400;
+//	robot_status.arguments[2] = 600;
+
+//	robot_status.status = MOVIN_FORWARD;
+//	robot_status.arguments[0] = 500;
+//	robot_status.arguments[1] = 800;
 
   /* USER CODE END 2 */
 
@@ -1059,8 +1076,6 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 	}
-
-	//send_values_to_usart(debugger, 500, 0, 0);
     osDelay(10);
   }
   /* USER CODE END executor_function */
@@ -1081,8 +1096,9 @@ void IMU_update_function(void *argument)
   {
 	update_current_yaw();//TODO: skip sometimes for synchronization issues
 	update_current_z_angular_velocity();
-	send_values_to_usart(current_imu_yaw, current_imu_gyro_z, 0, 0);
-	osDelay(6);
+	send_values_to_usart(current_imu_yaw*100, current_imu_gyro_z*100, 0, 0);
+	//send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
+	osDelay(10);
   }
   /* USER CODE END IMU_update_function */
 }
@@ -1143,7 +1159,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}else if (control_loop_state == POSITION){
 				float tmp = (micros() - previous_position_control_time);
 				// right motor position control
-				float error = target_encoder_count_R - encoder_count_R;
+				float error = (target_encoder_count_R - encoder_count_R)/3.6; // it was 1000ticks encoders but now it is 3600, i don't wanna tune it again
 
 				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
 
@@ -1157,7 +1173,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(tmp/1000000)) : position_integral_R;
 
 				// left motor position control
-				error = target_encoder_count_L - encoder_count_L;
+				error = (target_encoder_count_L - encoder_count_L)/3.6;
 
 				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + error*(tmp/1000000) : 0;

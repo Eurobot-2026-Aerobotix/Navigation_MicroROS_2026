@@ -86,7 +86,7 @@ int move_forward(float distance, float speed){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 		// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -110,7 +110,7 @@ int move_forward(float distance, float speed){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 
@@ -180,7 +180,7 @@ int move_backward(float distance, float speed){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 		// calculating the distance to move that results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -205,7 +205,7 @@ int move_backward(float distance, float speed){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	int32_t phi_error = (int32_t)( (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // this part is there to fix any last minute fuck ups, concerning the phi
@@ -355,7 +355,7 @@ int rotate(float angle, int8_t is_radian){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 
@@ -380,7 +380,7 @@ int rotate(float angle, int8_t is_radian){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
@@ -465,7 +465,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 
 		distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	distance_to_target = get_arc_distance_to(target_point_x, target_point_y, center_point_x, center_point_y, radius);
@@ -486,7 +486,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	set_target_encoder_counts(encoder_count_R, encoder_count_L);
@@ -635,7 +635,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 		distance_to_target = MIN(distance_to_target, arc_length);
 
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(distance_to_target, x, arc_length, alpha*100);
+		//send_values_to_usart(distance_to_target, x, arc_length, alpha*100);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
@@ -660,7 +660,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 			emergency_break();
 			return 0;
 		}
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
 	}
 	stop_motors();

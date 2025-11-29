@@ -44,14 +44,14 @@ void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address)
     bno_i2c = hi2c;
     bno_addr = address;
 
-    delay_ms(700);  // required after power-up
+    delay_ms(900);  // required after power-up
 
     // CONFIG MODE
     bno055_setMode(OPERATION_MODE_CONFIG);
 
     // reset
     bno055_write8(BNO055_SYS_TRIGGER, 0x20);
-    delay_ms(700);
+    delay_ms(900);
 
     // enter config mode again
     bno055_setMode(OPERATION_MODE_CONFIG);
