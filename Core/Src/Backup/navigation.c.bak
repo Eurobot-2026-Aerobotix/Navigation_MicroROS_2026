@@ -15,7 +15,7 @@ float ramping_acceleration = 10;
 float acc_linearization_coef = 12;
 float breaking_acceleration = -2;
 float deceleration_offset = 40;
-float rotating_speed = 800;
+float rotating_speed = 750;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;
@@ -86,7 +86,7 @@ int move_forward(float distance, float speed){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 		// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -110,7 +110,7 @@ int move_forward(float distance, float speed){
 			break;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 
@@ -722,7 +722,7 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int encoder_tolerance = 18;
+	int encoder_tolerance = 60;
 	int pwm_tolerance = 700;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);

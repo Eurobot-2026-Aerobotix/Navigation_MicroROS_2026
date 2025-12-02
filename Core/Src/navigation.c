@@ -15,7 +15,7 @@ float ramping_acceleration = 10;
 float acc_linearization_coef = 12;
 float breaking_acceleration = -2;
 float deceleration_offset = 40;
-float rotating_speed = 800;
+float rotating_speed = 750;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;

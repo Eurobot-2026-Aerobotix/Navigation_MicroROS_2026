@@ -114,7 +114,7 @@ void update_encoder_counts(){ // ISR safe, takes approximately 250ns
 
 	delta = (int32_t)(encoder_timer_L->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_L;
 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
-	encoder_count_L -= delta; // it was + not - but the encoder phase pins were inverted
+	encoder_count_L += delta;
 
 	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
 	previous_encoder_timer_CNT_L = encoder_timer_L->Instance->CNT;

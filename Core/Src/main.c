@@ -280,22 +280,22 @@ DMA_HandleTypeDef hdma_usart2_tx;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 2500 * 4,
+  .stack_size = 2000 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for executor */
 osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
-  .stack_size = 600 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 500 * 4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for IMU_update_task */
 osThreadId_t IMU_update_taskHandle;
 const osThreadAttr_t IMU_update_task_attributes = {
   .name = "IMU_update_task",
-  .stack_size = 600 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 500 * 4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* USER CODE BEGIN PV */
 
@@ -436,8 +436,8 @@ int main(void)
 //	robot_status.arguments[2] = 600;
 
 //	robot_status.status = MOVIN_FORWARD;
-//	robot_status.arguments[0] = 500;
-//	robot_status.arguments[1] = 800;
+//	robot_status.arguments[0] = 1000;
+//	robot_status.arguments[1] = 750;
 
   /* USER CODE END 2 */
 
@@ -1096,7 +1096,7 @@ void IMU_update_function(void *argument)
   {
 	update_current_yaw();//TODO: skip sometimes for synchronization issues
 	update_current_z_angular_velocity();
-	send_values_to_usart(current_imu_yaw*100, current_imu_gyro_z*100, 0, 0);
+	send_values_to_usart(current_imu_yaw*100, current_imu_gyro_z*100, 500, 0);
 	//send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
 	osDelay(10);
   }
