@@ -231,9 +231,9 @@ void publisher_task(void *argument) {
         // Get pose data
     	float pos[3];
     	get_position(pos);
-    	pose_msg.x = pos[0];
-    	pose_msg.y = pos[1];
-    	pose_msg.z = pos[2];   // θ
+    	pose_msg.x = pos[0]/1000.0;
+    	pose_msg.y = pos[1]/1000.0;
+    	pose_msg.z = pos[2];
 
         rcl_publish(&pose_publisher, &pose_msg, NULL);
         vTaskDelay(pdMS_TO_TICKS(70));  // Adjust as needed
@@ -417,10 +417,13 @@ int main(void)
   communication_state = PC;
 
   reset_position_IMU();
-  //set_position_IMU(0, 0, 180, 180);
+  //set_position_IMU(1200, 0, 0, 0);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
+//  while(1){
+//	  send_values_to_usart(encoder_count_L, encoder_count_R, 0, 0);
+//  }
 
 //  while(1){
 //	  send_values_to_usart(absolute_phi*1000, 0, 0, 0);
@@ -1097,7 +1100,6 @@ void IMU_update_function(void *argument)
 	update_current_yaw();//TODO: skip sometimes for synchronization issues
 	update_current_z_angular_velocity();
 	send_values_to_usart(current_imu_yaw*100, current_imu_gyro_z*100, 500, 0);
-	//send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
 	osDelay(10);
   }
   /* USER CODE END IMU_update_function */

@@ -25,6 +25,12 @@ void set_position_IMU(float current__x, float current__y, float current__phi, fl
 	set_position(current__x, current__y, current__phi, absolute__phi);
 	update_current_yaw();
 	imu_yaw_offset = normalize_angle(imu_yaw_offset + deg_to_rad(current__phi) - current_imu_yaw);
+	HAL_Delay(10);
+	for(int i=0; i<100; i++){ // kinda lezem hedhi bech l IMU ma yetmou3e9ch (ma44irha keen ydhayya3 0.1rad mellowel)
+		update_current_yaw();
+		update_current_z_angular_velocity();
+		HAL_Delay(10);
+	}
 }
 
 void reset_position_IMU(){
