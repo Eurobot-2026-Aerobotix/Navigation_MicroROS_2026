@@ -414,10 +414,13 @@ int main(void)
 
   PWM_R = 0;
   PWM_L = 0;
+  current_imu_yaw = 0;
+  current_imu_gyro_z = 0;
+  absolute_imu_yaw = 0;
   communication_state = PC;
 
   reset_position_IMU();
-  //set_position_IMU(1200, 0, 0, 0);
+  set_position_IMU(1200, 200, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -439,8 +442,8 @@ int main(void)
 //	robot_status.arguments[2] = 600;
 
 //	robot_status.status = MOVIN_FORWARD;
-//	robot_status.arguments[0] = 1000;
-//	robot_status.arguments[1] = 750;
+//	robot_status.arguments[0] = 200;
+//	robot_status.arguments[1] = 400;
 
   /* USER CODE END 2 */
 
@@ -1099,8 +1102,8 @@ void IMU_update_function(void *argument)
   {
 	update_current_yaw();//TODO: skip sometimes for synchronization issues
 	update_current_z_angular_velocity();
-	send_values_to_usart(current_imu_yaw*100, current_imu_gyro_z*100, 500, 0);
-	osDelay(10);
+	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, 500, current_imu_gyro_z*100);
+	osDelay(10); // TODO: maybe this task blocks the executor
   }
   /* USER CODE END IMU_update_function */
 }
@@ -1121,7 +1124,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = 0;
 			PWM_R = 0;
 		}else{
-			update_position(skip_position_update); // will also update the speed internally
+			update_position_EKF(skip_position_update);
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);
 				// right motor speed control

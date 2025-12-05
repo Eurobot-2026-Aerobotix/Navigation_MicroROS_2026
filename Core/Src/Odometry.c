@@ -8,7 +8,7 @@
 #include "../Inc/Odometry.h"
 
 float driven_wheels_spacing;
-float dead_wheels_spacing;
+float dead_wheels_spacing = 0;
 float current_x = 0;
 float current_y = 0;
 float current_phi = 0;
@@ -32,7 +32,7 @@ float normalize_angle(float angle){
 	return a;
 }
 
-void update_position(int skip){
+void update_position(int8_t skip){
 	if (!skip){
 		update_encoder_counts();
 

@@ -30,7 +30,7 @@ extern int8_t block_get_position;
 extern int8_t is_inside_inner_plane;
 
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
-void update_position(int skip);
+void update_position(int8_t skip);
 void reset_position();
 void set_position(float current__x, float current__y, float current__phi, float absolute__phi);
 float get_distance_to(float x, float y);
