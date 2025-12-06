@@ -39,12 +39,12 @@ void bno055_setMode(uint8_t mode)
     delay_ms(30);
 }
 
-void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address)
+void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address, int8_t mode)
 {
     bno_i2c = hi2c;
     bno_addr = address;
 
-    delay_ms(900);  // required after power-up
+    delay_ms(900);
 
     // CONFIG MODE
     bno055_setMode(OPERATION_MODE_CONFIG);
@@ -53,7 +53,7 @@ void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address)
     bno055_write8(BNO055_SYS_TRIGGER, 0x20);
     delay_ms(900);
 
-    // enter config mode again
+    // back to config
     bno055_setMode(OPERATION_MODE_CONFIG);
 
     // page 0
@@ -63,12 +63,12 @@ void bno055_init(I2C_HandleTypeDef *hi2c, uint8_t address)
     bno055_write8(BNO055_SYS_TRIGGER, 0x80);
     delay_ms(10);
 
-    // set units (deg/sec, degrees)
+    // unit selection
     bno055_write8(BNO055_UNIT_SEL, 0x00);
 
-    // NORMAL FUSION MODE
-    bno055_setMode(OPERATION_MODE_NDOF);
-    delay_ms(50);
+    // start fusion mode
+    bno055_setMode(mode);
+    delay_ms(20);
 }
 
 bno055_vector_t bno055_readGyro(void) // returns angular velocity around each axis in degrees/s

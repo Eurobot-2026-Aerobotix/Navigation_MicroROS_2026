@@ -420,7 +420,7 @@ int main(void)
   communication_state = PC;
 
   reset_position_IMU();
-  set_position_IMU(1200, 200, 90, 90);
+  //set_position_IMU(1200, 200, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -1102,7 +1102,9 @@ void IMU_update_function(void *argument)
   {
 	update_current_yaw();//TODO: skip sometimes for synchronization issues
 	update_current_z_angular_velocity();
-	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, 500, current_imu_gyro_z*100);
+	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
+
+	send_values_to_usart(current_imu_yaw*100, 500, 0, absolute_phi*100);
 	osDelay(10); // TODO: maybe this task blocks the executor
   }
   /* USER CODE END IMU_update_function */

@@ -11,14 +11,6 @@
 #include "Odometry.h"
 #include "IMU.h"
 
-
-extern float imu_yaw_offset;
-extern float current_imu_yaw;
-extern float absolute_imu_yaw;
-extern float current_imu_gyro_z;
-extern int8_t imu_yaw_new;
-extern int8_t imu_gyro_z_new;
-
 void set_IMU_I2C_channel(I2C_HandleTypeDef *hi2c);
 void update_position_EKF(int8_t skip);
 void set_position_IMU(float current__x, float current__y, float current__phi, float absolute__phi);

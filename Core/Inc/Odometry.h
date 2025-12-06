@@ -28,6 +28,12 @@ extern float inner_plane_absolute_phi;
 extern int8_t skip_position_update;
 extern int8_t block_get_position;
 extern int8_t is_inside_inner_plane;
+extern float imu_yaw_offset;
+extern float current_imu_yaw;
+extern float absolute_imu_yaw;
+extern float current_imu_gyro_z;
+extern int8_t imu_yaw_new;
+extern int8_t imu_gyro_z_new;
 
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
 void update_position(int8_t skip);

@@ -20,6 +20,12 @@ float inner_plane_absolute_phi = 0;
 int8_t skip_position_update = 0; // for synchronization reasons
 int8_t block_get_position = 0;
 int8_t is_inside_inner_plane = 0;
+float imu_yaw_offset = 0;
+float current_imu_yaw;
+float absolute_imu_yaw = 0;
+float current_imu_gyro_z;
+int8_t imu_yaw_new = 0;
+int8_t imu_gyro_z_new = 0;
 
 float normalize_angle(float angle){
 	float a = angle;
