@@ -392,7 +392,7 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // encoder timer
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // encoder timer
 
-  set_IMU_I2C_channel(&hi2c1);
+  //set_IMU_I2C_channel(&hi2c1); // set I²C channel of the IMU, abandoned
 
   // hedhom lezem ykounou hnee, tes2elch 3leech
   current_speed_R = 0;
@@ -419,8 +419,8 @@ int main(void)
   absolute_imu_yaw = 0;
   communication_state = PC;
 
-  reset_position_IMU();
-  //set_position_IMU(1200, 200, 90, 90);
+  reset_position();
+  //set_position(1200, 200, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -442,8 +442,8 @@ int main(void)
 //	robot_status.arguments[2] = 600;
 
 //	robot_status.status = MOVIN_FORWARD;
-//	robot_status.arguments[0] = 200;
-//	robot_status.arguments[1] = 400;
+//	robot_status.arguments[0] = 500;
+//	robot_status.arguments[1] = 700;
 
   /* USER CODE END 2 */
 
@@ -1100,12 +1100,12 @@ void IMU_update_function(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	update_current_yaw();//TODO: skip sometimes for synchronization issues
-	update_current_z_angular_velocity();
+	// IMU abandoned, bhim yeser brojla, a7wel
+	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 
-	send_values_to_usart(current_imu_yaw*100, 500, 0, absolute_phi*100);
-	osDelay(10); // TODO: maybe this task blocks the executor
+	//send_values_to_usart(current_imu_yaw*100, absolute_imu_yaw*100, 500, absolute_phi*100);
+	osDelay(1000);
   }
   /* USER CODE END IMU_update_function */
 }
@@ -1126,7 +1126,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = 0;
 			PWM_R = 0;
 		}else{
-			update_position_EKF(skip_position_update);
+			update_position(skip_position_update);
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);
 				// right motor speed control

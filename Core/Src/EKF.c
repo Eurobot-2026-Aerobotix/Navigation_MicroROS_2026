@@ -9,7 +9,7 @@
 #include "EKF.h"
 
 void set_IMU_I2C_channel(I2C_HandleTypeDef *hi2c){
-	bno055_init(hi2c, BNO055_I2C_ADDR_LO, OPERATION_MODE_MAGGYRO);
+	bno055_init(hi2c, BNO055_I2C_ADDR_LO, OPERATION_MODE_IMU);
 	uint8_t id = bno055_read8(BNO055_CHIP_ID);
 //	while (id != 0xA0) {
 //		bno055_init(hi2c, BNO055_I2C_ADDR_LO, OPERATION_MODE_MAGGYRO);
@@ -49,32 +49,22 @@ void reset_position_IMU(){
 }
 
 void update_current_yaw(){
-	bno055_vector_t v = bno055_readMag();
-	static float yaw_rad = 0;
-	float new_yaw_rad = atan2(v.y, v.x);
-	if (fabs(new_yaw_rad - yaw_rad) > PI){
-		yaw_rad = new_yaw_rad;
-	}else{
-		yaw_rad = 0.8*yaw_rad + 0.2 *atan2(v.y, v.x);
-	}
-//	current_imu_yaw = yaw_rad;
-//	bno055_vector_t v = bno055_readEuler();
-//	float yaw_rad = v.x * PI / 180.0;
-//	if (yaw_rad > PI) yaw_rad -= 2*PI;
+	bno055_vector_t v = bno055_readEuler();
+	float yaw_rad = v.x * PI / 180.0;
+	if (yaw_rad > PI) yaw_rad -= 2*PI;
 	yaw_rad *= -1;
-	current_imu_yaw = yaw_rad;
 
-//	float new_imu_yaw = normalize_angle(yaw_rad /*+ imu_yaw_offset*/);
-//	float d_yaw = new_imu_yaw - current_imu_yaw;
-//	current_imu_yaw = new_imu_yaw;
-//
-//	if (d_yaw>PI){
-//		d_yaw -= 2*PI;
-//	}
-//	else if (d_yaw < -2.5){
-//		d_yaw += 2*PI;
-//	}
-//	absolute_imu_yaw += d_yaw;
+	float new_imu_yaw = normalize_angle(yaw_rad + imu_yaw_offset);
+	float d_yaw = new_imu_yaw - current_imu_yaw;
+	current_imu_yaw = new_imu_yaw;
+
+	if (d_yaw>PI){
+		d_yaw -= 2*PI;
+	}
+	else if (d_yaw < -2.5){
+		d_yaw += 2*PI;
+	}
+	absolute_imu_yaw += d_yaw;
 	imu_yaw_new = 1;
 }
 void update_current_z_angular_velocity(){ // returns in rad/s

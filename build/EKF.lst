@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -50,15 +50,15 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 1
   37              		.cfi_def_cfa_offset 8
   38              		.cfi_offset 3, -8
   39              		.cfi_offset 14, -4
-  12:Core/Src/EKF.c **** 	bno055_init(hi2c, BNO055_I2C_ADDR_LO, OPERATION_MODE_MAGGYRO);
+  12:Core/Src/EKF.c **** 	bno055_init(hi2c, BNO055_I2C_ADDR_LO, OPERATION_MODE_IMU);
   40              		.loc 1 12 2 is_stmt 1 view .LVU2
-  41 0002 0622     		movs	r2, #6
+  41 0002 0822     		movs	r2, #8
   42 0004 5021     		movs	r1, #80
   43 0006 FFF7FEFF 		bl	bno055_init
   44              	.LVL1:
   13:Core/Src/EKF.c **** 	uint8_t id = bno055_read8(BNO055_CHIP_ID);
   45              		.loc 1 13 2 view .LVU3
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 2
 
 
   46              		.loc 1 13 15 is_stmt 0 view .LVU4
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 1
   29:Core/Src/EKF.c **** 	}
   30:Core/Src/EKF.c **** 	update_position(skip);
   87              		.loc 1 30 2 is_stmt 1 view .LVU13
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 3
 
 
   88 0010 FFF7FEFF 		bl	update_position
@@ -133,18 +133,20 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 1
   96              		.cfi_endproc
   97              	.LFE142:
   99              		.global	__aeabi_f2d
- 100              		.global	__aeabi_d2f
- 101              		.global	__aeabi_dcmpgt
- 102              		.global	__aeabi_dmul
- 103              		.global	__aeabi_dadd
- 104              		.section	.text.update_current_yaw,"ax",%progbits
- 105              		.align	1
- 106              		.global	update_current_yaw
- 107              		.syntax unified
- 108              		.thumb
- 109              		.thumb_func
- 111              	update_current_yaw:
- 112              	.LFB145:
+ 100              		.global	__aeabi_dmul
+ 101              		.global	__aeabi_ddiv
+ 102              		.global	__aeabi_d2f
+ 103              		.global	__aeabi_dcmpgt
+ 104              		.global	__aeabi_dsub
+ 105              		.global	__aeabi_dadd
+ 106              		.section	.text.update_current_yaw,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	update_current_yaw
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	update_current_yaw:
+ 114              	.LFB145:
   32:Core/Src/EKF.c **** 
   33:Core/Src/EKF.c **** void set_position_IMU(float current__x, float current__y, float current__phi, float absolute__phi){
   34:Core/Src/EKF.c **** 	set_position(current__x, current__y, current__phi, absolute__phi);
@@ -165,493 +167,490 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 1
   49:Core/Src/EKF.c **** }
   50:Core/Src/EKF.c **** 
   51:Core/Src/EKF.c **** void update_current_yaw(){
- 113              		.loc 1 51 26 is_stmt 1 view -0
- 114              		.cfi_startproc
- 115              		@ args = 0, pretend = 0, frame = 16
- 116              		@ frame_needed = 0, uses_anonymous_args = 0
- 117 0000 30B5     		push	{r4, r5, lr}
- 118              	.LCFI2:
- 119              		.cfi_def_cfa_offset 12
- 120              		.cfi_offset 4, -12
- 121              		.cfi_offset 5, -8
- 122              		.cfi_offset 14, -4
- 123 0002 2DED068B 		vpush.64	{d8, d9, d10}
- 124              	.LCFI3:
- 125              		.cfi_def_cfa_offset 36
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 4
+ 115              		.loc 1 51 26 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 16
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119 0000 30B5     		push	{r4, r5, lr}
+ 120              	.LCFI2:
+ 121              		.cfi_def_cfa_offset 12
+ 122              		.cfi_offset 4, -12
+ 123              		.cfi_offset 5, -8
+ 124              		.cfi_offset 14, -4
+ 125 0002 2DED028B 		vpush.64	{d8}
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 4
 
 
- 126              		.cfi_offset 80, -36
- 127              		.cfi_offset 81, -32
- 128              		.cfi_offset 82, -28
- 129              		.cfi_offset 83, -24
- 130              		.cfi_offset 84, -20
- 131              		.cfi_offset 85, -16
- 132 0006 85B0     		sub	sp, sp, #20
- 133              	.LCFI4:
- 134              		.cfi_def_cfa_offset 56
-  52:Core/Src/EKF.c **** 	bno055_vector_t v = bno055_readMag();
- 135              		.loc 1 52 2 view .LVU16
- 136              		.loc 1 52 22 is_stmt 0 view .LVU17
- 137 0008 FFF7FEFF 		bl	bno055_readMag
- 138              	.LVL5:
- 139 000c 10EE104A 		vmov	r4, s0
- 140 0010 10EE900A 		vmov	r0, s1
- 141 0014 8DED010A 		vstr.32	s0, [sp, #4]
- 142 0018 CDED020A 		vstr.32	s1, [sp, #8]
- 143 001c 8DED031A 		vstr.32	s2, [sp, #12]
-  53:Core/Src/EKF.c **** 	static float yaw_rad = 0;
- 144              		.loc 1 53 2 is_stmt 1 view .LVU18
-  54:Core/Src/EKF.c **** 	float new_yaw_rad = atan2(v.y, v.x);
- 145              		.loc 1 54 2 view .LVU19
- 146              		.loc 1 54 22 is_stmt 0 view .LVU20
- 147 0020 FFF7FEFF 		bl	__aeabi_f2d
- 148              	.LVL6:
- 149 0024 41EC190B 		vmov	d9, r0, r1
- 150 0028 2046     		mov	r0, r4	@ float
- 151 002a FFF7FEFF 		bl	__aeabi_f2d
- 152              	.LVL7:
- 153 002e 41EC1A0B 		vmov	d10, r0, r1
- 154 0032 B0EE4A1A 		vmov.f32	s2, s20
- 155 0036 F0EE6A1A 		vmov.f32	s3, s21
- 156 003a B0EE490A 		vmov.f32	s0, s18
- 157 003e F0EE690A 		vmov.f32	s1, s19
- 158 0042 FFF7FEFF 		bl	atan2
- 159              	.LVL8:
- 160 0046 51EC100B 		vmov	r0, r1, d0
- 161              		.loc 1 54 8 discriminator 1 view .LVU21
- 162 004a FFF7FEFF 		bl	__aeabi_d2f
- 163              	.LVL9:
- 164 004e 08EE100A 		vmov	s16, r0
- 165              	.LVL10:
-  55:Core/Src/EKF.c **** 	if (fabs(new_yaw_rad - yaw_rad) > PI){
- 166              		.loc 1 55 2 is_stmt 1 view .LVU22
- 167              		.loc 1 55 23 is_stmt 0 view .LVU23
- 168 0052 2D4B     		ldr	r3, .L15+24
- 169 0054 D3ED008A 		vldr.32	s17, [r3]
- 170 0058 78EE687A 		vsub.f32	s15, s16, s17
- 171              		.loc 1 55 6 view .LVU24
- 172 005c F0EEE77A 		vabs.f32	s15, s15
- 173 0060 17EE900A 		vmov	r0, s15
- 174              	.LVL11:
- 175              		.loc 1 55 6 view .LVU25
- 176 0064 FFF7FEFF 		bl	__aeabi_f2d
- 177              	.LVL12:
- 178              		.loc 1 55 5 view .LVU26
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 5
+ 126              	.LCFI3:
+ 127              		.cfi_def_cfa_offset 20
+ 128              		.cfi_offset 80, -20
+ 129              		.cfi_offset 81, -16
+ 130 0006 85B0     		sub	sp, sp, #20
+ 131              	.LCFI4:
+ 132              		.cfi_def_cfa_offset 40
+  52:Core/Src/EKF.c **** 	bno055_vector_t v = bno055_readEuler();
+ 133              		.loc 1 52 2 view .LVU16
+ 134              		.loc 1 52 22 is_stmt 0 view .LVU17
+ 135 0008 FFF7FEFF 		bl	bno055_readEuler
+ 136              	.LVL5:
+ 137 000c 10EE100A 		vmov	r0, s0
+ 138 0010 8DED010A 		vstr.32	s0, [sp, #4]
+ 139 0014 CDED020A 		vstr.32	s1, [sp, #8]
+ 140 0018 8DED031A 		vstr.32	s2, [sp, #12]
+  53:Core/Src/EKF.c **** 	float yaw_rad = v.x * PI / 180.0;
+ 141              		.loc 1 53 2 is_stmt 1 view .LVU18
+ 142              		.loc 1 53 19 is_stmt 0 view .LVU19
+ 143 001c FFF7FEFF 		bl	__aeabi_f2d
+ 144              	.LVL6:
+ 145              		.loc 1 53 22 view .LVU20
+ 146 0020 33A3     		adr	r3, .L20
+ 147 0022 D3E90023 		ldrd	r2, [r3]
+ 148 0026 FFF7FEFF 		bl	__aeabi_dmul
+ 149              	.LVL7:
+ 150              		.loc 1 53 27 view .LVU21
+ 151 002a 0022     		movs	r2, #0
+ 152 002c 344B     		ldr	r3, .L20+16
+ 153 002e FFF7FEFF 		bl	__aeabi_ddiv
+ 154              	.LVL8:
+ 155              		.loc 1 53 8 view .LVU22
+ 156 0032 FFF7FEFF 		bl	__aeabi_d2f
+ 157              	.LVL9:
+ 158 0036 08EE100A 		vmov	s16, r0
+ 159              	.LVL10:
+  54:Core/Src/EKF.c **** 	if (yaw_rad > PI) yaw_rad -= 2*PI;
+ 160              		.loc 1 54 2 is_stmt 1 view .LVU23
+ 161              		.loc 1 54 14 is_stmt 0 view .LVU24
+ 162 003a FFF7FEFF 		bl	__aeabi_f2d
+ 163              	.LVL11:
+ 164              		.loc 1 54 14 view .LVU25
+ 165 003e 0446     		mov	r4, r0
+ 166 0040 0D46     		mov	r5, r1
+ 167              		.loc 1 54 5 view .LVU26
+ 168 0042 2BA3     		adr	r3, .L20
+ 169 0044 D3E90023 		ldrd	r2, [r3]
+ 170 0048 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 171              	.LVL12:
+ 172 004c 50B1     		cbz	r0, .L9
+ 173              		.loc 1 54 20 is_stmt 1 discriminator 1 view .LVU27
+ 174              		.loc 1 54 28 is_stmt 0 discriminator 1 view .LVU28
+ 175 004e 2AA3     		adr	r3, .L20+8
+ 176 0050 D3E90023 		ldrd	r2, [r3]
+ 177 0054 2046     		mov	r0, r4
+ 178 0056 2946     		mov	r1, r5
+ 179 0058 FFF7FEFF 		bl	__aeabi_dsub
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 5
 
 
- 179 0068 21A3     		adr	r3, .L15
- 180 006a D3E90023 		ldrd	r2, [r3]
- 181 006e FFF7FEFF 		bl	__aeabi_dcmpgt
- 182              	.LVL13:
- 183 0072 98B1     		cbz	r0, .L13
-  56:Core/Src/EKF.c **** 		yaw_rad = new_yaw_rad;
- 184              		.loc 1 56 3 is_stmt 1 view .LVU27
- 185              		.loc 1 56 11 is_stmt 0 view .LVU28
- 186 0074 244B     		ldr	r3, .L15+24
- 187 0076 83ED008A 		vstr.32	s16, [r3]
- 188              	.L11:
-  57:Core/Src/EKF.c **** 	}else{
-  58:Core/Src/EKF.c **** 		yaw_rad = 0.8*yaw_rad + 0.2 *atan2(v.y, v.x);
-  59:Core/Src/EKF.c **** 	}
-  60:Core/Src/EKF.c **** //	current_imu_yaw = yaw_rad;
-  61:Core/Src/EKF.c **** //	bno055_vector_t v = bno055_readEuler();
-  62:Core/Src/EKF.c **** //	float yaw_rad = v.x * PI / 180.0;
-  63:Core/Src/EKF.c **** //	if (yaw_rad > PI) yaw_rad -= 2*PI;
-  64:Core/Src/EKF.c **** 	yaw_rad *= -1;
- 189              		.loc 1 64 2 is_stmt 1 view .LVU29
- 190              		.loc 1 64 10 is_stmt 0 view .LVU30
- 191 007a 234B     		ldr	r3, .L15+24
- 192 007c D3ED007A 		vldr.32	s15, [r3]
- 193 0080 F1EE677A 		vneg.f32	s15, s15
- 194 0084 C3ED007A 		vstr.32	s15, [r3]
-  65:Core/Src/EKF.c **** 	current_imu_yaw = yaw_rad;
- 195              		.loc 1 65 2 is_stmt 1 view .LVU31
- 196              		.loc 1 65 18 is_stmt 0 view .LVU32
- 197 0088 204B     		ldr	r3, .L15+28
- 198 008a C3ED007A 		vstr.32	s15, [r3]
-  66:Core/Src/EKF.c **** 
-  67:Core/Src/EKF.c **** //	float new_imu_yaw = normalize_angle(yaw_rad /*+ imu_yaw_offset*/);
-  68:Core/Src/EKF.c **** //	float d_yaw = new_imu_yaw - current_imu_yaw;
-  69:Core/Src/EKF.c **** //	current_imu_yaw = new_imu_yaw;
-  70:Core/Src/EKF.c **** //
-  71:Core/Src/EKF.c **** //	if (d_yaw>PI){
-  72:Core/Src/EKF.c **** //		d_yaw -= 2*PI;
-  73:Core/Src/EKF.c **** //	}
-  74:Core/Src/EKF.c **** //	else if (d_yaw < -2.5){
-  75:Core/Src/EKF.c **** //		d_yaw += 2*PI;
-  76:Core/Src/EKF.c **** //	}
-  77:Core/Src/EKF.c **** //	absolute_imu_yaw += d_yaw;
-  78:Core/Src/EKF.c **** 	imu_yaw_new = 1;
- 199              		.loc 1 78 2 is_stmt 1 view .LVU33
- 200              		.loc 1 78 14 is_stmt 0 view .LVU34
- 201 008e 204B     		ldr	r3, .L15+32
- 202 0090 0122     		movs	r2, #1
- 203 0092 1A70     		strb	r2, [r3]
-  79:Core/Src/EKF.c **** }
- 204              		.loc 1 79 1 view .LVU35
- 205 0094 05B0     		add	sp, sp, #20
- 206              	.LCFI5:
- 207              		.cfi_remember_state
- 208              		.cfi_def_cfa_offset 36
- 209              		@ sp needed
- 210 0096 BDEC068B 		vldm	sp!, {d8-d10}
- 211              	.LCFI6:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 6
+ 180              	.LVL13:
+ 181 005c FFF7FEFF 		bl	__aeabi_d2f
+ 182              	.LVL14:
+ 183 0060 08EE100A 		vmov	s16, r0
+ 184              	.LVL15:
+ 185              	.L9:
+  55:Core/Src/EKF.c **** 	yaw_rad *= -1;
+ 186              		.loc 1 55 2 is_stmt 1 view .LVU29
+  56:Core/Src/EKF.c **** 
+  57:Core/Src/EKF.c **** 	float new_imu_yaw = normalize_angle(yaw_rad + imu_yaw_offset);
+ 187              		.loc 1 57 2 view .LVU30
+ 188              		.loc 1 57 22 is_stmt 0 view .LVU31
+ 189 0064 274B     		ldr	r3, .L20+20
+ 190 0066 93ED000A 		vldr.32	s0, [r3]
+ 191 006a 30EE480A 		vsub.f32	s0, s0, s16
+ 192 006e FFF7FEFF 		bl	normalize_angle
+ 193              	.LVL16:
+  58:Core/Src/EKF.c **** 	float d_yaw = new_imu_yaw - current_imu_yaw;
+ 194              		.loc 1 58 2 is_stmt 1 view .LVU32
+ 195              		.loc 1 58 28 is_stmt 0 view .LVU33
+ 196 0072 254B     		ldr	r3, .L20+24
+ 197 0074 93ED008A 		vldr.32	s16, [r3]
+ 198              	.LVL17:
+ 199              		.loc 1 58 8 view .LVU34
+ 200 0078 30EE488A 		vsub.f32	s16, s0, s16
+ 201              	.LVL18:
+  59:Core/Src/EKF.c **** 	current_imu_yaw = new_imu_yaw;
+ 202              		.loc 1 59 2 is_stmt 1 view .LVU35
+ 203              		.loc 1 59 18 is_stmt 0 view .LVU36
+ 204 007c 83ED000A 		vstr.32	s0, [r3]
+  60:Core/Src/EKF.c **** 
+  61:Core/Src/EKF.c **** 	if (d_yaw>PI){
+ 205              		.loc 1 61 2 is_stmt 1 view .LVU37
+ 206              		.loc 1 61 11 is_stmt 0 view .LVU38
+ 207 0080 18EE100A 		vmov	r0, s16
+ 208 0084 FFF7FEFF 		bl	__aeabi_f2d
+ 209              	.LVL19:
+ 210              		.loc 1 61 11 view .LVU39
+ 211 0088 0446     		mov	r4, r0
+ 212 008a 0D46     		mov	r5, r1
+ 213              		.loc 1 61 5 view .LVU40
+ 214 008c 18A3     		adr	r3, .L20
+ 215 008e D3E90023 		ldrd	r2, [r3]
+ 216 0092 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 217              	.LVL20:
+ 218 0096 C0B1     		cbz	r0, .L18
+  62:Core/Src/EKF.c **** 		d_yaw -= 2*PI;
+ 219              		.loc 1 62 3 is_stmt 1 view .LVU41
+ 220              		.loc 1 62 9 is_stmt 0 view .LVU42
+ 221 0098 17A3     		adr	r3, .L20+8
+ 222 009a D3E90023 		ldrd	r2, [r3]
+ 223 009e 2046     		mov	r0, r4
+ 224 00a0 2946     		mov	r1, r5
+ 225 00a2 FFF7FEFF 		bl	__aeabi_dsub
+ 226              	.LVL21:
+ 227 00a6 FFF7FEFF 		bl	__aeabi_d2f
+ 228              	.LVL22:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 6
 
 
- 212              		.cfi_restore 84
- 213              		.cfi_restore 85
- 214              		.cfi_restore 82
- 215              		.cfi_restore 83
- 216              		.cfi_restore 80
- 217              		.cfi_restore 81
- 218              		.cfi_def_cfa_offset 12
- 219              	.LVL14:
- 220              		.loc 1 79 1 view .LVU36
- 221 009a 30BD     		pop	{r4, r5, pc}
- 222              	.LVL15:
- 223              	.L13:
- 224              	.LCFI7:
- 225              		.cfi_restore_state
-  58:Core/Src/EKF.c **** 	}
- 226              		.loc 1 58 3 is_stmt 1 view .LVU37
-  58:Core/Src/EKF.c **** 	}
- 227              		.loc 1 58 16 is_stmt 0 view .LVU38
- 228 009c 18EE900A 		vmov	r0, s17
- 229 00a0 FFF7FEFF 		bl	__aeabi_f2d
- 230              	.LVL16:
- 231 00a4 14A3     		adr	r3, .L15+8
- 232 00a6 D3E90023 		ldrd	r2, [r3]
- 233 00aa FFF7FEFF 		bl	__aeabi_dmul
- 234              	.LVL17:
- 235 00ae 0446     		mov	r4, r0
- 236 00b0 0D46     		mov	r5, r1
-  58:Core/Src/EKF.c **** 	}
- 237              		.loc 1 58 32 view .LVU39
- 238 00b2 B0EE4A1A 		vmov.f32	s2, s20
- 239 00b6 F0EE6A1A 		vmov.f32	s3, s21
- 240 00ba B0EE490A 		vmov.f32	s0, s18
- 241 00be F0EE690A 		vmov.f32	s1, s19
- 242 00c2 FFF7FEFF 		bl	atan2
- 243              	.LVL18:
- 244 00c6 51EC100B 		vmov	r0, r1, d0
-  58:Core/Src/EKF.c **** 	}
- 245              		.loc 1 58 31 discriminator 1 view .LVU40
- 246 00ca 0DA3     		adr	r3, .L15+16
- 247 00cc D3E90023 		ldrd	r2, [r3]
- 248 00d0 FFF7FEFF 		bl	__aeabi_dmul
- 249              	.LVL19:
- 250 00d4 0246     		mov	r2, r0
- 251 00d6 0B46     		mov	r3, r1
-  58:Core/Src/EKF.c **** 	}
- 252              		.loc 1 58 25 discriminator 1 view .LVU41
- 253 00d8 2046     		mov	r0, r4
- 254 00da 2946     		mov	r1, r5
- 255 00dc FFF7FEFF 		bl	__aeabi_dadd
- 256              	.LVL20:
- 257 00e0 FFF7FEFF 		bl	__aeabi_d2f
- 258              	.LVL21:
-  58:Core/Src/EKF.c **** 	}
- 259              		.loc 1 58 11 discriminator 1 view .LVU42
- 260 00e4 084B     		ldr	r3, .L15+24
- 261 00e6 1860     		str	r0, [r3]	@ float
- 262 00e8 C7E7     		b	.L11
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 7
+ 229 00aa 08EE100A 		vmov	s16, r0
+ 230              	.LVL23:
+ 231              	.L13:
+  63:Core/Src/EKF.c **** 	}
+  64:Core/Src/EKF.c **** 	else if (d_yaw < -2.5){
+  65:Core/Src/EKF.c **** 		d_yaw += 2*PI;
+  66:Core/Src/EKF.c **** 	}
+  67:Core/Src/EKF.c **** 	absolute_imu_yaw += d_yaw;
+ 232              		.loc 1 67 2 is_stmt 1 view .LVU43
+ 233              		.loc 1 67 19 is_stmt 0 view .LVU44
+ 234 00ae 174B     		ldr	r3, .L20+28
+ 235 00b0 D3ED007A 		vldr.32	s15, [r3]
+ 236 00b4 77EE887A 		vadd.f32	s15, s15, s16
+ 237 00b8 C3ED007A 		vstr.32	s15, [r3]
+  68:Core/Src/EKF.c **** 	imu_yaw_new = 1;
+ 238              		.loc 1 68 2 is_stmt 1 view .LVU45
+ 239              		.loc 1 68 14 is_stmt 0 view .LVU46
+ 240 00bc 144B     		ldr	r3, .L20+32
+ 241 00be 0122     		movs	r2, #1
+ 242 00c0 1A70     		strb	r2, [r3]
+  69:Core/Src/EKF.c **** }
+ 243              		.loc 1 69 1 view .LVU47
+ 244 00c2 05B0     		add	sp, sp, #20
+ 245              	.LCFI5:
+ 246              		.cfi_remember_state
+ 247              		.cfi_def_cfa_offset 20
+ 248              		@ sp needed
+ 249 00c4 BDEC028B 		vldm	sp!, {d8}
+ 250              	.LCFI6:
+ 251              		.cfi_restore 80
+ 252              		.cfi_restore 81
+ 253              		.cfi_def_cfa_offset 12
+ 254              	.LVL24:
+ 255              		.loc 1 69 1 view .LVU48
+ 256 00c8 30BD     		pop	{r4, r5, pc}
+ 257              	.LVL25:
+ 258              	.L18:
+ 259              	.LCFI7:
+ 260              		.cfi_restore_state
+  64:Core/Src/EKF.c **** 		d_yaw += 2*PI;
+ 261              		.loc 1 64 7 is_stmt 1 view .LVU49
+  64:Core/Src/EKF.c **** 		d_yaw += 2*PI;
+ 262              		.loc 1 64 10 is_stmt 0 view .LVU50
+ 263 00ca F8EE047A 		vmov.f32	s15, #-2.5e+0
+ 264 00ce B4EEE78A 		vcmpe.f32	s16, s15
+ 265 00d2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 266 00d6 EAD5     		bpl	.L13
+  65:Core/Src/EKF.c **** 	}
+ 267              		.loc 1 65 3 is_stmt 1 view .LVU51
+  65:Core/Src/EKF.c **** 	}
+ 268              		.loc 1 65 9 is_stmt 0 view .LVU52
+ 269 00d8 07A3     		adr	r3, .L20+8
+ 270 00da D3E90023 		ldrd	r2, [r3]
+ 271 00de 2046     		mov	r0, r4
+ 272 00e0 2946     		mov	r1, r5
+ 273 00e2 FFF7FEFF 		bl	__aeabi_dadd
+ 274              	.LVL26:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 7
 
 
- 263              	.L16:
- 264 00ea 00BFAFF3 		.align	3
- 264      0080
- 265              	.L15:
- 266 00f0 1E264454 		.word	1413752350
- 267 00f4 FB210940 		.word	1074340347
- 268 00f8 9A999999 		.word	-1717986918
- 269 00fc 9999E93F 		.word	1072273817
- 270 0100 9A999999 		.word	-1717986918
- 271 0104 9999C93F 		.word	1070176665
- 272 0108 00000000 		.word	yaw_rad.0
- 273 010c 00000000 		.word	current_imu_yaw
- 274 0110 00000000 		.word	imu_yaw_new
- 275              		.cfi_endproc
- 276              	.LFE145:
- 278              		.section	.text.reset_position_IMU,"ax",%progbits
- 279              		.align	1
- 280              		.global	reset_position_IMU
- 281              		.syntax unified
- 282              		.thumb
- 283              		.thumb_func
- 285              	reset_position_IMU:
- 286              	.LFB144:
+ 275 00e6 FFF7FEFF 		bl	__aeabi_d2f
+ 276              	.LVL27:
+ 277 00ea 08EE100A 		vmov	s16, r0
+ 278              	.LVL28:
+  65:Core/Src/EKF.c **** 	}
+ 279              		.loc 1 65 9 view .LVU53
+ 280 00ee DEE7     		b	.L13
+ 281              	.L21:
+ 282              		.align	3
+ 283              	.L20:
+ 284 00f0 1E264454 		.word	1413752350
+ 285 00f4 FB210940 		.word	1074340347
+ 286 00f8 1E264454 		.word	1413752350
+ 287 00fc FB211940 		.word	1075388923
+ 288 0100 00806640 		.word	1080459264
+ 289 0104 00000000 		.word	imu_yaw_offset
+ 290 0108 00000000 		.word	current_imu_yaw
+ 291 010c 00000000 		.word	absolute_imu_yaw
+ 292 0110 00000000 		.word	imu_yaw_new
+ 293              		.cfi_endproc
+ 294              	.LFE145:
+ 296              		.section	.text.reset_position_IMU,"ax",%progbits
+ 297              		.align	1
+ 298              		.global	reset_position_IMU
+ 299              		.syntax unified
+ 300              		.thumb
+ 301              		.thumb_func
+ 303              	reset_position_IMU:
+ 304              	.LFB144:
   45:Core/Src/EKF.c **** 	update_current_yaw();
- 287              		.loc 1 45 26 is_stmt 1 view -0
- 288              		.cfi_startproc
- 289              		@ args = 0, pretend = 0, frame = 0
- 290              		@ frame_needed = 0, uses_anonymous_args = 0
- 291 0000 08B5     		push	{r3, lr}
- 292              	.LCFI8:
- 293              		.cfi_def_cfa_offset 8
- 294              		.cfi_offset 3, -8
- 295              		.cfi_offset 14, -4
+ 305              		.loc 1 45 26 is_stmt 1 view -0
+ 306              		.cfi_startproc
+ 307              		@ args = 0, pretend = 0, frame = 0
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 309 0000 08B5     		push	{r3, lr}
+ 310              	.LCFI8:
+ 311              		.cfi_def_cfa_offset 8
+ 312              		.cfi_offset 3, -8
+ 313              		.cfi_offset 14, -4
   46:Core/Src/EKF.c **** 	imu_yaw_offset = -current_imu_yaw;
- 296              		.loc 1 46 2 view .LVU44
- 297 0002 FFF7FEFF 		bl	update_current_yaw
- 298              	.LVL22:
+ 314              		.loc 1 46 2 view .LVU55
+ 315 0002 FFF7FEFF 		bl	update_current_yaw
+ 316              	.LVL29:
   47:Core/Src/EKF.c **** 	set_position(0, 0, 0, 0);
- 299              		.loc 1 47 2 view .LVU45
+ 317              		.loc 1 47 2 view .LVU56
   47:Core/Src/EKF.c **** 	set_position(0, 0, 0, 0);
- 300              		.loc 1 47 19 is_stmt 0 view .LVU46
- 301 0006 094B     		ldr	r3, .L19
- 302 0008 D3ED007A 		vldr.32	s15, [r3]
- 303 000c F1EE677A 		vneg.f32	s15, s15
+ 318              		.loc 1 47 19 is_stmt 0 view .LVU57
+ 319 0006 094B     		ldr	r3, .L24
+ 320 0008 D3ED007A 		vldr.32	s15, [r3]
+ 321 000c F1EE677A 		vneg.f32	s15, s15
   47:Core/Src/EKF.c **** 	set_position(0, 0, 0, 0);
- 304              		.loc 1 47 17 view .LVU47
- 305 0010 074B     		ldr	r3, .L19+4
- 306 0012 C3ED007A 		vstr.32	s15, [r3]
+ 322              		.loc 1 47 17 view .LVU58
+ 323 0010 074B     		ldr	r3, .L24+4
+ 324 0012 C3ED007A 		vstr.32	s15, [r3]
   48:Core/Src/EKF.c **** }
- 307              		.loc 1 48 2 is_stmt 1 view .LVU48
- 308 0016 9FED070A 		vldr.32	s0, .L19+8
- 309 001a F0EE401A 		vmov.f32	s3, s0
- 310 001e B0EE401A 		vmov.f32	s2, s0
- 311 0022 F0EE400A 		vmov.f32	s1, s0
- 312 0026 FFF7FEFF 		bl	set_position
- 313              	.LVL23:
+ 325              		.loc 1 48 2 is_stmt 1 view .LVU59
+ 326 0016 9FED070A 		vldr.32	s0, .L24+8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 8
+
+
+ 327 001a F0EE401A 		vmov.f32	s3, s0
+ 328 001e B0EE401A 		vmov.f32	s2, s0
+ 329 0022 F0EE400A 		vmov.f32	s1, s0
+ 330 0026 FFF7FEFF 		bl	set_position
+ 331              	.LVL30:
   49:Core/Src/EKF.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 8
+ 332              		.loc 1 49 1 is_stmt 0 view .LVU60
+ 333 002a 08BD     		pop	{r3, pc}
+ 334              	.L25:
+ 335              		.align	2
+ 336              	.L24:
+ 337 002c 00000000 		.word	current_imu_yaw
+ 338 0030 00000000 		.word	imu_yaw_offset
+ 339 0034 00000000 		.word	0
+ 340              		.cfi_endproc
+ 341              	.LFE144:
+ 343              		.section	.text.update_current_z_angular_velocity,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	update_current_z_angular_velocity
+ 346              		.syntax unified
+ 347              		.thumb
+ 348              		.thumb_func
+ 350              	update_current_z_angular_velocity:
+ 351              	.LFB146:
+  70:Core/Src/EKF.c **** void update_current_z_angular_velocity(){ // returns in rad/s
+ 352              		.loc 1 70 41 is_stmt 1 view -0
+ 353              		.cfi_startproc
+ 354              		@ args = 0, pretend = 0, frame = 16
+ 355              		@ frame_needed = 0, uses_anonymous_args = 0
+ 356 0000 00B5     		push	{lr}
+ 357              	.LCFI9:
+ 358              		.cfi_def_cfa_offset 4
+ 359              		.cfi_offset 14, -4
+ 360 0002 85B0     		sub	sp, sp, #20
+ 361              	.LCFI10:
+ 362              		.cfi_def_cfa_offset 24
+  71:Core/Src/EKF.c **** 	bno055_vector_t v = bno055_readGyro();
+ 363              		.loc 1 71 2 view .LVU62
+ 364              		.loc 1 71 22 is_stmt 0 view .LVU63
+ 365 0004 FFF7FEFF 		bl	bno055_readGyro
+ 366              	.LVL31:
+ 367 0008 8DED010A 		vstr.32	s0, [sp, #4]
+ 368 000c CDED020A 		vstr.32	s1, [sp, #8]
+ 369 0010 8DED031A 		vstr.32	s2, [sp, #12]
+  72:Core/Src/EKF.c **** 	current_imu_gyro_z = v.z;
+ 370              		.loc 1 72 2 is_stmt 1 view .LVU64
+ 371              		.loc 1 72 21 is_stmt 0 view .LVU65
+ 372 0014 044B     		ldr	r3, .L28
+ 373 0016 83ED001A 		vstr.32	s2, [r3]
+  73:Core/Src/EKF.c **** 	imu_gyro_z_new = 1;
+ 374              		.loc 1 73 2 is_stmt 1 view .LVU66
+ 375              		.loc 1 73 17 is_stmt 0 view .LVU67
+ 376 001a 044B     		ldr	r3, .L28+4
+ 377 001c 0122     		movs	r2, #1
+ 378 001e 1A70     		strb	r2, [r3]
+  74:Core/Src/EKF.c **** }
+ 379              		.loc 1 74 1 view .LVU68
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 9
 
 
- 314              		.loc 1 49 1 is_stmt 0 view .LVU49
- 315 002a 08BD     		pop	{r3, pc}
- 316              	.L20:
- 317              		.align	2
- 318              	.L19:
- 319 002c 00000000 		.word	current_imu_yaw
- 320 0030 00000000 		.word	imu_yaw_offset
- 321 0034 00000000 		.word	0
- 322              		.cfi_endproc
- 323              	.LFE144:
- 325              		.section	.text.update_current_z_angular_velocity,"ax",%progbits
- 326              		.align	1
- 327              		.global	update_current_z_angular_velocity
- 328              		.syntax unified
- 329              		.thumb
- 330              		.thumb_func
- 332              	update_current_z_angular_velocity:
- 333              	.LFB146:
-  80:Core/Src/EKF.c **** void update_current_z_angular_velocity(){ // returns in rad/s
- 334              		.loc 1 80 41 is_stmt 1 view -0
- 335              		.cfi_startproc
- 336              		@ args = 0, pretend = 0, frame = 16
- 337              		@ frame_needed = 0, uses_anonymous_args = 0
- 338 0000 00B5     		push	{lr}
- 339              	.LCFI9:
- 340              		.cfi_def_cfa_offset 4
- 341              		.cfi_offset 14, -4
- 342 0002 85B0     		sub	sp, sp, #20
- 343              	.LCFI10:
- 344              		.cfi_def_cfa_offset 24
-  81:Core/Src/EKF.c **** 	bno055_vector_t v = bno055_readGyro();
- 345              		.loc 1 81 2 view .LVU51
- 346              		.loc 1 81 22 is_stmt 0 view .LVU52
- 347 0004 FFF7FEFF 		bl	bno055_readGyro
- 348              	.LVL24:
- 349 0008 8DED010A 		vstr.32	s0, [sp, #4]
- 350 000c CDED020A 		vstr.32	s1, [sp, #8]
- 351 0010 8DED031A 		vstr.32	s2, [sp, #12]
-  82:Core/Src/EKF.c **** 	current_imu_gyro_z = v.z;
- 352              		.loc 1 82 2 is_stmt 1 view .LVU53
- 353              		.loc 1 82 21 is_stmt 0 view .LVU54
- 354 0014 044B     		ldr	r3, .L23
- 355 0016 83ED001A 		vstr.32	s2, [r3]
-  83:Core/Src/EKF.c **** 	imu_gyro_z_new = 1;
- 356              		.loc 1 83 2 is_stmt 1 view .LVU55
- 357              		.loc 1 83 17 is_stmt 0 view .LVU56
- 358 001a 044B     		ldr	r3, .L23+4
- 359 001c 0122     		movs	r2, #1
- 360 001e 1A70     		strb	r2, [r3]
-  84:Core/Src/EKF.c **** }
- 361              		.loc 1 84 1 view .LVU57
- 362 0020 05B0     		add	sp, sp, #20
- 363              	.LCFI11:
- 364              		.cfi_def_cfa_offset 4
- 365              		@ sp needed
- 366 0022 5DF804FB 		ldr	pc, [sp], #4
- 367              	.L24:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 9
-
-
- 368 0026 00BF     		.align	2
- 369              	.L23:
- 370 0028 00000000 		.word	current_imu_gyro_z
- 371 002c 00000000 		.word	imu_gyro_z_new
- 372              		.cfi_endproc
- 373              	.LFE146:
- 375              		.section	.text.set_position_IMU,"ax",%progbits
- 376              		.align	1
- 377              		.global	set_position_IMU
- 378              		.syntax unified
- 379              		.thumb
- 380              		.thumb_func
- 382              	set_position_IMU:
- 383              	.LVL25:
- 384              	.LFB143:
+ 380 0020 05B0     		add	sp, sp, #20
+ 381              	.LCFI11:
+ 382              		.cfi_def_cfa_offset 4
+ 383              		@ sp needed
+ 384 0022 5DF804FB 		ldr	pc, [sp], #4
+ 385              	.L29:
+ 386 0026 00BF     		.align	2
+ 387              	.L28:
+ 388 0028 00000000 		.word	current_imu_gyro_z
+ 389 002c 00000000 		.word	imu_gyro_z_new
+ 390              		.cfi_endproc
+ 391              	.LFE146:
+ 393              		.section	.text.set_position_IMU,"ax",%progbits
+ 394              		.align	1
+ 395              		.global	set_position_IMU
+ 396              		.syntax unified
+ 397              		.thumb
+ 398              		.thumb_func
+ 400              	set_position_IMU:
+ 401              	.LVL32:
+ 402              	.LFB143:
   33:Core/Src/EKF.c **** 	set_position(current__x, current__y, current__phi, absolute__phi);
- 385              		.loc 1 33 99 is_stmt 1 view -0
- 386              		.cfi_startproc
- 387              		@ args = 0, pretend = 0, frame = 0
- 388              		@ frame_needed = 0, uses_anonymous_args = 0
+ 403              		.loc 1 33 99 is_stmt 1 view -0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 0
+ 406              		@ frame_needed = 0, uses_anonymous_args = 0
   33:Core/Src/EKF.c **** 	set_position(current__x, current__y, current__phi, absolute__phi);
- 389              		.loc 1 33 99 is_stmt 0 view .LVU59
- 390 0000 10B5     		push	{r4, lr}
- 391              	.LCFI12:
- 392              		.cfi_def_cfa_offset 8
- 393              		.cfi_offset 4, -8
- 394              		.cfi_offset 14, -4
- 395 0002 2DED028B 		vpush.64	{d8}
- 396              	.LCFI13:
- 397              		.cfi_def_cfa_offset 16
- 398              		.cfi_offset 80, -16
- 399              		.cfi_offset 81, -12
- 400 0006 B0EE418A 		vmov.f32	s16, s2
+ 407              		.loc 1 33 99 is_stmt 0 view .LVU70
+ 408 0000 10B5     		push	{r4, lr}
+ 409              	.LCFI12:
+ 410              		.cfi_def_cfa_offset 8
+ 411              		.cfi_offset 4, -8
+ 412              		.cfi_offset 14, -4
+ 413 0002 2DED028B 		vpush.64	{d8}
+ 414              	.LCFI13:
+ 415              		.cfi_def_cfa_offset 16
+ 416              		.cfi_offset 80, -16
+ 417              		.cfi_offset 81, -12
+ 418 0006 B0EE418A 		vmov.f32	s16, s2
   34:Core/Src/EKF.c **** 	update_current_yaw();
- 401              		.loc 1 34 2 is_stmt 1 view .LVU60
- 402 000a FFF7FEFF 		bl	set_position
- 403              	.LVL26:
+ 419              		.loc 1 34 2 is_stmt 1 view .LVU71
+ 420 000a FFF7FEFF 		bl	set_position
+ 421              	.LVL33:
   35:Core/Src/EKF.c **** 	imu_yaw_offset = normalize_angle(imu_yaw_offset + deg_to_rad(current__phi) - current_imu_yaw);
- 404              		.loc 1 35 2 view .LVU61
- 405 000e FFF7FEFF 		bl	update_current_yaw
- 406              	.LVL27:
+ 422              		.loc 1 35 2 view .LVU72
+ 423 000e FFF7FEFF 		bl	update_current_yaw
+ 424              	.LVL34:
   36:Core/Src/EKF.c **** 	HAL_Delay(10);
- 407              		.loc 1 36 2 view .LVU62
+ 425              		.loc 1 36 2 view .LVU73
   36:Core/Src/EKF.c **** 	HAL_Delay(10);
- 408              		.loc 1 36 52 is_stmt 0 view .LVU63
- 409 0012 B0EE480A 		vmov.f32	s0, s16
- 410 0016 FFF7FEFF 		bl	deg_to_rad
- 411              	.LVL28:
+ 426              		.loc 1 36 52 is_stmt 0 view .LVU74
+ 427 0012 B0EE480A 		vmov.f32	s0, s16
+ 428 0016 FFF7FEFF 		bl	deg_to_rad
+ 429              	.LVL35:
   36:Core/Src/EKF.c **** 	HAL_Delay(10);
- 412              		.loc 1 36 50 discriminator 1 view .LVU64
- 413 001a 104C     		ldr	r4, .L29
- 414 001c D4ED007A 		vldr.32	s15, [r4]
- 415 0020 70EE277A 		vadd.f32	s15, s0, s15
-  36:Core/Src/EKF.c **** 	HAL_Delay(10);
- 416              		.loc 1 36 19 discriminator 1 view .LVU65
- 417 0024 0E4B     		ldr	r3, .L29+4
- 418 0026 93ED000A 		vldr.32	s0, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 10
+ 430              		.loc 1 36 50 discriminator 1 view .LVU75
+ 431 001a 104C     		ldr	r4, .L34
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 10
 
 
- 419 002a 37EEC00A 		vsub.f32	s0, s15, s0
- 420 002e FFF7FEFF 		bl	normalize_angle
- 421              	.LVL29:
+ 432 001c D4ED007A 		vldr.32	s15, [r4]
+ 433 0020 70EE277A 		vadd.f32	s15, s0, s15
   36:Core/Src/EKF.c **** 	HAL_Delay(10);
- 422              		.loc 1 36 17 discriminator 2 view .LVU66
- 423 0032 84ED000A 		vstr.32	s0, [r4]
+ 434              		.loc 1 36 19 discriminator 1 view .LVU76
+ 435 0024 0E4B     		ldr	r3, .L34+4
+ 436 0026 93ED000A 		vldr.32	s0, [r3]
+ 437 002a 37EEC00A 		vsub.f32	s0, s15, s0
+ 438 002e FFF7FEFF 		bl	normalize_angle
+ 439              	.LVL36:
+  36:Core/Src/EKF.c **** 	HAL_Delay(10);
+ 440              		.loc 1 36 17 discriminator 2 view .LVU77
+ 441 0032 84ED000A 		vstr.32	s0, [r4]
   37:Core/Src/EKF.c **** 	for(int i=0; i<100; i++){ // kinda lezem hedhi bech l IMU ma yetmou3e9ch (ma44irha keen ydhayya3 0
- 424              		.loc 1 37 2 is_stmt 1 view .LVU67
- 425 0036 0A20     		movs	r0, #10
- 426 0038 FFF7FEFF 		bl	HAL_Delay
- 427              	.LVL30:
+ 442              		.loc 1 37 2 is_stmt 1 view .LVU78
+ 443 0036 0A20     		movs	r0, #10
+ 444 0038 FFF7FEFF 		bl	HAL_Delay
+ 445              	.LVL37:
   38:Core/Src/EKF.c **** 		update_current_yaw();
- 428              		.loc 1 38 2 view .LVU68
- 429              	.LBB2:
+ 446              		.loc 1 38 2 view .LVU79
+ 447              	.LBB2:
   38:Core/Src/EKF.c **** 		update_current_yaw();
- 430              		.loc 1 38 6 view .LVU69
+ 448              		.loc 1 38 6 view .LVU80
   38:Core/Src/EKF.c **** 		update_current_yaw();
- 431              		.loc 1 38 10 is_stmt 0 view .LVU70
- 432 003c 0024     		movs	r4, #0
+ 449              		.loc 1 38 10 is_stmt 0 view .LVU81
+ 450 003c 0024     		movs	r4, #0
   38:Core/Src/EKF.c **** 		update_current_yaw();
- 433              		.loc 1 38 2 view .LVU71
- 434 003e 07E0     		b	.L26
- 435              	.LVL31:
- 436              	.L27:
+ 451              		.loc 1 38 2 view .LVU82
+ 452 003e 07E0     		b	.L31
+ 453              	.LVL38:
+ 454              	.L32:
   39:Core/Src/EKF.c **** 		update_current_z_angular_velocity();
- 437              		.loc 1 39 3 is_stmt 1 view .LVU72
- 438 0040 FFF7FEFF 		bl	update_current_yaw
- 439              	.LVL32:
+ 455              		.loc 1 39 3 is_stmt 1 view .LVU83
+ 456 0040 FFF7FEFF 		bl	update_current_yaw
+ 457              	.LVL39:
   40:Core/Src/EKF.c **** 		HAL_Delay(10);
- 440              		.loc 1 40 3 view .LVU73
- 441 0044 FFF7FEFF 		bl	update_current_z_angular_velocity
- 442              	.LVL33:
+ 458              		.loc 1 40 3 view .LVU84
+ 459 0044 FFF7FEFF 		bl	update_current_z_angular_velocity
+ 460              	.LVL40:
   41:Core/Src/EKF.c **** 	}
- 443              		.loc 1 41 3 view .LVU74
- 444 0048 0A20     		movs	r0, #10
- 445 004a FFF7FEFF 		bl	HAL_Delay
- 446              	.LVL34:
+ 461              		.loc 1 41 3 view .LVU85
+ 462 0048 0A20     		movs	r0, #10
+ 463 004a FFF7FEFF 		bl	HAL_Delay
+ 464              	.LVL41:
   38:Core/Src/EKF.c **** 		update_current_yaw();
- 447              		.loc 1 38 23 discriminator 3 view .LVU75
- 448 004e 0134     		adds	r4, r4, #1
- 449              	.LVL35:
- 450              	.L26:
+ 465              		.loc 1 38 23 discriminator 3 view .LVU86
+ 466 004e 0134     		adds	r4, r4, #1
+ 467              	.LVL42:
+ 468              	.L31:
   38:Core/Src/EKF.c **** 		update_current_yaw();
- 451              		.loc 1 38 16 discriminator 1 view .LVU76
- 452 0050 632C     		cmp	r4, #99
- 453 0052 F5DD     		ble	.L27
- 454              	.LBE2:
+ 469              		.loc 1 38 16 discriminator 1 view .LVU87
+ 470 0050 632C     		cmp	r4, #99
+ 471 0052 F5DD     		ble	.L32
+ 472              	.LBE2:
   43:Core/Src/EKF.c **** 
- 455              		.loc 1 43 1 is_stmt 0 view .LVU77
- 456 0054 BDEC028B 		vldm	sp!, {d8}
- 457              	.LCFI14:
- 458              		.cfi_restore 80
- 459              		.cfi_restore 81
- 460              		.cfi_def_cfa_offset 8
- 461              	.LVL36:
-  43:Core/Src/EKF.c **** 
- 462              		.loc 1 43 1 view .LVU78
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 11
+ 473              		.loc 1 43 1 is_stmt 0 view .LVU88
+ 474 0054 BDEC028B 		vldm	sp!, {d8}
+ 475              	.LCFI14:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 11
 
 
- 463 0058 10BD     		pop	{r4, pc}
- 464              	.LVL37:
- 465              	.L30:
+ 476              		.cfi_restore 80
+ 477              		.cfi_restore 81
+ 478              		.cfi_def_cfa_offset 8
+ 479              	.LVL43:
   43:Core/Src/EKF.c **** 
- 466              		.loc 1 43 1 view .LVU79
- 467 005a 00BF     		.align	2
- 468              	.L29:
- 469 005c 00000000 		.word	imu_yaw_offset
- 470 0060 00000000 		.word	current_imu_yaw
- 471              		.cfi_endproc
- 472              	.LFE143:
- 474              		.section	.bss.yaw_rad.0,"aw",%nobits
- 475              		.align	2
- 478              	yaw_rad.0:
- 479 0000 00000000 		.space	4
- 480              		.text
- 481              	.Letext0:
- 482              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 483              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
- 484              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
- 485              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 486              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 487              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
- 488              		.file 8 "Core/Inc/Odometry.h"
- 489              		.file 9 "Core/Inc/IMU.h"
- 490              		.file 10 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltoo
- 491              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccsbspBV.s 			page 12
+ 480              		.loc 1 43 1 view .LVU89
+ 481 0058 10BD     		pop	{r4, pc}
+ 482              	.LVL44:
+ 483              	.L35:
+  43:Core/Src/EKF.c **** 
+ 484              		.loc 1 43 1 view .LVU90
+ 485 005a 00BF     		.align	2
+ 486              	.L34:
+ 487 005c 00000000 		.word	imu_yaw_offset
+ 488 0060 00000000 		.word	current_imu_yaw
+ 489              		.cfi_endproc
+ 490              	.LFE143:
+ 492              		.text
+ 493              	.Letext0:
+ 494              		.file 2 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 495              		.file 3 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
+ 496              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h"
+ 497              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 498              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 499              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 500              		.file 8 "Core/Inc/Odometry.h"
+ 501              		.file 9 "Core/Inc/IMU.h"
+ 502              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 EKF.c
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:21     .text.set_IMU_I2C_channel:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:27     .text.set_IMU_I2C_channel:00000000 set_IMU_I2C_channel
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:56     .text.update_position_EKF:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:62     .text.update_position_EKF:00000000 update_position_EKF
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:95     .text.update_position_EKF:00000018 $d
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:105    .text.update_current_yaw:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:111    .text.update_current_yaw:00000000 update_current_yaw
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:266    .text.update_current_yaw:000000f0 $d
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:478    .bss.yaw_rad.0:00000000 yaw_rad.0
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:279    .text.reset_position_IMU:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:285    .text.reset_position_IMU:00000000 reset_position_IMU
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:319    .text.reset_position_IMU:0000002c $d
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:326    .text.update_current_z_angular_velocity:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:332    .text.update_current_z_angular_velocity:00000000 update_current_z_angular_velocity
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:370    .text.update_current_z_angular_velocity:00000028 $d
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:376    .text.set_position_IMU:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:382    .text.set_position_IMU:00000000 set_position_IMU
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:469    .text.set_position_IMU:0000005c $d
-C:\Users\monji\AppData\Local\Temp\ccsbspBV.s:475    .bss.yaw_rad.0:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:21     .text.set_IMU_I2C_channel:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:27     .text.set_IMU_I2C_channel:00000000 set_IMU_I2C_channel
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:56     .text.update_position_EKF:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:62     .text.update_position_EKF:00000000 update_position_EKF
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:95     .text.update_position_EKF:00000018 $d
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:107    .text.update_current_yaw:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:113    .text.update_current_yaw:00000000 update_current_yaw
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:284    .text.update_current_yaw:000000f0 $d
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:297    .text.reset_position_IMU:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:303    .text.reset_position_IMU:00000000 reset_position_IMU
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:337    .text.reset_position_IMU:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:344    .text.update_current_z_angular_velocity:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:350    .text.update_current_z_angular_velocity:00000000 update_current_z_angular_velocity
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:388    .text.update_current_z_angular_velocity:00000028 $d
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:394    .text.set_position_IMU:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:400    .text.set_position_IMU:00000000 set_position_IMU
+C:\Users\monji\AppData\Local\Temp\ccqRpPFj.s:487    .text.set_position_IMU:0000005c $d
 
 UNDEFINED SYMBOLS
 bno055_init
@@ -659,18 +658,20 @@ bno055_read8
 update_position
 imu_yaw_new
 __aeabi_f2d
+__aeabi_dmul
+__aeabi_ddiv
 __aeabi_d2f
 __aeabi_dcmpgt
-__aeabi_dmul
+__aeabi_dsub
 __aeabi_dadd
-bno055_readMag
-atan2
-current_imu_yaw
-set_position
+bno055_readEuler
+normalize_angle
 imu_yaw_offset
+current_imu_yaw
+absolute_imu_yaw
+set_position
 bno055_readGyro
 current_imu_gyro_z
 imu_gyro_z_new
 deg_to_rad
-normalize_angle
 HAL_Delay
