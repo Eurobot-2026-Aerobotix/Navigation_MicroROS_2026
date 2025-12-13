@@ -424,6 +424,14 @@ int main(void)
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
+
+//  go_to(500, -500, 600);
+//  go_to(400, 0, 700);
+//  go_to(500, 100, 600);
+//  go_to(0, -400, 600);
+//  go_to(0, 0, 600);
+//  orientate(0, 0);
+
 //  while(1){
 //	  send_values_to_usart(encoder_count_L, encoder_count_R, 0, 0);
 //  }
@@ -432,9 +440,9 @@ int main(void)
 //	  send_values_to_usart(absolute_phi*1000, 0, 0, 0);
 //	  HAL_Delay(10);
 //  }
-//  robot_status.status = ROTATIN;
-//  robot_status.arguments[0] = 90.0;
-//  robot_status.arguments[1] = 0.0;
+  robot_status.status = ROTATIN;
+  robot_status.arguments[0] = 90.0;
+  robot_status.arguments[1] = 0.0;
 
 //  robot_status.status = GOIN_TO;
 //	robot_status.arguments[0] = 400;

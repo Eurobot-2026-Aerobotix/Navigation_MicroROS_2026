@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
   21:Core/Src/Odometry.c **** int8_t block_get_position = 0;
   22:Core/Src/Odometry.c **** int8_t is_inside_inner_plane = 0;
   23:Core/Src/Odometry.c **** float imu_yaw_offset = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 2
 
 
   24:Core/Src/Odometry.c **** float current_imu_yaw;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
   79 0030 0028     		cmp	r0, #0
   80 0032 E9D1     		bne	.L3
   32:Core/Src/Odometry.c **** 	while (a > PI){
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 3
 
 
   81              		.loc 1 32 11 is_stmt 0 view .LVU8
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  129              		.global	get_distance_to
  130              		.syntax unified
  131              		.thumb
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 4
 
 
  132              		.thumb_func
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  138              		.cfi_startproc
  139              		@ args = 0, pretend = 0, frame = 0
  140              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 5
 
 
  141              		.loc 1 88 40 is_stmt 0 view .LVU16
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  195              	.LFB143:
   91:Core/Src/Odometry.c **** float get_arc_distance_to(float target_point__x, float target_point__y, float center_point__x, floa
  196              		.loc 1 91 127 is_stmt 1 view -0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 6
 
 
  197              		.cfi_startproc
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  250              		.loc 1 92 8 discriminator 1 view .LVU32
  251 0056 FFF7FEFF 		bl	__aeabi_d2f
  252              	.LVL24:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 7
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 7
 
 
  253 005a 08EE100A 		vmov	s16, r0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  305 00ca 08EE900A 		vmov	s17, r0
  306              	.LVL39:
   95:Core/Src/Odometry.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 8
 
 
   96:Core/Src/Odometry.c **** 	float delta = projection_angle - target_angle;
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  358 0122 FFF7FEFF 		bl	__aeabi_dadd
  359              	.LVL49:
  360 0126 FFF7FEFF 		bl	__aeabi_d2f
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 9
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 9
 
 
  361              	.LVL50:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  409              		.cfi_restore 88
  410              		.cfi_restore 89
  411              		.cfi_restore 86
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 10
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 10
 
 
  412              		.cfi_restore 87
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  106:Core/Src/Odometry.c **** 	return atan2(y - current_y, x - current_x);
  467              		.loc 1 106 2 is_stmt 1 view .LVU70
  468              		.loc 1 106 17 is_stmt 0 view .LVU71
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 11
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 11
 
 
  469 0006 124B     		ldr	r3, .L28
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  523              		.cfi_startproc
  524              		@ args = 0, pretend = 0, frame = 0
  525              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 12
 
 
  526              		@ link register save eliminated.
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  577              		.loc 1 113 15 view .LVU87
  578 0012 FFF7FEFF 		bl	__aeabi_f2d
  579              	.LVL68:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 13
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 13
 
 
  580              		.loc 1 113 30 view .LVU88
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
   41:Core/Src/Odometry.c **** 	if (!skip){
  631              		.loc 1 41 34 view .LVU94
  632 0004 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 14
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 14
 
 
  633              	.LCFI9:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  681              	.LVL78:
   47:Core/Src/Odometry.c **** 
  682              		.loc 1 47 3 is_stmt 1 view .LVU101
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 15
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 15
 
 
   47:Core/Src/Odometry.c **** 
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
   52:Core/Src/Odometry.c **** 		current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
  724              		.loc 1 52 48 view .LVU115
  725 008c 79EE299A 		vadd.f32	s19, s18, s19
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 16
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 16
 
 
  726              	.LVL86:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  771 00ec FFF7FEFF 		bl	__aeabi_dmul
  772              	.LVL95:
  773 00f0 0446     		mov	r4, r0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 17
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 17
 
 
  774 00f2 0D46     		mov	r5, r1
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  818 0136 D3E90023 		ldrd	r2, [r3]
  819 013a FFF7FEFF 		bl	__aeabi_dcmpgt
  820              	.LVL102:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 18
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 18
 
 
  821 013e 0028     		cmp	r0, #0
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  870 0184 FB211940 		.word	1075388923
  871 0188 1E264454 		.word	1413752350
  872 018c FB210940 		.word	1074340347
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 19
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 19
 
 
  873 0190 1E264454 		.word	1413752350
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  927              	.LVL112:
  928 001e 0446     		mov	r4, r0
  929 0020 0D46     		mov	r5, r1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 20
 
 
  930              		.loc 1 116 23 view .LVU146
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  982 0018 FFF7FEFF 		bl	__aeabi_ddiv
  983              	.LVL118:
  984 001c FFF7FEFF 		bl	__aeabi_d2f
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 21
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 21
 
 
  985              	.LVL119:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1037 0024 08BD     		pop	{r3, pc}
  1038              	.L61:
  1039 0026 00BF     		.align	3
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 22
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 22
 
 
  1040              	.L60:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
   71:Core/Src/Odometry.c **** 	current_x = current__x;
  1090              		.loc 1 71 2 is_stmt 1 view .LVU167
   71:Core/Src/Odometry.c **** 	current_x = current__x;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 23
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 23
 
 
  1091              		.loc 1 71 18 is_stmt 0 view .LVU168
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1131              		.loc 1 76 62 view .LVU182
  1132 0064 0646     		mov	r6, r0
  1133              	.LVL133:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 24
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 24
 
 
   76:Core/Src/Odometry.c **** 	encoder_count_L = -(CPR * absolute__phi * dead_wheels_spacing/2) / (wheel_diameter_L * PI);
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1179 00b6 3046     		mov	r0, r6
  1180 00b8 3946     		mov	r1, r7
  1181 00ba FFF7FEFF 		bl	__aeabi_ddiv
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 25
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 25
 
 
  1182              	.LVL142:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1220 00ea 164A     		ldr	r2, .L64+68
  1221 00ec 1360     		str	r3, [r2]	@ float
   86:Core/Src/Odometry.c **** }
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 26
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 26
 
 
  1222              		.loc 1 86 2 is_stmt 1 view .LVU208
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1274              		.cfi_def_cfa_offset 8
  1275              		.cfi_offset 3, -8
  1276              		.cfi_offset 14, -4
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 27
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 27
 
 
   67:Core/Src/Odometry.c **** }
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1327 0014 1A60     		str	r2, [r3]	@ float
  128:Core/Src/Odometry.c **** 	inner_plane_y = current_y;
  1328              		.loc 1 128 2 is_stmt 1 view .LVU220
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 28
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 28
 
 
  1329              		.loc 1 128 16 is_stmt 0 view .LVU221
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1375 005c 00000000 		.word	inner_plane_x
  1376 0060 00000000 		.word	current_y
  1377 0064 00000000 		.word	inner_plane_y
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 29
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 29
 
 
  1378 0068 00000000 		.word	current_phi
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1430 001a 41EC180B 		vmov	d8, r0, r1
  1431 001e B0EE480A 		vmov.f32	s0, s16
  1432 0022 F0EE680A 		vmov.f32	s1, s17
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 30
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 30
 
 
  1433 0026 FFF7FEFF 		bl	cos
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1483 0084 27EEA68A 		vmul.f32	s16, s15, s13
  1484              		.loc 1 144 72 view .LVU258
  1485 0088 1B4B     		ldr	r3, .L76+32
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 31
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 31
 
 
  1486 008a D3ED007A 		vldr.32	s15, [r3]
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1536 00d8 00000000 		.word	skip_position_update
  1537 00dc 00000000 		.word	inner_plane_phi
  1538 00e0 00000000 		.word	inner_plane_absolute_phi
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 32
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 32
 
 
  1539 00e4 00000000 		.word	absolute_phi
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1591 0018 30EEE78A 		vsub.f32	s16, s1, s15
  1592              	.LVL165:
  153:Core/Src/Odometry.c **** 	float c = cos(inner_plane_phi);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 33
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 33
 
 
  1593              		.loc 1 153 2 is_stmt 1 view .LVU280
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1644 0074 C4ED017A 		vstr.32	s15, [r4, #4]
  157:Core/Src/Odometry.c **** }
  1645              		.loc 1 157 1 view .LVU299
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 34
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 34
 
 
  1646 0078 BDEC068B 		vldm	sp!, {d8-d10}
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1700 000e 0446     		mov	r4, r0
  160:Core/Src/Odometry.c **** 	float c = cos(inner_plane_phi);
  1701              		.loc 1 160 2 is_stmt 1 view .LVU304
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 35
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 35
 
 
  1702              		.loc 1 160 12 is_stmt 0 view .LVU305
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1752              		.loc 1 164 17 is_stmt 0 view .LVU322
  1753 0064 094B     		ldr	r3, .L84+4
  1754 0066 D3ED006A 		vldr.32	s13, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 36
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 36
 
 
  1755 006a 37EE267A 		vadd.f32	s14, s14, s13
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1807              	.LCFI29:
  1808              		.cfi_def_cfa_offset 8
  1809              		.cfi_offset 3, -8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 37
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 37
 
 
  1810              		.cfi_offset 14, -4
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1861 0012 00BF     		.align	2
  1862              	.L92:
  1863 0014 00000000 		.word	inner_plane_phi
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 38
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 38
 
 
  1864              		.cfi_endproc
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1909              		.loc 1 183 3 is_stmt 1 view .LVU351
  1910              		.loc 1 183 15 is_stmt 0 view .LVU352
  1911 001e 0D4B     		ldr	r3, .L101+8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 39
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 39
 
 
  1912 0020 1B68     		ldr	r3, [r3]	@ float
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  1964              	imu_yaw_new:
  1965 0000 00       		.space	1
  1966              		.global	current_imu_gyro_z
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 40
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 40
 
 
  1967              		.section	.bss.current_imu_gyro_z,"aw",%nobits
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  2045              	absolute_phi:
  2046 0000 00000000 		.space	4
  2047              		.global	current_phi
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 41
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 41
 
 
  2048              		.section	.bss.current_phi,"aw",%nobits
@@ -2432,109 +2432,109 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 1
  2086              		.file 4 "Core/Src/../Inc/Motors.h"
  2087              		.file 5 "Core/Src/../Inc/Odometry.h"
  2088              		.file 6 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltool
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 42
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 42
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 Odometry.c
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:27     .text.normalize_angle:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:33     .text.normalize_angle:00000000 normalize_angle
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:118    .text.normalize_angle:00000068 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:128    .text.get_distance_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:134    .text.get_distance_to:00000000 get_distance_to
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:180    .text.get_distance_to:00000040 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2066   .bss.current_x:00000000 current_x
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2059   .bss.current_y:00000000 current_y
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:187    .text.get_arc_distance_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:193    .text.get_arc_distance_to:00000000 get_arc_distance_to
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:426    .text.get_arc_distance_to:00000188 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2052   .bss.current_phi:00000000 current_phi
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:441    .text.get_angle_to:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:447    .text.get_angle_to:00000000 get_angle_to
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:507    .text.get_angle_to:00000050 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:513    .text.setup_wheels_spacing:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:519    .text.setup_wheels_spacing:00000000 setup_wheels_spacing
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:540    .text.setup_wheels_spacing:00000010 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2080   .bss.driven_wheels_spacing:00000000 driven_wheels_spacing
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2073   .bss.dead_wheels_spacing:00000000 dead_wheels_spacing
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:549    .text.ticks_to_distance:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:555    .text.ticks_to_distance:00000000 ticks_to_distance
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:606    .text.ticks_to_distance:00000048 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:613    .text.update_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:619    .text.update_position:00000000 update_position
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:869    .text.update_position:00000180 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2045   .bss.absolute_phi:00000000 absolute_phi
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:890    .text.distance_to_ticks:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:896    .text.distance_to_ticks:00000000 distance_to_ticks
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:946    .text.distance_to_ticks:00000040 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:953    .text.rad_to_deg:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:959    .text.rad_to_deg:00000000 rad_to_deg
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:992    .text.rad_to_deg:00000028 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:999    .text.deg_to_rad:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1005   .text.deg_to_rad:00000000 deg_to_rad
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1041   .text.deg_to_rad:00000028 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1049   .text.set_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1055   .text.set_position:00000000 set_position
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1236   .text.set_position:00000100 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1260   .text.reset_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1266   .text.reset_position:00000000 reset_position
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1289   .text.reset_position:00000018 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1294   .text.set_new_plane:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1300   .text.set_new_plane:00000000 set_new_plane
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1373   .text.set_new_plane:00000054 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2010   .bss.skip_position_update:00000000 skip_position_update
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2038   .bss.inner_plane_x:00000000 inner_plane_x
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2031   .bss.inner_plane_y:00000000 inner_plane_y
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2024   .bss.inner_plane_phi:00000000 inner_plane_phi
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2017   .bss.inner_plane_absolute_phi:00000000 inner_plane_absolute_phi
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2004   .bss.block_get_position:00000000 block_get_position
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1998   .bss.is_inside_inner_plane:00000000 is_inside_inner_plane
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1389   .text.revert_to_original_plane:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1395   .text.revert_to_original_plane:00000000 revert_to_original_plane
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1536   .text.revert_to_original_plane:000000d8 $d
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 43
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:27     .text.normalize_angle:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:33     .text.normalize_angle:00000000 normalize_angle
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:118    .text.normalize_angle:00000068 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:128    .text.get_distance_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:134    .text.get_distance_to:00000000 get_distance_to
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:180    .text.get_distance_to:00000040 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2066   .bss.current_x:00000000 current_x
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2059   .bss.current_y:00000000 current_y
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:187    .text.get_arc_distance_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:193    .text.get_arc_distance_to:00000000 get_arc_distance_to
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:426    .text.get_arc_distance_to:00000188 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2052   .bss.current_phi:00000000 current_phi
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:441    .text.get_angle_to:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:447    .text.get_angle_to:00000000 get_angle_to
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:507    .text.get_angle_to:00000050 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:513    .text.setup_wheels_spacing:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:519    .text.setup_wheels_spacing:00000000 setup_wheels_spacing
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:540    .text.setup_wheels_spacing:00000010 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2080   .bss.driven_wheels_spacing:00000000 driven_wheels_spacing
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2073   .bss.dead_wheels_spacing:00000000 dead_wheels_spacing
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:549    .text.ticks_to_distance:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:555    .text.ticks_to_distance:00000000 ticks_to_distance
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:606    .text.ticks_to_distance:00000048 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:613    .text.update_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:619    .text.update_position:00000000 update_position
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:869    .text.update_position:00000180 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2045   .bss.absolute_phi:00000000 absolute_phi
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:890    .text.distance_to_ticks:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:896    .text.distance_to_ticks:00000000 distance_to_ticks
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:946    .text.distance_to_ticks:00000040 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:953    .text.rad_to_deg:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:959    .text.rad_to_deg:00000000 rad_to_deg
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:992    .text.rad_to_deg:00000028 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:999    .text.deg_to_rad:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1005   .text.deg_to_rad:00000000 deg_to_rad
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1041   .text.deg_to_rad:00000028 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1049   .text.set_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1055   .text.set_position:00000000 set_position
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1236   .text.set_position:00000100 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1260   .text.reset_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1266   .text.reset_position:00000000 reset_position
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1289   .text.reset_position:00000018 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1294   .text.set_new_plane:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1300   .text.set_new_plane:00000000 set_new_plane
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1373   .text.set_new_plane:00000054 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2010   .bss.skip_position_update:00000000 skip_position_update
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2038   .bss.inner_plane_x:00000000 inner_plane_x
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2031   .bss.inner_plane_y:00000000 inner_plane_y
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2024   .bss.inner_plane_phi:00000000 inner_plane_phi
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2017   .bss.inner_plane_absolute_phi:00000000 inner_plane_absolute_phi
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2004   .bss.block_get_position:00000000 block_get_position
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1998   .bss.is_inside_inner_plane:00000000 is_inside_inner_plane
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1389   .text.revert_to_original_plane:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1395   .text.revert_to_original_plane:00000000 revert_to_original_plane
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1536   .text.revert_to_original_plane:000000d8 $d
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 43
 
 
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1550   .text.convert_point_coordinates_to_inner:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1556   .text.convert_point_coordinates_to_inner:00000000 convert_point_coordinates_to_inner
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1663   .text.convert_point_coordinates_to_inner:00000080 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1670   .text.convert_point_coordinates_to_original:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1676   .text.convert_point_coordinates_to_original:00000000 convert_point_coordinates_to_original
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1785   .text.convert_point_coordinates_to_original:00000088 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1792   .text.convert_phi_to_inner:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1798   .text.convert_phi_to_inner:00000000 convert_phi_to_inner
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1825   .text.convert_phi_to_inner:00000014 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1830   .text.convert_phi_to_original:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1836   .text.convert_phi_to_original:00000000 convert_phi_to_original
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1863   .text.convert_phi_to_original:00000014 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1868   .text.get_position:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1874   .text.get_position:00000000 get_position
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1946   .text.get_position:0000004c $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1958   .bss.imu_gyro_z_new:00000000 imu_gyro_z_new
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1959   .bss.imu_gyro_z_new:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1964   .bss.imu_yaw_new:00000000 imu_yaw_new
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1965   .bss.imu_yaw_new:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1971   .bss.current_imu_gyro_z:00000000 current_imu_gyro_z
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1968   .bss.current_imu_gyro_z:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1978   .bss.absolute_imu_yaw:00000000 absolute_imu_yaw
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1975   .bss.absolute_imu_yaw:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1985   .bss.current_imu_yaw:00000000 current_imu_yaw
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1982   .bss.current_imu_yaw:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1992   .bss.imu_yaw_offset:00000000 imu_yaw_offset
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1989   .bss.imu_yaw_offset:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:1999   .bss.is_inside_inner_plane:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2005   .bss.block_get_position:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2011   .bss.skip_position_update:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2014   .bss.inner_plane_absolute_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2021   .bss.inner_plane_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2028   .bss.inner_plane_y:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2035   .bss.inner_plane_x:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2042   .bss.absolute_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2049   .bss.current_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2056   .bss.current_y:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2063   .bss.current_x:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2070   .bss.dead_wheels_spacing:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cckueTl8.s:2077   .bss.driven_wheels_spacing:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1550   .text.convert_point_coordinates_to_inner:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1556   .text.convert_point_coordinates_to_inner:00000000 convert_point_coordinates_to_inner
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1663   .text.convert_point_coordinates_to_inner:00000080 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1670   .text.convert_point_coordinates_to_original:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1676   .text.convert_point_coordinates_to_original:00000000 convert_point_coordinates_to_original
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1785   .text.convert_point_coordinates_to_original:00000088 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1792   .text.convert_phi_to_inner:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1798   .text.convert_phi_to_inner:00000000 convert_phi_to_inner
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1825   .text.convert_phi_to_inner:00000014 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1830   .text.convert_phi_to_original:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1836   .text.convert_phi_to_original:00000000 convert_phi_to_original
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1863   .text.convert_phi_to_original:00000014 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1868   .text.get_position:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1874   .text.get_position:00000000 get_position
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1946   .text.get_position:0000004c $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1958   .bss.imu_gyro_z_new:00000000 imu_gyro_z_new
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1959   .bss.imu_gyro_z_new:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1964   .bss.imu_yaw_new:00000000 imu_yaw_new
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1965   .bss.imu_yaw_new:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1971   .bss.current_imu_gyro_z:00000000 current_imu_gyro_z
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1968   .bss.current_imu_gyro_z:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1978   .bss.absolute_imu_yaw:00000000 absolute_imu_yaw
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1975   .bss.absolute_imu_yaw:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1985   .bss.current_imu_yaw:00000000 current_imu_yaw
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1982   .bss.current_imu_yaw:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1992   .bss.imu_yaw_offset:00000000 imu_yaw_offset
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1989   .bss.imu_yaw_offset:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:1999   .bss.is_inside_inner_plane:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2005   .bss.block_get_position:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2011   .bss.skip_position_update:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2014   .bss.inner_plane_absolute_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2021   .bss.inner_plane_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2028   .bss.inner_plane_y:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2035   .bss.inner_plane_x:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2042   .bss.absolute_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2049   .bss.current_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2056   .bss.current_y:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2063   .bss.current_x:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2070   .bss.dead_wheels_spacing:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccFLI61y.s:2077   .bss.driven_wheels_spacing:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_dsub
@@ -2552,7 +2552,7 @@ __aeabi_ddiv
 CPR
 update_encoder_counts
 cos
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cckueTl8.s 			page 44
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFLI61y.s 			page 44
 
 
 sin
