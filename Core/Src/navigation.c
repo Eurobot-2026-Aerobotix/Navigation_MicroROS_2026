@@ -843,7 +843,92 @@ int circle_curve_backwards(float target_x, float target_y, float target_phi, flo
 	complex_movement = 0;
 	return 0;
 }
+int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed){
+	float x0 = current_x;
+	float y0 = current_y;
 
+	float distance =  get_bezier_distance(0, x0, y0, x1, y1, x2, y2, x3, y3); // hani baddelt hedhi bech te5ou nafs l fonction lo5ra
+
+	float d_1 = speed/ramping_acceleration;
+	float d_2 = speed/breaking_acceleration + distance;
+
+	if (d_2 <= d_1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
+		float intersection_x = (breaking_acceleration*distance)/(breaking_acceleration - ramping_acceleration);
+		float intersection_speed = ramping_acceleration * intersection_x;
+		speed = 0.9 * intersection_speed;
+		d_1 = speed/ramping_acceleration;
+		d_2 = speed/breaking_acceleration + distance + deceleration_offset;
+	}
+
+	orientate(atan2(y1-y0, x1-x0), 1);
+	while(!is_idle()){
+		delay(10);
+	};
+	delay(200);
+	reset_speed_control_variables();
+
+	direction_R = 1;
+	direction_L = 1;
+	cruise_speed_R = speed;
+	cruise_speed_L = speed;
+	float distance_to_target = distance;
+	float previous_distance_to_target = distance;
+	float d = 0;
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	control_loop_state = SPEED;
+	trajectory = BEZIER_CURVE;
+
+	float lane_correction_term;
+	float phase_two_distance = 30;
+	int t = 0;
+	float speed_R , speed_L;
+
+	while (distance_to_target >= 5.0f){
+		d = distance - distance_to_target;
+
+		if (wheel_state_R == ACCELERATING && d > d_1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && d > d_2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
+			return 0;
+		}
+
+		t = project_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3);
+		// TODO: e t mahich 9a3da t9addem
+
+		float signed_distance = signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
+		lane_correction_term = signed_distance * 0.000; // 0.15// this coefficient is tunable
+		if (d < 0.1*d_1){
+			lane_correction_term = 0;
+		}
+
+		float radius = get_bezier_radius(t, x0, y0, x1, y1, x2, y2, x3, y3);
+
+		if (fabs(radius) < 100000){
+			speed_R = ( speed * (radius + (dead_wheels_spacing / 2.0f)) / radius );
+			speed_L = ( speed * (radius - (dead_wheels_spacing / 2.0f)) / radius );
+		}
+		else {
+			speed_R = speed ;
+			speed_L = speed ;
+		}
+		previous_distance_to_target = distance_to_target;
+
+		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
+
+		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
+		delay(4);
+		send_values_to_usart(t*1000, 0, 0, 0);
+	}
+	stop_motors();
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
+	return 0;
+}
 int go_to(float x, float y, float speed){
 	complex_movement = 1;
 	if ( orientate( get_angle_to(x, y), 1 ) ){
