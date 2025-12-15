@@ -110,7 +110,7 @@ float get_bezier_distance(float t ,float x0, float y0,float x1, float y1,float x
     int N = 100; //TODO: make this dependent on the distance between (x0,y0) and (x3,y3)
     float length = 0.0f;
 
-    for(int i = (t * 100); i <= N; i++){
+    for(float i = (t * 100); i <= N; i++){
         float t_prev = (float)(i - 1) / N;
         float t_curr = (float)i / N;
 
