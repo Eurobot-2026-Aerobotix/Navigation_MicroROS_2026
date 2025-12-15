@@ -356,7 +356,7 @@ int rotate(float angle, int8_t is_radian){
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
+		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	// completing the last part of distance separately, so the break happens on point
 
@@ -847,7 +847,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	float x0 = current_x;
 	float y0 = current_y;
 
-	float distance =  get_bezier_distance(0, x0, y0, x1, y1, x2, y2, x3, y3); // hani baddelt hedhi bech te5ou nafs l fonction lo5ra
+	float distance =  get_bezier_distance(0, x0, y0, x1, y1, x2, y2, x3, y3);
 
 	float d_1 = speed/ramping_acceleration;
 	float d_2 = speed/breaking_acceleration + distance;
@@ -881,10 +881,10 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 	float lane_correction_term;
 	float phase_two_distance = 30;
-	int t = 0;
+	float t = 0;
 	float speed_R , speed_L;
 
-	while (distance_to_target >= 5.0f){
+	while (distance_to_target >= 5.0f && t < 1.0000f){
 		d = distance - distance_to_target;
 
 		if (wheel_state_R == ACCELERATING && d > d_1 ){
@@ -898,10 +898,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		}
 
 		t = project_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3);
-		// TODO: e t mahich 9a3da t9addem
 
 		float signed_distance = signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
-		lane_correction_term = signed_distance * 0.000; // 0.15// this coefficient is tunable
+		lane_correction_term = signed_distance * 0.015;// this coefficient is tunable
 		if (d < 0.1*d_1){
 			lane_correction_term = 0;
 		}
@@ -921,8 +920,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
 
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
+		send_values_to_usart(t, signed_distance, 0, 0);
 		delay(4);
-		send_values_to_usart(t*1000, 0, 0, 0);
 	}
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
