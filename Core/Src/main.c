@@ -487,10 +487,23 @@ int main(void)
 	float x3 = 0.0f;
 	float y3 = -1500.0f;
 
-//while(1){
-//	send_values_to_usart(project_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3)*1000, 0, 0, 0);
-//	delay(10);
-//}
+	orientate(90.0, 0);
+	orientate(0.0, 0);
+	orientate(-90.0, 0);
+	orientate(90.0, 0);
+	orientate(0.0, 0);
+	orientate(45.0, 0);
+	orientate(90.0, 0);
+	orientate(0.0, 0);
+	orientate(-90.0, 0);
+	orientate(90.0, 0);
+	orientate(50.0, 0);
+	orientate(0, 0);
+
+	while(1){
+		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
+		delay(10);
+	}
 	bezier_curve(x1, y1, x2, y2, x3, y3, 400);
 
 //  robot_status.status = GOIN_TO;
