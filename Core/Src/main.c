@@ -101,6 +101,8 @@ float kpP_L = 10;
 float kdP_L = 0.8;
 float kiP_L = 90;
 
+int8_t command_waiting = 0;
+
 int step = 0;
 
 
@@ -117,7 +119,8 @@ void service_callback(const void *request_msg, void *response_msg) {
     			    	  		    	}
     			    	  		    	res_out->result = true;
     			    	  			    break;
-									 case 1: // chihemmek feha test
+									 case 1:
+										command_waiting = 1;
 										first_forward_recieved = 1;
 										robot_status.status = MOVIN_FORWARD;
 										robot_status.arguments[0] = req_in->arg2;
@@ -126,6 +129,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 2: // move backward
+										command_waiting = 1;
 										robot_status.status = MOVIN_BACKWARD;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -133,6 +137,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 3: // rotate
+										command_waiting = 1;
 										robot_status.status = ROTATIN;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -140,6 +145,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 4: //orientate
+										command_waiting = 1;
 										robot_status.status = ORIENTATIN;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -147,6 +153,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 5: // go to
+										command_waiting = 1;
 										robot_status.status = GOIN_TO;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -185,6 +192,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 8: // move forward wtih deviation
+										command_waiting = 1;
 										robot_status.status = MOVIN_FORWARD_WITH_DEVIATION;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -193,6 +201,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 9: // circle curve
+										command_waiting = 1;
 										robot_status.status = CIRCLE_CURVIN;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
@@ -207,14 +216,39 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle() && !complex_movement)? true: false;
+										res_out->result = (is_idle() && !complex_movement && !simple_movement && !command_waiting)? true: false;
 										break;
 
 									 case 12: // go to backwards
+										command_waiting = 1;
 										robot_status.status = GOIN_TO_BACKWARDS;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
 										robot_status.arguments[2] = req_in->arg4;
+										res_out->result = true;  // x, y, speed
+										break;
+									 case 13: // go to backwards
+										command_waiting = 1;
+										robot_status.status = BEZIER_CURVIN;
+										robot_status.arguments[0] = req_in->arg2;//x1
+										robot_status.arguments[1] = req_in->arg3;//y1
+										robot_status.arguments[2] = req_in->arg4;//x2
+										robot_status.arguments[3] = req_in->arg5;//y2
+										robot_status.arguments[4] = req_in->arg6;//x3
+										robot_status.arguments[5] = req_in->arg7;//y3
+										robot_status.arguments[6] = req_in->arg8;//speed
+										res_out->result = true;  // x, y, speed
+										break;
+									 case 14: // go to backwards
+										command_waiting = 1;
+										robot_status.status = BEZIER_CURVIN_BACKWARDS;
+										robot_status.arguments[0] = req_in->arg2;//x1
+										robot_status.arguments[1] = req_in->arg3;//y1
+										robot_status.arguments[2] = req_in->arg4;//x2
+										robot_status.arguments[3] = req_in->arg5;//y2
+										robot_status.arguments[4] = req_in->arg6;//x3
+										robot_status.arguments[5] = req_in->arg7;//y3
+										robot_status.arguments[6] = req_in->arg8;//speed
 										res_out->result = true;  // x, y, speed
 										break;
 
@@ -1104,6 +1138,16 @@ void executor_function(void *argument)
 			circle_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3]);
 			robot_status.status = IDLE;
 		}
+		else if ( robot_status.status == BEZIER_CURVIN){
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
+			// TODO: add backwards argument if not an entire function
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6]);
+			robot_status.status = IDLE;
+		}
+		command_waiting = 0;
 	}
     osDelay(10);
   }
@@ -1128,7 +1172,7 @@ void IMU_update_function(void *argument)
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 
 	//send_values_to_usart(current_imu_yaw*100, absolute_imu_yaw*100, 500, absolute_phi*100);
-	osDelay(1000);
+	osDelay(10000);
   }
   /* USER CODE END IMU_update_function */
 }

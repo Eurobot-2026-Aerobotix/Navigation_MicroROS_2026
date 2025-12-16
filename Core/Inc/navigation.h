@@ -41,7 +41,9 @@ enum Robot_state_enum{
 	ROTATIN,
 	ORIENTATIN,
 	MOVIN_FORWARD_WITH_DEVIATION,
-	CIRCLE_CURVIN
+	CIRCLE_CURVIN,
+	BEZIER_CURVIN,
+	BEZIER_CURVIN_BACKWARDS
 };
 
 typedef struct{
@@ -65,6 +67,7 @@ extern float cruise_speed_L;
 extern float starting_phi;
 extern float turning_radius;
 extern int complex_movement;
+extern int simple_movement;
 
 int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_backward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached

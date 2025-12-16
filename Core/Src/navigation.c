@@ -26,8 +26,10 @@ float filtered_target_speed_R = 0;
 float filtered_target_speed_L = 0;
 float speed_filter = 0.95;
 int complex_movement = 0;
+int simple_movement = 0;
 
 int move_forward(float distance, float speed){
+	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	};
@@ -117,9 +119,11 @@ int move_forward(float distance, float speed){
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
+	simple_movement = 0;
 	return 0;
 }
 int move_backward(float distance, float speed){
+	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	};
@@ -212,6 +216,7 @@ int move_backward(float distance, float speed){
 	set_target_encoder_counts(encoder_count_R + phi_error - phi_error/2, encoder_count_L - phi_error/2 ); // why not just phi_error/2 at first ? cause of arithmitic, those are integers
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
+	simple_movement = 0;
 	return 0;
 }
 float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
@@ -279,6 +284,7 @@ float calculate_instant_target_phi(float x, float distance){
 	return 0;
 }
 int rotate(float angle, int8_t is_radian){
+	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	};
@@ -388,9 +394,11 @@ int rotate(float angle, int8_t is_radian){
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
+	simple_movement = 0;
 	return 0;
 }
 int move_forward_with_deviation(float distance, float deviation, float speed){
+	//!!!!!!!!! ma3ach nest7a99oha
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
 	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
@@ -498,6 +506,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	return 0;
 }
 int orientate(float orientation, int8_t is_radian){
+	simple_movement = 1;
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
 	if (fabs(orientation - current_phi) > deg_to_rad(0.4) ){
 		float angle = orientation - current_phi;
@@ -509,6 +518,7 @@ int orientate(float orientation, int8_t is_radian){
 		previous_speed_control_time = micros();
 		return rotate(angle, 1);
 	}
+	simple_movement = 0;
 	return 0;
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
@@ -577,6 +587,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
 
 	orientate( 2*trajectory_phi - target_phi , 1);
+	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	};
@@ -677,6 +688,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 }
 
 int circle_curve_backwards(float target_x, float target_y, float target_phi, float speed){
+	//!!!!!!!!!!!! ma3ach nest7a9oha
 	complex_movement = 1;
 	speed = fabs(speed);
 	while(!is_idle()){
@@ -844,6 +856,7 @@ int circle_curve_backwards(float target_x, float target_y, float target_phi, flo
 	return 0;
 }
 int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed){
+	complex_movement = 1;
 	float x0 = current_x;
 	float y0 = current_y;
 
@@ -861,6 +874,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	}
 
 	orientate(atan2(y1-y0, x1-x0), 1);
+	simple_movement = 1;
 
 	acc_linearization_coef = sqrt(d_1);
 
@@ -937,6 +951,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	stop_motors();
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
+	simple_movement = 0;
+	complex_movement = 0;
 	return 0;
 }
 int go_to(float x, float y, float speed){
