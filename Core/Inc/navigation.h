@@ -59,6 +59,7 @@ extern enum Trajectory trajectory;
 extern float ramping_acceleration; // !!! these accelerations marks the rate of change in velocity with respect to the distance traveled, not time!!!
 extern float breaking_acceleration;
 extern float emergency_breaking_acceleration;
+extern float deceleration_offset;
 extern float rotating_speed;
 extern int8_t direction_R; // 1 if going forward, -1 if backwards
 extern int8_t direction_L;
@@ -81,7 +82,7 @@ int orientate(float orientation, int8_t is_radian);// will return 0 if target ha
 int move_forward_with_deviation(float distance, float deviation, float speed); // follows an arc to the target, that deviates at its max from the straight line "deviation" millimeters will deviate left if deviation is positive, will deviate right otherwise
 int circle_curve(float target_x, float target_y, float target_phi, float speed);
 int circle_curve_backwards(float target_x, float target_y, float target_phi, float speed);
-int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed); // sa77a maram
+int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction); // sa77a maram
 int go_to(float x, float y, float speed);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 int go_to_backwards(float x, float y, float speed);
 void emergency_break();

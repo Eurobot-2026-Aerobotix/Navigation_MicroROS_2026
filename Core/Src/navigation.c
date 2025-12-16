@@ -848,14 +848,13 @@ int circle_curve_backwards(float target_x, float target_y, float target_phi, flo
 	stop_motors();
 	target_phi = calculate_instant_target_phi(arc_length, arc_length) + inner_plane_absolute_phi;
 	revert_to_original_plane();
-	debugger_2 = target_phi - absolute_phi;
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	complex_movement = 0;
 	return 0;
 }
-int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed){
+int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction){
 	complex_movement = 1;
 	float x0 = current_x;
 	float y0 = current_y;
@@ -873,7 +872,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		d_2 = speed/breaking_acceleration + distance + deceleration_offset;
 	}
 
-	orientate(atan2(y1-y0, x1-x0), 1);
+	orientate(atan2(y1-y0, x1-x0) + PI*(-direction+1)/2, 1);
 	simple_movement = 1;
 
 	acc_linearization_coef = sqrt(d_1);
@@ -889,7 +888,6 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	cruise_speed_R = speed;
 	cruise_speed_L = speed;
 	float distance_to_target = distance;
-	float previous_distance_to_target = distance;
 	float d = 0;
 	wheel_state_R = ACCELERATING;
 	wheel_state_L = ACCELERATING;
@@ -897,12 +895,11 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	trajectory = BEZIER_CURVE;
 
 	float lane_correction_term;
-	float phase_two_distance = 30;
 	float t = 0;
 	float speed_R , speed_L;
 
 
-	while (distance_to_target >= 5.0f && t < 1.0000f){
+	while (distance_to_target >= 1.0f && t < 1.0000f){
 		d = distance - distance_to_target;
 
 		if (wheel_state_R == ACCELERATING && d > d_1 ){
@@ -918,28 +915,27 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		t = project_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3);
 
 		float radius = get_bezier_radius(t, x0, y0, x1, y1, x2, y2, x3, y3);
-	    speed = calculate_instant_target_speed_R(d, distance);
+	    speed = direction * calculate_instant_target_speed_R(d, distance);
 
-		float signed_distance = signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
-		lane_correction_term = signed_distance * (0.002f);// this coefficient is tunable
-		if (d < 0.1*d_1){
+		float signed_distance = direction * signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
+		lane_correction_term = MIN(fabs(SQR(signed_distance) * (0.008f)), 0.5)*SGN(signed_distance);// this coefficient is tunable
+		if (d < 0.1*d_1 || 1){ // 0.002f;
 			lane_correction_term = 0;
 		}
 
 		if (fabs(radius) < 100000){
-			speed_R = ( speed * (radius + (dead_wheels_spacing / 2.0f)) / radius );
-			speed_L = ( speed * (radius - (dead_wheels_spacing / 2.0f)) / radius );
+			speed_R = ( speed * (radius + direction * (dead_wheels_spacing / 2.0f)) / radius );
+			speed_L = ( speed * (radius - direction * (dead_wheels_spacing / 2.0f)) / radius );
 		}
 		else {
 			speed_R = speed ;
 			speed_L = speed ;
 		}
 		if ((fabs(speed_R)>700) || (fabs(speed_L) > 700)){
-			speed = 700.0/ MAX((radius + (dead_wheels_spacing / 2.0f)) / (radius), (radius - (dead_wheels_spacing / 2.0f)) / (radius));
-			speed_R = ( speed * (radius + (dead_wheels_spacing / 2.0f)) / (radius));
-			speed_L = ( speed * (radius - (dead_wheels_spacing / 2.0f)) / (radius));
+			speed = direction * 700.0/ MAX((radius + (dead_wheels_spacing / 2.0f)) / (radius), (radius - (dead_wheels_spacing / 2.0f)) / (radius));
+			speed_R = ( speed * (radius + direction * (dead_wheels_spacing / 2.0f)) / (radius));
+			speed_L = ( speed * (radius - direction * (dead_wheels_spacing / 2.0f)) / (radius));
 		}
-		previous_distance_to_target = distance_to_target;
 
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
 
@@ -949,6 +945,15 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		delay(4);
 	}
 	stop_motors();
+	float target_angle = atan2(y3-y2 , x3-x2) + PI*(-direction+1)/2;
+	float diff = absolute_phi - target_angle;
+
+	while (diff >  PI) { target_angle += 2*PI; diff -= 2*PI; }
+	while (diff < -PI) { target_angle -= 2*PI; diff += 2*PI; }
+
+	float position_correction = ( ( (target_angle - absolute_phi) * dead_wheels_spacing*CPR / ( ((wheel_diameter_L + wheel_diameter_R)/2)*PI) ) ) / 2.0f;
+	// haw salla7tha heeey !!!!!!!!!! bellehi a3mel talla 3a lipo
+	set_target_encoder_counts(encoder_count_R + position_correction, encoder_count_L - position_correction); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	simple_movement = 0;

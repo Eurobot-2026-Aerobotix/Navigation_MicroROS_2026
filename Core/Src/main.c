@@ -454,7 +454,7 @@ int main(void)
   communication_state = PC;
 
   reset_position();
-  //set_position(1200, 200, 90, 90);
+ // set_position(800, 500, 90, 90);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -477,35 +477,81 @@ int main(void)
 //  robot_status.status = ROTATIN;
 //  robot_status.arguments[0] = 90.0;
 //  robot_status.arguments[1] = 0.0;
+//
+//	float x0 = 0.0f;
+//	float y0 = 0.0f;
+//	float x1 = -430.0f;
+//	float y1 = -432.0f;
+//	float x2 = 430.0f;
+//	float y2 = -1304.0f;
+//	float x3 = 0.0f;
+//	float y3 = -1500.0f;
+  /************/
+  	float x0 = 0.0f;
+  	float y0 = 0.0f;
+  	float x1 = 75.0f;
+  	float y1 = 0.0f;
+  	float x2 = 90.0f;
+  	float y2 = 45.0f;
+  	float x3 = 185.0f;
+  	float y3 = 45.0f;
+  /**********/
+  // tokrob lel hit
+//  float x0 = 0.0f;
+//  float y0 = 0.0f;
+//  float x1 = -130.0f;
+//  float y1 = 0.0f;
+//  float x2 = -300.0f;
+//  float y2 = 100.0f;
+//  float x3 = -300.0f;
+//  float y3 = 500.0f;
+  /*********/
+//  float x0 = 800.0f;
+//  float y0 = 500.0f;
+//  float x1 = 250.0f;
+//  float y1 = 300.0f;
+//  float x2 = 760.0f;
+//  float y2 = 178.0f;
+//  float x3 = 0.0f;
+//  float y3 = 0.0f;
+//  float x0 = 0.0f;
+//  float y0 = 0.0f;
+//  float x1 = -1014.0f;
+//  float y1 = -396.0f;
+//  float x2 = 1018.0f;
+//  float y2 = -1138.5f;
+//  float x3 = 0.0f;
+//  float y3 = -1500.0f;
+//	orientate(90.0, 0);
+//	orientate(0.0, 0);
+//	orientate(-90.0, 0);
+//	orientate(90.0, 0);
+//	orientate(0.0, 0);
+//	orientate(45.0, 0);
+//	orientate(90.0, 0);
+//	orientate(0.0, 0);
+//	orientate(-90.0, 0);
+//	orientate(90.0, 0);
+//	orientate(50.0, 0);
+//	orientate(0, 0);
+//
+//	while(1){
+//		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
+//		delay(10);
+//	}
+//move_forward(500, 700);
+	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
 
-	float x0 = 0.0f;
-	float y0 = 0.0f;
-	float x1 = -430.0f;
-	float y1 = -432.0f;
-	float x2 = 430.0f;
-	float y2 = -1304.0f;
-	float x3 = 0.0f;
-	float y3 = -1500.0f;
-
-	orientate(90.0, 0);
-	orientate(0.0, 0);
-	orientate(-90.0, 0);
-	orientate(90.0, 0);
-	orientate(0.0, 0);
-	orientate(45.0, 0);
-	orientate(90.0, 0);
-	orientate(0.0, 0);
-	orientate(-90.0, 0);
-	orientate(90.0, 0);
-	orientate(50.0, 0);
-	orientate(0, 0);
-
-	while(1){
-		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
-		delay(10);
-	}
-	bezier_curve(x1, y1, x2, y2, x3, y3, 400);
-
+//  	x1 = 83.4f;
+//  	y1 = 45.0f;
+//  	x2 = 100.0f;
+//  	y2 = 45.0f;
+//  	x3 = 100.0f;
+//  	y3 = 750.0f;
+//
+//  	bezier_curve(x1, y1, x2, y2, x3, y3, 700, -1);
+    go_to_backwards(0,0, 700);
+    orientate(0, 0);
 //  robot_status.status = GOIN_TO;
 //	robot_status.arguments[0] = 400;
 //	robot_status.arguments[1] = -400;
@@ -1152,12 +1198,11 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6]);
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], 1);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
-			// TODO: add backwards argument if not an entire function
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6]);
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1);
 			robot_status.status = IDLE;
 		}
 		command_waiting = 0;
