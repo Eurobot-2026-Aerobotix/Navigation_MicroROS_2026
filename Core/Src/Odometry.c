@@ -42,18 +42,13 @@ void update_position(int8_t skip){
 	if (!skip){
 		update_encoder_counts();
 
-		float dR = ticks_to_distance(encoder_count_R - previous_encoder_count_R, wheel_diameter_R);
-		float dL = ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L);
-		float dC = (dR+dL)/2;
+		float dC = (ticks_to_distance(encoder_count_R - previous_encoder_count_R, wheel_diameter_R) + ticks_to_distance(encoder_count_L - previous_encoder_count_L, wheel_diameter_L))/2;
 
 		float previous_absolute_phi = absolute_phi;
 		absolute_phi = ( ticks_to_distance(encoder_count_R, wheel_diameter_R) - ticks_to_distance(encoder_count_L, wheel_diameter_L) )/dead_wheels_spacing;
 
-		//current_x += dC*cos( ( previous_absolute_phi + absolute_phi ) / 2 );
-		//current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
-
-		current_x += dC*cos(previous_absolute_phi);
-		current_y += dC*sin(previous_absolute_phi);
+		current_x += dC*cos( ( previous_absolute_phi + absolute_phi ) / 2 );
+		current_y += dC*sin( ( previous_absolute_phi + absolute_phi ) / 2 );
 
 		current_phi = absolute_phi;
 		while (current_phi > PI){
@@ -110,7 +105,7 @@ float get_angle_to(float x, float y){
 }
 
 float get_bezier_distance(float t ,float x0, float y0,float x1, float y1,float x2 , float y2 ,float x3, float y3){
-    int N = 100 * sqrt(SQR(x3-x0)+SQR(y3-y0)) / 150.0; //TODO: make this dependent on the distance between (x0,y0) and (x3,y3)
+    int N = 100 * sqrt(SQR(x3-x0)+SQR(y3-y0)) / 150.0;
     float length = 0.0f;
 
     for(float i = (t * N); i <= N; i++){
@@ -251,7 +246,7 @@ void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spaci
 float ticks_to_distance(int32_t ticks, float wheel_diameter){
 	return (ticks*wheel_diameter*PI/CPR);
 }
-float distance_to_ticks(int32_t distance, float wheel_diameter){
+int32_t distance_to_ticks(float distance, float wheel_diameter){
 	return (distance*CPR)/(wheel_diameter*PI);
 }
 float rad_to_deg(float radian){

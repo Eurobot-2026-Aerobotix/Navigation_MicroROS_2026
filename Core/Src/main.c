@@ -408,7 +408,7 @@ int main(void)
   //setup_wheel_diameters(79.67706788, 80.9302886);
   setup_wheel_diameters(61.194030486412037716988166615536, 61.290175146455206273129785022359);
 
-  setup_wheels_spacing(188.5, 295.66289813189084913246820560862);
+  setup_wheels_spacing(188.5, 295.91189568145668808336175992172);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 800, 800, -800, -800);
 
@@ -534,11 +534,13 @@ int main(void)
 //	orientate(90.0, 0);
 //	orientate(50.0, 0);
 //	orientate(0, 0);
-//
-//	while(1){
-//		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
-//		delay(10);
-//	}
+
+//  	rotating_speed = 500;
+  	rotate(180, 0);
+	while(1){
+		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
+		delay(10);
+	}
 //move_forward(500, 700);
 	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
 

@@ -31,7 +31,7 @@ enum Communication{
 	RASPBERRY
 };
 
-#define PI 3.141592653589
+#define PI 3.1415926535897932384626433832795
 
 extern enum Communication communication_state;
 extern TIM_HandleTypeDef* htim_motors;

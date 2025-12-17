@@ -49,7 +49,7 @@ double signed_distance_to_bezier(double px, double py, double x0, double y0, dou
 float get_bezier_radius(float t,float x0, float y0,float x1, float y1, float x2, float y2,float x3, float y3);
 float project_bezier(float px, float py, float x0,float y0, float x1,float y1, float x2,float y2, float x3,float y3);
 float ticks_to_distance(int32_t ticks, float wheel_diameter);
-float distance_to_ticks(int32_t distance, float wheel_diameter);
+int32_t distance_to_ticks(float distance, float wheel_diameter);
 float rad_to_deg(float radian);
 float deg_to_rad(float degrees);
 void set_new_plane();

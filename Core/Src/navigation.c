@@ -29,6 +29,7 @@ int complex_movement = 0;
 int simple_movement = 0;
 
 int move_forward(float distance, float speed){
+	// TODO: generalize to backwards too
 	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
@@ -37,6 +38,9 @@ int move_forward(float distance, float speed){
 	reset_speed_control_variables();
 	direction_R = 1;
 	direction_L = 1;
+
+	float starting_x = current_x;
+	float starting_y = current_y;
 
 	// all of these formulas are derived from a ramp graph: speed = f(distance)
 	float x1 = speed/ramping_acceleration;
@@ -78,6 +82,9 @@ int move_forward(float distance, float speed){
 			return 0;
 		}
 
+		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_point_y - starting_y, target_point_x - starting_x) );
+		float deviation_distance = sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
+		// TODO: implement the above lane correction if the below is not sufficient
 		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 		if (x < 0.1*x1){
 			lane_correction_term = 0;
@@ -351,17 +358,18 @@ int rotate(float angle, int8_t is_radian){
 		distance_traveled_R = fabs(encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
 		distance_traveled_L = fabs(encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
 
-		yaw_centering_term = ( distance_traveled_R - distance_traveled_L ) * 0.02; // the coefficient is tunable
+
+		speed = calculate_instant_target_speed_R_full(x, distance, rotating_ramping_acceleration, rotating_breaking_acceleration);
+		yaw_centering_term = ( distance_traveled_R - distance_traveled_L ) * 0.2 / ( MAX(fabs(speed), 100)/100.0); //0.02 // the coefficient is tunable
 		if (x < 0.1*x1){
 			yaw_centering_term = 0;
 		}
-		speed = calculate_instant_target_speed_R_full(x, distance, rotating_ramping_acceleration, rotating_breaking_acceleration);
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -375,7 +383,7 @@ int rotate(float angle, int8_t is_radian){
 	while (fabs(target_phi - absolute_phi) > deg_to_rad(0.2) && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
 		distance_traveled_R = (encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
 		distance_traveled_L = (encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
-		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.05;
+		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.2 / ( MAX(fabs(speed), 100)/100.0); // 0.05
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
 		speed = MAX(fabs(speed)*0.95, 150) * direction_R;
@@ -383,15 +391,16 @@ int rotate(float angle, int8_t is_radian){
 		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 
-		if(micros() - phase_two_start_time> 2000000){
+		if(micros() - phase_two_start_time > 2000000){
 			break;
 		}
 
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
-	stop_motors(); // TODO: explore if the calculation of target encoder couts is wrong, set the ending phi to more
-	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning phi
+	stop_motors();
+	int32_t position_correction = (target_phi - absolute_phi)*dead_wheels_spacing*CPR / ( ( (wheel_diameter_R + wheel_diameter_L) / 2 )*PI) / 2.0;
+	set_target_encoder_counts(encoder_count_R + position_correction, encoder_count_L - position_correction ); // the second part is there to fix any last minute fuck ups, concerning phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	simple_movement = 0;
@@ -952,7 +961,6 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	while (diff < -PI) { target_angle -= 2*PI; diff += 2*PI; }
 
 	float position_correction = ( ( (target_angle - absolute_phi) * dead_wheels_spacing*CPR / ( ((wheel_diameter_L + wheel_diameter_R)/2)*PI) ) ) / 2.0f;
-	// haw salla7tha heeey !!!!!!!!!! bellehi a3mel talla 3a lipo
 	set_target_encoder_counts(encoder_count_R + position_correction, encoder_count_L - position_correction); // the second part is there to fix any last minute fuck ups, concerning the phi
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
@@ -985,7 +993,7 @@ int go_to_backwards(float x, float y, float speed){
 	delay(200);
 	previous_speed_control_time = micros();
 	complex_movement = 0;
-	return move_backward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
+	return move_backward(get_distance_to(x, y), speed) * 2; // why *2 ? fuck you
 }
 
 void emergency_break(){
