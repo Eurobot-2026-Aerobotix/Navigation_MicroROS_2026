@@ -30,6 +30,8 @@ int simple_movement = 0;
 
 int move_forward(float distance, float speed){
 	// TODO: generalize to backwards too
+	float direction = SGN(distance);
+	speed = fabs(speed);
 	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
@@ -57,8 +59,8 @@ int move_forward(float distance, float speed){
 
 	cruise_speed_R = speed;
 	cruise_speed_L = speed;
-	float target_point_x = current_x + distance*cos(current_phi);
-	float target_point_y = current_y + distance*sin(current_phi);
+	float target_point_x = current_x + direction * distance*cos(current_phi);
+	float target_point_y = current_y + direction * distance*sin(current_phi);
 	float distance_to_target = distance;
 	float previous_distance_to_target = distance;
 	float x = 0;
@@ -83,34 +85,38 @@ int move_forward(float distance, float speed){
 		}
 
 		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_point_y - starting_y, target_point_x - starting_x) );
-		float deviation_distance = sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
+		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
 		// TODO: implement the above lane correction if the below is not sufficient
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
-		if (x < 0.1*x1){
-			lane_correction_term = 0;
-		}
+		//lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+		lane_correction_term = (deviation_distance) * ( 0.02 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 
-		set_target_speeds(calculate_instant_target_speed_R(x, distance)*(1 + lane_correction_term) ,calculate_instant_target_speed_L(x, distance)* (1 - lane_correction_term));
+		set_target_speeds(direction*calculate_instant_target_speed_R(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed_L(x, distance)* (1 - lane_correction_term));
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_point_x, target_point_y);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(deviation_distance, 0, 0, 0);
+
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
-		// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
-	float x_closest = ( target_point_y - current_y + tan(current_phi)*current_x - tan(current_phi - PI/2)*target_point_x ) / ( tan(current_phi) - tan(current_phi - PI/2) );
+	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
+	float backwards_offset = PI*(1 - direction)/2;
+	float x_closest = ( target_point_y - current_y + tan(current_phi + backwards_offset)*current_x - tan(current_phi + backwards_offset - PI/2)*target_point_x ) / ( tan(current_phi + backwards_offset) - tan(current_phi + backwards_offset - PI/2) );
 	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
 	speed = (target_speed_R + target_speed_L)/ 2;
-	speed = MAX(speed, 150);// handling the case where the robot skips the first while loop, being too close to target_distance
+	speed = direction*MAX(fabs(speed), 150);// handling the case where the robot skips the first while loop, being too close to target_distance
 	
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
+		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_point_y - starting_y, target_point_x - starting_x) );
+		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle);
+		lane_correction_term = (deviation_distance) * ( 0.02 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) );
+		//lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
-		speed = MAX(speed*0.99, 150);
+		speed = MAX(fabs(speed)*0.99, 150) * direction;
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
@@ -119,108 +125,11 @@ int move_forward(float distance, float speed){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 
 	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
-	wheel_state_R = DEAD_STOP;
-	wheel_state_L = DEAD_STOP;
-	simple_movement = 0;
-	return 0;
-}
-int move_backward(float distance, float speed){
-	simple_movement = 1;
-	while(!is_idle()){
-		delay(10);
-	};
-	delay(200);
-	reset_speed_control_variables();
-	speed = (speed < 0)? -speed: speed;
-	distance = (distance < 0)? -distance: distance;
-	direction_R = -1;
-	direction_L = -1;
-
-	// all of these formulas are derived from a ramp graph: speed = f(distance)
-	float x1 = speed/ramping_acceleration;
-	float x2 = speed/breaking_acceleration + distance + deceleration_offset;
-
-	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
-		float intersection_x = (breaking_acceleration*(distance+deceleration_offset))/(breaking_acceleration - ramping_acceleration);
-		float intersection_speed = ramping_acceleration * intersection_x;
-		speed = intersection_speed;
-		x1 = speed/ramping_acceleration;
-		x2 = speed/breaking_acceleration + distance + deceleration_offset;
-	}
-	acc_linearization_coef = sqrt(x1);
-
-	cruise_speed_R = -speed;
-	cruise_speed_L = -speed;
-	float target_point_x = current_x - distance*cos(current_phi);
-	float target_point_y = current_y - distance*sin(current_phi);
-	float distance_to_target = distance;
-	float previous_distance_to_target = distance;
-	float x = 0;
-
-	wheel_state_R = ACCELERATING;
-	wheel_state_L = ACCELERATING;
-	trajectory = STRAIGHT;
-	control_loop_state = SPEED;
-	starting_phi = absolute_phi;
-	float lane_correction_term;
-	float phase_two_distance = 10 * (distance/300.0);
-	while (distance_to_target > phase_two_distance && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
-
-		x = MAX(distance - distance_to_target, 0);
-		if (wheel_state_R == ACCELERATING && x > x1 ){
-			wheel_state_R = CRUISING;
-			wheel_state_L = CRUISING;
-		}else if (wheel_state_R == CRUISING && x > x2){
-			wheel_state_R = CONTROLLED_BREAK;
-			wheel_state_L = CONTROLLED_BREAK;
-		}else if (wheel_state_R == EMERGENCY_BREAK){
-			return 0;
-		}
-
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
-		if (x < 0.1*x1){
-			lane_correction_term = 0;
-		}
-		set_target_speeds(calculate_instant_target_speed_R(x, distance)*(1 - lane_correction_term) ,calculate_instant_target_speed_L(x, distance)* (1 + lane_correction_term));
-		delay(4);
-		previous_distance_to_target = distance_to_target;
-		distance_to_target = get_distance_to(target_point_x, target_point_y);
-
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-	}
-	// completing the last part of distance separately, so the break happens on point
-		// calculating the distance to move that results in the robot being the closest to target point, i can't explain the math in code unfortunately
-	float x_closest = ( target_point_y - current_y + tan(current_phi)*current_x - tan(current_phi - PI/2)*target_point_x ) / ( tan(current_phi) - tan(current_phi - PI/2) );
-	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
-	speed = (target_speed_R + target_speed_L)/ 2;
-	speed = MIN(speed, -150);// handling the case where the robot skips the first while loop, being too close to target_distance
-
-	distance_to_target = get_distance_to(x_closest, y_closest);
-	previous_distance_to_target = distance_to_target;
-
-	int32_t phase_two_start_time = micros();
-	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
-		set_target_speeds(speed*(1 - lane_correction_term) ,speed* (1 + lane_correction_term));
-		speed = MIN(speed*0.99, -150);
-		previous_distance_to_target = distance_to_target;
-		delay(2);
-		distance_to_target = get_distance_to(x_closest, y_closest);
-
-		if(micros() - phase_two_start_time> 4000000){
-			break;
-		}
-
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-	}
-	stop_motors();
-	int32_t phi_error = (int32_t)( (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // this part is there to fix any last minute fuck ups, concerning the phi
-	set_target_encoder_counts(encoder_count_R + phi_error - phi_error/2, encoder_count_L - phi_error/2 ); // why not just phi_error/2 at first ? cause of arithmitic, those are integers
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 	simple_movement = 0;
@@ -517,7 +426,10 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 int orientate(float orientation, int8_t is_radian){
 	simple_movement = 1;
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	if (fabs(orientation - current_phi) > deg_to_rad(0.4) ){
+	while(!is_idle()){
+		delay(10);
+	};
+	if (fabs(orientation - current_phi) > deg_to_rad(0.1) ){
 		float angle = orientation - current_phi;
 		if (angle > PI){
 			angle -= 2*PI;
@@ -572,7 +484,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	alpha = normalize_angle(alpha);
 	float distance = get_distance_to(target_x, target_y);
 	if (fabs(sin(alpha)) < 1e-3){// almost straight line
-		return go_to(target_x, target_y, speed);
+		return go_to(target_x, target_y, speed, 1);
 	}
 	float radius = distance / ( 2*sin(alpha) );
 	float arc_length = 2 * fabs( alpha * radius);
@@ -696,173 +608,6 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	return 0;
 }
 
-int circle_curve_backwards(float target_x, float target_y, float target_phi, float speed){
-	//!!!!!!!!!!!! ma3ach nest7a9oha
-	complex_movement = 1;
-	speed = fabs(speed);
-	while(!is_idle()){
-		delay(10);
-	};
-
-	/*
-	if( fabs(atan2(target_y - current_y, target_x - current_x) - current_phi ) > PI/2 + 0.01){ // if the target point is behind the robot, it will turn 180 then project the plane and do the rest
-		rotate(180, 0);
-		while(!is_idle()){
-			delay(10);
-		};
-	}
-	*/
-
-	target_phi = deg_to_rad(target_phi);
-	// projecting a sub_plane
-	set_new_plane();
-	target_phi = convert_phi_to_inner(target_phi);
-	float result[2];
-	convert_point_coordinates_to_inner(target_x, target_y, result);
-	target_x = result[0];
-	target_y = result[1];
-	//edge cases
-	if (target_y > 0 && fabs(target_phi + PI) <= 0.001){
-		target_phi = PI;
-	}else if (target_y < 0 && fabs(target_phi - PI) <= 0.001){
-		target_phi = -PI;
-	}else if (!(fabs(target_phi - PI) <= 0.001 || fabs(target_phi + PI) <= 0.001)){
-		target_phi = normalize_angle(target_phi);
-	}
-	if (fabs(target_phi + PI) <= 0.001){
-		target_phi = deg_to_rad(-179.5);
-	}else if (fabs(target_phi - PI) <= 0.001){
-		target_phi = deg_to_rad(179.5);
-	}
-
-	reset_speed_control_variables();
-	// there is a lotta math going on here, can't explain it in code
-	float trajectory_phi = atan2(target_y - current_y, target_x - current_x);
-	float alpha = trajectory_phi - target_phi;
-	alpha = normalize_angle(alpha);
-	float distance = get_distance_to(target_x, target_y);
-	if (fabs(sin(alpha)) < 1e-3){// almost straight line
-		return go_to(target_x, target_y, speed);
-	}
-	float radius = distance / ( 2*sin(alpha) );
-	float arc_length = 2 * fabs( alpha * radius);
-	float arc_length_R;
-	float arc_length_L;
-	if (radius > 0){
-		arc_length_R = 2 * fabs(alpha) * ( radius - dead_wheels_spacing/2);
-		arc_length_L = 2 * fabs(alpha) * ( radius + dead_wheels_spacing/2);
-	}else{
-		arc_length_R = -2 * fabs(alpha) * ( radius - dead_wheels_spacing/2);
-		arc_length_L = -2 * fabs(alpha) * ( radius + dead_wheels_spacing/2);
-	}
-
-	speed = speed*arc_length/MAX(fabs(arc_length_R), fabs(arc_length_L));
-
-	//starting_phi = 2*trajectory_phi - target_phi + (absolute_phi - current_phi); // the part between paratheses is to offset the phi to make it in the prespective of absolute phi not current_phi
-
-	turning_radius = radius;
-
-	float center_point_x = target_x + radius*cos(target_phi - PI/2 );
-	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
-
-	orientate( 2*trajectory_phi - target_phi , 1);
-	while(!is_idle()){
-		delay(10);
-	};
-	reset_speed_control_variables();
-	starting_phi = absolute_phi;
-	direction_R = 1;
-	direction_L = 1;
-	cruise_speed_R = speed;
-	cruise_speed_L = speed * ( arc_length_L/arc_length ); // not used
-
-	float x1 = speed/ramping_acceleration;
-	float x2 = speed/breaking_acceleration + arc_length;
-
-	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
-		float intersection_x = (breaking_acceleration*(arc_length))/(breaking_acceleration - ramping_acceleration);
-		float intersection_speed = ramping_acceleration * intersection_x;
-		speed = intersection_speed;
-		x1 = speed/ramping_acceleration;
-		x2 = speed/breaking_acceleration + arc_length;
-		cruise_speed_R = speed; // we will use this as the center speed not the right speed, I have put it there so I wont have to create other stuff
-		cruise_speed_L = speed * ( arc_length_L/arc_length ); // not used
-	}
-	acc_linearization_coef = sqrt(x1);
-
-	wheel_state_R = ACCELERATING;
-	wheel_state_L = ACCELERATING;
-	trajectory = CIRCLE_CURVE;
-	control_loop_state = SPEED;
-	float lane_correction_term;
-	float phase_two_distance =  10 * (arc_length/300.0);
-	float x = 0;
-	float distance_to_target = arc_length;
-	float previous_distance_to_target = distance_to_target;
-	while (distance_to_target > phase_two_distance && !(distance_to_target > previous_distance_to_target && distance_to_target< arc_length/2) ){
-		x = arc_length - distance_to_target;
-		if (wheel_state_R == ACCELERATING && x > x1 ){
-			wheel_state_R = CRUISING;
-			wheel_state_L = CRUISING;
-		}else if (wheel_state_R == CRUISING && x > x2){
-			wheel_state_R = CONTROLLED_BREAK;
-			wheel_state_L = CONTROLLED_BREAK;
-		}else if (wheel_state_R == EMERGENCY_BREAK){
-			revert_to_original_plane();
-			emergency_break();
-			return 0;
-		}
-
-		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * ( 0.7 / ( MAX( MIN( abs(target_speed_R) , abs(target_speed_L)), 100.0) /500.0) ); // the coefficient is tunable
-		if (x < 0.1*x1){
-			lane_correction_term = 0;
-		}
-		float sp = calculate_instant_target_speed_R(x, arc_length);
-		set_target_speeds(sp * (1 + lane_correction_term*SGN(arc_length_R))*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term*SGN(arc_length_L))*( arc_length_L/arc_length ));
-		delay(4);
-		previous_distance_to_target = distance_to_target;
-
-		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
-		distance_to_target = MIN(distance_to_target, arc_length);
-
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		//send_values_to_usart(distance_to_target, x, arc_length, alpha*100);
-	}
-	// completing the last part of distance separately, so the break happens on point
-	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
-	previous_distance_to_target = distance_to_target;
-	float sp = calculate_instant_target_speed_R(x, arc_length);
-	sp = MAX(sp, 150);
-	int32_t phase_two_start_time = micros();
-	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
-		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * ( 0.7 / ( MAX( MIN( abs(target_speed_R) , abs(target_speed_L)), 100.0) /500.0) ) ; // the coefficient is tunable
-		set_target_speeds(sp * (1 + lane_correction_term*SGN(arc_length_R))*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term*SGN(arc_length_L))*( arc_length_L/arc_length ));
-		sp = MAX(sp*0.995, 150);
-		previous_distance_to_target = distance_to_target;
-		delay(2);
-		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
-		distance_to_target = MIN(distance_to_target, arc_length);
-
-		if(micros() - phase_two_start_time> 4000000){
-			break;
-		}
-		if (wheel_state_R == EMERGENCY_BREAK){
-			revert_to_original_plane();
-			emergency_break();
-			return 0;
-		}
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		//send_values_to_usart(absolute_phi*1000, encoder_count_L, target_speed_L, target_speed_R);
-	}
-	stop_motors();
-	target_phi = calculate_instant_target_phi(arc_length, arc_length) + inner_plane_absolute_phi;
-	revert_to_original_plane();
-	set_target_encoder_counts(encoder_count_R, encoder_count_L - (target_phi - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
-	wheel_state_R = DEAD_STOP;
-	wheel_state_L = DEAD_STOP;
-	complex_movement = 0;
-	return 0;
-}
 int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction){
 	complex_movement = 1;
 	float x0 = current_x;
@@ -949,8 +694,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
 
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
-		send_values_to_usart(signed_distance,0, 0, 0);
-		//send_values_to_usart(current_speed_L, current_speed_R, d, t*1000);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		delay(4);
 	}
 	stop_motors();
@@ -968,32 +712,21 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	complex_movement = 0;
 	return 0;
 }
-int go_to(float x, float y, float speed){
+int go_to(float x, float y, float speed, int direction){
 	complex_movement = 1;
-	if ( orientate( get_angle_to(x, y), 1 ) ){
-		return 1;
-	}
 	while(!is_idle()){
 		delay(10);
 	}
-	delay(200);
-	previous_speed_control_time = micros();
-	complex_movement = 0;
-	return move_forward(get_distance_to(x, y), speed) * 2; // why *2 ? view in .h file
-}
+	orientate( get_angle_to(x, y) + PI*(1 - direction)/2, 1 );
 
-int go_to_backwards(float x, float y, float speed){
-	complex_movement = 1;
-	if ( orientate( get_angle_to(x, y)+PI, 1 ) ){
-		return 1;
-	}
 	while(!is_idle()){
 		delay(10);
 	}
 	delay(200);
 	previous_speed_control_time = micros();
+	move_forward(direction * get_distance_to(x, y), speed);
 	complex_movement = 0;
-	return move_backward(get_distance_to(x, y), speed) * 2; // why *2 ? fuck you
+	return 0;
 }
 
 void emergency_break(){

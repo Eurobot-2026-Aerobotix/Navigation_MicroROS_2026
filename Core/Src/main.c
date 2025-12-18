@@ -406,9 +406,9 @@ int main(void)
   setup_motor_channels(&htim1, TIM_CHANNEL_2, TIM_CHANNEL_1, TIM_CHANNEL_3, TIM_CHANNEL_4);
   setup_encoder_timers(&htim4, &htim3, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(61.194030486412037716988166615536, 61.290175146455206273129785022359);
+  setup_wheel_diameters(61.03574477411629697387217216342, 61.058510204430340617341846078706);
 
-  setup_wheels_spacing(188.5, 295.91189568145668808336175992172);
+  setup_wheels_spacing(188.5, 292.95458400518235520755469052622);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 800, 800, -800, -800);
 
@@ -478,23 +478,23 @@ int main(void)
 //  robot_status.arguments[0] = 90.0;
 //  robot_status.arguments[1] = 0.0;
 //
-//	float x0 = 0.0f;
-//	float y0 = 0.0f;
-//	float x1 = -430.0f;
-//	float y1 = -432.0f;
-//	float x2 = 430.0f;
-//	float y2 = -1304.0f;
-//	float x3 = 0.0f;
-//	float y3 = -1500.0f;
+	float x0 = 0.0f;
+	float y0 = 0.0f;
+	float x1 = -430.0f;
+	float y1 = -432.0f;
+	float x2 = 430.0f;
+	float y2 = -1304.0f;
+	float x3 = 0.0f;
+	float y3 = -1500.0f;
   /************/
-  	float x0 = 0.0f;
-  	float y0 = 0.0f;
-  	float x1 = 75.0f;
-  	float y1 = 0.0f;
-  	float x2 = 90.0f;
-  	float y2 = 45.0f;
-  	float x3 = 185.0f;
-  	float y3 = 45.0f;
+//  	float x0 = 0.0f;
+//  	float y0 = 0.0f;
+//  	float x1 = 75.0f;
+//  	float y1 = 0.0f;
+//  	float x2 = 90.0f;
+//  	float y2 = 45.0f;
+//  	float x3 = 185.0f;
+//  	float y3 = 45.0f;
   /**********/
   // tokrob lel hit
 //  float x0 = 0.0f;
@@ -536,24 +536,24 @@ int main(void)
 //	orientate(0, 0);
 
 //  	rotating_speed = 500;
-  	rotate(180, 0);
+//  	while(1){
+//		send_values_to_usart(encoder_count_R, encoder_count_L, current_phi*1000, 0);
+//		delay(10);
+//	}
+//  	rotate(180, 0);
+
+	go_to(700, 100, 700, 1);
+	orientate(0, 0);
+	go_to(700, 0, 700, -1);
+//	go_to(0, 0, 700, 1);
+//	orientate(0, 0);
+//	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
+//    go_to_backwards(0,0, 700);
+//    orientate(0, 0);
 	while(1){
 		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
 		delay(10);
 	}
-//move_forward(500, 700);
-	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
-
-//  	x1 = 83.4f;
-//  	y1 = 45.0f;
-//  	x2 = 100.0f;
-//  	y2 = 45.0f;
-//  	x3 = 100.0f;
-//  	y3 = 750.0f;
-//
-//  	bezier_curve(x1, y1, x2, y2, x3, y3, 700, -1);
-    go_to_backwards(0,0, 700);
-    orientate(0, 0);
 //  robot_status.status = GOIN_TO;
 //	robot_status.arguments[0] = 400;
 //	robot_status.arguments[1] = -400;
@@ -1172,7 +1172,7 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_BACKWARD){
-			move_backward(robot_status.arguments[0], robot_status.arguments[1]);
+			move_forward((-1)*robot_status.arguments[0], robot_status.arguments[1]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ROTATIN){
@@ -1184,11 +1184,11 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO){
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
-			go_to_backwards(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_FORWARD_WITH_DEVIATION){
