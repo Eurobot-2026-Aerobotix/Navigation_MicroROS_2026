@@ -15,6 +15,11 @@ float ramping_acceleration = 10;
 float acc_linearization_coef = 12;
 float breaking_acceleration = -2;
 float deceleration_offset = 40;
+float speed_offset = 150;
+float deceleration_offset_speed = 40;
+float speed_offset_speed = 150;
+float deceleration_offset_smooth = 0;
+float speed_offset_smooth = 120;
 float rotating_speed = 650;
 int8_t direction_R;
 int8_t direction_L;
@@ -28,7 +33,8 @@ float speed_filter = 0.95;
 int complex_movement = 0;
 int simple_movement = 0;
 
-int move_forward_full(float distance, float speed, float target_x, float target_y){
+int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
+	apply_smooth_or_not(is_smooth);
 	float direction = SGN(distance);
 	distance = fabs(distance);
 	speed = fabs(speed);
@@ -92,9 +98,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
 
-		send_values_to_usart(deviation_distance, 0, 0, 0);
-
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -102,7 +106,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	float x_closest = ( target_y - current_y + tan(current_phi + backwards_offset)*current_x - tan(current_phi + backwards_offset - PI/2)*target_x ) / ( tan(current_phi + backwards_offset) - tan(current_phi + backwards_offset - PI/2) );
 	float y_closest = tan(current_phi)*(x_closest - current_x) + current_y;
 	speed = (target_speed_R + target_speed_L)/ 2;
-	speed = direction*MAX(fabs(speed), 150);// handling the case where the robot skips the first while loop, being too close to target_distance
+	speed = direction*MAX(fabs(speed), speed_offset);// handling the case where the robot skips the first while loop, being too close to target_distance
 	
 	distance_to_target = get_distance_to(x_closest, y_closest);
 	previous_distance_to_target = distance_to_target;
@@ -113,7 +117,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		lane_correction_term = (deviation_distance) * ( 0.02 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) );
 		//lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
-		speed = MAX(fabs(speed)*0.99, 150) * direction;
+		speed = MAX(fabs(speed)*0.99, speed_offset) * direction;
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
@@ -122,7 +126,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			break;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 
@@ -133,10 +137,10 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	return 0;
 }
 
-int move_forward(float distance, float speed){
+int move_forward(float distance, float speed, int8_t is_smooth){
 	float target_x = current_x + distance*cos(current_phi);
 	float target_y = current_y + distance*sin(current_phi);
-	move_forward_full(distance, speed, target_x, target_y);
+	move_forward_full(distance, speed, target_x, target_y, is_smooth);
 }
 float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
 	if (wheel_state_R == ACCELERATING){
@@ -154,10 +158,10 @@ float calculate_instant_target_speed_R_full(float x, float distance, float rampi
 
 	}else if (wheel_state_R == CONTROLLED_BREAK){
 		if (direction_R == 1){
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), 150), cruise_speed_R);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), speed_offset), cruise_speed_R);
 			return filtered_target_speed_R;
 		}else{
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -150), cruise_speed_R);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -speed_offset), cruise_speed_R);
 			return filtered_target_speed_R;
 		}
 	}
@@ -179,10 +183,10 @@ float calculate_instant_target_speed_L_full(float x, float distance, float rampi
 
 	}else if (wheel_state_L == CONTROLLED_BREAK){
 		if (direction_L == 1){
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), 150), cruise_speed_L);
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), speed_offset), cruise_speed_L);
 			return filtered_target_speed_L;
 		}else{
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -150), cruise_speed_L);
+			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -speed_offset), cruise_speed_L);
 			return filtered_target_speed_L;
 		}
 	}
@@ -202,7 +206,8 @@ float calculate_instant_target_phi(float x, float distance){
 	}
 	return 0;
 }
-int rotate(float angle, int8_t is_radian){
+int rotate(float angle, int8_t is_radian, int8_t is_smooth){
+	apply_smooth_or_not(is_smooth);
 	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
@@ -287,7 +292,7 @@ int rotate(float angle, int8_t is_radian){
 	// completing the last part of distance separately, so the break happens on point
 
 	speed = fabs(target_speed_R - target_speed_L)/ 2; // one of the speeds is negative, that's why there is a minus
-	speed = MAX(fabs(speed), 150)*direction_R;// handling the case where the robot skips the first while loop, being too close to target_distance
+	speed = MAX(fabs(speed), speed_offset)*direction_R;// handling the case where the robot skips the first while loop, being too close to target_distance
 	distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
 	previous_distance_to_target = distance_to_target;
 
@@ -298,7 +303,7 @@ int rotate(float angle, int8_t is_radian){
 		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.2 / ( MAX(fabs(speed), 100)/100.0); // 0.05
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
-		speed = MAX(fabs(speed)*0.95, 150) * direction_R;
+		speed = MAX(fabs(speed)*0.95, speed_offset) * direction_R;
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
@@ -337,7 +342,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	float center_point_x = current_x + radius*cos(current_phi - PI/2 + alpha);
 	float center_point_y = current_y + radius*sin(current_phi - PI/2 + alpha);
 
-	rotate(alpha, 1);
+	rotate(alpha, 1, 0);
 	while(!is_idle()){
 		delay(50);
 	}
@@ -426,7 +431,7 @@ int move_forward_with_deviation(float distance, float deviation, float speed){
 	wheel_state_L = DEAD_STOP;
 	return 0;
 }
-int orientate(float orientation, int8_t is_radian){
+int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	simple_movement = 1;
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
 	while(!is_idle()){
@@ -440,19 +445,20 @@ int orientate(float orientation, int8_t is_radian){
 			angle += 2*PI;
 		}
 		previous_speed_control_time = micros();
-		return rotate(angle, 1);
+		return rotate(angle, 1, is_smooth);
 	}
 	simple_movement = 0;
 	return 0;
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
+	/// wallet zeyda, 3anna bezier babyyyy
 	complex_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	};
 
 	if( fabs(atan2(target_y - current_y, target_x - current_x) - current_phi ) > PI/2 + 0.01){ // if the target point is behind the robot, it will turn 180 then project the plane and do the rest
-		rotate(180, 0);
+		rotate(180, 0, 0);
 		while(!is_idle()){
 			delay(10);
 		};
@@ -487,7 +493,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	alpha = normalize_angle(alpha);
 	float distance = get_distance_to(target_x, target_y);
 	if (fabs(sin(alpha)) < 1e-3){// almost straight line
-		return go_to(target_x, target_y, speed, 1);
+		return go_to(target_x, target_y, speed, 1, 0);
 	}
 	float radius = distance / ( 2*sin(alpha) );
 	float arc_length = 2 * fabs( alpha * radius);
@@ -510,7 +516,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	float center_point_x = target_x + radius*cos(target_phi - PI/2 );
 	float center_point_y = target_y + radius*sin(target_phi - PI/2 );
 
-	orientate( 2*trajectory_phi - target_phi , 1);
+	orientate( 2*trajectory_phi - target_phi , 1, 0);
 	simple_movement = 1;
 	while(!is_idle()){
 		delay(10);
@@ -578,12 +584,12 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
 	previous_distance_to_target = distance_to_target;
 	float sp = calculate_instant_target_speed_R(x, arc_length);
-	sp = MAX(sp, 150);
+	sp = MAX(sp, speed_offset);
 	int32_t phase_two_start_time = micros();
 	while (distance_to_target >1 && distance_to_target <= previous_distance_to_target){
 		lane_correction_term = (calculate_instant_target_phi(x, arc_length) - absolute_phi) * ( 0.7 / ( MAX( MIN( abs(target_speed_R) , abs(target_speed_L)), 100.0) /500.0) ) ; // the coefficient is tunable
 		set_target_speeds(sp * (1 + lane_correction_term*SGN(arc_length_R))*( arc_length_R/arc_length ) ,sp * (1 - lane_correction_term*SGN(arc_length_L))*( arc_length_L/arc_length ));
-		sp = MAX(sp*0.995, 150);
+		sp = MAX(sp*0.995, speed_offset);
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = get_arc_distance_to(target_x, target_y, center_point_x, center_point_y, radius);
@@ -611,7 +617,7 @@ int circle_curve(float target_x, float target_y, float target_phi, float speed){
 	return 0;
 }
 
-int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction){
+int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
 	complex_movement = 1;
 	float x0 = current_x;
 	float y0 = current_y;
@@ -629,7 +635,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		d_2 = speed/breaking_acceleration + distance + deceleration_offset;
 	}
 
-	orientate(atan2(y1-y0, x1-x0) + PI*(-direction+1)/2, 1);
+	orientate(atan2(y1-y0, x1-x0) + PI*(-direction+1)/2, 1, 0);
+	apply_smooth_or_not(is_smooth);
 	simple_movement = 1;
 
 	acc_linearization_coef = sqrt(d_1);
@@ -697,7 +704,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
 
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(signed_distance, 0, 0, 0);
 		delay(4);
 	}
 	stop_motors();
@@ -715,18 +723,18 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	complex_movement = 0;
 	return 0;
 }
-int go_to(float x, float y, float speed, int direction){
+int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	complex_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	}
-	orientate( get_angle_to(x, y) + PI*(1 - direction)/2, 1 );
+	orientate( get_angle_to(x, y) + PI*(1 - direction)/2, 1 , 0);
 
 	while(!is_idle()){
 		delay(10);
 	}
 	delay(200);
-	move_forward_full(direction * get_distance_to(x, y), speed, x, y);
+	move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	complex_movement = 0;
 	return 0;
 }
@@ -770,4 +778,9 @@ void reset_speed_control_variables(){
 	previous_speed_error_R = 0;
 	filtered_target_speed_R = 0;
 	filtered_target_speed_L = 0;
+}
+
+void apply_smooth_or_not(int8_t is_smooth){
+	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_speed;
+	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_speed;
 }

@@ -60,32 +60,38 @@ extern float ramping_acceleration; // !!! these accelerations marks the rate of 
 extern float breaking_acceleration;
 extern float emergency_breaking_acceleration;
 extern float deceleration_offset;
+extern float deceleration_offset_speed;
+extern float speed_offset_speed;
+extern float deceleration_offset_smooth;
+extern float speed_offset_smooth;
 extern float rotating_speed;
 extern int8_t direction_R; // 1 if going forward, -1 if backwards
 extern int8_t direction_L;
 extern float cruise_speed_R; // the speed which the right wheel is accelerating towards
 extern float cruise_speed_L;
+extern float speed_offset;
 extern float starting_phi;
 extern float turning_radius;
 extern int complex_movement;
 extern int simple_movement;
 
-int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
-int move_forward_full(float distance, float speed, float target_x, float target_y);
+int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
+int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);
 float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
 float calculate_instant_target_speed_L_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
 float calculate_instant_target_speed_R(float x, float distance);
 float calculate_instant_target_speed_L(float x, float distance);
 float calculate_instant_target_phi(float x, float distance);
-int rotate(float angle, int8_t is_radian);// is_radian should be set to 1 if the angle is expressed in radians and to 0 if in degrees
-int orientate(float orientation, int8_t is_radian);// will return 0 if target has been reached successfully or 1 if it could not be reached
+int rotate(float angle, int8_t is_radian, int8_t is_smooth);// is_radian should be set to 1 if the angle is expressed in radians and to 0 if in degrees
+int orientate(float orientation, int8_t is_radian, int8_t is_smooth);// will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_with_deviation(float distance, float deviation, float speed); // follows an arc to the target, that deviates at its max from the straight line "deviation" millimeters will deviate left if deviation is positive, will deviate right otherwise
 int circle_curve(float target_x, float target_y, float target_phi, float speed);
-int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction); // sa77a maram
-int go_to(float x, float y, float speed, int direction);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
+int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth); // sa77a maram
+int go_to(float x, float y, float speed, int direction, int8_t is_smooth);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 void emergency_break();
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
 int8_t is_idle();
 void reset_speed_control_variables();
+void apply_smooth_or_not(int8_t is_smooth);
 
 #endif /* INC_NAVIGATION_H_ */

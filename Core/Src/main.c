@@ -109,6 +109,7 @@ int step = 0;
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
+    communication_state = RASPBERRY;
 
     switch ((int)req_in->arg1) {
     			    	  		    case 0 : // chihemmek feha test
@@ -454,7 +455,7 @@ int main(void)
   communication_state = PC;
 
   reset_position();
-  //set_position(700, 100, 0, 0);
+  set_position(200, 400, 0, 0);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -480,80 +481,21 @@ int main(void)
 //
 	float x0 = 0.0f;
 	float y0 = 0.0f;
-	float x1 = -430.0f;
-	float y1 = -432.0f;
-	float x2 = 430.0f;
-	float y2 = -1304.0f;
-	float x3 = 0.0f;
-	float y3 = -1500.0f;
-  /************/
-//  	float x0 = 0.0f;
-//  	float y0 = 0.0f;
-//  	float x1 = 75.0f;
-//  	float y1 = 0.0f;
-//  	float x2 = 90.0f;
-//  	float y2 = 45.0f;
-//  	float x3 = 185.0f;
-//  	float y3 = 45.0f;
-  /**********/
-  // tokrob lel hit
-//  float x0 = 0.0f;
-//  float y0 = 0.0f;
-//  float x1 = -130.0f;
-//  float y1 = 0.0f;
-//  float x2 = -300.0f;
-//  float y2 = 100.0f;
-//  float x3 = -300.0f;
-//  float y3 = 500.0f;
-  /*********/
-//  float x0 = 800.0f;
-//  float y0 = 500.0f;
-//  float x1 = 250.0f;
-//  float y1 = 300.0f;
-//  float x2 = 760.0f;
-//  float y2 = 178.0f;
-//  float x3 = 0.0f;
-//  float y3 = 0.0f;
-//  float x0 = 0.0f;
-//  float y0 = 0.0f;
-//  float x1 = -1014.0f;
-//  float y1 = -396.0f;
-//  float x2 = 1018.0f;
-//  float y2 = -1138.5f;
-//  float x3 = 0.0f;
-//  float y3 = -1500.0f;
-//	orientate(90.0, 0);
-//	orientate(0.0, 0);
-//	orientate(-90.0, 0);
-//	orientate(90.0, 0);
-//	orientate(0.0, 0);
-//	orientate(45.0, 0);
-//	orientate(90.0, 0);
-//	orientate(0.0, 0);
-//	orientate(-90.0, 0);
-//	orientate(90.0, 0);
-//	orientate(50.0, 0);
-//	orientate(0, 0);
+	float x1 = 150.0f;
+	float y1 = 0.0f;
+	float x2 = 100.0f;
+	float y2 = -50.0f;
+	float x3 = 300.0f;
+	float y3 = -50.0f;
 
-//  	rotating_speed = 500;
-//  	while(1){
-//		send_values_to_usart(encoder_count_R, encoder_count_L, current_phi*1000, 0);
+//	speed_offset = 120;
+//	deceleration_offset = 20;
+//	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
+
+//	while(1){
+//		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
 //		delay(10);
 //	}
-//  	rotate(180, 0);
-
-	go_to(700, 100, 700, 1);
-	orientate(0, 0);
-	go_to(700, 0, 700, -1);
-	go_to(0, 0, 700, 1);
-	orientate(0, 0);
-//	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
-//    go_to_backwards(0,0, 700);
-//    orientate(0, 0);
-	while(1){
-		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
-		delay(10);
-	}
 //  robot_status.status = GOIN_TO;
 //	robot_status.arguments[0] = 400;
 //	robot_status.arguments[1] = -400;
@@ -1168,27 +1110,27 @@ void executor_function(void *argument)
   {
 	if ( robot_status.status != IDLE){
 		if ( robot_status.status == MOVIN_FORWARD){
-			move_forward(robot_status.arguments[0], robot_status.arguments[1]);
+			move_forward(robot_status.arguments[0], robot_status.arguments[1], 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_BACKWARD){
-			move_forward((-1)*robot_status.arguments[0], robot_status.arguments[1]);
+			move_forward((-1)*robot_status.arguments[0], robot_status.arguments[1], 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ROTATIN){
-			rotate(robot_status.arguments[0], robot_status.arguments[1]);
+			rotate(robot_status.arguments[0], robot_status.arguments[1], 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ORIENTATIN){
-			orientate(robot_status.arguments[0], robot_status.arguments[1]);
+			orientate(robot_status.arguments[0], robot_status.arguments[1], 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO){
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1);
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1);
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1, 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_FORWARD_WITH_DEVIATION){
@@ -1200,11 +1142,11 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], 1);
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], 1, 0);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1);
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, 0);
 			robot_status.status = IDLE;
 		}
 		command_waiting = 0;
