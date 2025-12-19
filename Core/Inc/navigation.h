@@ -71,6 +71,7 @@ extern int complex_movement;
 extern int simple_movement;
 
 int move_forward(float distance, float speed); // will return 0 if target has been reached successfully or 1 if it could not be reached
+int move_forward_full(float distance, float speed, float target_x, float target_y);
 float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
 float calculate_instant_target_speed_L_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
 float calculate_instant_target_speed_R(float x, float distance);

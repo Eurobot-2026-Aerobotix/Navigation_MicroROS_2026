@@ -454,7 +454,7 @@ int main(void)
   communication_state = PC;
 
   reset_position();
- // set_position(800, 500, 90, 90);
+  //set_position(700, 100, 0, 0);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -545,8 +545,8 @@ int main(void)
 	go_to(700, 100, 700, 1);
 	orientate(0, 0);
 	go_to(700, 0, 700, -1);
-//	go_to(0, 0, 700, 1);
-//	orientate(0, 0);
+	go_to(0, 0, 700, 1);
+	orientate(0, 0);
 //	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
 //    go_to_backwards(0,0, 700);
 //    orientate(0, 0);
