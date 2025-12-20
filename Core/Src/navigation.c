@@ -140,7 +140,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 int move_forward(float distance, float speed, int8_t is_smooth){
 	float target_x = current_x + distance*cos(current_phi);
 	float target_y = current_y + distance*sin(current_phi);
-	move_forward_full(distance, speed, target_x, target_y, is_smooth);
+	return move_forward_full(distance, speed, target_x, target_y, is_smooth);
 }
 float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
 	if (wheel_state_R == ACCELERATING){
@@ -324,7 +324,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	return 0;
 }
 int move_forward_with_deviation(float distance, float deviation, float speed){
-	//!!!!!!!!! ma3ach nest7a99oha
+	//!!!!!!!!! ma3ach nest7a99oha **deprecated
 	reset_speed_control_variables();
 	// there is a lotta math going on here, can't explain it in code
 	float radius = ( SQR(distance/2) + SQR(deviation) ) / ( 2*deviation );
@@ -451,7 +451,7 @@ int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	return 0;
 }
 int circle_curve(float target_x, float target_y, float target_phi, float speed){
-	/// wallet zeyda, 3anna bezier babyyyy
+	/// wallet zeyda, 3anna bezier babyyyy **deprecated
 	complex_movement = 1;
 	while(!is_idle()){
 		delay(10);
@@ -734,7 +734,9 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 		delay(10);
 	}
 	delay(200);
-	move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
+	if (get_distance_to(x, y) > 2){
+		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
+	}
 	complex_movement = 0;
 	return 0;
 }
@@ -744,7 +746,6 @@ void emergency_break(){
 	wheel_state_L = EMERGENCY_BREAK;
 	complex_movement = 0;
 	set_target_encoder_counts(encoder_count_R, encoder_count_L);
-
 }
 
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){

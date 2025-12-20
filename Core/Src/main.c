@@ -126,6 +126,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.status = MOVIN_FORWARD;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
 										res_out->result = true;// distance, speed
 										break;
 
@@ -134,6 +135,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.status = MOVIN_BACKWARD;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
 										res_out->result = true;  // distance, speed
 										break;
 
@@ -142,6 +144,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.status = ROTATIN;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
 										res_out->result = true; // angle, is_radian
 										break;
 
@@ -150,6 +153,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.status = ORIENTATIN;
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
+										robot_status.arguments[2] = req_in->arg4;
 										res_out->result = true;  // orientation, is_radian
 										break;
 
@@ -159,6 +163,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
 										robot_status.arguments[2] = req_in->arg4;
+										robot_status.arguments[3] = req_in->arg5;
 										res_out->result = true;  // x, y, speed
 										break;
 
@@ -226,6 +231,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[0] = req_in->arg2;
 										robot_status.arguments[1] = req_in->arg3;
 										robot_status.arguments[2] = req_in->arg4;
+										robot_status.arguments[3] = req_in->arg5;
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 13: // go to backwards
@@ -238,6 +244,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[4] = req_in->arg6;//x3
 										robot_status.arguments[5] = req_in->arg7;//y3
 										robot_status.arguments[6] = req_in->arg8;//speed
+										robot_status.arguments[7] = req_in->arg9;//is_smooth
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 14: // go to backwards
@@ -250,6 +257,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[4] = req_in->arg6;//x3
 										robot_status.arguments[5] = req_in->arg7;//y3
 										robot_status.arguments[6] = req_in->arg8;//speed
+										robot_status.arguments[7] = req_in->arg9;
 										res_out->result = true;  // x, y, speed
 										break;
 
@@ -479,17 +487,16 @@ int main(void)
 //  robot_status.arguments[0] = 90.0;
 //  robot_status.arguments[1] = 0.0;
 //
-	float x0 = 0.0f;
-	float y0 = 0.0f;
-	float x1 = 150.0f;
-	float y1 = 0.0f;
-	float x2 = 100.0f;
-	float y2 = -50.0f;
-	float x3 = 300.0f;
-	float y3 = -50.0f;
-
-//	speed_offset = 120;
-//	deceleration_offset = 20;
+//	float x0 = 0.0f;
+//	float y0 = 0.0f;
+//	float x1 = 150.0f;
+//	float y1 = 0.0f;
+//	float x2 = 100.0f;
+//	float y2 = -50.0f;
+//	float x3 = 300.0f;
+//	float y3 = -50.0f;
+//
+//	move_forward(500, 700, 1);
 //	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
 
 //	while(1){
@@ -1110,27 +1117,27 @@ void executor_function(void *argument)
   {
 	if ( robot_status.status != IDLE){
 		if ( robot_status.status == MOVIN_FORWARD){
-			move_forward(robot_status.arguments[0], robot_status.arguments[1], 0);
+			move_forward(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_BACKWARD){
-			move_forward((-1)*robot_status.arguments[0], robot_status.arguments[1], 0);
+			move_forward((-1)*robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ROTATIN){
-			rotate(robot_status.arguments[0], robot_status.arguments[1], 0);
+			rotate(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ORIENTATIN){
-			orientate(robot_status.arguments[0], robot_status.arguments[1], 0);
+			orientate(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO){
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, 0);
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1, 0);
+			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1, robot_status.arguments[3]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == MOVIN_FORWARD_WITH_DEVIATION){
@@ -1142,11 +1149,11 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], 1, 0);
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], 1, robot_status.arguments[7]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, 0);
+			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
 			robot_status.status = IDLE;
 		}
 		command_waiting = 0;
