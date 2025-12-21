@@ -81,25 +81,25 @@ service__srv__NaviStm_Response response_msg;
 //  Service Callback
 int8_t first_forward_recieved = 0;
 // speed control parameters
-float kpS_R = 5; // 1.5 3
+float kpS_R = 4; // 1.5 3
 float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
-float kiS_R = 90; // 8 13.5
+float kiS_R = 18; // 8 13.5
 
-float kpS_L = 5; // 3.5 5
+float kpS_L = 4; // 3.5 5
 float kdS_L = 0; // 0.00 0
-float kiS_L = 90; // 20 15.5
+float kiS_L = 18; // 20 15.5
 
 int timer_flag = 0;
 
 
 // position control parameters
-float kpP_R = 10;
+float kpP_R = 15;
 float kdP_R = 0.8;
-float kiP_R = 90;
+float kiP_R = 300;
 
-float kpP_L = 10;
+float kpP_L = 15;
 float kdP_L = 0.8;
-float kiP_L = 90;
+float kiP_L = 300;
 
 int8_t command_waiting = 0;
 
@@ -234,7 +234,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[3] = req_in->arg5;
 										res_out->result = true;  // x, y, speed
 										break;
-									 case 13: // go to backwards
+									 case 13: // bezier curve
 										command_waiting = 1;
 										robot_status.status = BEZIER_CURVIN;
 										robot_status.arguments[0] = req_in->arg2;//x1
@@ -247,7 +247,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[7] = req_in->arg9;//is_smooth
 										res_out->result = true;  // x, y, speed
 										break;
-									 case 14: // go to backwards
+									 case 14: // bezier curve backwards
 										command_waiting = 1;
 										robot_status.status = BEZIER_CURVIN_BACKWARDS;
 										robot_status.arguments[0] = req_in->arg2;//x1
@@ -413,13 +413,13 @@ int main(void)
   // setting up timers and stuff
   // TODO: configure correct parameters
   setup_motor_channels(&htim1, TIM_CHANNEL_2, TIM_CHANNEL_1, TIM_CHANNEL_3, TIM_CHANNEL_4);
-  setup_encoder_timers(&htim4, &htim3, 14400);
+  setup_encoder_timers(&htim3, &htim4, 2400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(61.03574477411629697387217216342, 61.058510204430340617341846078706);
+  setup_wheel_diameters(48.621673042330550642225182293029, 120.15472268655199932221485753194);// chi, chi, chihemmek
 
-  setup_wheels_spacing(188.5, 292.95458400518235520755469052622);
+  setup_wheels_spacing(188.5, 347.05986250040615014953832050437);
   //setup_wheels_spacing(188.5, 342.5);
-  setup_PWM_min_max(4499, 800, 800, -800, -800);
+  setup_PWM_min_max(4499, 960, 900, -960, -900);
 
   // starting timers
   HAL_TIM_Base_Start_IT(&htim7); // interrupt timer
@@ -463,7 +463,7 @@ int main(void)
   communication_state = PC;
 
   reset_position();
-  set_position(200, 400, 0, 0);
+  //set_position(200, 400, 0, 0);
   control_loop_state = ACTIVATED;
 
   robot_status.status = IDLE;
@@ -474,9 +474,12 @@ int main(void)
 //  go_to(0, -400, 600);
 //  go_to(0, 0, 600);
 //  orientate(0, 0);
+  orientate(90, 0, 0);
 
+//  set_target_encoder_counts(0, 0);
 //  while(1){
-//	  send_values_to_usart(encoder_count_L, encoder_count_R, 0, 0);
+//	  send_values_to_usart(target_encoder_count_R, target_speed_L, current_speed_R, current_speed_L);
+//	  delay(10);
 //  }
 
 //  while(1){
@@ -1256,7 +1259,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(tmp/1000000)) : position_integral_R;
 
 				// left motor position control
-				error = (target_encoder_count_L - encoder_count_L)/3.6;
+				error = ((target_encoder_count_L - encoder_count_L)/3.6)*2.5;
 
 				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + error*(tmp/1000000) : 0;
