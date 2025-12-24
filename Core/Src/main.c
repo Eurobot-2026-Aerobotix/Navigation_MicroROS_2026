@@ -282,6 +282,16 @@ void publisher_task(void *argument) {
         vTaskDelay(pdMS_TO_TICKS(70));  // Adjust as needed
     }
 }
+void publish_odom(void){
+	float pos[3];
+	get_position(pos);
+	pose_msg.x = pos[0]/1000.0;
+	pose_msg.y = pos[1]/1000.0;
+	pose_msg.z = pos[2];
+
+	rcl_publish(&pose_publisher, &pose_msg, NULL);
+
+}
 
 /*void bool_subscriber_callback(const void *msg_in) {
     const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
@@ -1084,19 +1094,20 @@ void StartDefaultTask(void *argument)
 	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
 	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
 
-	    const osThreadAttr_t pubTask_attributes = {
+	    /*const osThreadAttr_t pubTask_attributes = {
 	        .name = "posePubTask",
 	        .stack_size = 256 * 4,  // Adjust if needed
 	        .priority = (osPriority_t) osPriorityNormal2,
 	    };
-	    osThreadNew(publisher_task, NULL, &pubTask_attributes);
+	    osThreadNew(publisher_task, NULL, &pubTask_attributes);*/
 
 
 	    //  Keep ROS 2 Running
   /* Infinite loop */
   for(;;)
   {
-	  rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+	  rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(0));
+	  publish_odom();
 	 osDelay(1);
   }
   /* USER CODE END 5 */
