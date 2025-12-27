@@ -260,7 +260,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										robot_status.arguments[7] = req_in->arg9;
 										res_out->result = true;  // x, y, speed
 										break;
-									 case 14: // go to backwards
+									 case 15: // go to backwards
 										set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
 										res_out->result = true;  // x, y, speed
 										break;
