@@ -60,8 +60,8 @@ extern float ramping_acceleration; // !!! these accelerations marks the rate of 
 extern float breaking_acceleration;
 extern float emergency_breaking_acceleration;
 extern float deceleration_offset;
-extern float deceleration_offset_speed;
-extern float speed_offset_speed;
+extern float deceleration_offset_fast;
+extern float speed_offset_fast;
 extern float deceleration_offset_smooth;
 extern float speed_offset_smooth;
 extern float rotating_speed;

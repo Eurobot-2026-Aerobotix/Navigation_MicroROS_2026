@@ -81,13 +81,13 @@ service__srv__NaviStm_Response response_msg;
 //  Service Callback
 int8_t first_forward_recieved = 0;
 // speed control parameters
-float kpS_R = 5; // 1.5 3
-float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
-float kiS_R = 90; // 8 13.5
+float kpS_R = 15; // 5
+float kdS_R = 0; // at this frequency, derivative is too noisy to be utilized
+float kiS_R = 90; //
 
-float kpS_L = 5; // 3.5 5
-float kdS_L = 0; // 0.00 0
-float kiS_L = 90; // 20 15.5
+float kpS_L = 15; // 15
+float kdS_L = 0; //
+float kiS_L = 90; // 90
 
 int timer_flag = 0;
 
@@ -416,14 +416,14 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
-  setup_motor_channels(&htim1, TIM_CHANNEL_2, TIM_CHANNEL_1, TIM_CHANNEL_3, TIM_CHANNEL_4);
-  setup_encoder_timers(&htim4, &htim3, 14400);
+  setup_motor_channels(&htim1, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3, TIM_CHANNEL_4);
+  setup_encoder_timers(&htim3, &htim4, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(61.03574477411629697387217216342, 61.058510204430340617341846078706);
+  setup_wheel_diameters(60.923886551154374393042658421109, 60.944852560119474406912011502838);
 
-  setup_wheels_spacing(188.5, 292.95458400518235520755469052622);
+  setup_wheels_spacing(188.5, 283.8181546711913152000460370592);
   //setup_wheels_spacing(188.5, 342.5);
-  setup_PWM_min_max(4499, 800, 800, -800, -800);
+  setup_PWM_min_max(4499, 805, 835, -805, -835);
 
   // starting timers
   HAL_TIM_Base_Start_IT(&htim7); // interrupt timer
@@ -467,8 +467,8 @@ int main(void)
   communication_state = PC;
 
   reset_position();
-  set_position(200, 400, 0, 0);
-  control_loop_state = ACTIVATED;
+  //set_position(200, 400, 0, 0);
+  control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
 
@@ -479,8 +479,11 @@ int main(void)
 //  go_to(0, 0, 600);
 //  orientate(0, 0);
 
+//  control_loop_state = ACTIVATED;
+
 //  while(1){
-//	  send_values_to_usart(encoder_count_L, encoder_count_R, 0, 0);
+//	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
+//	  delay(10);
 //  }
 
 //  while(1){

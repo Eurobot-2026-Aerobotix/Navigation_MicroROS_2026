@@ -16,10 +16,10 @@ float acc_linearization_coef = 12;
 float breaking_acceleration = -2;
 float deceleration_offset = 40;
 float speed_offset = 150;
-float deceleration_offset_speed = 40;
-float speed_offset_speed = 150;
+float deceleration_offset_fast = 40;
+float speed_offset_fast = 150;
 float deceleration_offset_smooth = 0;
-float speed_offset_smooth = 120;
+float speed_offset_smooth = 150;
 float rotating_speed = 650;
 int8_t direction_R;
 int8_t direction_L;
@@ -98,7 +98,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -119,14 +119,14 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		set_target_speeds(speed*(1 + lane_correction_term) ,speed* (1 - lane_correction_term));
 		speed = MAX(fabs(speed)*0.99, speed_offset) * direction;
 		previous_distance_to_target = distance_to_target;
-		delay(2);
 		distance_to_target = get_distance_to(x_closest, y_closest);
+		delay(2);
 
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 
@@ -782,6 +782,6 @@ void reset_speed_control_variables(){
 }
 
 void apply_smooth_or_not(int8_t is_smooth){
-	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_speed;
-	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_speed;
+	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_fast;
+	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_fast;
 }
