@@ -1048,6 +1048,8 @@ static void MX_GPIO_Init(void)
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
+
+//micto ros starts here :
 bool create_rcl_entities(void)
 {
   rcl_ret_t ret;
@@ -1106,6 +1108,18 @@ void execute_every_n_ms(int64_t ms, SystemState system_state) {
     }
     while (0);
 }
+bool destroy_rcl_entities(void)
+{
+  rcl_ret_t ret = RCL_RET_OK;
+
+  ret |= rcl_service_fini(&service, &node);
+  ret |= rcl_publisher_fini(&pose_publisher, &node);
+  ret |= rcl_node_fini(&node);
+  ret |= rclc_executor_fini(&executor);
+  ret |= rclc_support_fini(&support);
+
+  return (ret == RCL_RET_OK);
+}
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
@@ -1147,32 +1161,48 @@ void StartDefaultTask(void *argument)
         }
         else
         {
-          system_state = AGENT_WAIT;
+        	destroy_rcl_entities();
+        	system_state = AGENT_WAIT;
         }
         break;
 
       case AGENT_CONNECTED:
         // Check agent health every 100 ms
-		  ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+    	  execute_every_n_ms(
+    	           500,
+    	           system_state =
+    	             (rmw_uros_ping_agent(100, 1) == RMW_RET_OK)
+    	               ? AGENT_CONNECTED
+    	               : AGENT_DISCONNECTED
+    	         );
+    	  if (system_state == AGENT_CONNECTED)
+    	    {
+    	      ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
 
-		  if (ret == RCL_RET_OK)
-		  {
-			publish_odom();
-		  }
-
-        break;
-
-
+    	      if (ret == RCL_RET_OK)
+    	      {
+    	        publish_odom();
+    	      }
+    	      else
+    	      {
+    	        // executor error usually means transport/session issue
+    	        system_state = AGENT_DISCONNECTED;
+    	      }
+    	    }
+    	    break;
+      case AGENT_DISCONNECTED:
+              destroy_rcl_entities();
+              system_state = AGENT_WAIT;
+              break;
       default:
         system_state = AGENT_WAIT;
         break;
     }
-
     osDelay(1);
   }
-
   /* USER CODE END 5 */
 }
+//en of micro ros
 
 /* USER CODE BEGIN Header_executor_function */
 /**
