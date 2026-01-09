@@ -280,7 +280,7 @@ void publish_odom(void){
 	pose_msg.z = pos[2];
 
 	rcl_publish(&pose_publisher, &pose_msg, NULL);
-
+}
 /*void bool_subscriber_callback(const void *msg_in) {
     const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
     evitementFlag = msg->data; // true = stop
