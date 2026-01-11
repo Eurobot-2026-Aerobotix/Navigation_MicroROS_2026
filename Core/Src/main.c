@@ -474,7 +474,13 @@ int main(void)
 //  go_to(0, 0, 600);
 //  orientate(0, 0);
 
-//  control_loop_state = ACTIVATED;
+  control_loop_state = ACTIVATED;
+
+  go_to(1000, 0, 700, 1, 1);
+  for(int i=0; i<50; i++){
+	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
+	  delay(10);
+  }
 
 //  while(1){
 //	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
