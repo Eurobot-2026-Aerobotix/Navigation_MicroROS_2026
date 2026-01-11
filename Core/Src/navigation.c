@@ -686,6 +686,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 		float signed_distance = direction * signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
 		lane_correction_term = MIN(fabs(SQR(signed_distance) * (0.008f)), 0.5)*SGN(signed_distance);// this coefficient is tunable
+		// TODO: add phi correction
 		if (d < 0.1*d_1 || 1){ // 0.002f;
 			lane_correction_term = 0;
 		}
@@ -698,8 +699,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			speed_R = speed ;
 			speed_L = speed ;
 		}
-		if ((fabs(speed_R)>700) || (fabs(speed_L) > 700)){
-			speed = direction * 700.0/ MAX((radius + (dead_wheels_spacing / 2.0f)) / (radius), (radius - (dead_wheels_spacing / 2.0f)) / (radius));
+		if ((fabs(speed_R)>800) || (fabs(speed_L) > 800)){
+			speed = direction * 800.0/ MAX((radius + (dead_wheels_spacing / 2.0f)) / (radius), (radius - (dead_wheels_spacing / 2.0f)) / (radius));
 			speed_R = ( speed * (radius + direction * (dead_wheels_spacing / 2.0f)) / (radius));
 			speed_L = ( speed * (radius - direction * (dead_wheels_spacing / 2.0f)) / (radius));
 		}
@@ -763,8 +764,8 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int encoder_tolerance = 60;
-	int pwm_tolerance = 700;
+	int encoder_tolerance = 120;
+	int pwm_tolerance = 1000;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);
 	return right_wheel_idle && left_wheel_idle;

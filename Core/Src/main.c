@@ -476,7 +476,10 @@ int main(void)
 
   control_loop_state = ACTIVATED;
   //move_forward(-400, 700, 0);
-  go_to(-400, 0, 700, -1, 1);
+  go_to(200, -200, 700, 1, 0);
+  go_to(200, 0, 700, 1, 0);
+  go_to(0, 0, 700, -1, 0);
+  orientate(0, 0, 0);
   for(int i=0; i<50; i++){
 	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
 	  delay(10);
