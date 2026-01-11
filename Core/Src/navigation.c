@@ -18,8 +18,8 @@ float deceleration_offset = 40;
 float speed_offset = 150;
 float deceleration_offset_fast = 40;
 float speed_offset_fast = 150;
-float deceleration_offset_smooth = 0;
-float speed_offset_smooth = 150;
+float deceleration_offset_smooth = 30;
+float speed_offset_smooth = 80;
 float rotating_speed = 650;
 int8_t direction_R;
 int8_t direction_L;
@@ -90,7 +90,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 
 		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_y - starting_y, target_x - starting_x) );
 		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
-		float phi_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)) + phi_correction_term; // the first coefficient is tunable
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.1), 0.1);
 
@@ -115,7 +115,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	while (distance_to_target >0.1 && distance_to_target <= previous_distance_to_target){
 		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_y - starting_y, target_x - starting_x) );
 		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle);
-		float phi_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ) + phi_correction_term;
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.1), 0.1);
 		//lane_correction_term = (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 0.7 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the coefficient is tunable
@@ -731,7 +731,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	while(!is_idle()){
 		delay(10);
 	}
-	orientate( get_angle_to(x, y) + PI*(1 - direction)/2, 1 , 0);
+	orientate( normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 ), 1 , 0);
 
 	while(!is_idle()){
 		delay(10);

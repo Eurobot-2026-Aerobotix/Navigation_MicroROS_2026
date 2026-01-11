@@ -475,8 +475,8 @@ int main(void)
 //  orientate(0, 0);
 
   control_loop_state = ACTIVATED;
-
-  go_to(1000, 0, 700, 1, 1);
+  //move_forward(-400, 700, 0);
+  go_to(-400, 0, 700, -1, 1);
   for(int i=0; i<50; i++){
 	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
 	  delay(10);
