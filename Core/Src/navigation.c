@@ -315,8 +315,8 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			break;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	stop_motors();
 	int32_t position_correction = (target_phi - absolute_phi)*dead_wheels_spacing*CPR / ( ( (wheel_diameter_R + wheel_diameter_L) / 2 )*PI) / 2.0;
