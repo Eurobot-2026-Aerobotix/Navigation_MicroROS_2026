@@ -472,7 +472,7 @@ int main(void)
   current_imu_yaw = 0;
   current_imu_gyro_z = 0;
   absolute_imu_yaw = 0;
-  communication_state = PC;
+  communication_state = RASPBERRY;
 
   reset_position();
   //set_position(200, 400, 0, 0);
@@ -1195,9 +1195,89 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
+	  set_position(1734.91,2025.58,180,180);
+	  delay(1000);
+	  // go_to 1309.56, 2185.4, 100
+
+
+	  command_waiting = 1;
+	  robot_status.status = GOIN_TO;
+	  robot_status.arguments[0] = 1309.56;
+	  robot_status.arguments[1] = 2185.4;
+	  robot_status.arguments[2] = 1000;
+	  robot_status.arguments[3] = 0;
+	  delay(1000);
+	while(!is_idle()){
+		delay(100);
+	}
+	  // go_to_backwards 1209.03, 1765.22, 1000
+	  command_waiting = 1;
+	  robot_status.status = GOIN_TO_BACKWARDS;
+	  robot_status.arguments[0] = 1209.03;
+	  robot_status.arguments[1] = 1765.22;
+	  robot_status.arguments[2] = 1000;
+	  robot_status.arguments[3] = 0;
+	  delay(1000);
+	  	while(!is_idle()){
+	  		delay(100);
+	  	}
+	  // go_to 1392.05, 1981.75, 1000
+	  command_waiting = 1;
+	  robot_status.status = GOIN_TO;
+	  robot_status.arguments[0] = 1392.05;
+	  robot_status.arguments[1] = 1981.75;
+	  robot_status.arguments[2] = 1000;
+	  robot_status.arguments[3] = 0;
+	  delay(1000);
+	  	while(!is_idle()){
+	  		delay(100);
+	  	}
+	  // go_to_backwards 940.93, 2012.69, 1000
+	  command_waiting = 1;
+	  robot_status.status = GOIN_TO_BACKWARDS;
+	  robot_status.arguments[0] = 940.93;
+	  robot_status.arguments[1] = 2012.69;
+	  robot_status.arguments[2] = 1000;
+	  robot_status.arguments[3] = 0;
+	  delay(1000);
+	  	while(!is_idle()){
+	  		delay(100);
+	  	}
+	  // go_to 940.93, 832.04, 400
+	  command_waiting = 1;
+	  robot_status.status = GOIN_TO;
+	  robot_status.arguments[0] = 940.93;
+	  robot_status.arguments[1] = 832.04;
+	  robot_status.arguments[2] = 400;
+	  robot_status.arguments[3] = 0;
+	  delay(1000);
+	  	while(!is_idle()){
+	  		delay(100);
+	  	}
+	  // orientate 180
+	  command_waiting = 1;
+	  robot_status.status = ORIENTATIN;
+	  robot_status.arguments[0] = 180;
+	  robot_status.arguments[1] = 0;
+	  robot_status.arguments[2] = 0;
+	  delay(1000);
+	  	while(!is_idle()){
+	  		delay(100);
+	  	}
+	  // go_to 1639.53, 2025.58, 400
+	  command_waiting = 1;
+	  robot_status.status = GOIN_TO;
+	  robot_status.arguments[0] = 1639.53;
+	  robot_status.arguments[1] = 2025.58;
+	  robot_status.arguments[2] = 400;
+	  robot_status.arguments[3] = 0;
+	  delay(1000);
+	  	while(!is_idle()){
+	  		delay(100);
+	  	}
 
 	//send_values_to_usart(current_imu_yaw*100, absolute_imu_yaw*100, 500, absolute_phi*100);
-	osDelay(10000);
+
   }
   /* USER CODE END IMU_update_function */
 }
