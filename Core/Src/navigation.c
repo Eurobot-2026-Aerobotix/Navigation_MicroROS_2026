@@ -99,7 +99,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -129,7 +129,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 
@@ -218,7 +218,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	delay(200);
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
-	float rotating_ramping_acceleration = MAX(300/(fabs(rad_to_deg(angle))/10.0 + 10), 10); // high acceleration for small angle and low for large
+	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/10.0 + 10), 10); // high acceleration for small angle and low for large 200 kenet 300
 	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/3.0 + 10), -4); // same logic
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
@@ -289,7 +289,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -315,7 +315,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			break;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	stop_motors();

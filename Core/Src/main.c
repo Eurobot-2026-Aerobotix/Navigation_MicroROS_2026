@@ -329,7 +329,7 @@ const osThreadAttr_t defaultTask_attributes = {
 osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
-  .stack_size = 500 * 4,
+  .stack_size = 600 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for IMU_update_task */
@@ -453,6 +453,10 @@ int main(void)
   speed_integral_L = 0;
   speed_derivative_L = 0;
   previous_speed_error_L = 0;
+  current_x = 0;
+  current_y = 0;
+  current_phi = 0;
+  absolute_phi = 0;
 
   PWM_R = 0;
   PWM_L = 0;
@@ -1193,10 +1197,10 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
+	  /*
 	  set_position(1734.91,2025.58,180,180);
 	  delay(1000);
 	  // go_to 1309.56, 2185.4, 100
-
 
 	  command_waiting = 1;
 	  robot_status.status = GOIN_TO;
@@ -1205,9 +1209,19 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[2] = 1000;
 	  robot_status.arguments[3] = 0;
 	  delay(1000);
-	while(!is_idle()){
+	while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 		delay(100);
 	}
+
+	  command_waiting = 1;
+	  robot_status.status = ORIENTATIN;
+	  robot_status.arguments[0] = 0;
+	  robot_status.arguments[1] = 0;
+	  robot_status.arguments[2] = 0;
+	  delay(1000);
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
+		delay(100);
+	  }
 	  // go_to_backwards 1209.03, 1765.22, 1000
 	  command_waiting = 1;
 	  robot_status.status = GOIN_TO_BACKWARDS;
@@ -1216,7 +1230,7 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[2] = 1000;
 	  robot_status.arguments[3] = 0;
 	  delay(1000);
-	  	while(!is_idle()){
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
 	  // go_to 1392.05, 1981.75, 1000
@@ -1227,7 +1241,7 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[2] = 1000;
 	  robot_status.arguments[3] = 0;
 	  delay(1000);
-	  	while(!is_idle()){
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
 	  // go_to_backwards 940.93, 2012.69, 1000
@@ -1238,7 +1252,7 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[2] = 1000;
 	  robot_status.arguments[3] = 0;
 	  delay(1000);
-	  	while(!is_idle()){
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
 	  // go_to 940.93, 832.04, 400
@@ -1249,7 +1263,7 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[2] = 400;
 	  robot_status.arguments[3] = 0;
 	  delay(1000);
-	  	while(!is_idle()){
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
 	  // orientate 180
@@ -1259,7 +1273,7 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[1] = 0;
 	  robot_status.arguments[2] = 0;
 	  delay(1000);
-	  	while(!is_idle()){
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
 	  // go_to 1639.53, 2025.58, 400
@@ -1270,10 +1284,10 @@ void IMU_update_function(void *argument)
 	  robot_status.arguments[2] = 400;
 	  robot_status.arguments[3] = 0;
 	  delay(1000);
-	  	while(!is_idle()){
+	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
-
+*/
 	//send_values_to_usart(current_imu_yaw*100, absolute_imu_yaw*100, 500, absolute_phi*100);
 
   }
