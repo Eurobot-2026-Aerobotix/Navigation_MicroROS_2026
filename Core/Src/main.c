@@ -1060,60 +1060,129 @@ static void MX_GPIO_Init(void)
 /* USER CODE END Header_StartDefaultTask */
 
 //micto ros starts here :
+bool create_rcl_entities(void)
+{
+  rcl_ret_t ret;
+
+  ret = rclc_support_init(&support, 0, NULL, &allocator);
+  if (ret != RCL_RET_OK) return false;
+
+  ret = rclc_node_init_default(&node, "cubemx_node", "", &support);
+  if (ret != RCL_RET_OK) return false;
+
+  ret = rclc_publisher_init_default(
+      &pose_publisher,
+      &node,
+      ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
+      "/robot_pose_raw"
+  );
+  if (ret != RCL_RET_OK) return false;
+
+  const rosidl_message_type_support_t *service_type_support =
+      ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(
+        rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
+
+  ret = rclc_service_init_default(
+      &service,
+      &node,
+      service_type_support,
+      "/stm/navi_stm"
+  );
+  if (ret != RCL_RET_OK) return false;
+
+  ret = rclc_executor_init(&executor, &support.context, 5, &allocator);
+  if (ret != RCL_RET_OK) return false;
+
+  ret = rclc_executor_add_service(
+      &executor,
+      &service,
+      &request_msg,
+      &response_msg,
+      service_callback
+  );
+  if (ret != RCL_RET_OK) return false;
+
+  return true;
+}
+void execute_every_n_ms(int64_t ms, SystemState system_state) {
+    /* Method for periodically pinging the micro_ros_agent */
+    do {
+        static volatile int64_t init = -1;
+        if (init == -1) {
+            init = uxr_millis();
+        }
+        if (uxr_millis() - init > ms) {
+            // system_state;
+            init = uxr_millis();
+        }
+    }
+    while (0);
+}
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	 // Set Micro-ROS transport
-	    rmw_uros_set_custom_transport(true, (void *)&huart2,
-	        cubemx_transport_open, cubemx_transport_close,
-	        cubemx_transport_write, cubemx_transport_read);
 
-	    // Init ROS 2
-	    allocator = rcl_get_default_allocator();
-	    rclc_support_init(&support, 0, NULL, &allocator);
-	    rclc_node_init_default(&node, "cubemx_node", "", &support);
+  SystemState system_state = AGENT_WAIT;
+  rcl_ret_t ret;
 
-	    //  Initialize the Publisher
-	    rclc_publisher_init_default(
-	        &pose_publisher,
-	        &node,
-	        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
-	        "/robot_pose_raw"
-	    );
-	   /* //  Initialize the Subscriber
-	        rclc_subscription_init_default(
-	            &bool_subscriber,
-	            &node,
-	            ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
-	            "/bool_topic"
-	        );*/
+  // Set Micro-ROS transport ONCE
+  rmw_uros_set_custom_transport(
+      true,
+      (void *)&huart2,
+      cubemx_transport_open,
+      cubemx_transport_close,
+      cubemx_transport_write,
+      cubemx_transport_read
+  );
 
-	    //  initialize the Service
-	    const rosidl_message_type_support_t *service_type_support =
-	        ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
-	    rclc_service_init_default(&service, &node, service_type_support, "/stm/navi_stm");
+  allocator = rcl_get_default_allocator();
 
-	    //  executor for handling both service and publisher
-	    rclc_executor_init(&executor, &support.context, 15, &allocator);
-	    rclc_executor_add_service(&executor, &service, &request_msg, &response_msg, service_callback);
-	    //rclc_executor_add_subscription(&executor, &bool_subscriber, &bool_msg, bool_subscriber_callback, ON_NEW_DATA);
-
-	    /*const osThreadAttr_t pubTask_attributes = {
-	        .name = "posePubTask",
-	        .stack_size = 256 * 4,  // Adjust if needed
-	        .priority = (osPriority_t) osPriorityNormal2,
-	    };
-	    osThreadNew(publisher_task, NULL, &pubTask_attributes);*/
-
-
-	    //  Keep ROS 2 Running
-  /* Infinite loop */
-  for(;;)
+  for (;;)
   {
-	  rcl_ret_t ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
-	  publish_odom();
-	 osDelay(1);
+    switch (system_state)
+    {
+      case AGENT_WAIT:
+        // Ping agent every 500 ms
+        execute_every_n_ms(
+          500,
+          system_state =
+            (rmw_uros_ping_agent(100, 1) == RMW_RET_OK)
+              ? AGENT_AVAILABLE
+              : AGENT_WAIT
+        );
+        break;
+
+      case AGENT_AVAILABLE:
+        if (create_rcl_entities())
+        {
+          system_state = AGENT_CONNECTED;
+        }
+        else
+        {
+          system_state = AGENT_WAIT;
+        }
+        break;
+
+      case AGENT_CONNECTED:
+        // Check agent health every 100 ms
+		  ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+
+		  if (ret == RCL_RET_OK)
+		  {
+			publish_odom();
+		  }
+
+        break;
+
+
+      default:
+        system_state = AGENT_WAIT;
+        break;
+    }
+
+    osDelay(1);
   }
+
   /* USER CODE END 5 */
 }
 
@@ -1197,7 +1266,7 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
-	  /*
+/*
 	  set_position(1734.91,2025.58,180,180);
 	  delay(1000);
 	  // go_to 1309.56, 2185.4, 100
@@ -1287,8 +1356,9 @@ void IMU_update_function(void *argument)
 	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
 	  		delay(100);
 	  	}
-*/
+	  */
 	//send_values_to_usart(current_imu_yaw*100, absolute_imu_yaw*100, 500, absolute_phi*100);
+	 delay(10000);
 
   }
   /* USER CODE END IMU_update_function */
