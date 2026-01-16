@@ -38,7 +38,7 @@ build/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- libmicroros/uros_include/rcl/rcl/rcl.h \
+ Core/Src/../Inc/micro_ros.h libmicroros/uros_include/rcl/rcl/rcl.h \
  libmicroros/uros_include/rcl/rcl/init.h \
  libmicroros/uros_include/rcl/rcl/allocator.h \
  libmicroros/uros_include/rcutils/rcutils/allocator.h \
@@ -248,6 +248,7 @@ Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
+Core/Src/../Inc/micro_ros.h:
 libmicroros/uros_include/rcl/rcl/rcl.h:
 libmicroros/uros_include/rcl/rcl/init.h:
 libmicroros/uros_include/rcl/rcl/allocator.h:

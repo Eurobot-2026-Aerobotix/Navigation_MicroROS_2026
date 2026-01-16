@@ -50,6 +50,7 @@ Core/Src/IMU.c \
 Core/Src/EKF.c \
 Core/Src/Odometry.c \
 Core/Src/freertos.c \
+Core/Src/micro_ros.c \
 Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
 Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \
 Middlewares/Third_Party/FreeRTOS/Source/list.c \

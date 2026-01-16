@@ -1,0 +1,163 @@
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"micro_ros.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/micro_ros.c"
+  20              		.global	response_msg
+  21              		.section	.bss.response_msg,"aw",%nobits
+  22              		.align	2
+  25              	response_msg:
+  26 0000 00       		.space	1
+  27              		.global	request_msg
+  28              		.section	.bss.request_msg,"aw",%nobits
+  29              		.align	2
+  32              	request_msg:
+  33 0000 00000000 		.space	40
+  33      00000000 
+  33      00000000 
+  33      00000000 
+  33      00000000 
+  34              		.global	executor
+  35              		.section	.bss.executor,"aw",%nobits
+  36              		.align	3
+  39              	executor:
+  40 0000 00000000 		.space	136
+  40      00000000 
+  40      00000000 
+  40      00000000 
+  40      00000000 
+  41              		.global	service
+  42              		.section	.bss.service,"aw",%nobits
+  43              		.align	2
+  46              	service:
+  47 0000 00000000 		.space	4
+  48              		.global	bool_msg
+  49              		.section	.bss.bool_msg,"aw",%nobits
+  50              		.align	2
+  53              	bool_msg:
+  54 0000 00       		.space	1
+  55              		.global	bool_subscriber
+  56              		.section	.bss.bool_subscriber,"aw",%nobits
+  57              		.align	2
+  60              	bool_subscriber:
+  61 0000 00000000 		.space	4
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 2
+
+
+  62              		.global	pose_publisher
+  63              		.section	.bss.pose_publisher,"aw",%nobits
+  64              		.align	2
+  67              	pose_publisher:
+  68 0000 00000000 		.space	4
+  69              		.global	allocator
+  70              		.section	.bss.allocator,"aw",%nobits
+  71              		.align	2
+  74              	allocator:
+  75 0000 00000000 		.space	20
+  75      00000000 
+  75      00000000 
+  75      00000000 
+  75      00000000 
+  76              		.global	support
+  77              		.section	.bss.support,"aw",%nobits
+  78              		.align	2
+  81              	support:
+  82 0000 00000000 		.space	52
+  82      00000000 
+  82      00000000 
+  82      00000000 
+  82      00000000 
+  83              		.global	node
+  84              		.section	.bss.node,"aw",%nobits
+  85              		.align	2
+  88              	node:
+  89 0000 00000000 		.space	8
+  89      00000000 
+  90              		.text
+  91              	.Letext0:
+  92              		.file 2 "libmicroros/uros_include/rcutils/rcutils/allocator.h"
+  93              		.file 3 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+  94              		.file 4 "libmicroros/uros_include/rcl/rcl/allocator.h"
+  95              		.file 5 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+  96              		.file 6 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+  97              		.file 7 "libmicroros/uros_include/rmw/rmw/ret_types.h"
+  98              		.file 8 "libmicroros/uros_include/rcutils/rcutils/time.h"
+  99              		.file 9 "libmicroros/uros_include/rmw/rmw/time.h"
+ 100              		.file 10 "libmicroros/uros_include/rmw/rmw/types.h"
+ 101              		.file 11 "libmicroros/uros_include/rcl/rcl/types.h"
+ 102              		.file 12 "libmicroros/uros_include/rcl/rcl/context.h"
+ 103              		.file 13 "libmicroros/uros_include/rcl/rcl/guard_condition.h"
+ 104              		.file 14 "libmicroros/uros_include/rcl/rcl/node.h"
+ 105              		.file 15 "libmicroros/uros_include/rcl/rcl/time.h"
+ 106              		.file 16 "libmicroros/uros_include/rcl/rcl/publisher.h"
+ 107              		.file 17 "libmicroros/uros_include/rcl/rcl/subscription.h"
+ 108              		.file 18 "libmicroros/uros_include/rcl/rcl/client.h"
+ 109              		.file 19 "libmicroros/uros_include/rcl/rcl/service.h"
+ 110              		.file 20 "libmicroros/uros_include/rmw/rmw/qos_profiles.h"
+ 111              		.file 21 "libmicroros/uros_include/rcl/rcl/timer.h"
+ 112              		.file 22 "libmicroros/uros_include/rcl/rcl/event.h"
+ 113              		.file 23 "libmicroros/uros_include/rcl/rcl/wait.h"
+ 114              		.file 24 "libmicroros/uros_include/rclc/types.h"
+ 115              		.file 25 "libmicroros/uros_include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__
+ 116              		.file 26 "libmicroros/uros_include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.h
+ 117              		.file 27 "libmicroros/uros_include/action_msgs/action_msgs/msg/detail/goal_info__struct.h"
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 3
+
+
+ 118              		.file 28 "libmicroros/uros_include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.h"
+ 119              		.file 29 "libmicroros/uros_include/rcl_action/rcl_action/types.h"
+ 120              		.file 30 "libmicroros/uros_include/rcl_action/rcl_action/action_client.h"
+ 121              		.file 31 "libmicroros/uros_include/rcl_action/rcl_action/action_server.h"
+ 122              		.file 32 "libmicroros/uros_include/rcl_action/rcl_action/default_qos.h"
+ 123              		.file 33 "libmicroros/uros_include/rclc/action_goal_handle.h"
+ 124              		.file 34 "libmicroros/uros_include/rclc/action_server.h"
+ 125              		.file 35 "libmicroros/uros_include/rclc/action_client.h"
+ 126              		.file 36 "libmicroros/uros_include/std_msgs/std_msgs/msg/detail/bool__struct.h"
+ 127              		.file 37 "libmicroros/uros_include/rclc/executor_handle.h"
+ 128              		.file 38 "libmicroros/uros_include/rclc/executor.h"
+ 129              		.file 39 "libmicroros/uros_include/service/service/srv/detail/navi_stm__struct.h"
+ 130              		.file 40 "Core/Inc/micro_ros.h"
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 micro_ros.c
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:25     .bss.response_msg:00000000 response_msg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:22     .bss.response_msg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:32     .bss.request_msg:00000000 request_msg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:29     .bss.request_msg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:39     .bss.executor:00000000 executor
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:36     .bss.executor:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:46     .bss.service:00000000 service
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:43     .bss.service:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:53     .bss.bool_msg:00000000 bool_msg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:50     .bss.bool_msg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:60     .bss.bool_subscriber:00000000 bool_subscriber
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:57     .bss.bool_subscriber:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:67     .bss.pose_publisher:00000000 pose_publisher
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:64     .bss.pose_publisher:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:74     .bss.allocator:00000000 allocator
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:71     .bss.allocator:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:81     .bss.support:00000000 support
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:78     .bss.support:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:88     .bss.node:00000000 node
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:85     .bss.node:00000000 $d
+
+NO UNDEFINED SYMBOLS
