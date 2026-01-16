@@ -85,6 +85,16 @@ void execute_every_n_ms(int64_t ms, SystemState system_state) {
     }
     while (0);
 }
+void destroy_rcl_entities(void)
+{
+  rcl_ret_t ret;
 
+  ret = rclc_executor_fini(&executor);
+  ret = rcl_service_fini(&service, &node);
+  ret = rcl_publisher_fini(&pose_publisher, &node);
+  ret = rcl_node_fini(&node);
+  ret = rclc_support_fini(&support);
 
+  rmw_uros_set_context_entity_destroy_session_timeout(&support.context, 0);
+}
 

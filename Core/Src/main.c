@@ -1065,18 +1065,20 @@ void StartDefaultTask(void *argument)
 
       case AGENT_CONNECTED:
         // Check agent health every 100 ms
+    	  if (rmw_uros_ping_agent(100, 1) != RMW_RET_OK)
+    	    {
+    	      system_state = AGENT_DISCONNECTED;
+    	      break;
+    	    }
 		  ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
 
 		  if (ret == RCL_RET_OK)
 		  {
 			publish_odom();
 		  }
-		  else{
-			  system_state=AGENT_DISCONNECTED;
-		  }
 		  break;
       case AGENT_DISCONNECTED:
-              //destroy_rcl_entities();     // clean old session
+              destroy_rcl_entities();     // clean old session
               system_state = AGENT_WAIT; // start pinging again
               break;
 

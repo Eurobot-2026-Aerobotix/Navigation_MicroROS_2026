@@ -46,7 +46,7 @@ extern service__srv__NaviStm_Response response_msg;
 bool create_rcl_entities(void);
 void execute_every_n_ms(int64_t ms, SystemState system_state);
 void service_callback(const void *request_msg, void *response_msg);
-
+void destroy_rcl_entities(void);
 /*bool create_rcl_entities(void);
 void execute_every_n_ms(int64_t ms, SystemState system_state);
 void service_callback(const void *request_msg, void *response_msg);*/
