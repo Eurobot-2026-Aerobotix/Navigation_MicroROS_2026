@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 1
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -20,144 +20,617 @@ ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 1
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
   19              		.file 1 "Core/Src/micro_ros.c"
-  20              		.global	response_msg
-  21              		.section	.bss.response_msg,"aw",%nobits
-  22              		.align	2
-  25              	response_msg:
-  26 0000 00       		.space	1
-  27              		.global	request_msg
-  28              		.section	.bss.request_msg,"aw",%nobits
-  29              		.align	2
-  32              	request_msg:
-  33 0000 00000000 		.space	40
-  33      00000000 
-  33      00000000 
-  33      00000000 
-  33      00000000 
-  34              		.global	executor
-  35              		.section	.bss.executor,"aw",%nobits
-  36              		.align	3
-  39              	executor:
-  40 0000 00000000 		.space	136
-  40      00000000 
-  40      00000000 
-  40      00000000 
-  40      00000000 
-  41              		.global	service
-  42              		.section	.bss.service,"aw",%nobits
-  43              		.align	2
-  46              	service:
-  47 0000 00000000 		.space	4
-  48              		.global	bool_msg
-  49              		.section	.bss.bool_msg,"aw",%nobits
-  50              		.align	2
-  53              	bool_msg:
-  54 0000 00       		.space	1
-  55              		.global	bool_subscriber
-  56              		.section	.bss.bool_subscriber,"aw",%nobits
-  57              		.align	2
-  60              	bool_subscriber:
-  61 0000 00000000 		.space	4
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 2
+  20              		.section	.rodata.create_rcl_entities.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 00       		.ascii	"\000"
+  24 0001 000000   		.align	2
+  25              	.LC1:
+  26 0004 63756265 		.ascii	"cubemx_node\000"
+  26      6D785F6E 
+  26      6F646500 
+  27              		.align	2
+  28              	.LC2:
+  29 0010 2F726F62 		.ascii	"/robot_pose_raw\000"
+  29      6F745F70 
+  29      6F73655F 
+  29      72617700 
+  30              		.align	2
+  31              	.LC3:
+  32 0020 2F73746D 		.ascii	"/stm/navi_stm\000"
+  32      2F6E6176 
+  32      695F7374 
+  32      6D00
+  33              		.section	.text.create_rcl_entities,"ax",%progbits
+  34              		.align	1
+  35              		.global	create_rcl_entities
+  36              		.syntax unified
+  37              		.thumb
+  38              		.thumb_func
+  40              	create_rcl_entities:
+  41              	.LFB138:
+   1:Core/Src/micro_ros.c **** /*
+   2:Core/Src/micro_ros.c ****  * micro_ros.c
+   3:Core/Src/micro_ros.c ****  *
+   4:Core/Src/micro_ros.c ****  *  Created on: Jan 16, 2026
+   5:Core/Src/micro_ros.c ****  *      Author: aminebensaid66
+   6:Core/Src/micro_ros.c ****  */
+   7:Core/Src/micro_ros.c **** #include "micro_ros.h"
+   8:Core/Src/micro_ros.c **** #include "main.h"
+   9:Core/Src/micro_ros.c **** 
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 2
 
 
-  62              		.global	pose_publisher
-  63              		.section	.bss.pose_publisher,"aw",%nobits
-  64              		.align	2
-  67              	pose_publisher:
-  68 0000 00000000 		.space	4
-  69              		.global	allocator
-  70              		.section	.bss.allocator,"aw",%nobits
-  71              		.align	2
-  74              	allocator:
-  75 0000 00000000 		.space	20
-  75      00000000 
-  75      00000000 
-  75      00000000 
-  75      00000000 
-  76              		.global	support
-  77              		.section	.bss.support,"aw",%nobits
-  78              		.align	2
-  81              	support:
-  82 0000 00000000 		.space	52
-  82      00000000 
-  82      00000000 
-  82      00000000 
-  82      00000000 
-  83              		.global	node
-  84              		.section	.bss.node,"aw",%nobits
-  85              		.align	2
-  88              	node:
-  89 0000 00000000 		.space	8
-  89      00000000 
-  90              		.text
-  91              	.Letext0:
-  92              		.file 2 "libmicroros/uros_include/rcutils/rcutils/allocator.h"
-  93              		.file 3 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
-  94              		.file 4 "libmicroros/uros_include/rcl/rcl/allocator.h"
-  95              		.file 5 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
-  96              		.file 6 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
-  97              		.file 7 "libmicroros/uros_include/rmw/rmw/ret_types.h"
-  98              		.file 8 "libmicroros/uros_include/rcutils/rcutils/time.h"
-  99              		.file 9 "libmicroros/uros_include/rmw/rmw/time.h"
- 100              		.file 10 "libmicroros/uros_include/rmw/rmw/types.h"
- 101              		.file 11 "libmicroros/uros_include/rcl/rcl/types.h"
- 102              		.file 12 "libmicroros/uros_include/rcl/rcl/context.h"
- 103              		.file 13 "libmicroros/uros_include/rcl/rcl/guard_condition.h"
- 104              		.file 14 "libmicroros/uros_include/rcl/rcl/node.h"
- 105              		.file 15 "libmicroros/uros_include/rcl/rcl/time.h"
- 106              		.file 16 "libmicroros/uros_include/rcl/rcl/publisher.h"
- 107              		.file 17 "libmicroros/uros_include/rcl/rcl/subscription.h"
- 108              		.file 18 "libmicroros/uros_include/rcl/rcl/client.h"
- 109              		.file 19 "libmicroros/uros_include/rcl/rcl/service.h"
- 110              		.file 20 "libmicroros/uros_include/rmw/rmw/qos_profiles.h"
- 111              		.file 21 "libmicroros/uros_include/rcl/rcl/timer.h"
- 112              		.file 22 "libmicroros/uros_include/rcl/rcl/event.h"
- 113              		.file 23 "libmicroros/uros_include/rcl/rcl/wait.h"
- 114              		.file 24 "libmicroros/uros_include/rclc/types.h"
- 115              		.file 25 "libmicroros/uros_include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__
- 116              		.file 26 "libmicroros/uros_include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.h
- 117              		.file 27 "libmicroros/uros_include/action_msgs/action_msgs/msg/detail/goal_info__struct.h"
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 3
+  10:Core/Src/micro_ros.c **** //  ROS 2 Core Components
+  11:Core/Src/micro_ros.c **** rcl_node_t node;
+  12:Core/Src/micro_ros.c **** rclc_support_t support;
+  13:Core/Src/micro_ros.c **** rcl_allocator_t allocator;
+  14:Core/Src/micro_ros.c **** 
+  15:Core/Src/micro_ros.c **** //  Publisher Components
+  16:Core/Src/micro_ros.c **** rcl_publisher_t pose_publisher;
+  17:Core/Src/micro_ros.c **** 
+  18:Core/Src/micro_ros.c **** // Subscriber Components
+  19:Core/Src/micro_ros.c **** rcl_subscription_t bool_subscriber;
+  20:Core/Src/micro_ros.c **** std_msgs__msg__Bool bool_msg;
+  21:Core/Src/micro_ros.c **** 
+  22:Core/Src/micro_ros.c **** //  Service Components
+  23:Core/Src/micro_ros.c **** rcl_service_t service;
+  24:Core/Src/micro_ros.c **** rclc_executor_t executor ;
+  25:Core/Src/micro_ros.c **** service__srv__NaviStm_Request request_msg;
+  26:Core/Src/micro_ros.c **** service__srv__NaviStm_Response response_msg;
+  27:Core/Src/micro_ros.c **** 
+  28:Core/Src/micro_ros.c **** 
+  29:Core/Src/micro_ros.c **** bool create_rcl_entities(void)
+  30:Core/Src/micro_ros.c **** {
+  42              		.loc 1 30 1 view -0
+  43              		.cfi_startproc
+  44              		@ args = 0, pretend = 0, frame = 0
+  45              		@ frame_needed = 0, uses_anonymous_args = 0
+  46 0000 00B5     		push	{lr}
+  47              	.LCFI0:
+  48              		.cfi_def_cfa_offset 4
+  49              		.cfi_offset 14, -4
+  50 0002 83B0     		sub	sp, sp, #12
+  51              	.LCFI1:
+  52              		.cfi_def_cfa_offset 16
+  31:Core/Src/micro_ros.c ****   rcl_ret_t ret;
+  53              		.loc 1 31 3 view .LVU1
+  32:Core/Src/micro_ros.c **** 
+  33:Core/Src/micro_ros.c ****   ret = rclc_support_init(&support, 0, NULL, &allocator);
+  54              		.loc 1 33 3 view .LVU2
+  55              		.loc 1 33 9 is_stmt 0 view .LVU3
+  56 0004 1F4B     		ldr	r3, .L15
+  57 0006 0022     		movs	r2, #0
+  58 0008 1146     		mov	r1, r2
+  59 000a 1F48     		ldr	r0, .L15+4
+  60 000c FFF7FEFF 		bl	rclc_support_init
+  61              	.LVL0:
+  34:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  62              		.loc 1 34 3 is_stmt 1 view .LVU4
+  63              		.loc 1 34 6 is_stmt 0 view .LVU5
+  64 0010 18B1     		cbz	r0, .L10
+  65              		.loc 1 34 33 discriminator 1 view .LVU6
+  66 0012 0020     		movs	r0, #0
+  67              	.LVL1:
+  68              	.L2:
+  35:Core/Src/micro_ros.c **** 
+  36:Core/Src/micro_ros.c ****   ret = rclc_node_init_default(&node, "cubemx_node", "", &support);
+  37:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  38:Core/Src/micro_ros.c **** 
+  39:Core/Src/micro_ros.c ****   ret = rclc_publisher_init_default(
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 3
 
 
- 118              		.file 28 "libmicroros/uros_include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.h"
- 119              		.file 29 "libmicroros/uros_include/rcl_action/rcl_action/types.h"
- 120              		.file 30 "libmicroros/uros_include/rcl_action/rcl_action/action_client.h"
- 121              		.file 31 "libmicroros/uros_include/rcl_action/rcl_action/action_server.h"
- 122              		.file 32 "libmicroros/uros_include/rcl_action/rcl_action/default_qos.h"
- 123              		.file 33 "libmicroros/uros_include/rclc/action_goal_handle.h"
- 124              		.file 34 "libmicroros/uros_include/rclc/action_server.h"
- 125              		.file 35 "libmicroros/uros_include/rclc/action_client.h"
- 126              		.file 36 "libmicroros/uros_include/std_msgs/std_msgs/msg/detail/bool__struct.h"
- 127              		.file 37 "libmicroros/uros_include/rclc/executor_handle.h"
- 128              		.file 38 "libmicroros/uros_include/rclc/executor.h"
- 129              		.file 39 "libmicroros/uros_include/service/service/srv/detail/navi_stm__struct.h"
- 130              		.file 40 "Core/Inc/micro_ros.h"
-ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s 			page 4
+  40:Core/Src/micro_ros.c ****       &pose_publisher,
+  41:Core/Src/micro_ros.c ****       &node,
+  42:Core/Src/micro_ros.c ****       ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
+  43:Core/Src/micro_ros.c ****       "/robot_pose_raw"
+  44:Core/Src/micro_ros.c ****   );
+  45:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  46:Core/Src/micro_ros.c **** 
+  47:Core/Src/micro_ros.c ****   const rosidl_message_type_support_t *service_type_support =
+  48:Core/Src/micro_ros.c ****       ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(
+  49:Core/Src/micro_ros.c ****         rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
+  50:Core/Src/micro_ros.c **** 
+  51:Core/Src/micro_ros.c ****   ret = rclc_service_init_default(
+  52:Core/Src/micro_ros.c ****       &service,
+  53:Core/Src/micro_ros.c ****       &node,
+  54:Core/Src/micro_ros.c ****       service_type_support,
+  55:Core/Src/micro_ros.c ****       "/stm/navi_stm"
+  56:Core/Src/micro_ros.c ****   );
+  57:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  58:Core/Src/micro_ros.c **** 
+  59:Core/Src/micro_ros.c ****   ret = rclc_executor_init(&executor, &support.context, 5, &allocator);
+  60:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  61:Core/Src/micro_ros.c **** 
+  62:Core/Src/micro_ros.c ****   ret = rclc_executor_add_service(
+  63:Core/Src/micro_ros.c ****       &executor,
+  64:Core/Src/micro_ros.c ****       &service,
+  65:Core/Src/micro_ros.c ****       &request_msg,
+  66:Core/Src/micro_ros.c ****       &response_msg,
+  67:Core/Src/micro_ros.c ****       service_callback
+  68:Core/Src/micro_ros.c ****   );
+  69:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  70:Core/Src/micro_ros.c **** 
+  71:Core/Src/micro_ros.c ****   return true;
+  72:Core/Src/micro_ros.c **** }
+  69              		.loc 1 72 1 view .LVU7
+  70 0014 03B0     		add	sp, sp, #12
+  71              	.LCFI2:
+  72              		.cfi_remember_state
+  73              		.cfi_def_cfa_offset 4
+  74              		@ sp needed
+  75 0016 5DF804FB 		ldr	pc, [sp], #4
+  76              	.LVL2:
+  77              	.L10:
+  78              	.LCFI3:
+  79              		.cfi_restore_state
+  36:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  80              		.loc 1 36 3 is_stmt 1 view .LVU8
+  36:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  81              		.loc 1 36 9 is_stmt 0 view .LVU9
+  82 001a 1B4B     		ldr	r3, .L15+4
+  83 001c 1B4A     		ldr	r2, .L15+8
+  84 001e 1C49     		ldr	r1, .L15+12
+  85 0020 1C48     		ldr	r0, .L15+16
+  86              	.LVL3:
+  36:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+  87              		.loc 1 36 9 view .LVU10
+  88 0022 FFF7FEFF 		bl	rclc_node_init_default
+  89              	.LVL4:
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 4
+
+
+  37:Core/Src/micro_ros.c **** 
+  90              		.loc 1 37 3 is_stmt 1 view .LVU11
+  37:Core/Src/micro_ros.c **** 
+  91              		.loc 1 37 6 is_stmt 0 view .LVU12
+  92 0026 08B1     		cbz	r0, .L11
+  37:Core/Src/micro_ros.c **** 
+  93              		.loc 1 37 33 discriminator 1 view .LVU13
+  94 0028 0020     		movs	r0, #0
+  95              	.LVL5:
+  37:Core/Src/micro_ros.c **** 
+  96              		.loc 1 37 33 discriminator 1 view .LVU14
+  97 002a F3E7     		b	.L2
+  98              	.LVL6:
+  99              	.L11:
+  39:Core/Src/micro_ros.c ****       &pose_publisher,
+ 100              		.loc 1 39 3 is_stmt 1 view .LVU15
+  39:Core/Src/micro_ros.c ****       &pose_publisher,
+ 101              		.loc 1 39 9 is_stmt 0 view .LVU16
+ 102 002c FFF7FEFF 		bl	rosidl_typesupport_c__get_message_type_support_handle__geometry_msgs__msg__Vector3
+ 103              	.LVL7:
+  39:Core/Src/micro_ros.c ****       &pose_publisher,
+ 104              		.loc 1 39 9 view .LVU17
+ 105 0030 0246     		mov	r2, r0
+  39:Core/Src/micro_ros.c ****       &pose_publisher,
+ 106              		.loc 1 39 9 discriminator 1 view .LVU18
+ 107 0032 194B     		ldr	r3, .L15+20
+ 108 0034 1749     		ldr	r1, .L15+16
+ 109 0036 1948     		ldr	r0, .L15+24
+ 110 0038 FFF7FEFF 		bl	rclc_publisher_init_default
+ 111              	.LVL8:
+  45:Core/Src/micro_ros.c **** 
+ 112              		.loc 1 45 3 is_stmt 1 view .LVU19
+  45:Core/Src/micro_ros.c **** 
+ 113              		.loc 1 45 6 is_stmt 0 view .LVU20
+ 114 003c 08B1     		cbz	r0, .L12
+  45:Core/Src/micro_ros.c **** 
+ 115              		.loc 1 45 33 discriminator 1 view .LVU21
+ 116 003e 0020     		movs	r0, #0
+ 117              	.LVL9:
+  45:Core/Src/micro_ros.c **** 
+ 118              		.loc 1 45 33 discriminator 1 view .LVU22
+ 119 0040 E8E7     		b	.L2
+ 120              	.LVL10:
+ 121              	.L12:
+  47:Core/Src/micro_ros.c ****       ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(
+ 122              		.loc 1 47 3 is_stmt 1 view .LVU23
+  48:Core/Src/micro_ros.c ****         rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
+ 123              		.loc 1 48 7 is_stmt 0 view .LVU24
+ 124 0042 FFF7FEFF 		bl	rosidl_typesupport_microxrcedds_c__get_service_type_support_handle__service__srv__NaviStm
+ 125              	.LVL11:
+  48:Core/Src/micro_ros.c ****         rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
+ 126              		.loc 1 48 7 view .LVU25
+ 127 0046 0246     		mov	r2, r0
+ 128              	.LVL12:
+  51:Core/Src/micro_ros.c ****       &service,
+ 129              		.loc 1 51 3 is_stmt 1 view .LVU26
+  51:Core/Src/micro_ros.c ****       &service,
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 5
+
+
+ 130              		.loc 1 51 9 is_stmt 0 view .LVU27
+ 131 0048 154B     		ldr	r3, .L15+28
+ 132 004a 1249     		ldr	r1, .L15+16
+ 133 004c 1548     		ldr	r0, .L15+32
+ 134              	.LVL13:
+  51:Core/Src/micro_ros.c ****       &service,
+ 135              		.loc 1 51 9 view .LVU28
+ 136 004e FFF7FEFF 		bl	rclc_service_init_default
+ 137              	.LVL14:
+  57:Core/Src/micro_ros.c **** 
+ 138              		.loc 1 57 3 is_stmt 1 view .LVU29
+  57:Core/Src/micro_ros.c **** 
+ 139              		.loc 1 57 6 is_stmt 0 view .LVU30
+ 140 0052 08B1     		cbz	r0, .L13
+  57:Core/Src/micro_ros.c **** 
+ 141              		.loc 1 57 33 discriminator 1 view .LVU31
+ 142 0054 0020     		movs	r0, #0
+ 143              	.LVL15:
+  57:Core/Src/micro_ros.c **** 
+ 144              		.loc 1 57 33 discriminator 1 view .LVU32
+ 145 0056 DDE7     		b	.L2
+ 146              	.LVL16:
+ 147              	.L13:
+  59:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+ 148              		.loc 1 59 3 is_stmt 1 view .LVU33
+  59:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+ 149              		.loc 1 59 9 is_stmt 0 view .LVU34
+ 150 0058 0A4B     		ldr	r3, .L15
+ 151 005a 0522     		movs	r2, #5
+ 152 005c 0A49     		ldr	r1, .L15+4
+ 153 005e 1248     		ldr	r0, .L15+36
+ 154              	.LVL17:
+  59:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
+ 155              		.loc 1 59 9 view .LVU35
+ 156 0060 FFF7FEFF 		bl	rclc_executor_init
+ 157              	.LVL18:
+  60:Core/Src/micro_ros.c **** 
+ 158              		.loc 1 60 3 is_stmt 1 view .LVU36
+  60:Core/Src/micro_ros.c **** 
+ 159              		.loc 1 60 6 is_stmt 0 view .LVU37
+ 160 0064 08B1     		cbz	r0, .L14
+  60:Core/Src/micro_ros.c **** 
+ 161              		.loc 1 60 33 discriminator 1 view .LVU38
+ 162 0066 0020     		movs	r0, #0
+ 163              	.LVL19:
+  60:Core/Src/micro_ros.c **** 
+ 164              		.loc 1 60 33 discriminator 1 view .LVU39
+ 165 0068 D4E7     		b	.L2
+ 166              	.LVL20:
+ 167              	.L14:
+  62:Core/Src/micro_ros.c ****       &executor,
+ 168              		.loc 1 62 3 is_stmt 1 view .LVU40
+  62:Core/Src/micro_ros.c ****       &executor,
+ 169              		.loc 1 62 9 is_stmt 0 view .LVU41
+ 170 006a 104B     		ldr	r3, .L15+40
+ 171 006c 0093     		str	r3, [sp]
+ 172 006e 104B     		ldr	r3, .L15+44
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 6
+
+
+ 173 0070 104A     		ldr	r2, .L15+48
+ 174 0072 0C49     		ldr	r1, .L15+32
+ 175 0074 0C48     		ldr	r0, .L15+36
+ 176              	.LVL21:
+  62:Core/Src/micro_ros.c ****       &executor,
+ 177              		.loc 1 62 9 view .LVU42
+ 178 0076 FFF7FEFF 		bl	rclc_executor_add_service
+ 179              	.LVL22:
+  69:Core/Src/micro_ros.c **** 
+ 180              		.loc 1 69 3 is_stmt 1 view .LVU43
+  69:Core/Src/micro_ros.c **** 
+ 181              		.loc 1 69 6 is_stmt 0 view .LVU44
+ 182 007a 08B9     		cbnz	r0, .L8
+  71:Core/Src/micro_ros.c **** }
+ 183              		.loc 1 71 10 view .LVU45
+ 184 007c 0120     		movs	r0, #1
+ 185              	.LVL23:
+  71:Core/Src/micro_ros.c **** }
+ 186              		.loc 1 71 10 view .LVU46
+ 187 007e C9E7     		b	.L2
+ 188              	.LVL24:
+ 189              	.L8:
+  69:Core/Src/micro_ros.c **** 
+ 190              		.loc 1 69 33 discriminator 1 view .LVU47
+ 191 0080 0020     		movs	r0, #0
+ 192              	.LVL25:
+  69:Core/Src/micro_ros.c **** 
+ 193              		.loc 1 69 33 discriminator 1 view .LVU48
+ 194 0082 C7E7     		b	.L2
+ 195              	.L16:
+ 196              		.align	2
+ 197              	.L15:
+ 198 0084 00000000 		.word	allocator
+ 199 0088 00000000 		.word	support
+ 200 008c 00000000 		.word	.LC0
+ 201 0090 04000000 		.word	.LC1
+ 202 0094 00000000 		.word	node
+ 203 0098 10000000 		.word	.LC2
+ 204 009c 00000000 		.word	pose_publisher
+ 205 00a0 20000000 		.word	.LC3
+ 206 00a4 00000000 		.word	service
+ 207 00a8 00000000 		.word	executor
+ 208 00ac 00000000 		.word	service_callback
+ 209 00b0 00000000 		.word	response_msg
+ 210 00b4 00000000 		.word	request_msg
+ 211              		.cfi_endproc
+ 212              	.LFE138:
+ 214              		.section	.text.execute_every_n_ms,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	execute_every_n_ms
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	execute_every_n_ms:
+ 222              	.LVL26:
+ 223              	.LFB139:
+  73:Core/Src/micro_ros.c **** 
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 7
+
+
+  74:Core/Src/micro_ros.c **** void execute_every_n_ms(int64_t ms, SystemState system_state) {
+ 224              		.loc 1 74 63 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		.loc 1 74 63 is_stmt 0 view .LVU50
+ 229 0000 2DE93048 		push	{r4, r5, fp, lr}
+ 230              	.LCFI4:
+ 231              		.cfi_def_cfa_offset 16
+ 232              		.cfi_offset 4, -16
+ 233              		.cfi_offset 5, -12
+ 234              		.cfi_offset 11, -8
+ 235              		.cfi_offset 14, -4
+ 236 0004 0546     		mov	r5, r0
+ 237 0006 0C46     		mov	r4, r1
+  75:Core/Src/micro_ros.c ****     // Method for periodically pinging the micro_ros_agent
+  76:Core/Src/micro_ros.c ****     do {
+ 238              		.loc 1 76 5 is_stmt 1 view .LVU51
+ 239              	.LBB2:
+  77:Core/Src/micro_ros.c ****         static volatile int64_t init = -1;
+ 240              		.loc 1 77 9 view .LVU52
+  78:Core/Src/micro_ros.c ****         if (init == -1) {
+ 241              		.loc 1 78 9 view .LVU53
+ 242              		.loc 1 78 18 is_stmt 0 view .LVU54
+ 243 0008 114B     		ldr	r3, .L23
+ 244 000a D3E90023 		ldrd	r2, [r3]
+ 245              	.LVL27:
+ 246              		.loc 1 78 12 view .LVU55
+ 247 000e B3F1FF3F 		cmp	r3, #-1
+ 248 0012 08BF     		it	eq
+ 249 0014 B2F1FF3F 		cmpeq	r2, #-1
+ 250 0018 0ED0     		beq	.L21
+ 251              	.LVL28:
+ 252              	.L18:
+  79:Core/Src/micro_ros.c ****             init = uxr_millis();
+  80:Core/Src/micro_ros.c ****         }
+  81:Core/Src/micro_ros.c ****         if (uxr_millis() - init > ms) {
+ 253              		.loc 1 81 9 is_stmt 1 view .LVU56
+ 254              		.loc 1 81 13 is_stmt 0 view .LVU57
+ 255 001a FFF7FEFF 		bl	uxr_millis
+ 256              	.LVL29:
+ 257              		.loc 1 81 26 discriminator 1 view .LVU58
+ 258 001e 0C4B     		ldr	r3, .L23
+ 259 0020 D3E900BC 		ldrd	fp, [r3]
+ 260 0024 B0EB0B02 		subs	r2, r0, fp
+ 261 0028 61EB0C03 		sbc	r3, r1, ip
+ 262              		.loc 1 81 12 discriminator 1 view .LVU59
+ 263 002c 9542     		cmp	r5, r2
+ 264 002e 74EB0301 		sbcs	r1, r4, r3
+ 265 0032 07DB     		blt	.L22
+ 266              	.L17:
+ 267              	.LBE2:
+  82:Core/Src/micro_ros.c ****             // system_state;
+  83:Core/Src/micro_ros.c ****             init = uxr_millis();
+  84:Core/Src/micro_ros.c ****         }
+  85:Core/Src/micro_ros.c ****     }
+  86:Core/Src/micro_ros.c ****     while (0);
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 8
+
+
+  87:Core/Src/micro_ros.c **** }
+ 268              		.loc 1 87 1 view .LVU60
+ 269 0034 BDE83088 		pop	{r4, r5, fp, pc}
+ 270              	.LVL30:
+ 271              	.L21:
+ 272              	.LBB3:
+  79:Core/Src/micro_ros.c ****             init = uxr_millis();
+ 273              		.loc 1 79 13 is_stmt 1 view .LVU61
+  79:Core/Src/micro_ros.c ****             init = uxr_millis();
+ 274              		.loc 1 79 20 is_stmt 0 view .LVU62
+ 275 0038 FFF7FEFF 		bl	uxr_millis
+ 276              	.LVL31:
+  79:Core/Src/micro_ros.c ****             init = uxr_millis();
+ 277              		.loc 1 79 18 discriminator 1 view .LVU63
+ 278 003c 044B     		ldr	r3, .L23
+ 279 003e C3E90001 		strd	r0, [r3]
+ 280 0042 EAE7     		b	.L18
+ 281              	.L22:
+  83:Core/Src/micro_ros.c ****         }
+ 282              		.loc 1 83 13 is_stmt 1 view .LVU64
+  83:Core/Src/micro_ros.c ****         }
+ 283              		.loc 1 83 20 is_stmt 0 view .LVU65
+ 284 0044 FFF7FEFF 		bl	uxr_millis
+ 285              	.LVL32:
+  83:Core/Src/micro_ros.c ****         }
+ 286              		.loc 1 83 18 discriminator 1 view .LVU66
+ 287 0048 014B     		ldr	r3, .L23
+ 288 004a C3E90001 		strd	r0, [r3]
+ 289              	.LBE3:
+  76:Core/Src/micro_ros.c ****         static volatile int64_t init = -1;
+ 290              		.loc 1 76 8 is_stmt 1 view .LVU67
+ 291              		.loc 1 87 1 is_stmt 0 view .LVU68
+ 292 004e F1E7     		b	.L17
+ 293              	.L24:
+ 294              		.align	2
+ 295              	.L23:
+ 296 0050 00000000 		.word	init.0
+ 297              		.cfi_endproc
+ 298              	.LFE139:
+ 300              		.section	.data.init.0,"aw"
+ 301              		.align	3
+ 304              	init.0:
+ 305 0000 FFFFFFFF 		.word	-1
+ 306 0004 FFFFFFFF 		.word	-1
+ 307              		.global	response_msg
+ 308              		.section	.bss.response_msg,"aw",%nobits
+ 309              		.align	2
+ 312              	response_msg:
+ 313 0000 00       		.space	1
+ 314              		.global	request_msg
+ 315              		.section	.bss.request_msg,"aw",%nobits
+ 316              		.align	2
+ 319              	request_msg:
+ 320 0000 00000000 		.space	40
+ 320      00000000 
+ 320      00000000 
+ 320      00000000 
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 9
+
+
+ 320      00000000 
+ 321              		.global	executor
+ 322              		.section	.bss.executor,"aw",%nobits
+ 323              		.align	3
+ 326              	executor:
+ 327 0000 00000000 		.space	136
+ 327      00000000 
+ 327      00000000 
+ 327      00000000 
+ 327      00000000 
+ 328              		.global	service
+ 329              		.section	.bss.service,"aw",%nobits
+ 330              		.align	2
+ 333              	service:
+ 334 0000 00000000 		.space	4
+ 335              		.global	bool_msg
+ 336              		.section	.bss.bool_msg,"aw",%nobits
+ 337              		.align	2
+ 340              	bool_msg:
+ 341 0000 00       		.space	1
+ 342              		.global	bool_subscriber
+ 343              		.section	.bss.bool_subscriber,"aw",%nobits
+ 344              		.align	2
+ 347              	bool_subscriber:
+ 348 0000 00000000 		.space	4
+ 349              		.global	pose_publisher
+ 350              		.section	.bss.pose_publisher,"aw",%nobits
+ 351              		.align	2
+ 354              	pose_publisher:
+ 355 0000 00000000 		.space	4
+ 356              		.global	allocator
+ 357              		.section	.bss.allocator,"aw",%nobits
+ 358              		.align	2
+ 361              	allocator:
+ 362 0000 00000000 		.space	20
+ 362      00000000 
+ 362      00000000 
+ 362      00000000 
+ 362      00000000 
+ 363              		.global	support
+ 364              		.section	.bss.support,"aw",%nobits
+ 365              		.align	2
+ 368              	support:
+ 369 0000 00000000 		.space	52
+ 369      00000000 
+ 369      00000000 
+ 369      00000000 
+ 369      00000000 
+ 370              		.global	node
+ 371              		.section	.bss.node,"aw",%nobits
+ 372              		.align	2
+ 375              	node:
+ 376 0000 00000000 		.space	8
+ 376      00000000 
+ 377              		.text
+ 378              	.Letext0:
+ 379              		.file 2 "libmicroros/uros_include/rcutils/rcutils/allocator.h"
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 10
+
+
+ 380              		.file 3 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 381              		.file 4 "libmicroros/uros_include/rcl/rcl/allocator.h"
+ 382              		.file 5 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 383              		.file 6 "/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.external
+ 384              		.file 7 "libmicroros/uros_include/rmw/rmw/ret_types.h"
+ 385              		.file 8 "libmicroros/uros_include/rcutils/rcutils/time.h"
+ 386              		.file 9 "libmicroros/uros_include/rmw/rmw/time.h"
+ 387              		.file 10 "libmicroros/uros_include/rmw/rmw/types.h"
+ 388              		.file 11 "libmicroros/uros_include/rcl/rcl/types.h"
+ 389              		.file 12 "libmicroros/uros_include/rcl/rcl/context.h"
+ 390              		.file 13 "libmicroros/uros_include/rcl/rcl/guard_condition.h"
+ 391              		.file 14 "libmicroros/uros_include/rcl/rcl/node.h"
+ 392              		.file 15 "libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/message_type_support_struct.h
+ 393              		.file 16 "libmicroros/uros_include/rcl/rcl/time.h"
+ 394              		.file 17 "libmicroros/uros_include/rcl/rcl/publisher.h"
+ 395              		.file 18 "libmicroros/uros_include/rcl/rcl/subscription.h"
+ 396              		.file 19 "libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/service_type_support_struct.h
+ 397              		.file 20 "libmicroros/uros_include/rcl/rcl/client.h"
+ 398              		.file 21 "libmicroros/uros_include/rcl/rcl/service.h"
+ 399              		.file 22 "libmicroros/uros_include/rmw/rmw/qos_profiles.h"
+ 400              		.file 23 "libmicroros/uros_include/rcl/rcl/timer.h"
+ 401              		.file 24 "libmicroros/uros_include/rcl/rcl/event.h"
+ 402              		.file 25 "libmicroros/uros_include/rcl/rcl/wait.h"
+ 403              		.file 26 "libmicroros/uros_include/rclc/types.h"
+ 404              		.file 27 "libmicroros/uros_include/unique_identifier_msgs/unique_identifier_msgs/msg/detail/uuid__
+ 405              		.file 28 "libmicroros/uros_include/builtin_interfaces/builtin_interfaces/msg/detail/time__struct.h
+ 406              		.file 29 "libmicroros/uros_include/action_msgs/action_msgs/msg/detail/goal_info__struct.h"
+ 407              		.file 30 "libmicroros/uros_include/action_msgs/action_msgs/srv/detail/cancel_goal__struct.h"
+ 408              		.file 31 "libmicroros/uros_include/rcl_action/rcl_action/types.h"
+ 409              		.file 32 "libmicroros/uros_include/rcl_action/rcl_action/action_client.h"
+ 410              		.file 33 "libmicroros/uros_include/rcl_action/rcl_action/action_server.h"
+ 411              		.file 34 "libmicroros/uros_include/rcl_action/rcl_action/default_qos.h"
+ 412              		.file 35 "libmicroros/uros_include/rclc/action_goal_handle.h"
+ 413              		.file 36 "libmicroros/uros_include/rclc/action_server.h"
+ 414              		.file 37 "libmicroros/uros_include/rclc/action_client.h"
+ 415              		.file 38 "libmicroros/uros_include/std_msgs/std_msgs/msg/detail/bool__struct.h"
+ 416              		.file 39 "libmicroros/uros_include/rclc/executor_handle.h"
+ 417              		.file 40 "libmicroros/uros_include/rclc/executor.h"
+ 418              		.file 41 "libmicroros/uros_include/service/service/srv/detail/navi_stm__struct.h"
+ 419              		.file 42 "Core/Inc/micro_ros.h"
+ 420              		.file 43 "libmicroros/uros_include/rclc/service.h"
+ 421              		.file 44 "Core/Inc/main.h"
+ 422              		.file 45 "libmicroros/uros_include/rclc/publisher.h"
+ 423              		.file 46 "libmicroros/uros_include/geometry_msgs/geometry_msgs/msg/detail/vector3__type_support.h"
+ 424              		.file 47 "libmicroros/uros_include/rclc/node.h"
+ 425              		.file 48 "libmicroros/uros_include/rclc/init.h"
+ 426              		.file 49 "libmicroros/uros_include/uxr/client/util/time.h"
+ARM GAS  /var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 micro_ros.c
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:25     .bss.response_msg:00000000 response_msg
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:22     .bss.response_msg:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:32     .bss.request_msg:00000000 request_msg
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:29     .bss.request_msg:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:39     .bss.executor:00000000 executor
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:36     .bss.executor:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:46     .bss.service:00000000 service
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:43     .bss.service:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:53     .bss.bool_msg:00000000 bool_msg
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:50     .bss.bool_msg:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:60     .bss.bool_subscriber:00000000 bool_subscriber
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:57     .bss.bool_subscriber:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:67     .bss.pose_publisher:00000000 pose_publisher
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:64     .bss.pose_publisher:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:74     .bss.allocator:00000000 allocator
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:71     .bss.allocator:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:81     .bss.support:00000000 support
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:78     .bss.support:00000000 $d
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:88     .bss.node:00000000 node
-/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//ccHtJlU0.s:85     .bss.node:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:21     .rodata.create_rcl_entities.str1.4:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:34     .text.create_rcl_entities:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:40     .text.create_rcl_entities:00000000 create_rcl_entities
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:198    .text.create_rcl_entities:00000084 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:361    .bss.allocator:00000000 allocator
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:368    .bss.support:00000000 support
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:375    .bss.node:00000000 node
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:354    .bss.pose_publisher:00000000 pose_publisher
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:333    .bss.service:00000000 service
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:326    .bss.executor:00000000 executor
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:312    .bss.response_msg:00000000 response_msg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:319    .bss.request_msg:00000000 request_msg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:215    .text.execute_every_n_ms:00000000 $t
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:221    .text.execute_every_n_ms:00000000 execute_every_n_ms
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:296    .text.execute_every_n_ms:00000050 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:304    .data.init.0:00000000 init.0
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:301    .data.init.0:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:309    .bss.response_msg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:316    .bss.request_msg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:323    .bss.executor:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:330    .bss.service:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:340    .bss.bool_msg:00000000 bool_msg
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:337    .bss.bool_msg:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:347    .bss.bool_subscriber:00000000 bool_subscriber
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:344    .bss.bool_subscriber:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:351    .bss.pose_publisher:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:358    .bss.allocator:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:365    .bss.support:00000000 $d
+/var/folders/8w/hhxpmw5s5nq9vy9lt9w1v2xh0000gn/T//cc0Fa0LY.s:372    .bss.node:00000000 $d
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+rclc_support_init
+rclc_node_init_default
+rosidl_typesupport_c__get_message_type_support_handle__geometry_msgs__msg__Vector3
+rclc_publisher_init_default
+rosidl_typesupport_microxrcedds_c__get_service_type_support_handle__service__srv__NaviStm
+rclc_service_init_default
+rclc_executor_init
+rclc_executor_add_service
+service_callback
+uxr_millis

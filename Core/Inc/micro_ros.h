@@ -18,6 +18,13 @@ extern "C" {
 #include <service/srv/navi_stm.h>
 #include <service/srv/set_variables.h>
 
+// micro-ROS system state
+typedef enum {
+    AGENT_WAIT = 0,
+    AGENT_AVAILABLE,
+    AGENT_CONNECTED,
+    AGENT_DISCONNECTED
+} SystemState;
 
 //  ROS 2 Core Components
 extern rcl_node_t node;
@@ -36,15 +43,9 @@ extern rcl_service_t service;
 extern rclc_executor_t executor ;
 extern service__srv__NaviStm_Request request_msg;
 extern service__srv__NaviStm_Response response_msg;
-
-
-// micro-ROS system state
-typedef enum {
-    AGENT_WAIT = 0,
-    AGENT_AVAILABLE,
-    AGENT_CONNECTED,
-    AGENT_DISCONNECTED
-} SystemState;
+bool create_rcl_entities(void);
+void execute_every_n_ms(int64_t ms, SystemState system_state);
+void service_callback(const void *request_msg, void *response_msg);
 
 /*bool create_rcl_entities(void);
 void execute_every_n_ms(int64_t ms, SystemState system_state);

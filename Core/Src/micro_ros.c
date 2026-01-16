@@ -24,16 +24,8 @@ rcl_service_t service;
 rclc_executor_t executor ;
 service__srv__NaviStm_Request request_msg;
 service__srv__NaviStm_Response response_msg;
-bool cubemx_transport_open(struct uxrCustomTransport * transport);
-bool cubemx_transport_close(struct uxrCustomTransport * transport);
-size_t cubemx_transport_write(struct uxrCustomTransport* transport, const uint8_t * buf, size_t len, uint8_t * err);
-size_t cubemx_transport_read(struct uxrCustomTransport* transport, uint8_t* buf, size_t len, int timeout, uint8_t* err);
 
-void * microros_allocate(size_t size, void * state);
-void microros_deallocate(void * pointer, void * state);
-void * microros_reallocate(void * pointer, size_t size, void * state);
-void * microros_zero_allocate(size_t number_of_elements, size_t size_of_element, void * state);
-/*
+
 bool create_rcl_entities(void)
 {
   rcl_ret_t ret;
@@ -77,8 +69,8 @@ bool create_rcl_entities(void)
   if (ret != RCL_RET_OK) return false;
 
   return true;
-}*/
-/*
+}
+
 void execute_every_n_ms(int64_t ms, SystemState system_state) {
     // Method for periodically pinging the micro_ros_agent
     do {
@@ -92,7 +84,7 @@ void execute_every_n_ms(int64_t ms, SystemState system_state) {
         }
     }
     while (0);
-}*/
+}
 
 
 
