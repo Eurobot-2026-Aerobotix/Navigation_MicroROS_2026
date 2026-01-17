@@ -165,6 +165,13 @@ build/Core/Src/micro_ros.o: Core/Src/micro_ros.c Core/Inc/micro_ros.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/string.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__struct.h \
+ libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string.h \
+ libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/primitives_sequence.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__functions.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__type_support.h \
+ libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string_functions.h \
  Core/Inc/main.h Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  Core/Inc/stm32f4xx_hal_conf.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -360,6 +367,13 @@ libmicroros/uros_include/service/service/srv/set_variables.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/string.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__struct.h:
+libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string.h:
+libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/primitives_sequence.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__functions.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__type_support.h:
+libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string_functions.h:
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:

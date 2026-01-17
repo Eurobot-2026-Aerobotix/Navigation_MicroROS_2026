@@ -75,7 +75,7 @@ int8_t command_waiting = 0;
 
 int step = 0;
 
-
+std_msgs__msg__String debug_msg;
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
@@ -250,6 +250,11 @@ void publish_odom(void){
 	pose_msg.z = pos[2];
 
 	rcl_publish(&pose_publisher, &pose_msg, NULL);
+}
+void publish_debug(const char * text)
+{
+    rosidl_runtime_c__String__assign(&debug_msg.data, text);
+    rcl_publish(&debugger_publisher, &debug_msg, NULL);
 }
 /*void bool_subscriber_callback(const void *msg_in) {
     const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
@@ -1056,11 +1061,13 @@ void StartDefaultTask(void *argument)
         if (create_rcl_entities())
         {
           system_state = AGENT_CONNECTED;
+          std_msgs__msg__String__init(&debug_msg);
         }
         else
         {
           system_state = AGENT_WAIT;
         }
+
         break;
 
       case AGENT_CONNECTED:
@@ -1075,6 +1082,9 @@ void StartDefaultTask(void *argument)
 		  if (ret == RCL_RET_OK)
 		  {
 			publish_odom();
+			char buf[20];
+			snprintf(buf, sizeof(buf), "%d", debugger);
+			publish_debug(buf);
 		  }
 		  break;
       case AGENT_DISCONNECTED:
@@ -1195,6 +1205,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = 0;
 			PWM_R = 0;
 		}else{
+			debugger=micros();
 			update_position(skip_position_update);
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);

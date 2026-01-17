@@ -17,7 +17,8 @@ extern "C" {
 #include <std_msgs/msg/int32.h>
 #include <service/srv/navi_stm.h>
 #include <service/srv/set_variables.h>
-
+#include <std_msgs/msg/string.h>
+#include <rosidl_runtime_c/string_functions.h>
 // micro-ROS system state
 typedef enum {
     AGENT_WAIT = 0,
@@ -33,7 +34,7 @@ extern rcl_allocator_t allocator;
 
 //  Publisher Components
 extern rcl_publisher_t pose_publisher;
-
+extern rcl_publisher_t debugger_publisher;
 // Subscriber Components
 extern rcl_subscription_t bool_subscriber;
 extern std_msgs__msg__Bool bool_msg;

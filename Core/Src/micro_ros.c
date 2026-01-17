@@ -14,7 +14,7 @@ rcl_allocator_t allocator;
 
 //  Publisher Components
 rcl_publisher_t pose_publisher;
-
+rcl_publisher_t debugger_publisher;
 // Subscriber Components
 rcl_subscription_t bool_subscriber;
 std_msgs__msg__Bool bool_msg;
@@ -24,7 +24,6 @@ rcl_service_t service;
 rclc_executor_t executor ;
 service__srv__NaviStm_Request request_msg;
 service__srv__NaviStm_Response response_msg;
-
 
 bool create_rcl_entities(void)
 {
@@ -42,6 +41,12 @@ bool create_rcl_entities(void)
       ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
       "/robot_pose_raw"
   );
+  ret = rclc_publisher_init_default(
+        &debugger_publisher,
+        &node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, String),
+        "/debug"
+    );
   if (ret != RCL_RET_OK) return false;
 
   const rosidl_message_type_support_t *service_type_support =
@@ -67,7 +72,6 @@ bool create_rcl_entities(void)
       service_callback
   );
   if (ret != RCL_RET_OK) return false;
-
   return true;
 }
 
