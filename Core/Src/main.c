@@ -51,25 +51,27 @@ void * microros_zero_allocate(size_t number_of_elements, size_t size_of_element,
 //  Service Callback
 int8_t first_forward_recieved = 0;
 // speed control parameters
-float kpS_R = 4; // 1.5 3
-float kdS_R = 0.0000; // at this frequency, derivative is too noisy to be utilized
-float kiS_R = 18; // 8 13.5
+float kpS_R = 11.5;//18;//9;//1;// 1.5 3
+float kdS_R = 0.000; // at this frequency, derivative is too noisy to be utilized
+float kiS_R = 15.5;// 70; //10;//90; // 8 13.5
 
-float kpS_L = 4; // 3.5 5
-float kdS_L = 0; // 0.00 0
-float kiS_L = 18; // 20 15.5
+float kpS_L = 11.5;//18; //1;// 3.5 5
+float kdS_L = 0.000; // 0.00 0
+float kiS_L = 15.5;//70;//10; 90;// 20 15.5
 
 int timer_flag = 0;
-
+//5 90
 
 // position control parameters
-float kpP_R = 15;
+//float kpP_R = 10;
+float kpP_R = 20;
 float kdP_R = 0.8;
-float kiP_R = 300;
+float kiP_R = 90;
 
-float kpP_L = 15;
+float kpP_L = 20;
 float kdP_L = 0.8;
-float kiP_L = 300;
+float kiP_L = 90;
+
 
 int8_t command_waiting = 0;
 
