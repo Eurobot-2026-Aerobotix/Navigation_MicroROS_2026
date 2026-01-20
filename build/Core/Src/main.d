@@ -38,7 +38,7 @@ build/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- libmicroros/uros_include/rcl/rcl/rcl.h \
+ Core/Src/../Inc/micro_ros.h libmicroros/uros_include/rcl/rcl/rcl.h \
  libmicroros/uros_include/rcl/rcl/init.h \
  libmicroros/uros_include/rcl/rcl/allocator.h \
  libmicroros/uros_include/rcutils/rcutils/allocator.h \
@@ -204,9 +204,15 @@ build/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h \
  libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/string.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__struct.h \
+ libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string.h \
+ libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/primitives_sequence.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__functions.h \
+ libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__type_support.h \
+ libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string_functions.h \
  Core/Inc/Motors.h Core/Inc/Odometry.h Core/Inc/Motors.h \
- Core/Inc/navigation.h Core/Inc/Odometry.h Core/Inc/EKF.h Core/Inc/IMU.h \
- Core/Inc/micro_ros_state.h
+ Core/Inc/navigation.h Core/Inc/Odometry.h Core/Inc/EKF.h Core/Inc/IMU.h
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -249,6 +255,7 @@ Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
+Core/Src/../Inc/micro_ros.h:
 libmicroros/uros_include/rcl/rcl/rcl.h:
 libmicroros/uros_include/rcl/rcl/init.h:
 libmicroros/uros_include/rcl/rcl/allocator.h:
@@ -415,6 +422,13 @@ libmicroros/uros_include/service/service/srv/set_variables.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__struct.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__functions.h:
 libmicroros/uros_include/service/service/srv/detail/set_variables__type_support.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/string.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__struct.h:
+libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string.h:
+libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/primitives_sequence.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__functions.h:
+libmicroros/uros_include/std_msgs/std_msgs/msg/detail/string__type_support.h:
+libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string_functions.h:
 Core/Inc/Motors.h:
 Core/Inc/Odometry.h:
 Core/Inc/Motors.h:
@@ -422,4 +436,3 @@ Core/Inc/navigation.h:
 Core/Inc/Odometry.h:
 Core/Inc/EKF.h:
 Core/Inc/IMU.h:
-Core/Inc/micro_ros_state.h:

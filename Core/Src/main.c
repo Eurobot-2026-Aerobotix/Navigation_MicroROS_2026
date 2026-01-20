@@ -23,23 +23,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
-#include <rcl/rcl.h>
-#include <rclc/rclc.h>
-#include <geometry_msgs/geometry_msgs/msg/vector3.h>
-#include <std_msgs/msg/bool.h>
-#include <rcl/error_handling.h>
-#include <rclc/executor.h>
-#include <uxr/client/transport.h>
-#include <rmw_microxrcedds_c/config.h>
-#include <rmw_microros/rmw_microros.h>
-#include <std_msgs/msg/int32.h>
-#include <service/srv/navi_stm.h>
-#include <service/srv/set_variables.h>
+#include "../Inc/micro_ros.h"
 #include "Motors.h"
 #include "Odometry.h"
 #include "navigation.h"
 #include "EKF.h"
-#include "micro_ros_state.h"
 
 /* USER CODE END Includes */
 
@@ -60,24 +48,6 @@ void * microros_zero_allocate(size_t number_of_elements, size_t size_of_element,
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-//  ROS 2 Core Components
-rcl_node_t node;
-rclc_support_t support;
-rcl_allocator_t allocator;
-
-//  Publisher Components
-rcl_publisher_t pose_publisher;
-
-// Subscriber Components
-rcl_subscription_t bool_subscriber;
-std_msgs__msg__Bool bool_msg;
-
-//  Service Components
-rcl_service_t service;
-rclc_executor_t executor ;
-service__srv__NaviStm_Request request_msg;
-service__srv__NaviStm_Response response_msg;
 
 //  Service Callback
 int8_t first_forward_recieved = 0;
@@ -281,18 +251,12 @@ void publish_odom(void){
 
 	rcl_publish(&pose_publisher, &pose_msg, NULL);
 }
-/*void bool_subscriber_callback(const void *msg_in) {
-    const std_msgs__msg__Bool *msg = (const std_msgs__msg__Bool *)msg_in;
-    evitementFlag = msg->data; // true = stop
-//    if (evitementFlag==true){
-//    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
-//    	stop_motors();
-//    }else{    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);}
-
-
-
-
-}*/
+std_msgs__msg__String debug_msg;
+void publish_debug(const char * text)
+{
+    rosidl_runtime_c__String__assign(&debug_msg.data, text);
+    rcl_publish(&debugger_publisher, &debug_msg, NULL);
+}
 
 
 
@@ -1058,65 +1022,6 @@ static void MX_GPIO_Init(void)
   */
 /* USER CODE END Header_StartDefaultTask */
 
-//micto ros starts here :
-bool create_rcl_entities(void)
-{
-  rcl_ret_t ret;
-
-  ret = rclc_support_init(&support, 0, NULL, &allocator);
-  if (ret != RCL_RET_OK) return false;
-
-  ret = rclc_node_init_default(&node, "cubemx_node", "", &support);
-  if (ret != RCL_RET_OK) return false;
-
-  ret = rclc_publisher_init_default(
-      &pose_publisher,
-      &node,
-      ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Vector3),
-      "/robot_pose_raw"
-  );
-  if (ret != RCL_RET_OK) return false;
-
-  const rosidl_message_type_support_t *service_type_support =
-      ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(
-        rosidl_typesupport_microxrcedds_c, service, srv, NaviStm)();
-
-  ret = rclc_service_init_default(
-      &service,
-      &node,
-      service_type_support,
-      "/stm/navi_stm"
-  );
-  if (ret != RCL_RET_OK) return false;
-
-  ret = rclc_executor_init(&executor, &support.context, 5, &allocator);
-  if (ret != RCL_RET_OK) return false;
-
-  ret = rclc_executor_add_service(
-      &executor,
-      &service,
-      &request_msg,
-      &response_msg,
-      service_callback
-  );
-  if (ret != RCL_RET_OK) return false;
-
-  return true;
-}
-void execute_every_n_ms(int64_t ms, SystemState system_state) {
-    /* Method for periodically pinging the micro_ros_agent */
-    do {
-        static volatile int64_t init = -1;
-        if (init == -1) {
-            init = uxr_millis();
-        }
-        if (uxr_millis() - init > ms) {
-            // system_state;
-            init = uxr_millis();
-        }
-    }
-    while (0);
-}
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
@@ -1155,23 +1060,36 @@ void StartDefaultTask(void *argument)
         if (create_rcl_entities())
         {
           system_state = AGENT_CONNECTED;
+          std_msgs__msg__String__init(&debug_msg);
         }
         else
         {
           system_state = AGENT_WAIT;
         }
+
         break;
 
       case AGENT_CONNECTED:
         // Check agent health every 100 ms
+    	  if (rmw_uros_ping_agent(100, 1) != RMW_RET_OK)
+    	    {
+    	      system_state = AGENT_DISCONNECTED;
+    	      break;
+    	    }
 		  ret = rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
 
 		  if (ret == RCL_RET_OK)
 		  {
 			publish_odom();
+			char buf[20];
+			snprintf(buf, sizeof(buf), "%d", debugger);
+			publish_debug(buf);
 		  }
-
-        break;
+		  break;
+      case AGENT_DISCONNECTED:
+              destroy_rcl_entities();     // clean old session
+              system_state = AGENT_WAIT; // start pinging again
+              break;
 
 
       default:
@@ -1184,7 +1102,6 @@ void StartDefaultTask(void *argument)
 
   /* USER CODE END 5 */
 }
-
 
 //en of micro ros
 
