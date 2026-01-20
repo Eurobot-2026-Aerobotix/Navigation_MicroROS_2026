@@ -74,6 +74,7 @@ extern float starting_phi;
 extern float turning_radius;
 extern int complex_movement;
 extern int simple_movement;
+extern int8_t command_waiting;
 
 int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);
@@ -93,5 +94,7 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 int8_t is_idle();
 void reset_speed_control_variables();
 void apply_smooth_or_not(int8_t is_smooth);
+void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth);
+void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth);
 
 #endif /* INC_NAVIGATION_H_ */

@@ -164,8 +164,11 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 	}
 }
 void delay(int ms){
-	vTaskDelay(pdMS_TO_TICKS(ms));
-	//HAL_Delay(ms);
+	if (communication_state == RASPBERRY){
+		vTaskDelay(pdMS_TO_TICKS(ms));
+	}else{
+		HAL_Delay(ms);
+	}
 }
 
 void reset_position_control_variables(){

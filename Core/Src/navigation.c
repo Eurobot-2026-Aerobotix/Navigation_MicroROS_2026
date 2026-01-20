@@ -33,6 +33,8 @@ float speed_filter = 0.95;
 int complex_movement = 0;
 int simple_movement = 0;
 
+int8_t command_waiting = 0;
+
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
 	apply_smooth_or_not(is_smooth);
 	float direction = SGN(distance);
@@ -745,6 +747,30 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	return 0;
 }
 
+void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
+	while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
+		delay(100);
+	}
+	command_waiting = 1;
+	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
+	robot_status.arguments[0] = x;
+	robot_status.arguments[1] = y;
+	robot_status.arguments[2] = speed;
+	robot_status.arguments[3] = is_smooth;
+	delay(1000);
+}
+void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
+	while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
+		delay(100);
+	}
+	command_waiting = 1;
+	robot_status.status = ORIENTATIN;
+	robot_status.arguments[0] = orientation;
+	robot_status.arguments[1] = is_radian;
+	robot_status.arguments[2] = is_smooth;
+	delay(1000);
+}
+
 void emergency_break(){
 	wheel_state_R = EMERGENCY_BREAK;
 	wheel_state_L = EMERGENCY_BREAK;
@@ -789,3 +815,4 @@ void apply_smooth_or_not(int8_t is_smooth){
 	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_fast;
 	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_fast;
 }
+

@@ -102,7 +102,6 @@ float kpP_L = 10;
 float kdP_L = 0.8;
 float kiP_L = 90;
 
-int8_t command_waiting = 0;
 
 int step = 0;
 
@@ -411,12 +410,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // setting up timers and stuff
   // TODO: configure correct parameters
-  setup_motor_channels(&htim1, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3, TIM_CHANNEL_4);
+  setup_motor_channels(&htim1, TIM_CHANNEL_4, TIM_CHANNEL_3, TIM_CHANNEL_2, TIM_CHANNEL_1);
   setup_encoder_timers(&htim3, &htim4, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(60.923886551154374393042658421109, 60.944852560119474406912011502838);
+  setup_wheel_diameters(61.059052445471550790520572783317, 61.079122136770798770650177917974);
 
-  setup_wheels_spacing(188.5, 283.8181546711913152000460370592);
+  setup_wheels_spacing(188.5, 283.61910293538113043759302050018);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 805, 835, -805, -835);
 
@@ -471,23 +470,23 @@ int main(void)
 
   robot_status.status = IDLE;
 
-//  go_to(500, -500, 600);
-//  go_to(400, 0, 700);
-//  go_to(500, 100, 600);
-//  go_to(0, -400, 600);
-//  go_to(0, 0, 600);
-//  orientate(0, 0);
+//  go_to(500, -500, 600, 1, 0);
+//  go_to(400, 0, 700, 1, 0);
+//  go_to(500, 100, 600, -1, 0);
+//  go_to(0, -400, 600, 1, 0);
+//  go_to(0, 0, 600, 1, 0);
+//  orientate(0, 0, 0);
 
-//  control_loop_state = ACTIVATED;
+  control_loop_state = ACTIVATED;
   //move_forward(-400, 700, 0);
 //  go_to(2100, 0, 1000, 1, 0);
 //  for(int i=0; i<50; i++){
 //	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
 //	  delay(10);
 //  }
-
+//  control_loop_state = ACTIVATED;
 //  while(1){
-//	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
+//	  send_values_to_usart(absolute_phi*100, 0, 0, 0);
 //	  delay(10);
 //  }
 
@@ -1266,100 +1265,16 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
-/*
-	  set_position(1734.91,2025.58,180,180);
-	  delay(1000);
-	  // go_to 1309.56, 2185.4, 100
 
-	  command_waiting = 1;
-	  robot_status.status = GOIN_TO;
-	  robot_status.arguments[0] = 1309.56;
-	  robot_status.arguments[1] = 2185.4;
-	  robot_status.arguments[2] = 1000;
-	  robot_status.arguments[3] = 0;
-	  delay(1000);
-	while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-		delay(100);
-	}
+	//set_position(1734.91,2025.58,180,180);
+	delay(1000);
 
-	  command_waiting = 1;
-	  robot_status.status = ORIENTATIN;
-	  robot_status.arguments[0] = 0;
-	  robot_status.arguments[1] = 0;
-	  robot_status.arguments[2] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-		delay(100);
-	  }
-	  // go_to_backwards 1209.03, 1765.22, 1000
-	  command_waiting = 1;
-	  robot_status.status = GOIN_TO_BACKWARDS;
-	  robot_status.arguments[0] = 1209.03;
-	  robot_status.arguments[1] = 1765.22;
-	  robot_status.arguments[2] = 1000;
-	  robot_status.arguments[3] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-	  		delay(100);
-	  	}
-	  // go_to 1392.05, 1981.75, 1000
-	  command_waiting = 1;
-	  robot_status.status = GOIN_TO;
-	  robot_status.arguments[0] = 1392.05;
-	  robot_status.arguments[1] = 1981.75;
-	  robot_status.arguments[2] = 1000;
-	  robot_status.arguments[3] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-	  		delay(100);
-	  	}
-	  // go_to_backwards 940.93, 2012.69, 1000
-	  command_waiting = 1;
-	  robot_status.status = GOIN_TO_BACKWARDS;
-	  robot_status.arguments[0] = 940.93;
-	  robot_status.arguments[1] = 2012.69;
-	  robot_status.arguments[2] = 1000;
-	  robot_status.arguments[3] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-	  		delay(100);
-	  	}
-	  // go_to 940.93, 832.04, 400
-	  command_waiting = 1;
-	  robot_status.status = GOIN_TO;
-	  robot_status.arguments[0] = 940.93;
-	  robot_status.arguments[1] = 832.04;
-	  robot_status.arguments[2] = 400;
-	  robot_status.arguments[3] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-	  		delay(100);
-	  	}
-	  // orientate 180
-	  command_waiting = 1;
-	  robot_status.status = ORIENTATIN;
-	  robot_status.arguments[0] = 180;
-	  robot_status.arguments[1] = 0;
-	  robot_status.arguments[2] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-	  		delay(100);
-	  	}
-	  // go_to 1639.53, 2025.58, 400
-	  command_waiting = 1;
-	  robot_status.status = GOIN_TO;
-	  robot_status.arguments[0] = 1639.53;
-	  robot_status.arguments[1] = 2025.58;
-	  robot_status.arguments[2] = 400;
-	  robot_status.arguments[3] = 0;
-	  delay(1000);
-	  while(!(is_idle() && !complex_movement && !simple_movement && !command_waiting)){
-	  		delay(100);
-	  	}
-	  */
-	//send_values_to_usart(current_imu_yaw*100, absolute_imu_yaw*100, 500, absolute_phi*100);
-	 delay(10000);
-
+	prepare_go_to(500, -500, 600, 1, 0);
+	prepare_go_to(400, 0, 700, 1, 0);
+	prepare_go_to(500, 100, 600, -1, 0);
+	prepare_go_to(0, -400, 600, 1, 0);
+	prepare_go_to(0, 0, 600, 1, 0);
+	prepare_orientate(0, 0, 0);
   }
   /* USER CODE END IMU_update_function */
 }
@@ -1378,8 +1293,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 	if (htim-> Instance == TIM7){
 		if(control_loop_state == DISACTIVATED){
-			PWM_L = 0;
-			PWM_R = 0;
+			//PWM_L = 0;
+			//PWM_R = 0;
 		}else{
 			update_position(skip_position_update);
 			if (control_loop_state == SPEED){
