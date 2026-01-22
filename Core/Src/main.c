@@ -441,7 +441,7 @@ int main(void)
 //  go_to(0, 0, 600, 1, 0);
 //  orientate(0, 0, 0);
 
-  control_loop_state = ACTIVATED;
+//  control_loop_state = ACTIVATED;
   //move_forward(-400, 700, 0);
 //  go_to(2100, 0, 1000, 1, 0);
 //  for(int i=0; i<50; i++){
@@ -1184,14 +1184,16 @@ void IMU_update_function(void *argument)
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 
 	//set_position(1734.91,2025.58,180,180);
-	delay(1000);
+//	delay(1000);
 
-	prepare_go_to(500, -500, 600, 1, 0);
-	prepare_go_to(400, 0, 700, 1, 0);
-	prepare_go_to(500, 100, 600, -1, 0);
-	prepare_go_to(0, -400, 600, 1, 0);
-	prepare_go_to(0, 0, 600, 1, 0);
-	prepare_orientate(0, 0, 0);
+//	prepare_go_to(2500, 0, 1100, 1, 0);
+	delay(10000000);
+//	prepare_go_to(500, -500, 600, 1, 0);
+//	prepare_go_to(400, 0, 700, 1, 0);
+//	prepare_go_to(500, 100, 600, -1, 0);
+//	prepare_go_to(0, -400, 600, 1, 0);
+//	prepare_go_to(0, 0, 600, 1, 0);
+//	prepare_orientate(0, 0, 0);
   }
   /* USER CODE END IMU_update_function */
 }
