@@ -388,7 +388,7 @@ int main(void)
   // setting up timers and stuff
   // TODO: configure correct parameters
   setup_motor_channels(&htim1, TIM_CHANNEL_2, TIM_CHANNEL_1, TIM_CHANNEL_3, TIM_CHANNEL_4);
-  setup_encoder_timers(&htim3, &htim4, 2400);
+  setup_encoder_timers(&htim4, &htim3, 2400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
   setup_wheel_diameters(48.621673042330550642225182293029, 120.15472268655199932221485753194);// chi, chi, chihemmek
 
@@ -443,7 +443,6 @@ int main(void)
 
   robot_status.status = IDLE;
 
-//  go_to(500, -500, 600);
 //  go_to(400, 0, 700);
 //  go_to(500, 100, 600);
 //  go_to(0, -400, 600);
