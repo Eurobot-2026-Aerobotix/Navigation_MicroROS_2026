@@ -40,8 +40,6 @@ enum Robot_state_enum{
 	GOIN_TO_BACKWARDS,
 	ROTATIN,
 	ORIENTATIN,
-	MOVIN_FORWARD_WITH_DEVIATION,
-	CIRCLE_CURVIN,
 	BEZIER_CURVIN,
 	BEZIER_CURVIN_BACKWARDS
 };
@@ -75,6 +73,7 @@ extern float turning_radius;
 extern int complex_movement;
 extern int simple_movement;
 extern int8_t command_waiting;
+extern int8_t reached_destination;
 
 int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);
@@ -85,8 +84,6 @@ float calculate_instant_target_speed_L(float x, float distance);
 float calculate_instant_target_phi(float x, float distance);
 int rotate(float angle, int8_t is_radian, int8_t is_smooth);// is_radian should be set to 1 if the angle is expressed in radians and to 0 if in degrees
 int orientate(float orientation, int8_t is_radian, int8_t is_smooth);// will return 0 if target has been reached successfully or 1 if it could not be reached
-int move_forward_with_deviation(float distance, float deviation, float speed); // follows an arc to the target, that deviates at its max from the straight line "deviation" millimeters will deviate left if deviation is positive, will deviate right otherwise
-int circle_curve(float target_x, float target_y, float target_phi, float speed);
 int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth); // sa77a maram
 int go_to(float x, float y, float speed, int direction, int8_t is_smooth);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 void emergency_break();
@@ -96,5 +93,6 @@ void reset_speed_control_variables();
 void apply_smooth_or_not(int8_t is_smooth);
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth);
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth);
+void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth);
 
 #endif /* INC_NAVIGATION_H_ */

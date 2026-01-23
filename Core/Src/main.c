@@ -82,58 +82,13 @@ void service_callback(const void *request_msg, void *response_msg) {
     communication_state = RASPBERRY;
 
     switch ((int)req_in->arg1) {
-    			    	  		    case 0 : // chihemmek feha test
-    			    	  		    	for (int i = 0; i < 5; i++)  // Blink 10 times
-    			    	  		    	{
-    			    	  		    	    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    			    	  		    	    osDelay(500);  // 500 ms ON/OFF cycle
-    			    	  		    	}
-    			    	  		    	res_out->result = true;
-    			    	  			    break;
-									 case 1:
-										command_waiting = 1;
-										first_forward_recieved = 1;
-										robot_status.status = MOVIN_FORWARD;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										res_out->result = true;// distance, speed
-										break;
-
-									 case 2: // move backward
-										command_waiting = 1;
-										robot_status.status = MOVIN_BACKWARD;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										res_out->result = true;  // distance, speed
-										break;
-
-									 case 3: // rotate
-										command_waiting = 1;
-										robot_status.status = ROTATIN;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										res_out->result = true; // angle, is_radian
-										break;
-
 									 case 4: //orientate
-										command_waiting = 1;
-										robot_status.status = ORIENTATIN;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
+										prepare_orientate(req_in->arg2, req_in->arg3, req_in->arg4);
 										res_out->result = true;  // orientation, is_radian
 										break;
 
 									 case 5: // go to
-										command_waiting = 1;
-										robot_status.status = GOIN_TO;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										robot_status.arguments[3] = req_in->arg5;
+										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, 1, req_in->arg5);
 										res_out->result = true;  // x, y, speed
 										break;
 
@@ -147,30 +102,6 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = true;
 										break;
 
-									 case 7: // Delay on the STM
-										delay(req_in->arg2);
-										res_out->result = (first_forward_recieved)? true: false;
-										break;
-
-									 case 8: // move forward wtih deviation
-										command_waiting = 1;
-										robot_status.status = MOVIN_FORWARD_WITH_DEVIATION;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										res_out->result = true; // distance, deviation, speed
-										break;
-
-									 case 9: // circle curve
-										command_waiting = 1;
-										robot_status.status = CIRCLE_CURVIN;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										robot_status.arguments[3] = req_in->arg5;
-										res_out->result = true;  // target_x, target_y, target_phi, speed
-										break;
-
 									 case 10: // emergency break
 										emergency_break();
 										res_out->result = true;
@@ -181,44 +112,24 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 12: // go to backwards
-										command_waiting = 1;
-										robot_status.status = GOIN_TO_BACKWARDS;
-										robot_status.arguments[0] = req_in->arg2;
-										robot_status.arguments[1] = req_in->arg3;
-										robot_status.arguments[2] = req_in->arg4;
-										robot_status.arguments[3] = req_in->arg5;
+										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, -1, req_in->arg5);
 										res_out->result = true;  // x, y, speed
 										break;
-									 case 13: // go to backwards
-										command_waiting = 1;
-										robot_status.status = BEZIER_CURVIN;
-										robot_status.arguments[0] = req_in->arg2;//x1
-										robot_status.arguments[1] = req_in->arg3;//y1
-										robot_status.arguments[2] = req_in->arg4;//x2
-										robot_status.arguments[3] = req_in->arg5;//y2
-										robot_status.arguments[4] = req_in->arg6;//x3
-										robot_status.arguments[5] = req_in->arg7;//y3
-										robot_status.arguments[6] = req_in->arg8;//speed
-										robot_status.arguments[7] = req_in->arg9;//is_smooth
+									 case 13: // bezier curve
+										prepare_bezier_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5, req_in->arg6, req_in->arg7, req_in->arg8, 1, req_in->arg9);
 										res_out->result = true;  // x, y, speed
 										break;
-									 case 14: // go to backwards
-										command_waiting = 1;
-										robot_status.status = BEZIER_CURVIN_BACKWARDS;
-										robot_status.arguments[0] = req_in->arg2;//x1
-										robot_status.arguments[1] = req_in->arg3;//y1
-										robot_status.arguments[2] = req_in->arg4;//x2
-										robot_status.arguments[3] = req_in->arg5;//y2
-										robot_status.arguments[4] = req_in->arg6;//x3
-										robot_status.arguments[5] = req_in->arg7;//y3
-										robot_status.arguments[6] = req_in->arg8;//speed
-										robot_status.arguments[7] = req_in->arg9;
+									 case 14: // bezier curve backwards
+										prepare_bezier_curve(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg5, req_in->arg6, req_in->arg7, req_in->arg8, -1, req_in->arg9);
 										res_out->result = true;  // x, y, speed
 										break;
-									 case 15: // go to backwards
+									 case 15: // set_position
 										set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
 										res_out->result = true;  // x, y, speed
 										break;
+									 case 16:
+										 res_out->result = ( (is_idle() && !complex_movement && !simple_movement && !command_waiting) || reached_destination )? true: false;
+										 break;
 
 									 default:
 										  res_out->result = false;
@@ -414,63 +325,9 @@ int main(void)
   communication_state = PC;
 
   reset_position();
-  //set_position(200, 400, 0, 0);
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
-
-//  go_to(500, -500, 600, 1, 0);
-//  go_to(400, 0, 700, 1, 0);
-//  go_to(500, 100, 600, -1, 0);
-//  go_to(0, -400, 600, 1, 0);
-//  go_to(0, 0, 600, 1, 0);
-//  orientate(0, 0, 0);
-
-//  control_loop_state = ACTIVATED;
-  //move_forward(-400, 700, 0);
-//  go_to(2100, 0, 1000, 1, 0);
-//  for(int i=0; i<50; i++){
-//	  send_values_to_usart(current_x, current_y, current_phi*100, 0);
-//	  delay(10);
-//  }
-//  control_loop_state = ACTIVATED;
-//  while(1){
-//	  send_values_to_usart(absolute_phi*100, 0, 0, 0);
-//	  delay(10);
-//  }
-
-//  while(1){
-//	  send_values_to_usart(absolute_phi*1000, 0, 0, 0);
-//	  HAL_Delay(10);
-//  }
-//  robot_status.status = ROTATIN;
-//  robot_status.arguments[0] = 90.0;
-//  robot_status.arguments[1] = 0.0;
-//
-//	float x0 = 0.0f;
-//	float y0 = 0.0f;
-//	float x1 = 150.0f;
-//	float y1 = 0.0f;
-//	float x2 = 100.0f;
-//	float y2 = -50.0f;
-//	float x3 = 300.0f;
-//	float y3 = -50.0f;
-//
-//	move_forward(500, 700, 1);
-//	bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1);
-
-//	while(1){
-//		send_values_to_usart(current_x, current_y, current_phi*1000, 0);
-//		delay(10);
-//	}
-//  robot_status.status = GOIN_TO;
-//	robot_status.arguments[0] = 400;
-//	robot_status.arguments[1] = -400;
-//	robot_status.arguments[2] = 600;
-
-//	robot_status.status = MOVIN_FORWARD;
-//	robot_status.arguments[0] = 500;
-//	robot_status.arguments[1] = 700;
 
   /* USER CODE END 2 */
 
@@ -1126,14 +983,6 @@ void executor_function(void *argument)
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1, robot_status.arguments[3]);
-			robot_status.status = IDLE;
-		}
-		else if ( robot_status.status == MOVIN_FORWARD_WITH_DEVIATION){
-			move_forward_with_deviation(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
-			robot_status.status = IDLE;
-		}
-		else if ( robot_status.status == CIRCLE_CURVIN){
-			circle_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3]);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
