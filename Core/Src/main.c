@@ -138,28 +138,13 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 6: // Reset
-										current_speed_R = 0;
-										current_speed_L = 0;
-										previous_speed_R = 0;
-										previous_speed_L = 0;
-										target_speed_R = 0;
-										target_speed_L = 0;
-										current_acceleration_R = 0;
-										current_acceleration_L = 0;
-										previous_speed_calculation_time = 0;
+										control_loop_state = DISACTIVATED;
+										reset_speed_control_variables();
+										reset_position_control_variables();
+										reset_position();
 
-										speed_integral_R = 0;
-										speed_derivative_R = 0;
-										previous_speed_error_R = 0;
-										speed_integral_L = 0;
-										speed_derivative_L = 0;
-										previous_speed_error_L = 0;
-
-										PWM_R = 0;
-										PWM_L = 0;
-										control_loop_state = (control_loop_state == DISACTIVATED)? ACTIVATED : DISACTIVATED;
 										communication_state = RASPBERRY;
-										res_out->result = (control_loop_state == ACTIVATED)? true: false; // activate/deactivate STM
+										res_out->result = true;
 										break;
 
 									 case 7: // Delay on the STM
@@ -1212,8 +1197,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 	if (htim-> Instance == TIM7){
 		if(control_loop_state == DISACTIVATED){
-			//PWM_L = 0;
-			//PWM_R = 0;
+			PWM_L = 0;
+			PWM_R = 0;
 		}else{
 			update_position(skip_position_update);
 			if (control_loop_state == SPEED){
@@ -1223,9 +1208,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 				speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
 				speed_integral_R += error*(tmp/1000000);
-				//speed_integral_R = (speed_integral_R > speed_integral_limit)? speed_integral_limit : (speed_integral_R < -speed_integral_limit)? -speed_integral_limit : speed_integral_R;
-
-				//speed_integral_R = (fabs(error) > 70)? 0: speed_integral_R;
 
 				previous_speed_error_R = error;
 
@@ -1239,9 +1221,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				error = target_speed_L - current_speed_L;
 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
 				speed_integral_L += error*(tmp/1000000);
-				//speed_integral_L = (speed_integral_L > speed_integral_limit)? speed_integral_limit : (speed_integral_L < -speed_integral_limit)? -speed_integral_limit : speed_integral_L;
-
-				//speed_integral_L = (fabs(error) > 70)? 0: speed_integral_L;
 
 				previous_speed_error_L = error;
 				previous_speed_control_time = micros();
