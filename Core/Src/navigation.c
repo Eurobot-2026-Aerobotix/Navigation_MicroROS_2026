@@ -45,7 +45,6 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	while(!is_idle()){
 		delay(10);
 	};
-	delay(200);
 	reset_speed_control_variables();
 	direction_R = 1;
 	direction_L = 1;
@@ -217,7 +216,6 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	while(!is_idle()){
 		delay(10);
 	};
-	delay(200);
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
 	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/10.0 + 10), 10); // high acceleration for small angle and low for large 200 kenet 300
@@ -471,7 +469,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	while(!is_idle()){
 		delay(10);
 	}
-	delay(200);
+	delay(50);
 	if (get_distance_to(x, y) > 2){
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	}
