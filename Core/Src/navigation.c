@@ -291,7 +291,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	// completing the last part of distance separately, so the break happens on point
@@ -317,7 +317,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			break;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	stop_motors();
@@ -411,9 +411,16 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		float radius = get_bezier_radius(t, x0, y0, x1, y1, x2, y2, x3, y3);
 	    speed = direction * calculate_instant_target_speed_R(d, distance);
 
-		float signed_distance = direction * signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
-		//float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) );
-		lane_correction_term = signed_distance * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) );// this coefficient is tunable
+	    float signed_distance = direction * signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
+		float phi_error = get_target_phi(t, x0, y0, x1, y1, x2, y2, x3, y3) - current_phi ;
+		if(phi_error > PI)
+			phi_error -= 2*PI ;
+		else if (phi_error < -PI)
+			phi_error += 2*PI ;
+		float phi_correction_term = direction * (phi_error) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+
+		lane_correction_term = signed_distance * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ) + phi_correction_term;// this coefficient is tunable
+		lane_correction_term = MIN(MAX(lane_correction_term, -0.2), 0.2);
 		if (d < 0.1*d_1 || 1){ // 0.002f;
 			lane_correction_term = 0;
 		}
@@ -435,8 +442,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
 		// TODO lane correction will pose a problem when one wheel is going forwards and the other is going backwards
 		set_target_speeds(speed_R*(1 + lane_correction_term) ,speed_L* (1 - lane_correction_term));
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
-		send_values_to_usart(signed_distance, 0, 0, 0);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		//send_values_to_usart(signed_distance, 0, 0, 0);
 		delay(4);
 	}
 	stop_motors();

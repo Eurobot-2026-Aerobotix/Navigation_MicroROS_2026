@@ -239,6 +239,15 @@ float project_bezier(float px, float py, float x0, float y0, float x1, float y1,
 	return t;
 }
 
+float get_target_phi(float t,float x0, float y0,float x1, float y1,float x2, float y2,float x3, float y3){
+    float mt = 1.0f - t;
+
+    float dx = 3*mt*mt*(x1-x0) + 6*mt*t*(x2-x1) + 3*t*t*(x3-x2);
+    float dy = 3*mt*mt*(y1-y0) + 6*mt*t*(y2-y1) + 3*t*t*(y3-y2);
+
+    return atan2f(dy, dx);
+}
+
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing){
 	driven_wheels_spacing = driven__wheels_spacing;
 	dead_wheels_spacing = dead__wheels_spacing;
