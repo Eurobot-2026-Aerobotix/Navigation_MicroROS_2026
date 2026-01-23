@@ -1019,16 +1019,6 @@ void IMU_update_function(void *argument)
 
 	//set_position(1734.91,2025.58,180,180);
 //	delay(1000);
-	float x0 = 0.0f;
-	float y0 = 0.0f;
-	float x1 = 446.0f;
-	float y1 = 356.0f;
-	float x2 = 435.0f;
-	float y2 = -333.0f;
-	float x3 = 907.0f;
-	float y3 = 0.0f;
-
-	prepare_bezier_curve(x1, y1, x2, y2, x3, y3, 700, 1, 0);
 	delay(10000000);
   }
   /* USER CODE END IMU_update_function */

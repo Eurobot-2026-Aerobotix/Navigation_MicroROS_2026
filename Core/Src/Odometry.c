@@ -105,8 +105,14 @@ float get_angle_to(float x, float y){
 }
 
 float get_bezier_distance(float t ,float x0, float y0,float x1, float y1,float x2 , float y2 ,float x3, float y3){
-    int N = 150 * sqrt(SQR(x3-x0)+SQR(y3-y0)) / 150.0;
     float length = 0.0f;
+    float control_len =hypotf(x1-x0, y1-y0) +hypotf(x2-x1, y2-y1) +hypotf(x3-x2, y3-y2);
+
+	float chord_len = hypotf(x3-x0, y3-y0);
+	float curv = control_len / chord_len;
+	int N = (int)(0.4f * control_len + 25.0f * (curv - 1.0f)); //0.4 wl 25.0 tnjm ttunihom
+	if (N < 20)  N = 20;
+	if (N > 300) N = 300;
 
     for(float i = (t * N); i <= N; i++){
         float t_prev = (float)(i - 1) / N;
