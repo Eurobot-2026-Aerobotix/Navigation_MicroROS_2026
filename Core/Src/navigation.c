@@ -100,6 +100,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
+		if (distance_to_target < 100){
+			reached_destination = 1;
+		}
 
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -129,6 +132,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 
 		if(micros() - phase_two_start_time> 4000000){
 			break;
+		}
+		if (distance_to_target < 100){
+			reached_destination = 1;
 		}
 
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
@@ -288,6 +294,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
+		if ((robot_status.status == ORIENTATIN) && (distance_to_target < 100)){
+			reached_destination = 1;
+		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
@@ -310,7 +319,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
-
+		if ((robot_status.status == ORIENTATIN) && (distance_to_target < 100)){
+			reached_destination = 1;
+		}
 		if(micros() - phase_two_start_time > 2000000){
 			break;
 		}
@@ -319,6 +330,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
 	}
 	stop_motors();
+	reached_destination = (robot_status.status == ORIENTATIN)? 1 : 0;
 	int32_t position_correction = (target_phi - absolute_phi)*dead_wheels_spacing*CPR / ( ( (wheel_diameter_R + wheel_diameter_L) / 2 )*PI) / 2.0;
 	set_target_encoder_counts(encoder_count_R + position_correction, encoder_count_L - position_correction ); // the second part is there to fix any last minute fuck ups, concerning phi
 	wheel_state_R = DEAD_STOP;
@@ -332,7 +344,7 @@ int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	while(!is_idle()){
 		delay(10);
 	};
-	if (fabs(orientation - current_phi) > deg_to_rad(0.1) ){
+	if (fabs(orientation - current_phi) > deg_to_rad(0.5) ){
 		float angle = orientation - current_phi;
 		if (angle > PI){
 			angle -= 2*PI;
@@ -438,6 +450,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		}
 
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
+		if (distance_to_target < 100){
+			reached_destination = 1;
+		}
 		set_target_speeds(speed_R*(1 + SGN(speed_R)* lane_correction_term) ,speed_L* (1 - SGN(speed_L)*lane_correction_term));
 		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		send_values_to_usart(current_x, current_y, current_phi, 0);
@@ -545,4 +560,27 @@ void reset_speed_control_variables(){
 void apply_smooth_or_not(int8_t is_smooth){
 	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_fast;
 	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_fast;
+}
+void reset_navigation_vars(){
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
+	trajectory = STRAIGHT;
+	control_loop_state = DISACTIVATED;
+	ramping_acceleration = 10;
+	acc_linearization_coef = 12;
+	breaking_acceleration = -2;
+	deceleration_offset = 40;
+	speed_offset = 150;
+	deceleration_offset_fast = 40;
+	speed_offset_fast = 150;
+	deceleration_offset_smooth = 30;
+	speed_offset_smooth = 80;
+	rotating_speed = 650;
+	filtered_target_speed_R = 0;
+	filtered_target_speed_L = 0;
+	speed_filter = 0.95;
+	complex_movement = 0;
+	simple_movement = 0;
+	command_waiting = 0;
+	reached_destination = 1;
 }

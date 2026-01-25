@@ -334,3 +334,23 @@ void get_position(float* position){
 		position[2] = current_phi;
 	}
 }
+
+void reset_odometry_vars(){
+	current_x = 0;
+	current_y = 0;
+	current_phi = 0;
+	absolute_phi = 0;
+	inner_plane_x = 0;
+	inner_plane_y = 0;
+	inner_plane_phi = 0;
+	inner_plane_absolute_phi = 0;
+	skip_position_update = 0;
+	block_get_position = 0;
+	is_inside_inner_plane = 0;
+	imu_yaw_offset = 0;
+	current_imu_yaw;
+	absolute_imu_yaw = 0;
+	current_imu_gyro_z;
+	imu_yaw_new = 0;
+	imu_gyro_z_new = 0;
+}

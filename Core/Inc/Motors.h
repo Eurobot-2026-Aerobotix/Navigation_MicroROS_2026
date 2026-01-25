@@ -95,5 +95,6 @@ void send_values_to_usart(float value1, float value2, float value3, float value4
 int32_t micros();
 void delay(int ms);
 void reset_position_control_variables();
+void reset_motors_vars();
 
 #endif /* __MOTORS_H */

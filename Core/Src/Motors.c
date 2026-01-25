@@ -182,3 +182,39 @@ void reset_position_control_variables(){
 	previous_position_error_L = 0;
 	previous_position_error_R = 0;
 }
+void reset_motors_vars(){
+	current_speed_R = 0;
+	current_speed_L = 0;
+	previous_speed_R = 0;
+	previous_speed_L = 0;
+	target_speed_R = 0;
+	target_speed_L = 0;
+	current_acceleration_R = 0;
+	current_acceleration_L = 0;
+	previous_speed_calculation_time = 0;
+	encoder_count_R = 0;
+	encoder_count_L = 0;
+	previous_encoder_timer_CNT_R = micros() - 999;
+	previous_encoder_timer_CNT_L = micros() - 999;
+	previous_encoder_count_R = 0;
+	previous_encoder_count_L = 0;
+	debugger = 0;
+	debugger_2 = 0.0f;
+	previous_speed_control_time = 0;
+	speed_integral_R = 0;
+	speed_derivative_R = 0;
+	previous_speed_error_R = 0;
+	speed_integral_L = 0;
+	speed_derivative_L = 0;
+	previous_speed_error_L = 0;
+	previous_position_error_R = 0;
+	previous_position_error_L = 0;
+	previous_position_control_time = 0;
+	position_max_response = 600;
+	position_integral_R = 0;
+	position_derivative_R = 0;
+	position_integral_L = 0;
+	position_derivative_L = 0;
+	target_encoder_count_R = 0;
+	target_encoder_count_L = 0;
+}

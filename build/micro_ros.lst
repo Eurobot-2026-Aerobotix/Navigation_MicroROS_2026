@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
    3:Core/Src/micro_ros.c ****  *
    4:Core/Src/micro_ros.c ****  *  Created on: Jan 16, 2026
    5:Core/Src/micro_ros.c ****  *      Author: aminebensaid66
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 2
 
 
    6:Core/Src/micro_ros.c ****  */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
   71              	.LVL1:
   72              	.L2:
   34:Core/Src/micro_ros.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 3
 
 
   35:Core/Src/micro_ros.c ****   ret = rclc_node_init_default(&node, "cubemx_node", "", &support);
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
   84              		.loc 1 35 3 is_stmt 1 view .LVU8
   35:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
   85              		.loc 1 35 9 is_stmt 0 view .LVU9
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 4
 
 
   86 0018 1F4B     		ldr	r3, .L15+4
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
   50:Core/Src/micro_ros.c **** 
  128              		.loc 1 50 3 is_stmt 1 view .LVU22
   50:Core/Src/micro_ros.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 5
 
 
  129              		.loc 1 50 6 is_stmt 0 view .LVU23
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  169 006e 1448     		ldr	r0, .L15+44
  170              	.LVL19:
   64:Core/Src/micro_ros.c ****   if (ret != RCL_RET_OK) return false;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 6
 
 
  171              		.loc 1 64 9 view .LVU38
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  212              		.align	2
  213              	.L15:
  214 0094 00000000 		.word	allocator
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 7
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 7
 
 
  215 0098 00000000 		.word	support
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  265 000e B3F1FF3F 		cmp	r3, #-1
  266 0012 08BF     		it	eq
  267 0014 B2F1FF3F 		cmpeq	r2, #-1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 8
 
 
  268 0018 0ED0     		beq	.L21
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  307              	.LBE3:
   80:Core/Src/micro_ros.c ****         static volatile int64_t init = -1;
  308              		.loc 1 80 8 is_stmt 1 view .LVU70
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 9
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 9
 
 
  309              		.loc 1 91 1 is_stmt 0 view .LVU71
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  357 001a 2046     		mov	r0, r4
  358 001c FFF7FEFF 		bl	rcl_node_fini
  359              	.LVL38:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 10
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 10
 
 
  100:Core/Src/micro_ros.c ****   ret = rclc_support_fini(&support);
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  411      00000000 
  412              		.global	service
  413              		.section	.bss.service,"aw",%nobits
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 11
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 11
 
 
  414              		.align	2
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  475              		.file 7 "libmicroros/uros_include/rmw/rmw/localhost.h"
  476              		.file 8 "libmicroros/uros_include/rmw/rmw/ret_types.h"
  477              		.file 9 "libmicroros/uros_include/rmw/rmw/security_options.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 12
 
 
  478              		.file 10 "libmicroros/uros_include/rmw/rmw/init_options.h"
@@ -707,45 +707,45 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 1
  521              		.file 53 "libmicroros/uros_include/geometry_msgs/geometry_msgs/msg/detail/vector3__type_support.h"
  522              		.file 54 "libmicroros/uros_include/rclc/node.h"
  523              		.file 55 "libmicroros/uros_include/uxr/client/util/time.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\ccFwLE19.s 			page 13
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 micro_ros.c
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:21     .rodata.create_rcl_entities.str1.4:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:37     .text.create_rcl_entities:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:43     .text.create_rcl_entities:00000000 create_rcl_entities
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:214    .text.create_rcl_entities:00000094 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:452    .bss.allocator:00000000 allocator
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:459    .bss.support:00000000 support
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:466    .bss.node:00000000 node
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:445    .bss.pose_publisher:00000000 pose_publisher
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:438    .bss.debugger_publisher:00000000 debugger_publisher
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:417    .bss.service:00000000 service
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:410    .bss.executor:00000000 executor
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:396    .bss.response_msg:00000000 response_msg
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:403    .bss.request_msg:00000000 request_msg
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:233    .text.execute_every_n_ms:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:239    .text.execute_every_n_ms:00000000 execute_every_n_ms
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:314    .text.execute_every_n_ms:00000050 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:388    .data.init.0:00000000 init.0
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:319    .text.destroy_rcl_entities:00000000 $t
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:325    .text.destroy_rcl_entities:00000000 destroy_rcl_entities
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:376    .text.destroy_rcl_entities:00000034 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:385    .data.init.0:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:393    .bss.response_msg:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:400    .bss.request_msg:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:407    .bss.executor:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:414    .bss.service:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:424    .bss.bool_msg:00000000 bool_msg
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:421    .bss.bool_msg:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:431    .bss.bool_subscriber:00000000 bool_subscriber
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:428    .bss.bool_subscriber:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:435    .bss.debugger_publisher:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:442    .bss.pose_publisher:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:449    .bss.allocator:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:456    .bss.support:00000000 $d
-C:\Users\monji\AppData\Local\Temp\ccFwLE19.s:463    .bss.node:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:21     .rodata.create_rcl_entities.str1.4:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:37     .text.create_rcl_entities:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:43     .text.create_rcl_entities:00000000 create_rcl_entities
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:214    .text.create_rcl_entities:00000094 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:452    .bss.allocator:00000000 allocator
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:459    .bss.support:00000000 support
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:466    .bss.node:00000000 node
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:445    .bss.pose_publisher:00000000 pose_publisher
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:438    .bss.debugger_publisher:00000000 debugger_publisher
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:417    .bss.service:00000000 service
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:410    .bss.executor:00000000 executor
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:396    .bss.response_msg:00000000 response_msg
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:403    .bss.request_msg:00000000 request_msg
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:233    .text.execute_every_n_ms:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:239    .text.execute_every_n_ms:00000000 execute_every_n_ms
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:314    .text.execute_every_n_ms:00000050 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:388    .data.init.0:00000000 init.0
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:319    .text.destroy_rcl_entities:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:325    .text.destroy_rcl_entities:00000000 destroy_rcl_entities
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:376    .text.destroy_rcl_entities:00000034 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:385    .data.init.0:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:393    .bss.response_msg:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:400    .bss.request_msg:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:407    .bss.executor:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:414    .bss.service:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:424    .bss.bool_msg:00000000 bool_msg
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:421    .bss.bool_msg:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:431    .bss.bool_subscriber:00000000 bool_subscriber
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:428    .bss.bool_subscriber:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:435    .bss.debugger_publisher:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:442    .bss.pose_publisher:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:449    .bss.allocator:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:456    .bss.support:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccfCJbWv.s:463    .bss.node:00000000 $d
 
 UNDEFINED SYMBOLS
 rclc_support_init

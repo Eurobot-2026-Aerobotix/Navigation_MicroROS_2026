@@ -93,10 +93,46 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 6: // Reset
+										reset_motors_vars();
+										reset_odometry_vars();
+										reset_navigation_vars();
+										current_speed_R = 0;
+										current_speed_L = 0;
+										previous_speed_R = 0;
+										previous_speed_L = 0;
+										target_speed_R = 0;
+										target_speed_L = 0;
+										current_acceleration_R = 0;
+										current_acceleration_L = 0;
+										previous_speed_calculation_time = 0;
+
+										speed_integral_R = 0;
+										speed_derivative_R = 0;
+										previous_speed_error_R = 0;
+										speed_integral_L = 0;
+										speed_derivative_L = 0;
+										previous_speed_error_L = 0;
+										current_x = 0;
+										current_y = 0;
+										current_phi = 0;
+										absolute_phi = 0;
+
+										PWM_R = 0;
+										PWM_L = 0;
+										current_imu_yaw = 0;
+										current_imu_gyro_z = 0;
+										absolute_imu_yaw = 0;
+
 										control_loop_state = DISACTIVATED;
 										reset_speed_control_variables();
 										reset_position_control_variables();
 										reset_position();
+
+										communication_state = PC;
+
+										robot_status.status = IDLE;
+										set_target_speeds(0, 0);
+										control_loop_state = SPEED;
 
 										communication_state = RASPBERRY;
 										res_out->result = true;
@@ -328,7 +364,8 @@ int main(void)
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
-
+  set_target_speeds(0, 0);
+  control_loop_state = SPEED;
   /* USER CODE END 2 */
 
   /* Init scheduler */

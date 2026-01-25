@@ -60,5 +60,6 @@ float convert_phi_to_inner(float phi);
 float convert_phi_to_original(float phi);
 float normalize_angle(float angle);
 void get_position(float* position);
+void reset_odometry_vars();
 
 #endif /* INC_ODOMETRY_H_ */
