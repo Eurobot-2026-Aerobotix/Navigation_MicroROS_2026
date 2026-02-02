@@ -309,9 +309,9 @@ int main(void)
   setup_motor_channels(&htim1, TIM_CHANNEL_4, TIM_CHANNEL_3, TIM_CHANNEL_2, TIM_CHANNEL_1);
   setup_encoder_timers(&htim3, &htim4, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(61.059052445471550790520572783317, 61.079122136770798770650177917974);
+  setup_wheel_diameters(63.921213268346428155071294487762, 64.012981753372459963017384004631);
 
-  setup_wheels_spacing(188.5, 283.7376567091892070453727637106);
+  setup_wheels_spacing(188.5, 290.68264595249647942421246603857);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 805, 835, -805, -835);
 
@@ -1056,7 +1056,16 @@ void IMU_update_function(void *argument)
 
 	//set_position(1734.91,2025.58,180,180);
 //	delay(1000);
-	delay(10000000);
+//	prepare_go_to(500, 0, 1100, 1, 0);
+//	delay(6000);
+//	prepare_go_to(500, 500, 1100, 1, 0);
+//	delay(6000);
+//	prepare_go_to(0, 500, 1100, 1, 0);
+//	delay(6000);
+//	prepare_go_to(0, 0, 1100, 1, 0);
+//	prepare_orientate(180, 0, 0);
+	delay(60000000);
+
   }
   /* USER CODE END IMU_update_function */
 }

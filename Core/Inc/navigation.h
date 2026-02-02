@@ -62,6 +62,8 @@ extern float deceleration_offset;
 extern float deceleration_offset_fast;
 extern float speed_offset_fast;
 extern float deceleration_offset_smooth;
+extern float breaking_acceleration_speed;
+extern float breaking_acceleration_smooth;
 extern float speed_offset_smooth;
 extern float rotating_speed;
 extern int8_t direction_R; // 1 if going forward, -1 if backwards

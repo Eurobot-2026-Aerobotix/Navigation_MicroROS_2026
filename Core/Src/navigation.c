@@ -20,6 +20,8 @@ float deceleration_offset_fast = 40;
 float speed_offset_fast = 150;
 float deceleration_offset_smooth = 30;
 float speed_offset_smooth = 80;
+float breaking_acceleration_speed = -3;
+float breaking_acceleration_smooth = -2;
 float rotating_speed = 650;
 int8_t direction_R;
 int8_t direction_L;
@@ -40,6 +42,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	apply_smooth_or_not(is_smooth);
 	float direction = SGN(distance);
 	distance = fabs(distance);
+	if (distance < 900){
+		breaking_acceleration = -2;
+	}
 	speed = fabs(speed);
 	simple_movement = 1;
 	while(!is_idle()){
@@ -92,7 +97,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 
 		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_y - starting_y, target_x - starting_x) );
 		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
-		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 1 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 3 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)) + phi_correction_term; // the first coefficient is tunable
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.1), 0.1);
 
@@ -104,7 +109,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			reached_destination = 1;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -137,7 +142,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			reached_destination = 1;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	reached_destination = 1;
@@ -364,7 +369,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	float y0 = current_y;
 
 	float distance =  get_bezier_distance(0, x0, y0, x1, y1, x2, y2, x3, y3);
-
+	if (distance < 900){
+		breaking_acceleration = -2;
+	}
 	float d_1 = speed/ramping_acceleration;
 	float d_2 = speed/breaking_acceleration + distance + deceleration_offset;
 
@@ -560,6 +567,7 @@ void reset_speed_control_variables(){
 void apply_smooth_or_not(int8_t is_smooth){
 	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_fast;
 	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_fast;
+	breaking_acceleration = (is_smooth)? breaking_acceleration_smooth : breaking_acceleration_speed;
 }
 void reset_navigation_vars(){
 	wheel_state_R = DEAD_STOP;
