@@ -75,6 +75,50 @@ float kiP_L = 90;
 
 int step = 0;
 
+void reset_everything(){
+	reset_motors_vars();
+	reset_odometry_vars();
+	reset_navigation_vars();
+	current_speed_R = 0;
+	current_speed_L = 0;
+	previous_speed_R = 0;
+	previous_speed_L = 0;
+	target_speed_R = 0;
+	target_speed_L = 0;
+	current_acceleration_R = 0;
+	current_acceleration_L = 0;
+	previous_speed_calculation_time = 0;
+
+	speed_integral_R = 0;
+	speed_derivative_R = 0;
+	previous_speed_error_R = 0;
+	speed_integral_L = 0;
+	speed_derivative_L = 0;
+	previous_speed_error_L = 0;
+	current_x = 0;
+	current_y = 0;
+	current_phi = 0;
+	absolute_phi = 0;
+
+	PWM_R = 0;
+	PWM_L = 0;
+	current_imu_yaw = 0;
+	current_imu_gyro_z = 0;
+	absolute_imu_yaw = 0;
+
+	control_loop_state = DISACTIVATED;
+	reset_speed_control_variables();
+	reset_position_control_variables();
+	reset_position();
+
+	communication_state = PC;
+
+	robot_status.status = IDLE;
+	set_target_speeds(0, 0);
+	control_loop_state = SPEED;
+
+	communication_state = RASPBERRY;
+}
 
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
@@ -93,48 +137,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 6: // Reset
-										reset_motors_vars();
-										reset_odometry_vars();
-										reset_navigation_vars();
-										current_speed_R = 0;
-										current_speed_L = 0;
-										previous_speed_R = 0;
-										previous_speed_L = 0;
-										target_speed_R = 0;
-										target_speed_L = 0;
-										current_acceleration_R = 0;
-										current_acceleration_L = 0;
-										previous_speed_calculation_time = 0;
-
-										speed_integral_R = 0;
-										speed_derivative_R = 0;
-										previous_speed_error_R = 0;
-										speed_integral_L = 0;
-										speed_derivative_L = 0;
-										previous_speed_error_L = 0;
-										current_x = 0;
-										current_y = 0;
-										current_phi = 0;
-										absolute_phi = 0;
-
-										PWM_R = 0;
-										PWM_L = 0;
-										current_imu_yaw = 0;
-										current_imu_gyro_z = 0;
-										absolute_imu_yaw = 0;
-
-										control_loop_state = DISACTIVATED;
-										reset_speed_control_variables();
-										reset_position_control_variables();
-										reset_position();
-
-										communication_state = PC;
-
-										robot_status.status = IDLE;
-										set_target_speeds(0, 0);
-										control_loop_state = SPEED;
-
-										communication_state = RASPBERRY;
+										reset_everything();
 										res_out->result = true;
 										break;
 
@@ -166,7 +169,11 @@ void service_callback(const void *request_msg, void *response_msg) {
 									 case 16:
 										 res_out->result = ( (is_idle() && !complex_movement && !simple_movement && !command_waiting) || reached_destination )? true: false;
 										 break;
-
+									 case 17://fix x and y
+										 control_loop_state = DISACTIVATED;
+										 float saved_phi = current_phi;
+										 reset_everything();
+										 set_position(req_in->arg2, req_in->arg3, saved_phi, saved_phi);
 									 default:
 										  res_out->result = false;
 										  break;
@@ -1053,19 +1060,30 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
+    float x1 = 1576.0f;
+    float y1 = 1883.0f;
+    float x2 = 1602.0f;
+    float y2 = 1857.0f;
+    float x3 = 1400.0f;
+    float y3 = 1850.0f;
 
-	//set_position(1734.91,2025.58,180,180);
-//	delay(1000);
-//	prepare_go_to(500, 0, 1100, 1, 0);
+	set_position(1600, 1900, 180, 180);
+	delay(1000);
+	prepare_bezier_curve(x1, y1, x2, y2, x3, y3, 800, 1, 0);
+	delay(7000);
+//	prepare_go_to(1000, 600, 1100, 1, 0);
 //	delay(6000);
-//	prepare_go_to(500, 500, 1100, 1, 0);
+//	prepare_go_to(1000, 1000, 1100, 1, 0);
 //	delay(6000);
-//	prepare_go_to(0, 500, 1100, 1, 0);
+////	prepare_go_to(0, 500, 1100, 1, 0);
 //	delay(6000);
 //	prepare_go_to(0, 0, 1100, 1, 0);
-//	prepare_orientate(180, 0, 0);
-	delay(60000000);
-
+	prepare_orientate(0, 0, 0);
+	delay(7000);
+    prepare_go_to(1600, 1900, 1100, 1, 0);
+    delay(7000);
+    prepare_orientate(0, 0, 0);
+    delay(60000000);
   }
   /* USER CODE END IMU_update_function */
 }
