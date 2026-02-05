@@ -34,8 +34,13 @@ extern float absolute_imu_yaw;
 extern float current_imu_gyro_z;
 extern int8_t imu_yaw_new;
 extern int8_t imu_gyro_z_new;
+extern float front_aruco_relative_x;
+extern float front_aruco_relative_y;
+extern float back_aruco_relative_x;
+extern float back_aruco_relative_y;
 
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
+void setup_aruco_positions(float front_x, float front_y, float back_x, float back_y);
 void update_position(int8_t skip);
 void reset_position();
 void set_position(float current__x, float current__y, float current__phi, float absolute__phi);

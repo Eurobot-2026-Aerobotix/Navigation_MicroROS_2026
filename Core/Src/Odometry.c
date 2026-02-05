@@ -26,6 +26,10 @@ float absolute_imu_yaw = 0;
 float current_imu_gyro_z;
 int8_t imu_yaw_new = 0;
 int8_t imu_gyro_z_new = 0;
+float front_aruco_relative_x = 0;
+float front_aruco_relative_y = 0;
+float back_aruco_relative_x = 0;
+float back_aruco_relative_y = 0;
 
 float normalize_angle(float angle){
 	float a = angle;
@@ -103,7 +107,12 @@ float get_arc_distance_to(float target_point__x, float target_point__y, float ce
 float get_angle_to(float x, float y){
 	return atan2(y - current_y, x - current_x);
 }
-
+void setup_aruco_positions(float front_x, float front_y, float back_x, float back_y){
+	front_aruco_relative_x = front_x;
+	front_aruco_relative_y = front_y;
+	back_aruco_relative_x = back_x;
+	back_aruco_relative_y = back_y;
+}
 float get_bezier_distance(float t ,float x0, float y0,float x1, float y1,float x2 , float y2 ,float x3, float y3){
     float length = 0.0f;
     float control_len =hypotf(x1-x0, y1-y0) +hypotf(x2-x1, y2-y1) +hypotf(x3-x2, y3-y2);

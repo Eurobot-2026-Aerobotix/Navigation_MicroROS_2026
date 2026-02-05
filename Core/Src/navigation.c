@@ -408,8 +408,6 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	float lane_correction_term;
 	float t = 0;
 	float speed_R , speed_L;
-	float radius_dependent_speed = 0;
-
 
 	while (distance_to_target >= 1.0f && t < 1.0000f){
 		d = distance - distance_to_target;
@@ -428,8 +426,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 		float radius = get_bezier_radius(t, x0, y0, x1, y1, x2, y2, x3, y3);
 
-		radius_dependent_speed = 700000;
-	    speed = direction * MIN(calculate_instant_target_speed_R(d, distance), radius_dependent_speed);
+	    speed = direction * calculate_instant_target_speed_R(d, distance);
 
 	    float signed_distance =  signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
 		float phi_error = get_target_phi(t, x0, y0, x1, y1, x2, y2, x3, y3) + (PI*(1-direction) )/2 - current_phi ;

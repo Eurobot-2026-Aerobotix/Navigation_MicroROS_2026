@@ -171,9 +171,26 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 break;
 									 case 17://fix x and y
 										 control_loop_state = DISACTIVATED;
-										 float saved_phi = current_phi;
+										 float front1_back2 = req_in->arg2; // should be one if front aruco detected, 2 if back is detected, 0 if none,
+										 float front_aruco_x = req_in->arg3;
+										 float front_aruco_y = req_in->arg4;
+										 float back_aruco_x = req_in->arg5;
+										 float back_aruco_y = req_in->arg6;
+										 float backup_x = req_in->arg7;
+										 float backup_y = req_in->arg8;
+										 float robot_phi = current_phi;
 										 reset_everything();
-										 set_position(req_in->arg2, req_in->arg3, saved_phi, saved_phi);
+										 if (!front1_back2){
+											 set_position(backup_x, backup_y, robot_phi, robot_phi);
+										 }else if (front1_back2 == 1){
+											 float x = front_aruco_x + front_aruco_relative_y*sin(robot_phi) - front_aruco_relative_x*cos(robot_phi);
+											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_y*cos(robot_phi);
+											 set_position(x, y, robot_phi, robot_phi);
+										 }else{
+											 float x = back_aruco_x + back_aruco_relative_y*sin(robot_phi) - back_aruco_relative_x*cos(robot_phi);
+											 float y = back_aruco_y - back_aruco_relative_x*sin(robot_phi) - back_aruco_relative_y*cos(robot_phi);
+											 set_position(x, y, robot_phi, robot_phi);
+										 }
 									 default:
 										  res_out->result = false;
 										  break;
@@ -319,6 +336,8 @@ int main(void)
   setup_wheel_diameters(63.921213268346428155071294487762, 64.012981753372459963017384004631);
 
   setup_wheels_spacing(188.5, 290.68264595249647942421246603857);
+
+  setup_aruco_positions(61, 96.85, -76.9, -97.35);
   //setup_wheels_spacing(188.5, 342.5);
   setup_PWM_min_max(4499, 805, 835, -805, -835);
 
@@ -1060,29 +1079,29 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
-    float x1 = 1576.0f;
-    float y1 = 1883.0f;
-    float x2 = 1602.0f;
-    float y2 = 1857.0f;
-    float x3 = 1400.0f;
-    float y3 = 1850.0f;
-
-	set_position(1600, 1900, 180, 180);
-	delay(1000);
-	prepare_bezier_curve(x1, y1, x2, y2, x3, y3, 800, 1, 0);
-	delay(7000);
+//  float x1 = 1576.0f;
+//  float y1 = 1883.0f;
+//  float x2 = 1602.0f;
+//  float y2 = 1857.0f;
+//  float x3 = 1400.0f;
+//  float y3 = 1850.0f;
+//
+//	set_position(1600, 1900, 180, 180);
+//	delay(1000);
+//	prepare_bezier_curve(x1, y1, x2, y2, x3, y3, 800, 1, 0);
+//	delay(7000);
 //	prepare_go_to(1000, 600, 1100, 1, 0);
 //	delay(6000);
 //	prepare_go_to(1000, 1000, 1100, 1, 0);
 //	delay(6000);
-////	prepare_go_to(0, 500, 1100, 1, 0);
+//	prepare_go_to(0, 500, 1100, 1, 0);
 //	delay(6000);
 //	prepare_go_to(0, 0, 1100, 1, 0);
-	prepare_orientate(0, 0, 0);
-	delay(7000);
-    prepare_go_to(1600, 1900, 1100, 1, 0);
-    delay(7000);
-    prepare_orientate(0, 0, 0);
+//	prepare_orientate(0, 0, 0);
+//	delay(7000);
+//  prepare_go_to(1600, 1900, 1100, 1, 0);
+//  delay(7000);
+//  prepare_orientate(0, 0, 0);
     delay(60000000);
   }
   /* USER CODE END IMU_update_function */
@@ -1139,7 +1158,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}else if (control_loop_state == POSITION){
 				float tmp = (micros() - previous_position_control_time);
 				// right motor position control
-				float error = (target_encoder_count_R - encoder_count_R)/3.6; // it was 1000ticks encoders but now it is 3600, i don't wanna tune it again
+				float error = (target_encoder_count_R - encoder_count_R)/3; // it was 1000ticks encoders but now it is 3600, i don't wanna tune it again
 
 				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
 
@@ -1153,7 +1172,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(tmp/1000000)) : position_integral_R;
 
 				// left motor position control
-				error = (target_encoder_count_L - encoder_count_L)/3.6;
+				error = (target_encoder_count_L - encoder_count_L)/3;
 
 				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + error*(tmp/1000000) : 0;
