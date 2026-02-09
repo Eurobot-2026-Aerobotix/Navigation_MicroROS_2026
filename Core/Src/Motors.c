@@ -51,6 +51,7 @@ float previous_position_error_R = 0;
 float previous_position_error_L = 0;
 int32_t previous_position_control_time = 0;
 float position_max_response = 600;
+float default_position_max_response = 600;
 float position_integral_R = 0;
 float position_derivative_R = 0;
 float position_integral_L = 0;

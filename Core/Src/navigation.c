@@ -108,6 +108,12 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		if (distance_to_target < 100){
 			reached_destination = 1;
 		}
+		if (distance_to_target < 300){
+			//control_loop_state = ACTIVATED;
+//			set_target_speeds(0, 0);
+//			return(0);
+			emergency_break();
+		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -141,7 +147,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		if (distance_to_target < 100){
 			reached_destination = 1;
 		}
-
+		if (wheel_state_R == EMERGENCY_BREAK){
+			return 0;
+		}
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
@@ -327,6 +335,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		if ((robot_status.status == ORIENTATIN) && (distance_to_target < 100)){
 			reached_destination = 1;
 		}
+		if (wheel_state_R == EMERGENCY_BREAK){
+			return 0;
+		}
 		if(micros() - phase_two_start_time > 2000000){
 			break;
 		}
@@ -384,6 +395,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	}
 
 	orientate(atan2(y1-y0, x1-x0) + PI*(-direction+1)/2, 1, 0);
+	if(wheel_state_L == EMERGENCY_BREAK){
+		return 0;
+	}
 	apply_smooth_or_not(is_smooth);
 	simple_movement = 1;
 
@@ -487,7 +501,9 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 		delay(10);
 	}
 	orientate( normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 ), 1 , 0);
-
+	if(wheel_state_L == EMERGENCY_BREAK){
+		return 0;
+	}
 	while(!is_idle()){
 		delay(10);
 	}
@@ -528,11 +544,39 @@ void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	robot_status.arguments[1] = is_radian;
 	robot_status.arguments[2] = is_smooth;
 }
+void prepare_emergency_break(){
+	reached_destination = 0;
+	command_waiting = 1;
+	robot_status.status = EMERGENCY;
+}
 void emergency_break(){
+	complex_movement = 1;
+	int saved_encoder_count_R = encoder_count_R;
+	int saved_encoder_count_L = encoder_count_L;
+	control_loop_state = ACTIVATED;
+	PWM_L = 0;
+	PWM_R = 0;
+	delay(150);
 	wheel_state_R = EMERGENCY_BREAK;
 	wheel_state_L = EMERGENCY_BREAK;
+	int speed_sign_R = SGN(current_speed_R);
+	int speed_sign_L = SGN(current_speed_L);
+	position_max_response = PWM_max*0.5;
+	set_target_encoder_counts(encoder_count_R - speed_sign_R * 1500, encoder_count_L - speed_sign_L * 1500);
+	int right_stopped = 0;
+	int left_stopped = 0;
+	while((!right_stopped) || (!left_stopped)){
+		delay(10);
+		if (SGN(current_speed_R) != speed_sign_R || fabs(current_speed_R) < 10){
+			right_stopped = 1;
+		}
+		if (SGN(current_speed_L) != speed_sign_L|| fabs(current_speed_L) < 10){
+			left_stopped = 1;
+		}
+	}
+	position_max_response = default_position_max_response;
+	set_target_encoder_counts(saved_encoder_count_R, saved_encoder_count_L);
 	complex_movement = 0;
-	set_target_encoder_counts(encoder_count_R, encoder_count_L);
 }
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){
 	reset_position_control_variables();
@@ -568,6 +612,7 @@ void apply_smooth_or_not(int8_t is_smooth){
 	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_fast;
 	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_fast;
 	breaking_acceleration = (is_smooth)? breaking_acceleration_smooth : breaking_acceleration_speed;
+	position_max_response = default_position_max_response;
 }
 void reset_navigation_vars(){
 	wheel_state_R = DEAD_STOP;

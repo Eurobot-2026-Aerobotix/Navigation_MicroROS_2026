@@ -73,6 +73,7 @@ extern float previous_position_error_R;
 extern float previous_position_error_L;
 extern int32_t previous_position_control_time;
 extern float position_max_response;
+extern float default_position_max_response;
 extern float position_integral_R;
 extern float position_derivative_R;
 extern float position_integral_L;

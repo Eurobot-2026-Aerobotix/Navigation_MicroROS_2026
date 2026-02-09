@@ -142,7 +142,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 10: // emergency break
-										emergency_break();
+										prepare_emergency_break();
 										res_out->result = true;
 										break;
 
@@ -174,10 +174,10 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 float front1_back2 = req_in->arg2; // should be one if front aruco detected, 2 if back is detected, 0 if none,
 										 float front_aruco_x = req_in->arg3;
 										 float front_aruco_y = req_in->arg4;
-										 float back_aruco_x = req_in->arg5;
-										 float back_aruco_y = req_in->arg6;
-										 float backup_x = req_in->arg7;
-										 float backup_y = req_in->arg8;
+										 float back_aruco_x = req_in->arg3;
+										 float back_aruco_y = req_in->arg4;
+										 float backup_x = req_in->arg3;
+										 float backup_y = req_in->arg4;
 										 float robot_phi = current_phi;
 										 reset_everything();
 										 if (!front1_back2){
@@ -191,6 +191,8 @@ void service_callback(const void *request_msg, void *response_msg) {
 											 float y = back_aruco_y - back_aruco_relative_x*sin(robot_phi) - back_aruco_relative_y*cos(robot_phi);
 											 set_position(x, y, robot_phi, robot_phi);
 										 }
+										 res_out->result = true;
+										 break;
 									 default:
 										  res_out->result = false;
 										  break;
@@ -1056,6 +1058,10 @@ void executor_function(void *argument)
 			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
 			robot_status.status = IDLE;
 		}
+		else if ( robot_status.status == EMERGENCY){
+			emergency_break();
+			robot_status.status = IDLE;
+		}
 		command_waiting = 0;
 	}
     osDelay(10);
@@ -1079,29 +1085,9 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
-//  float x1 = 1576.0f;
-//  float y1 = 1883.0f;
-//  float x2 = 1602.0f;
-//  float y2 = 1857.0f;
-//  float x3 = 1400.0f;
-//  float y3 = 1850.0f;
-//
-//	set_position(1600, 1900, 180, 180);
-//	delay(1000);
-//	prepare_bezier_curve(x1, y1, x2, y2, x3, y3, 800, 1, 0);
-//	delay(7000);
-//	prepare_go_to(1000, 600, 1100, 1, 0);
-//	delay(6000);
-//	prepare_go_to(1000, 1000, 1100, 1, 0);
-//	delay(6000);
-//	prepare_go_to(0, 500, 1100, 1, 0);
-//	delay(6000);
-//	prepare_go_to(0, 0, 1100, 1, 0);
-//	prepare_orientate(0, 0, 0);
-//	delay(7000);
-//  prepare_go_to(1600, 1900, 1100, 1, 0);
-//  delay(7000);
-//  prepare_orientate(0, 0, 0);
+
+//	prepare_go_to(1000, 0, 1100, 1, 0);
+
     delay(60000000);
   }
   /* USER CODE END IMU_update_function */
