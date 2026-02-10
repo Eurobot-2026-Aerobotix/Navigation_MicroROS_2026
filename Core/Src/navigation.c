@@ -37,6 +37,7 @@ int simple_movement = 0;
 
 int8_t command_waiting = 0;
 int8_t reached_destination = 1;
+int command_history = 0;
 
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
 	apply_smooth_or_not(is_smooth);
@@ -93,6 +94,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			simple_movement = 0;
+			reached_destination = 1;
+			complex_movement = 0;
 			return 0;
 		}
 
@@ -144,6 +148,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			simple_movement = 0;
+			reached_destination = 1;
+			complex_movement = 0;
 			return 0;
 		}
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
@@ -288,6 +295,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			simple_movement = 0;
+			reached_destination =  1;
+			complex_movement = 0;
 			return 0;
 		}
 
@@ -334,6 +344,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			simple_movement = 0;
+			reached_destination =  1;
+			complex_movement = 0;
 			return 0;
 		}
 		if(micros() - phase_two_start_time > 2000000){
@@ -394,6 +407,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 	orientate(atan2(y1-y0, x1-x0) + PI*(-direction+1)/2, 1, 0);
 	if(wheel_state_L == EMERGENCY_BREAK){
+		complex_movement = 0;
+		simple_movement = 0;
+		reached_destination = 1;
 		return 0;
 	}
 	apply_smooth_or_not(is_smooth);
@@ -432,6 +448,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			simple_movement = 0;
+			reached_destination = 1;
+			complex_movement = 0;
 			return 0;
 		}
 
@@ -495,22 +514,31 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return 0;
 }
 int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
+	debugger = 1;
 	complex_movement = 1;
 	while(!is_idle()){
 		delay(10);
 	}
+	debugger = 2;
 	orientate( normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 ), 1 , 0);
+	debugger = 3;
 	if(wheel_state_L == EMERGENCY_BREAK){
+		complex_movement = 0;
+		simple_movement = 0;
+		reached_destination = 1;
 		return 0;
 	}
 	while(!is_idle()){
 		delay(10);
 	}
 	delay(50);
+	debugger = 4;
 	if (get_distance_to(x, y) > 2){
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	}
+	debugger = 5;
 	complex_movement = 0;
+	debugger = 6;
 	return 0;
 }
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
@@ -521,6 +549,7 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 	robot_status.arguments[1] = y;
 	robot_status.arguments[2] = speed;
 	robot_status.arguments[3] = is_smooth;
+	command_history = command_history*10 + robot_status.status;
 }
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
 	reached_destination = 0;
@@ -546,9 +575,13 @@ void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 void prepare_emergency_break(){
 	wheel_state_L = EMERGENCY_BREAK;
 	wheel_state_R = EMERGENCY_BREAK;
+	command_history = command_history*10 + 9;
+	complex_movement = 0;
+	simple_movement = 0;
+	reached_destination = 1;
 }
 void emergency_break(){
-	complex_movement = 1;
+	//complex_movement = 1;
 	int saved_encoder_count_R = encoder_count_R;
 	int saved_encoder_count_L = encoder_count_L;
 	control_loop_state = ACTIVATED;
@@ -572,7 +605,7 @@ void emergency_break(){
 	}
 	position_max_response = default_position_max_response;
 	set_target_encoder_counts(saved_encoder_count_R, saved_encoder_count_L);
-	complex_movement = 0;
+	//complex_movement = 0;
 }
 void prepare_reset(){
 	reached_destination = 0;
