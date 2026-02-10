@@ -92,6 +92,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			wheel_state_R = CONTROLLED_BREAK;
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
+			emergency_break();
 			return 0;
 		}
 
@@ -107,12 +108,6 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		distance_to_target = get_distance_to(target_x, target_y);
 		if (distance_to_target < 100){
 			reached_destination = 1;
-		}
-		if (distance_to_target < 300){
-			//control_loop_state = ACTIVATED;
-//			set_target_speeds(0, 0);
-//			return(0);
-			emergency_break();
 		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
@@ -148,6 +143,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			reached_destination = 1;
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
+			emergency_break();
 			return 0;
 		}
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
@@ -291,6 +287,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			wheel_state_R = CONTROLLED_BREAK;
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
+			emergency_break();
 			return 0;
 		}
 
@@ -336,6 +333,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			reached_destination = 1;
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
+			emergency_break();
 			return 0;
 		}
 		if(micros() - phase_two_start_time > 2000000){
@@ -433,6 +431,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			wheel_state_R = CONTROLLED_BREAK;
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
+			emergency_break();
 			return 0;
 		}
 
@@ -545,9 +544,8 @@ void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	robot_status.arguments[2] = is_smooth;
 }
 void prepare_emergency_break(){
-	reached_destination = 0;
-	command_waiting = 1;
-	robot_status.status = EMERGENCY;
+	wheel_state_L = EMERGENCY_BREAK;
+	wheel_state_R = EMERGENCY_BREAK;
 }
 void emergency_break(){
 	complex_movement = 1;
@@ -556,9 +554,7 @@ void emergency_break(){
 	control_loop_state = ACTIVATED;
 	PWM_L = 0;
 	PWM_R = 0;
-	delay(150);
-	wheel_state_R = EMERGENCY_BREAK;
-	wheel_state_L = EMERGENCY_BREAK;
+	delay(200);
 	int speed_sign_R = SGN(current_speed_R);
 	int speed_sign_L = SGN(current_speed_L);
 	position_max_response = PWM_max*0.5;
@@ -578,6 +574,11 @@ void emergency_break(){
 	set_target_encoder_counts(saved_encoder_count_R, saved_encoder_count_L);
 	complex_movement = 0;
 }
+void prepare_reset(){
+	reached_destination = 0;
+	command_waiting = 1;
+	robot_status.status = RESETIN;
+}
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){
 	reset_position_control_variables();
 	target_encoder_count_R = encoder__count_R;
@@ -588,6 +589,7 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 	position_derivative_L = 0;
 	control_loop_state = POSITION;
 }
+
 int8_t is_idle(){
 	int encoder_tolerance = 120;
 	int pwm_tolerance = 1000;

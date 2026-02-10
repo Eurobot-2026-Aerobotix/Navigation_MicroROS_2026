@@ -42,8 +42,7 @@ enum Robot_state_enum{
 	ORIENTATIN,
 	BEZIER_CURVIN,
 	BEZIER_CURVIN_BACKWARDS,
-	RESETIN,
-	EMERGENCY
+	RESETIN
 };
 
 typedef struct{
@@ -99,6 +98,7 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth);
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth);
 void prepare_emergency_break();
+void prepare_reset();
 void reset_navigation_vars();
 
 #endif /* INC_NAVIGATION_H_ */

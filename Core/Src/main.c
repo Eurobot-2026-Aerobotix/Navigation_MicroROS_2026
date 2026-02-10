@@ -137,11 +137,13 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 6: // Reset
-										reset_everything();
+										prepare_reset();
 										res_out->result = true;
 										break;
 
 									 case 10: // emergency break
+										wheel_state_R = EMERGENCY_BREAK;
+										wheel_state_L = EMERGENCY_BREAK;
 										prepare_emergency_break();
 										res_out->result = true;
 										break;
@@ -989,7 +991,7 @@ void StartDefaultTask(void *argument)
 		  {
 			publish_odom();
 			char buf[20];
-			snprintf(buf, sizeof(buf), "%d", debugger);
+			snprintf(buf, sizeof(buf), "%d", robot_status.status);
 			publish_debug(buf);
 		  }
 		  break;
@@ -1058,8 +1060,8 @@ void executor_function(void *argument)
 			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
 			robot_status.status = IDLE;
 		}
-		else if ( robot_status.status == EMERGENCY){
-			emergency_break();
+		else if ( robot_status.status == RESETIN){
+			reset_everything();
 			robot_status.status = IDLE;
 		}
 		command_waiting = 0;
@@ -1087,6 +1089,8 @@ void IMU_update_function(void *argument)
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 
 //	prepare_go_to(1000, 0, 1100, 1, 0);
+//	delay(700);
+//	prepare_emergency_break();
 
     delay(60000000);
   }
