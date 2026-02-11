@@ -497,9 +497,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	while (fabs(normalize_angle(angle - current_phi)) > deg_to_rad(1)){
 		orientate(angle, 1 , 0);
 		debugger = 3;
-		if(wheel_state_L == EMERGENCY_BREAK){
-			debugger = 4;
-			emergency_recieved = 1;
+		if(emergency_recieved == 1){
 			return 0;
 		}
 		while(!is_idle()){

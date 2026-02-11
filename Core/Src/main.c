@@ -76,7 +76,7 @@ float kiP_L = 90;
 int step = 0;
 
 int accepted_new_go_to = 0;
-int last_command = 0;
+int command_count = 0;
 
 void reset_everything(){
 	reset_motors_vars();
@@ -135,11 +135,11 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 5: // go to
-										last_command = GOIN_TO;
 										char buf[20];
 										int before = 500 + emergency_recieved*10 + robot_status.status;
+										command_count++;
 										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, 1, req_in->arg5);
-//										snprintf(buf, sizeof(buf), "%d", before*1000 + 900 + accepted_new_go_to*10 + robot_status.status);
+//										snprintf(buf, sizeof(buf), "%d", command_count*100 + accepted_new_go_to*10 + robot_status.status);
 //										publish_debug(buf);
 										res_out->result = true;  // x, y, speed
 										break;
@@ -156,13 +156,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-//										if (robot_status.status == IDLE){
-//											if ((last_command == GOIN_TO) && !emergency_recieved && ((fabs(current_x - target_command_x) > 50) || (fabs(current_y - target_command_y) > 50) || (fabs(normalize_angle(current_phi - target_command_phi)) > 0.2))){
-//												reached_destination = 0;
-//												robot_status.status = GOIN_TO;
-//											}
-//										}
-										res_out->result = (is_idle() && (robot_status.status == IDLE))? true: false;
+										res_out->result = (is_idle() && (robot_status.status == IDLE) && (command_count == 0))? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -179,14 +173,10 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 									 case 15: // set_position
 										set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
-										target_command_x = current_x;
-										target_command_y = current_y;
-										target_command_phi = current_phi;
 										emergency_recieved = 0;
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 16:
-
 										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
 										 break;
 									 case 17://fix x and y
@@ -199,9 +189,15 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 float backup_x = req_in->arg3;
 										 float backup_y = req_in->arg4;
 										 float robot_phi = current_phi;
-										 reset_everything();
+										 //reset_everything();
+										 command_count = 0;
+										 robot_status.status = IDLE;
 										 if (!front1_back2){
-											 set_position(backup_x, backup_y, robot_phi, robot_phi);
+											reset_position();
+											set_position(backup_x, backup_y, rad_to_deg(robot_phi), rad_to_deg(robot_phi));
+											char buf[20];
+											snprintf(buf, sizeof(buf), "%d", ((int)roundf(rad_to_deg(robot_phi)))*100);
+											publish_debug(buf);
 										 }else if (front1_back2 == 1){
 											 float x = front_aruco_x + front_aruco_relative_y*sin(robot_phi) - front_aruco_relative_x*cos(robot_phi);
 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_y*cos(robot_phi);
@@ -211,6 +207,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 											 float y = back_aruco_y - back_aruco_relative_x*sin(robot_phi) - back_aruco_relative_y*cos(robot_phi);
 											 set_position(x, y, robot_phi, robot_phi);
 										 }
+										 control_loop_state = ACTIVATED;
 										 res_out->result = true;
 										 break;
 									 default:
@@ -1065,9 +1062,10 @@ void executor_function(void *argument)
 		else if ( robot_status.status == GOIN_TO){
 			accepted_new_go_to++;
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
+			command_count--;
 			char buf[20];
-			snprintf(buf, sizeof(buf), "%d", accepted_new_go_to*10 + debugger);
-			publish_debug(buf);
+//			snprintf(buf, sizeof(buf), "%d", command_count*100 + accepted_new_go_to*10 + debugger);
+//			publish_debug(buf);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
