@@ -201,11 +201,11 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 }else if (front1_back2 == 1){
 											 float x = front_aruco_x + front_aruco_relative_y*sin(robot_phi) - front_aruco_relative_x*cos(robot_phi);
 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_y*cos(robot_phi);
-											 set_position(x, y, robot_phi, robot_phi);
+											 set_position(x, y, deg_to_rad(robot_phi), deg_to_rad(robot_phi));
 										 }else{
 											 float x = back_aruco_x + back_aruco_relative_y*sin(robot_phi) - back_aruco_relative_x*cos(robot_phi);
 											 float y = back_aruco_y - back_aruco_relative_x*sin(robot_phi) - back_aruco_relative_y*cos(robot_phi);
-											 set_position(x, y, robot_phi, robot_phi);
+											 set_position(x, y, deg_to_rad(robot_phi), deg_to_rad(robot_phi));
 										 }
 										 control_loop_state = ACTIVATED;
 										 res_out->result = true;
