@@ -36,6 +36,11 @@ float speed_filter = 0.95;
 int8_t reached_destination = 1;
 int command_history = 0;
 
+int target_command_x = 0;
+int target_command_y = 0;
+int target_command_phi = 0;
+int emergency_recieved = 0;
+
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
 	apply_smooth_or_not(is_smooth);
 	float direction = SGN(distance);
@@ -492,6 +497,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	debugger = 3;
 	if(wheel_state_L == EMERGENCY_BREAK){
 		debugger = 4;
+		emergency_recieved = 1;
 		return 0;
 	}
 	while(!is_idle()){
@@ -512,6 +518,10 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 	robot_status.arguments[1] = y;
 	robot_status.arguments[2] = speed;
 	robot_status.arguments[3] = is_smooth;
+	target_command_x = x;
+	target_command_y = y;
+	target_command_phi = atan2(y - current_y, x - current_x);
+	emergency_recieved = 0;
 	command_history = command_history*10 + robot_status.status;
 }
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
@@ -539,6 +549,7 @@ void prepare_emergency_break(){
 	command_history = command_history*10 + 9;
 }
 void emergency_break(){
+	emergency_recieved = 1;
 	int saved_encoder_count_R = encoder_count_R;
 	int saved_encoder_count_L = encoder_count_L;
 	control_loop_state = ACTIVATED;
@@ -562,6 +573,8 @@ void emergency_break(){
 	}
 	position_max_response = default_position_max_response;
 	set_target_encoder_counts(saved_encoder_count_R, saved_encoder_count_L);
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
 }
 void prepare_reset(){
 	reached_destination = 0;

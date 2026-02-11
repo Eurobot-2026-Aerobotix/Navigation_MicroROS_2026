@@ -75,6 +75,10 @@ extern float starting_phi;
 extern float turning_radius;
 extern int8_t reached_destination;
 extern int command_history;
+extern int target_command_x;
+extern int target_command_y;
+extern int target_command_phi;
+extern int emergency_recieved;
 
 int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);

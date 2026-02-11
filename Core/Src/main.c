@@ -76,6 +76,7 @@ float kiP_L = 90;
 int step = 0;
 
 int accepted_new_go_to = 0;
+int last_command = 0;
 
 void reset_everything(){
 	reset_motors_vars();
@@ -134,12 +135,18 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 5: // go to
+										last_command = GOIN_TO;
+										char buf[20];
+										int before = 500 + emergency_recieved*10 + robot_status.status;
 										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, 1, req_in->arg5);
+//										snprintf(buf, sizeof(buf), "%d", before*1000 + 900 + accepted_new_go_to*10 + robot_status.status);
+//										publish_debug(buf);
 										res_out->result = true;  // x, y, speed
 										break;
 
 									 case 6: // Reset
-										prepare_reset();
+										 reset_everything();
+										//prepare_reset();
 										res_out->result = true;
 										break;
 
@@ -149,7 +156,13 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle() && robot_status.status == IDLE)? true: false;
+//										if (robot_status.status == IDLE){
+//											if ((last_command == GOIN_TO) && !emergency_recieved && ((fabs(current_x - target_command_x) > 50) || (fabs(current_y - target_command_y) > 50) || (fabs(normalize_angle(current_phi - target_command_phi)) > 0.2))){
+//												reached_destination = 0;
+//												robot_status.status = GOIN_TO;
+//											}
+//										}
+										res_out->result = (is_idle() && (robot_status.status == IDLE))? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -166,9 +179,14 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 									 case 15: // set_position
 										set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
+										target_command_x = current_x;
+										target_command_y = current_y;
+										target_command_phi = current_phi;
+										emergency_recieved = 0;
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 16:
+
 										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
 										 break;
 									 case 17://fix x and y
@@ -252,7 +270,7 @@ const osThreadAttr_t defaultTask_attributes = {
 osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
-  .stack_size = 600 * 4,
+  .stack_size = 700 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for IMU_update_task */
@@ -990,9 +1008,9 @@ void StartDefaultTask(void *argument)
 		  if (ret == RCL_RET_OK)
 		  {
 			publish_odom();
-			char buf[20];
-			snprintf(buf, sizeof(buf), "%d", accepted_new_go_to*10 + robot_status.status);
-			publish_debug(buf);
+//			char buf[20];
+//			snprintf(buf, sizeof(buf), "%d", accepted_new_go_to*10 + debugger);
+//			publish_debug(buf);
 		  }
 		  break;
       case AGENT_DISCONNECTED:
@@ -1047,6 +1065,9 @@ void executor_function(void *argument)
 		else if ( robot_status.status == GOIN_TO){
 			accepted_new_go_to++;
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
+			char buf[20];
+			snprintf(buf, sizeof(buf), "%d", accepted_new_go_to*10 + debugger);
+			publish_debug(buf);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
@@ -1061,10 +1082,10 @@ void executor_function(void *argument)
 			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
 			robot_status.status = IDLE;
 		}
-		else if ( robot_status.status == RESETIN){
-			reset_everything();
-			robot_status.status = IDLE;
-		}
+//		else if ( robot_status.status == RESETIN){
+//			reset_everything();
+//			robot_status.status = IDLE;
+//		}
 		if (robot_status.status == IDLE && command_history%10 != 0){
 			command_history = command_history*10;
 		}
