@@ -493,17 +493,20 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 		delay(10);
 	}
 	debugger = 2;
-	orientate( normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 ), 1 , 0);
-	debugger = 3;
-	if(wheel_state_L == EMERGENCY_BREAK){
-		debugger = 4;
-		emergency_recieved = 1;
-		return 0;
+	float angle = normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 );
+	while (fabs(normalize_angle(angle - current_phi)) > deg_to_rad(1)){
+		orientate(angle, 1 , 0);
+		debugger = 3;
+		if(wheel_state_L == EMERGENCY_BREAK){
+			debugger = 4;
+			emergency_recieved = 1;
+			return 0;
+		}
+		while(!is_idle()){
+			delay(10);
+		}
+		debugger = 5;
 	}
-	while(!is_idle()){
-		delay(10);
-	}
-	debugger = 5;
 	delay(50);
 	if (get_distance_to(x, y) > 2){
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
