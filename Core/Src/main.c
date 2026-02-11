@@ -76,7 +76,6 @@ float kiP_L = 90;
 int step = 0;
 
 int accepted_new_go_to = 0;
-int jettou_command = 0;
 
 void reset_everything(){
 	reset_motors_vars();
@@ -135,9 +134,6 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 5: // go to
-										jettou_command = 1;
-										reached_destination = 0;
-										command_waiting = 1;
 										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, 1, req_in->arg5);
 										res_out->result = true;  // x, y, speed
 										break;
@@ -148,14 +144,12 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 10: // emergency break
-										wheel_state_R = EMERGENCY_BREAK;
-										wheel_state_L = EMERGENCY_BREAK;
 										prepare_emergency_break();
 										res_out->result = true;
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle() && !complex_movement && !simple_movement && !command_waiting && !jettou_command)? true: false;
+										res_out->result = (is_idle() && robot_status.status == IDLE)? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -175,7 +169,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 16:
-										 res_out->result = ( (is_idle() && !complex_movement && !simple_movement && !command_waiting && !jettou_command) || reached_destination )? true: false;
+										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
 										 break;
 									 case 17://fix x and y
 										 control_loop_state = DISACTIVATED;
@@ -997,9 +991,8 @@ void StartDefaultTask(void *argument)
 		  {
 			publish_odom();
 			char buf[20];
-			//snprintf(buf, sizeof(buf), "%d", accepted_new_go_to* 1000000 + debugger*100000 + is_idle()*10000 + complex_movement*1000 + simple_movement*100 + command_waiting*10 + reached_destination);
-			//snprintf(buf, sizeof(buf), "%d", command_history);
-			//publish_debug(buf);
+			snprintf(buf, sizeof(buf), "%d", accepted_new_go_to*10 + robot_status.status);
+			publish_debug(buf);
 		  }
 		  break;
       case AGENT_DISCONNECTED:
@@ -1053,11 +1046,7 @@ void executor_function(void *argument)
 		}
 		else if ( robot_status.status == GOIN_TO){
 			accepted_new_go_to++;
-			char buf[20];
-			snprintf(buf, sizeof(buf), "%ld", accepted_new_go_to* 1000000 + debugger*100000 + is_idle()*10000 + complex_movement*1000 + simple_movement*100 + command_waiting*10 + reached_destination);
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
-			snprintf(buf, sizeof(buf), "%ld", accepted_new_go_to* 1000000 + debugger*100000 + is_idle()*10000 + complex_movement*1000 + simple_movement*100 + command_waiting*10 + reached_destination);
-			publish_debug(buf);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
@@ -1079,14 +1068,6 @@ void executor_function(void *argument)
 		if (robot_status.status == IDLE && command_history%10 != 0){
 			command_history = command_history*10;
 		}
-		if (command_waiting == 1){
-			command_history = command_history*10 + 1;
-		}
-		while(!is_idle() || complex_movement || simple_movement){
-			delay(10);
-		}
-		command_waiting = 0;
-		jettou_command = 0;
 	}
     osDelay(10);
   }

@@ -73,9 +73,6 @@ extern float cruise_speed_L;
 extern float speed_offset;
 extern float starting_phi;
 extern float turning_radius;
-extern int complex_movement;
-extern int simple_movement;
-extern int8_t command_waiting;
 extern int8_t reached_destination;
 extern int command_history;
 
