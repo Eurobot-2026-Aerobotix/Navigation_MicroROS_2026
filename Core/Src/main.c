@@ -135,12 +135,8 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 5: // go to
-										char buf[20];
-										int before = 500 + emergency_recieved*10 + robot_status.status;
 										command_count++;
 										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, 1, req_in->arg5);
-//										snprintf(buf, sizeof(buf), "%d", command_count*100 + accepted_new_go_to*10 + robot_status.status);
-//										publish_debug(buf);
 										res_out->result = true;  // x, y, speed
 										break;
 
@@ -195,9 +191,6 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 if (!front1_back2){
 											reset_position();
 											set_position(backup_x, backup_y, rad_to_deg(robot_phi), rad_to_deg(robot_phi));
-											char buf[20];
-											snprintf(buf, sizeof(buf), "%d", ((int)roundf(rad_to_deg(robot_phi)))*100);
-											publish_debug(buf);
 										 }else if (front1_back2 == 1){
 											 float x = front_aruco_x + front_aruco_relative_y*sin(robot_phi) - front_aruco_relative_x*cos(robot_phi);
 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_y*cos(robot_phi);
@@ -1006,7 +999,7 @@ void StartDefaultTask(void *argument)
 		  {
 			publish_odom();
 //			char buf[20];
-//			snprintf(buf, sizeof(buf), "%d", accepted_new_go_to*10 + debugger);
+//			snprintf(buf, sizeof(buf), "%d", (int)((debugger*100000/(float)micros())));
 //			publish_debug(buf);
 		  }
 		  break;
@@ -1063,9 +1056,6 @@ void executor_function(void *argument)
 			accepted_new_go_to++;
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
 			command_count--;
-			char buf[20];
-//			snprintf(buf, sizeof(buf), "%d", command_count*100 + accepted_new_go_to*10 + debugger);
-//			publish_debug(buf);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
@@ -1136,7 +1126,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			PWM_L = 0;
 			PWM_R = 0;
 		}else{
-			update_position(skip_position_update);
+			//update_position(skip_position_update);
+			update_position(0);
 			if (control_loop_state == SPEED){
 				float tmp = (micros() - previous_speed_control_time);
 				// right motor speed control

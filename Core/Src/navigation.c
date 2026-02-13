@@ -488,28 +488,23 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return 0;
 }
 int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
-	debugger = 1;
 	while(!is_idle()){
 		delay(10);
 	}
-	debugger = 2;
 	float angle = normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 );
 	while (fabs(normalize_angle(angle - current_phi)) > deg_to_rad(1)){
 		orientate(angle, 1 , 0);
-		debugger = 3;
 		if(emergency_recieved == 1){
 			return 0;
 		}
 		while(!is_idle()){
 			delay(10);
 		}
-		debugger = 5;
 	}
 	delay(50);
 	if (get_distance_to(x, y) > 2){
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	}
-	debugger = 6;
 	return 0;
 }
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
@@ -556,11 +551,13 @@ void emergency_break(){
 	control_loop_state = ACTIVATED;
 	PWM_L = 0;
 	PWM_R = 0;
-	delay(200);
+	while((fabs(current_speed_R) > 200) || (fabs(current_speed_L) > 200) ){
+		delay(10);
+	}
 	int speed_sign_R = SGN(current_speed_R);
 	int speed_sign_L = SGN(current_speed_L);
-	position_max_response = PWM_max*0.5;
-	set_target_encoder_counts(encoder_count_R - speed_sign_R * 1500, encoder_count_L - speed_sign_L * 1500);
+	position_max_response = PWM_max*0.25;
+	set_target_encoder_counts(saved_encoder_count_R - speed_sign_R * 1500, saved_encoder_count_L - speed_sign_L * 1500);
 	int right_stopped = 0;
 	int left_stopped = 0;
 	while((!right_stopped) || (!left_stopped)){

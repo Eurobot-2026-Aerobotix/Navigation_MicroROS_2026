@@ -39,6 +39,7 @@ extern float front_aruco_relative_y;
 extern float back_aruco_relative_x;
 extern float back_aruco_relative_y;
 
+
 void setup_wheels_spacing(float driven__wheels_spacing, float dead__wheels_spacing);
 void setup_aruco_positions(float front_x, float front_y, float back_x, float back_y);
 void update_position(int8_t skip);
