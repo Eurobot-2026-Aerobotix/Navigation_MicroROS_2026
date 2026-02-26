@@ -176,6 +176,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
 										 break;
 									 case 17://fix x and y
+										 __disable_irq();
 										 control_loop_state = DISACTIVATED;
 										 float front1_back2 = req_in->arg2; // should be one if front aruco detected, 2 if back is detected, 0 if none,
 										 float front_aruco_x = req_in->arg3;
@@ -201,6 +202,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 											 set_position(x, y, rad_to_deg(robot_phi), rad_to_deg(robot_phi));
 										 }
 										 control_loop_state = ACTIVATED;
+										 __enable_irq();
 										 res_out->result = true;
 										 break;
 									 default:
