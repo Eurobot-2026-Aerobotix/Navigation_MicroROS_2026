@@ -9232,38 +9232,38 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .comment       0x00000076       0x34 libmicroros\libmicroros.a(libmicroxrcedds_client-output_reliable_stream.c.o)
  .comment       0x00000076       0x34 libmicroros\libmicroros.a(libmicroxrcedds_client-seq_num.c.o)
 
-.debug_info     0x00000000    0x35945
- .debug_info    0x00000000     0x5858 build/Core/Src/main.o
- .debug_info    0x00005858      0xbaf build/Core/Src/stm32f4xx_it.o
- .debug_info    0x00006407     0x19c4 build/Core/Src/stm32f4xx_hal_msp.o
- .debug_info    0x00007dcb      0xe44 build/Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_info    0x00008c0f     0x41a0 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_info    0x0000cdaf     0x1da5 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_info    0x0000eb54      0xc5d build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_info    0x0000f7b1      0xdd1 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_info    0x00010582      0x8ac build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_info    0x00010e2e      0xbce build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_info    0x000119fc     0x3c20 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_info    0x0001561c     0x11fe build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_info    0x0001681a      0xb5c build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_info    0x00017376     0x439d build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
- .debug_info    0x0001b713      0x5f7 build/Core/Src/system_stm32f4xx.o
- .debug_info    0x0001bd0a      0x18c build/Core/Src/sysmem.o
- .debug_info    0x0001be96      0x848 build/Core/Src/syscalls.o
- .debug_info    0x0001c6de     0x322f build/Core/Src/navigation.o
- .debug_info    0x0001f90d     0x17ae build/Core/Src/Motors.o
- .debug_info    0x000210bb     0x20b9 build/Core/Src/Odometry.o
- .debug_info    0x00023174     0x227e build/Core/Src/micro_ros.o
- .debug_info    0x000253f2      0x30f build/Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_info    0x00025701     0x2a48 build/Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_info    0x00028149     0x3be6 build/Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_info    0x0002bd2f     0x24c1 build/Middlewares/Third_Party/FreeRTOS/Source/timers.o
- .debug_info    0x0002e1f0     0x5b67 build/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
- .debug_info    0x00033d57      0x60c build/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_info    0x00034363      0x5c2 build/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
- .debug_info    0x00034925      0x289 build/extra_sources/microros_time.o
- .debug_info    0x00034bae      0xd67 build/extra_sources/microros_transports/dma_transport.o
- .debug_info    0x00035915       0x30 build/startup_stm32f446xx.o
+.debug_info     0x00000000    0x3592c
+ .debug_info    0x00000000     0x583f build/Core/Src/main.o
+ .debug_info    0x0000583f      0xbaf build/Core/Src/stm32f4xx_it.o
+ .debug_info    0x000063ee     0x19c4 build/Core/Src/stm32f4xx_hal_msp.o
+ .debug_info    0x00007db2      0xe44 build/Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_info    0x00008bf6     0x41a0 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_info    0x0000cd96     0x1da5 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_info    0x0000eb3b      0xc5d build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_info    0x0000f798      0xdd1 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_info    0x00010569      0x8ac build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_info    0x00010e15      0xbce build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_info    0x000119e3     0x3c20 build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_info    0x00015603     0x11fe build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_info    0x00016801      0xb5c build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_info    0x0001735d     0x439d build/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_info    0x0001b6fa      0x5f7 build/Core/Src/system_stm32f4xx.o
+ .debug_info    0x0001bcf1      0x18c build/Core/Src/sysmem.o
+ .debug_info    0x0001be7d      0x848 build/Core/Src/syscalls.o
+ .debug_info    0x0001c6c5     0x322f build/Core/Src/navigation.o
+ .debug_info    0x0001f8f4     0x17ae build/Core/Src/Motors.o
+ .debug_info    0x000210a2     0x20b9 build/Core/Src/Odometry.o
+ .debug_info    0x0002315b     0x227e build/Core/Src/micro_ros.o
+ .debug_info    0x000253d9      0x30f build/Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_info    0x000256e8     0x2a48 build/Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_info    0x00028130     0x3be6 build/Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_info    0x0002bd16     0x24c1 build/Middlewares/Third_Party/FreeRTOS/Source/timers.o
+ .debug_info    0x0002e1d7     0x5b67 build/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
+ .debug_info    0x00033d3e      0x60c build/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_info    0x0003434a      0x5c2 build/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+ .debug_info    0x0003490c      0x289 build/extra_sources/microros_time.o
+ .debug_info    0x00034b95      0xd67 build/extra_sources/microros_transports/dma_transport.o
+ .debug_info    0x000358fc       0x30 build/startup_stm32f446xx.o
 
 .debug_abbrev   0x00000000     0x55bb
  .debug_abbrev  0x00000000      0x4fe build/Core/Src/main.o
@@ -9462,7 +9462,7 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 
 .debug_str      0x00000000     0xba56
  .debug_str     0x00000000     0xba56 build/Core/Src/main.o
-                               0x40d8 (size before relaxing)
+                               0x40cd (size before relaxing)
  .debug_str     0x0000ba56      0xa30 build/Core/Src/stm32f4xx_it.o
  .debug_str     0x0000ba56     0x1415 build/Core/Src/stm32f4xx_hal_msp.o
  .debug_str     0x0000ba56      0xec0 build/Core/Src/stm32f4xx_hal_timebase_tim.o
@@ -10955,7 +10955,6 @@ default_position_max_response                     build/Core/Src/Motors.o
 deg_to_rad                                        build/Core/Src/Odometry.o
                                                   build/Core/Src/EKF.o
                                                   build/Core/Src/navigation.o
-                                                  build/Core/Src/main.o
 delay                                             build/Core/Src/Motors.o
                                                   build/Core/Src/Odometry.o
                                                   build/Core/Src/navigation.o
