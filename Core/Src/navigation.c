@@ -112,7 +112,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			reached_destination = 1;
 		}
 
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(PWM_R , PWM_L, current_speed_R, current_speed_L);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -148,7 +148,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			emergency_break();
 			return 0;
 		}
-		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(PWM_R , PWM_L, current_speed_R, current_speed_L);
 	}
 	stop_motors();
 	reached_destination = 1;

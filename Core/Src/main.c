@@ -72,6 +72,14 @@ float kpP_L = 10;
 float kdP_L = 0.8;
 float kiP_L = 90;
 
+//static uint16_t collision_counter_R = 0;
+//static uint16_t collision_counter_L = 0;
+
+//#define COLLISION_PWM_THRESHOLD 4200
+//#define COLLISION_TIME_THRESHOLD 10   // 30 ms
+//#define COLLISION_SPEED_RATIO 0.8
+#define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
+#define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
 
 int step = 0;
 
@@ -1100,7 +1108,7 @@ void IMU_update_function(void *argument)
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 
-//	prepare_go_to(1000, 0, 1100, 1, 0);
+	prepare_go_to(1000, 0, 1100, 1, 0);
 //	delay(700);
 //	prepare_emergency_break();
 
@@ -1144,6 +1152,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) || (fabs(speed_integral_R*kiS_R) > PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
 
+//				if (fabs(PWM_R) > COLLISION_PWM_THRESHOLD &&
+//				    fabs(current_speed_R) < fabs(target_speed_R) * COLLISION_SPEED_RATIO &&
+//				    fabs(target_speed_R) > 100)
+//				{
+//				    collision_counter_R++;
+//				}
+//				else
+//				{
+//				    collision_counter_R = 0;
+//				}
+
 				// left motor speed control
 				error = target_speed_L - current_speed_L;
 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
@@ -1157,6 +1176,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				PWM_L = (target_speed_L == 0)?0: PWM_L;
 
 				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) || (fabs(speed_integral_L*kiS_L) > PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
+//				if (fabs(PWM_L) > COLLISION_PWM_THRESHOLD &&
+//				    fabs(current_speed_L) < fabs(target_speed_L) * COLLISION_SPEED_RATIO &&
+//				    fabs(target_speed_L) > 100)
+//				{
+//				    collision_counter_L++;
+//				}
+//				else
+//				{
+//				    collision_counter_L = 0;
+//				}
 
 			}else if (control_loop_state == POSITION){
 				float tmp = (micros() - previous_position_control_time);
@@ -1189,6 +1218,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 				previous_position_error_L = error;
 				previous_position_control_time = micros();
+			}
+
+			if (
+			    (fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+			     fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+
+			    ||
+
+			    (fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+			     fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+			   )
+			{
+			    // EMERGENCY STOP
+
+			    control_loop_state = DISACTIVATED;
+
+			    PWM_R = 0;
+			    PWM_L = 0;
+
+			    target_speed_R = 0;
+			    target_speed_L = 0;
+
+			    speed_integral_R = 0;
+			    speed_integral_L = 0;
 			}
 		}
 		run_right_motor();
@@ -1234,3 +1287,33 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
+
+
+//condition1 : PWM élevé
+//condition 2 : erreur vitesse élevée
+//High PWM
+//AND
+//Low speed
+//if (fabs(PWM_R) > 3500 && fabs(current_speed_R) < fabs(target_speed_R)*0.6)
+//{
+//    control_loop_state = DISACTIVATED;
+//    PWM_R = 0;
+//    PWM_L = 0;
+//}
+//static int collision_counter_R = 0;
+//
+//if (fabs(PWM_R) > 3500 && fabs(current_speed_R) < fabs(target_speed_R)*0.6)
+//{
+//    collision_counter_R++;
+//}
+//else
+//{
+//    collision_counter_R = 0;
+//}
+//
+//if (collision_counter_R > 50)
+//{
+//    control_loop_state = DISACTIVATED;
+//}
