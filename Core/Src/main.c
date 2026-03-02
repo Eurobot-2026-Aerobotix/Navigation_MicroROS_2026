@@ -78,6 +78,9 @@ int step = 0;
 int accepted_new_go_to = 0;
 int command_count = 0;
 
+#define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
+#define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
+
 void reset_everything(){
 	reset_motors_vars();
 	reset_odometry_vars();
@@ -1192,6 +1195,29 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				previous_position_error_L = error;
 				previous_position_control_time = micros();
 			}
+			if (
+						    (fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+						     fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+
+						    ||
+
+						    (fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+						     fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+						   )
+						{
+						    // EMERGENCY STOP
+
+						    control_loop_state = DISACTIVATED;
+
+						    PWM_R = 0;
+						    PWM_L = 0;
+
+						    target_speed_R = 0;
+						    target_speed_L = 0;
+
+						    speed_integral_R = 0;
+						    speed_integral_L = 0;
+						}
 		}
 		run_right_motor();
 		run_left_motor();
