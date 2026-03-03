@@ -1196,28 +1196,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				previous_position_control_time = micros();
 			}
 			if (
-						    (fabs(PWM_R) > STOP_PWM_THRESHOLD &&
-						     fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+					(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+					 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
 
-						    ||
+					||
 
-						    (fabs(PWM_L) > STOP_PWM_THRESHOLD &&
-						     fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
-						   )
-						{
-						    // EMERGENCY STOP
+					(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+					 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+				   )
+				{
+					// EMERGENCY STOP
 
-						    control_loop_state = DISACTIVATED;
-
-						    PWM_R = 0;
-						    PWM_L = 0;
-
-						    target_speed_R = 0;
-						    target_speed_L = 0;
-
-						    speed_integral_R = 0;
-						    speed_integral_L = 0;
-						}
+//					control_loop_state = ACTIVATED;
+//
+//					PWM_R = 0;
+//					PWM_L = 0;
+//
+//					target_speed_R = 0;
+//					target_speed_L = 0;
+//
+//					speed_integral_R = 0;
+//					speed_integral_L = 0;
+					// ken n5alliw l fou9aneyya e robot ma3ach ynajjem yresumi
+					prepare_emergency_break();
+				}
 		}
 		run_right_motor();
 		run_left_motor();
