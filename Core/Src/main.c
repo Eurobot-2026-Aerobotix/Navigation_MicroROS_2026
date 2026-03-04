@@ -176,7 +176,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 16:
-										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
+										 res_out->result = ( (is_idle() && robot_status.status == IDLE && (command_count == 0)) || reached_destination )? true: false;
 										 break;
 									 case 17://fix x and y
 										 __disable_irq();
