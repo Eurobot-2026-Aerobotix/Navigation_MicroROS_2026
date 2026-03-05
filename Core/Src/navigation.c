@@ -108,7 +108,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
-		if (distance_to_target < MIN(100, distance/2) ){
+		if (distance_to_target < MIN(30, distance/2) ){
 			reached_destination = 1;
 		}
 
@@ -141,7 +141,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-		if (distance_to_target < MIN(100, distance/2) ){
+		if (distance_to_target < MIN(30, distance/2) ){
 			reached_destination = 1;
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
