@@ -108,7 +108,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
-		if (distance_to_target < MIN(MAX(7*distance - 40, 20), 100) ){
+		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
 			reached_destination = 1;
 		}
 
@@ -141,7 +141,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-		if (distance_to_target < MIN(MAX(7*distance - 40, 20), 100) ){
+		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
 			reached_destination = 1;
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
@@ -304,7 +304,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
-		if ((robot_status.status == ORIENTATIN) && (distance_to_target < MIN(MAX(7*distance - 40, 20), 100)) ){
+		if ((robot_status.status == ORIENTATIN) && (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100)) ){
 			reached_destination = 1;
 		}
 
@@ -329,7 +329,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
-		if ((robot_status.status == ORIENTATIN) && (distance_to_target < MIN(MAX(7*distance - 40, 20), 100)) ){
+		if ((robot_status.status == ORIENTATIN) && (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100)) ){
 			reached_destination = 1;
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
@@ -465,7 +465,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		}
 
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
-		if (distance_to_target < MIN(MAX(7*distance - 40, 20), 100) ){
+		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
 			reached_destination = 1;
 		}
 		set_target_speeds(speed_R*(1 + SGN(speed_R)* lane_correction_term) ,speed_L* (1 - SGN(speed_L)*lane_correction_term));
