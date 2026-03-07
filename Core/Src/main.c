@@ -77,6 +77,7 @@ int step = 0;
 
 int accepted_new_go_to = 0;
 int command_count = 0;
+int fail_safe_activated = 0;
 
 #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
 #define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
@@ -1195,14 +1196,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				previous_position_error_L = error;
 				previous_position_control_time = micros();
 			}
-			if (
-					(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
-					 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+			if ( fail_safe_activated &&
+					(
+						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
 
-					||
+						||
 
-					(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
-					 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+					   )
 				   )
 				{
 					// EMERGENCY STOP
