@@ -40,6 +40,7 @@ int target_command_x = 0;
 int target_command_y = 0;
 int target_command_phi = 0;
 int emergency_recieved = 0;
+int stopped_because_of_collision = 0;
 
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
 	apply_smooth_or_not(is_smooth);
@@ -509,6 +510,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 }
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	reached_destination = 0;
+	stopped_because_of_collision = 0;
 	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
 	robot_status.arguments[0] = x;
 	robot_status.arguments[1] = y;
@@ -523,6 +525,7 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
 	reached_destination = 0;
 	robot_status.status = (direction == 1)? BEZIER_CURVIN : BEZIER_CURVIN_BACKWARDS;
+	stopped_because_of_collision = 0;
 	robot_status.arguments[0] = x1;//x1
 	robot_status.arguments[1] = y1;//y1
 	robot_status.arguments[2] = x2;//x2
@@ -534,12 +537,14 @@ void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, floa
 }
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	reached_destination = 0;
+	stopped_because_of_collision = 0;
 	robot_status.status = ORIENTATIN;
 	robot_status.arguments[0] = orientation;
 	robot_status.arguments[1] = is_radian;
 	robot_status.arguments[2] = is_smooth;
 }
 void prepare_emergency_break(){
+	stopped_because_of_collision = 0;
 	wheel_state_L = EMERGENCY_BREAK;
 	wheel_state_R = EMERGENCY_BREAK;
 	command_history = command_history*10 + 9;

@@ -79,6 +79,7 @@ extern int target_command_x;
 extern int target_command_y;
 extern int target_command_phi;
 extern int emergency_recieved;
+extern int stopped_because_of_collision;
 
 int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);
