@@ -1105,7 +1105,7 @@ void IMU_update_function(void *argument)
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 
-	prepare_go_to(1000, 0, 1100, 1, 0);
+	//prepare_go_to(1000, 0, 1100, 1, 0);
 
 //	delay(700);
 //	prepare_emergency_break();
