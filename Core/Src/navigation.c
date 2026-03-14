@@ -40,7 +40,37 @@ int target_command_x = 0;
 int target_command_y = 0;
 int target_command_phi = 0;
 int emergency_recieved = 0;
+float reached_destination_time = 0.35;
 
+float estimate_time_remaining_profile(float x, float distance, float x1, float x2)
+{
+    float D = distance + deceleration_offset;
+    float t = 0;
+
+    if(x < x1) {
+        t += 2.0 / (ramping_acceleration * acc_linearization_coef) * (sqrt(x1) - sqrt(x));
+        t += (x2 - x1) / cruise_speed_R;
+        t += (1.0 / fabs(breaking_acceleration)) * log((D - x1)/(D - x2));
+    }
+    else if(x < x2) {
+        t += (x2 - x) / cruise_speed_R;
+        t += (1.0 / fabs(breaking_acceleration)) * log((D - x)/(D - x2));
+    }
+    else {
+        t += (1.0 / fabs(breaking_acceleration)) * log((D - x)/(D - x2));
+    }
+    return t;
+}
+float hybrid_arrival_time(float x, float distance, float x1, float x2, float distance_to_target)
+{
+    float alpha = 0.7;
+    float t_profile = estimate_time_remaining_profile(x, distance,x1, x2);
+//    float v_robot = (fabs(current_speed_R) + fabs(current_speed_L))/2.0;
+//    v_robot = MAX(v_robot, 10.0);
+    float t_measured = distance_to_target / speed_offset;
+    float t_1 = alpha * t_profile + (1.0 - alpha) * t_measured;
+    return t_1;
+}
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
 	apply_smooth_or_not(is_smooth);
 	float direction = SGN(distance);
@@ -62,6 +92,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	// all of these formulas are derived from a ramp graph: speed = f(distance)
 	float x1 = speed/ramping_acceleration;
 	float x2 = speed/breaking_acceleration + distance + deceleration_offset;
+
+	float reached_destination_threshold = speed / fabs(breaking_acceleration) + fabs(deceleration_offset);
+	reached_destination_threshold = MAX(reached_destination_threshold, 10.0); // safety floor
 
 	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
 		float intersection_x = (breaking_acceleration*(distance+deceleration_offset))/(breaking_acceleration - ramping_acceleration);
@@ -108,7 +141,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
-		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
+		if(hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time){
 			reached_destination = 1;
 		}
 
@@ -141,12 +174,16 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		if(micros() - phase_two_start_time> 4000000){
 			break;
 		}
-		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
-			reached_destination = 1;
-		}
+
+//		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
+//			reached_destination = 1;
+//		}
 		if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
 			return 0;
+		}
+		if(hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time){
+			reached_destination = 1;
 		}
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
@@ -304,7 +341,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
-		if ((robot_status.status == ORIENTATIN) && (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100)) ){
+		if ((robot_status.status == ORIENTATIN) && (hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time)){
 			reached_destination = 1;
 		}
 
@@ -329,7 +366,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
-		if ((robot_status.status == ORIENTATIN) && (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100)) ){
+		if ((robot_status.status == ORIENTATIN) && (hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time)){
 			reached_destination = 1;
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
@@ -465,7 +502,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 		}
 
 		distance_to_target = get_bezier_distance(t, x0, y0, x1, y1, x2, y2,x3 ,y3);
-		if (distance_to_target < MIN(MAX(0.7*distance - 40, 20), 100) ){
+		if(hybrid_arrival_time(d, distance, d_1, d_2, distance_to_target) < reached_destination_time){
 			reached_destination = 1;
 		}
 		set_target_speeds(speed_R*(1 + SGN(speed_R)* lane_correction_term) ,speed_L* (1 - SGN(speed_L)*lane_correction_term));
