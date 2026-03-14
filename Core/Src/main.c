@@ -77,7 +77,7 @@ int step = 0;
 
 int accepted_new_go_to = 0;
 int command_count = 0;
-int fail_safe_activated = 0;
+int fail_safe_activated = 1;
 
 #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
 #define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
