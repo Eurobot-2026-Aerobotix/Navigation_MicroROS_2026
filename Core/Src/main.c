@@ -77,7 +77,7 @@ int step = 0;
 
 int accepted_new_go_to = 0;
 int command_count = 0;
-int fail_safe_activated = 0;
+int fail_safe_activated = 1;
 
 #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
 #define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
@@ -208,6 +208,9 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 control_loop_state = ACTIVATED;
 										 __enable_irq();
 										 res_out->result = true;
+										 break;
+									 case 18:
+										 res_out->result = stopped_because_of_collision? true: false;
 										 break;
 									 default:
 										  res_out->result = false;
@@ -1076,10 +1079,6 @@ void executor_function(void *argument)
 			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
 			robot_status.status = IDLE;
 		}
-//		else if ( robot_status.status == RESETIN){
-//			reset_everything();
-//			robot_status.status = IDLE;
-//		}
 		if (robot_status.status == IDLE && command_history%10 != 0){
 			command_history = command_history*10;
 		}
@@ -1223,6 +1222,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //					speed_integral_L = 0;
 					// ken n5alliw l fou9aneyya e robot ma3ach ynajjem yresumi
 					prepare_emergency_break();
+					stopped_because_of_collision = 1;
+
 				}
 		}
 		run_right_motor();
