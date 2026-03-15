@@ -103,5 +103,6 @@ void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, floa
 void prepare_emergency_break();
 void prepare_reset();
 void reset_navigation_vars();
-
+float estimate_time_remaining_profile(float x, float distance, float x1, float x2);
+float hybrid_arrival_time(float x, float distance, float x1, float x2, float distance_to_target);
 #endif /* INC_NAVIGATION_H_ */
