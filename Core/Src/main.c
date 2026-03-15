@@ -78,9 +78,11 @@ int step = 0;
 int accepted_new_go_to = 0;
 int command_count = 0;
 int fail_safe_activated = 1;
+float fail_safe_counter = 0;
 
 #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
 #define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
+
 
 void reset_everything(){
 	reset_motors_vars();
@@ -1208,22 +1210,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				   )
 				{
 					// EMERGENCY STOP
-
-//					control_loop_state = ACTIVATED;
-//
-//					PWM_R = 0;
-//					PWM_L = 0;
-//
-//					target_speed_R = 0;
-//					target_speed_L = 0;
-//
-//					speed_integral_R = 0;
-//					speed_integral_L = 0;
-					// ken n5alliw l fou9aneyya e robot ma3ach ynajjem yresumi
-					prepare_emergency_break();
-					stopped_because_of_collision = 1;
-
+                  fail_safe_counter++;
+                  if(fail_safe_counter > 500){
+                	  prepare_emergency_break();
+                	  stopped_because_of_collision = 1;
+                  }
 				}
+			else {
+				 fail_safe_counter = 0;
+			}
 		}
 		run_right_motor();
 		run_left_motor();
