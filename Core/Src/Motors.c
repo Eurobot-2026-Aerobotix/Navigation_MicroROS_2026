@@ -109,16 +109,19 @@ void stop_motors(){
 	target_speed_L = 0;
 }
 void update_encoder_counts(){ // ISR safe, takes approximately 250ns
-	int32_t delta = (int32_t)(encoder_timer_R->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_R;
+	int32_t tmp = encoder_timer_R->Instance->CNT;
+	int32_t delta = tmp - (int32_t)previous_encoder_timer_CNT_R;
+	previous_encoder_timer_CNT_R = tmp;
+
 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta; // handling overflow
 	encoder_count_R -= delta; // it was + not - but the encoder phase pins were inverted
 
-	delta = (int32_t)(encoder_timer_L->Instance->CNT) - (int32_t)previous_encoder_timer_CNT_L;
+	tmp = encoder_timer_L->Instance->CNT;
+	delta = tmp - (int32_t)previous_encoder_timer_CNT_L;
+	previous_encoder_timer_CNT_L = tmp;
+
 	delta = (delta>60000)? delta-65536 : (delta<-60000)? delta+65536 : delta;
 	encoder_count_L += delta;
-
-	previous_encoder_timer_CNT_R = encoder_timer_R->Instance->CNT;
-	previous_encoder_timer_CNT_L = encoder_timer_L->Instance->CNT;
 }
 void update_speed(){ // ISR safe, takes approximately 350ns
 	float tmp = (float)((int32_t)micros() - (int32_t)previous_speed_calculation_time);
