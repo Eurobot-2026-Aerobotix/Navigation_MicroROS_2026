@@ -128,6 +128,14 @@ void reset_everything(){
 
 	communication_state = RASPBERRY;
 }
+void shutdown(){
+	control_loop_state = SHUTDOWN;
+	delay(1);
+	control_loop_state = SHUTDOWN;
+	delay(1); // 3awedt'ha marrtin 5ater faza ta3 synchro
+	PWM_R = 0;
+	PWM_L = 0;
+}
 
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
@@ -213,6 +221,10 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 break;
 									 case 18:
 										 res_out->result = stopped_because_of_collision? true: false;
+										 break;
+									 case 19: // shutdown
+										 shutdown();
+										 res_out->result = true;
 										 break;
 									 default:
 										  res_out->result = false;
@@ -410,6 +422,7 @@ int main(void)
   communication_state = PC;
 
   reset_position();
+  set_position(300, 345, 0, 0);
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
@@ -1210,12 +1223,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				   )
 				{
 					// EMERGENCY STOP
-                  fail_safe_counter++;
-                  if(fail_safe_counter > 500){
-                	  prepare_emergency_break();
-                	  stopped_because_of_collision = 1;
-                  }
-				}
+                 fail_safe_counter++;
+                 if(fail_safe_counter > 500){
+                	 prepare_emergency_break();
+                	 stopped_because_of_collision = 1;
+                 }
+			}
 			else {
 				 fail_safe_counter = 0;
 			}

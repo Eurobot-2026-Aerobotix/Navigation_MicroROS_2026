@@ -128,6 +128,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			emergency_break();
 			return 0;
 		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
 
 		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_y - starting_y, target_x - starting_x) );
 		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
@@ -179,6 +182,10 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			emergency_break();
 			return 0;
 		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 	}
 	stop_motors();
@@ -292,7 +299,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	// I will track only the right wheel cause both wheels need to be in sync
 	float distance_to_target = distance;
 	float previous_distance_to_target = distance;
-	float x;
+	float x = 0;
 	float target_phi = absolute_phi + angle;
 
 	// Yaw centering, preventing that a wheel goes faster than the other and moves the rotation axis away from center
@@ -321,6 +328,10 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			emergency_break();
 			return 0;
 		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
 
 		distance_traveled_R = fabs(encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
 		distance_traveled_L = fabs(encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
@@ -367,6 +378,10 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 			emergency_break();
 			return 0;
 		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
 		if(micros() - phase_two_start_time > 2000000){
 			break;
 		}
@@ -460,6 +475,10 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			emergency_break();
 			return 0;
 		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
 
 		t = project_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3);
 
@@ -531,6 +550,10 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 		while(!is_idle()){
 			delay(10);
 		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
 	}
 	delay(50);
 	if (get_distance_to(x, y) > 2){

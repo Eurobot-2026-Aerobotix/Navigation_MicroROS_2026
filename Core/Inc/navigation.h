@@ -29,7 +29,8 @@ enum Control_loop {
 	DISACTIVATED, // blocks the main PID until the Raspberry activates the STM
 	ACTIVATED,
 	SPEED,
-	POSITION
+	POSITION,
+	SHUTDOWN
 };
 
 enum Robot_state_enum{
