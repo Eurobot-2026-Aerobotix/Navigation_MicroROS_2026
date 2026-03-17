@@ -1231,7 +1231,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				{
 					// EMERGENCY STOP
                  fail_safe_counter++;
-                 if(fail_safe_counter > 500){
+                 if(fail_safe_counter > 250){
                 	 prepare_emergency_break();
                 	 stopped_because_of_collision = 1;
                  }
