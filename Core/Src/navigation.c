@@ -636,6 +636,13 @@ void prepare_reset(){
 	reached_destination = 0;
 	robot_status.status = RESETIN;
 }
+void prepare_set_position(float x, float y, float phi, float absolute_phi){
+	robot_status.status = SETTIN_POSITION;
+	robot_status.arguments[0] = x;
+	robot_status.arguments[1] = y;
+	robot_status.arguments[2] = phi;
+	robot_status.arguments[3] = absolute_phi;
+}
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L){
 	reset_position_control_variables();
 	target_encoder_count_R = encoder__count_R;

@@ -155,8 +155,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 6: // Reset
-										 reset_everything();
-										//prepare_reset();
+										prepare_reset();
 										res_out->result = true;
 										break;
 
@@ -182,7 +181,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 15: // set_position
-										set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
+										prepare_set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
 										emergency_recieved = 0;
 										res_out->result = true;  // x, y, speed
 										break;
@@ -1092,6 +1091,14 @@ void executor_function(void *argument)
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
 			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == SETTIN_POSITION){
+			set_position(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3]);
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == RESETIN){
+			reset_everything();
 			robot_status.status = IDLE;
 		}
 		if (robot_status.status == IDLE && command_history%10 != 0){
