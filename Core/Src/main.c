@@ -77,7 +77,7 @@ int step = 0;
 
 int accepted_new_go_to = 0;
 int command_count = 0;
-int fail_safe_activated = 1;
+int fail_safe_activated = 0;
 float fail_safe_counter = 0;
 
 #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
@@ -367,9 +367,9 @@ int main(void)
   setup_motor_channels(&htim1, TIM_CHANNEL_4, TIM_CHANNEL_3, TIM_CHANNEL_2, TIM_CHANNEL_1);
   setup_encoder_timers(&htim3, &htim4, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(63.921213268346428155071294487762, 64.012981753372459963017384004631);
+  setup_wheel_diameters(63.457307833406560678205589174046, 63.418774067686835255685636818921);
 
-  setup_wheels_spacing(188.5, 290.68264595249647942421246603857);
+  setup_wheels_spacing(188.5, 283.98401314982547824580058860284);
 
   setup_aruco_positions(61, 96.85, -76.9, -97.35);
   //setup_wheels_spacing(188.5, 342.5);
@@ -421,7 +421,7 @@ int main(void)
   communication_state = PC;
 
   reset_position();
-  set_position(300, 345, 0, 0);
+  set_position(0, 0, 0, 0);
   control_loop_state = DISACTIVATED;
 
   robot_status.status = IDLE;
@@ -1126,8 +1126,10 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
-
-//	prepare_go_to(1000, 0, 1100, 1, 0);
+//
+//	prepare_orientate(-90, 0, 0);
+//	delay(2000);
+//	prepare_go_to(1000, 0, 1100, 1, 1);
 //	delay(700);
 //	prepare_emergency_break();
 
@@ -1217,28 +1219,28 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				previous_position_error_L = error;
 				previous_position_control_time = micros();
 			}
-			if ( fail_safe_activated &&
-					(
-						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
-						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
-
-						||
-
-						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
-						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
-					   )
-				   )
-				{
-					// EMERGENCY STOP
-                 fail_safe_counter++;
-                 if(fail_safe_counter > 250){
-                	 prepare_emergency_break();
-                	 stopped_because_of_collision = 1;
-                 }
-			}
-			else {
-				 fail_safe_counter = 0;
-			}
+//			if ( fail_safe_activated &&
+//					(
+//						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+//						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+//
+//						||
+//
+//						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+//						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+//					   )
+//				   )
+//				{
+//					// EMERGENCY STOP
+//                 fail_safe_counter++;
+//                 if(fail_safe_counter > 250){
+//                	 prepare_emergency_break();
+//                	 stopped_because_of_collision = 1;
+//                 }
+//			}
+//			else {
+//				 fail_safe_counter = 0;
+//			}
 		}
 		run_right_motor();
 		run_left_motor();
