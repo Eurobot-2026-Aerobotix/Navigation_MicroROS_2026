@@ -85,10 +85,8 @@ extern int stopped_because_of_collision;
 
 int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);
-float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
-float calculate_instant_target_speed_L_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
-float calculate_instant_target_speed_R(float x, float distance);
-float calculate_instant_target_speed_L(float x, float distance);
+float calculate_instant_target_speed_full(float x, float distance, float ramping__acceleration, float breaking__acceleration);
+float calculate_instant_target_speed(float x, float distance);
 float calculate_instant_target_phi(float x, float distance);
 int rotate(float angle, int8_t is_radian, int8_t is_smooth);// is_radian should be set to 1 if the angle is expressed in radians and to 0 if in degrees
 int orientate(float orientation, int8_t is_radian, int8_t is_smooth);// will return 0 if target has been reached successfully or 1 if it could not be reached
@@ -98,7 +96,7 @@ void emergency_break();
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
 int8_t is_idle();
 void reset_speed_control_variables();
-void apply_smooth_or_not(int8_t is_smooth);
+void apply_smooth_or_not(float distance, int8_t is_smooth);
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth);
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth);
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth);

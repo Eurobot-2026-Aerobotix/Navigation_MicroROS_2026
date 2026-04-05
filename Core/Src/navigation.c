@@ -12,16 +12,21 @@ enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
 float ramping_acceleration = 10;
-float acc_linearization_coef = 12;
+float acc_linearization_coef = 0;
+float dec_linearization_coef = 0;
+
 float breaking_acceleration = -2;
+float breaking_acceleration_speed = -2;
+float breaking_acceleration_smooth = -1.55;
+
 float deceleration_offset = 40;
+float deceleration_offset_fast = 10;
+float deceleration_offset_smooth = 80; //-80 fel 1000, -30 fel 300
+
 float speed_offset = 150;
-float deceleration_offset_fast = 40;
 float speed_offset_fast = 150;
-float deceleration_offset_smooth = 30;
 float speed_offset_smooth = 80;
-float breaking_acceleration_speed = -3;
-float breaking_acceleration_smooth = -2;
+
 float rotating_speed = 650;
 int8_t direction_R;
 int8_t direction_L;
@@ -73,11 +78,11 @@ float hybrid_arrival_time(float x, float distance, float x1, float x2, float dis
     return t_1;
 }
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth){
-	apply_smooth_or_not(is_smooth);
+	apply_smooth_or_not(fabs(distance), is_smooth);
 	float direction = SGN(distance);
 	distance = fabs(distance);
-	if (distance < 900){
-		breaking_acceleration = -2;
+	if (distance < 400){
+		breaking_acceleration = -3;
 	}
 	speed = fabs(speed);
 	while(!is_idle()){
@@ -102,6 +107,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		x2 = speed/breaking_acceleration + distance + deceleration_offset;
 	}
 	acc_linearization_coef = sqrt(x1);
+	dec_linearization_coef = sqrt(distance - x2);
 
 	cruise_speed_R = speed;
 	cruise_speed_L = speed;
@@ -138,7 +144,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)) + phi_correction_term; // the first coefficient is tunable
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.1), 0.1);
 
-		set_target_speeds(direction*calculate_instant_target_speed_R(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed_L(x, distance)* (1 - lane_correction_term));
+		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term));
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = get_distance_to(target_x, target_y);
@@ -200,7 +206,7 @@ int move_forward(float distance, float speed, int8_t is_smooth){
 	float target_y = current_y + distance*sin(current_phi);
 	return move_forward_full(distance, speed, target_x, target_y, is_smooth);
 }
-float calculate_instant_target_speed_R_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
+float calculate_instant_target_speed_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
 	if (wheel_state_R == ACCELERATING){
 		if (direction_R == 1){
 			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(ramping__acceleration*sqrt(x)*acc_linearization_coef, cruise_speed_R), 20);
@@ -215,46 +221,20 @@ float calculate_instant_target_speed_R_full(float x, float distance, float rampi
 		return filtered_target_speed_R;
 
 	}else if (wheel_state_R == CONTROLLED_BREAK){
+		float pretend_x = distance - sqrt(distance - x) * dec_linearization_coef;
 		if (direction_R == 1){
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), speed_offset), cruise_speed_R);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(pretend_x - ((trajectory == ROTATING)?0:deceleration_offset)-distance), speed_offset), cruise_speed_R);
 			return filtered_target_speed_R;
 		}else{
-			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -speed_offset), cruise_speed_R);
+			filtered_target_speed_R = filtered_target_speed_R * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(pretend_x - ((trajectory == ROTATING)?0:deceleration_offset)-distance), -speed_offset), cruise_speed_R);
 			return filtered_target_speed_R;
 		}
 	}
 	return 0; // just to prevent debugger error, will be erased once a definitive else is added
 }
-float calculate_instant_target_speed_L_full(float x, float distance, float ramping__acceleration, float breaking__acceleration){
-	if (wheel_state_L == ACCELERATING){
-		if (direction_L == 1){
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(ramping__acceleration*sqrt(x)*acc_linearization_coef, cruise_speed_L), 20);;
-			return filtered_target_speed_L;
-		}else{
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(-ramping__acceleration*sqrt(x)*acc_linearization_coef, cruise_speed_L), -20);
-			return filtered_target_speed_L;
-		}
 
-	}else if (wheel_state_L == CRUISING){
-		filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * cruise_speed_L;
-		return filtered_target_speed_L;
-
-	}else if (wheel_state_L == CONTROLLED_BREAK){
-		if (direction_L == 1){
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MIN(MAX(breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), speed_offset), cruise_speed_L);
-			return filtered_target_speed_L;
-		}else{
-			filtered_target_speed_L = filtered_target_speed_L * speed_filter + (1 - speed_filter) * MAX(MIN(-breaking__acceleration*(x-((trajectory == ROTATING || trajectory == CIRCLE_CURVE)?0:deceleration_offset)-distance), -speed_offset), cruise_speed_L);
-			return filtered_target_speed_L;
-		}
-	}
-	return 0; // just to prevent debugger error, will be erased once a definitive else is added
-}
-float calculate_instant_target_speed_R(float x, float distance){
-	return calculate_instant_target_speed_R_full( x, distance, ramping_acceleration, breaking_acceleration);
-}
-float calculate_instant_target_speed_L(float x, float distance){
-	return calculate_instant_target_speed_R_full( x, distance, ramping_acceleration, breaking_acceleration);
+float calculate_instant_target_speed(float x, float distance){
+	return calculate_instant_target_speed_full( x, distance, ramping_acceleration, breaking_acceleration);
 }
 float calculate_instant_target_phi(float x, float distance){
 	if (trajectory == STRAIGHT){
@@ -265,14 +245,13 @@ float calculate_instant_target_phi(float x, float distance){
 	return 0;
 }
 int rotate(float angle, int8_t is_radian, int8_t is_smooth){
-	apply_smooth_or_not(is_smooth);
 	while(!is_idle()){
 		delay(10);
 	};
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
 	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/10.0 + 10), 10); // high acceleration for small angle and low for large 200 kenet 300
-	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/3.0 + 10), -4); // same logic
+	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/2.5 + 12), -3); // same logic
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
 	direction_R = SGN(arc_length);
@@ -281,6 +260,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	// all of these formulas are derived from a ramp graph: speed = f(distance)
 	float speed = rotating_speed;
 	float distance = fabs(arc_length);
+	apply_smooth_or_not(fabs(distance), is_smooth);
 	float x1 = speed/rotating_ramping_acceleration;
 	float x2 = speed/rotating_breaking_acceleration + distance;
 
@@ -292,6 +272,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		x2 = speed/rotating_breaking_acceleration + distance;
 	}
 	acc_linearization_coef = sqrt(x1);
+	dec_linearization_coef = sqrt(distance - x2);
 
 	cruise_speed_R = speed * direction_R;
 	cruise_speed_L = speed * direction_L;
@@ -337,8 +318,8 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		distance_traveled_L = fabs(encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
 
 
-		speed = calculate_instant_target_speed_R_full(x, distance, rotating_ramping_acceleration, rotating_breaking_acceleration);
-		yaw_centering_term = ( distance_traveled_R - distance_traveled_L ) * 0.2 / ( MAX(fabs(speed), 100)/100.0); //0.02 // the coefficient is tunable
+		speed = calculate_instant_target_speed_full(x, distance, rotating_ramping_acceleration, rotating_breaking_acceleration);
+		yaw_centering_term = ( distance_traveled_R - distance_traveled_L ) * 0.1 / ( MAX(fabs(speed), 100)/100.0); //0.02 // the coefficient is tunable
 		if (x < 0.1*x1){
 			yaw_centering_term = 0;
 		}
@@ -364,7 +345,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	while (fabs(target_phi - absolute_phi) > deg_to_rad(0.2) && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
 		distance_traveled_R = (encoder_count_R - starting_encoder_count_R) * wheel_diameter_R * PI / CPR;
 		distance_traveled_L = (encoder_count_L - starting_encoder_count_L) * wheel_diameter_L * PI / CPR;
-		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.2 / ( MAX(fabs(speed), 100)/100.0); // 0.05
+		yaw_centering_term = ( fabs(distance_traveled_R) - fabs(distance_traveled_L) ) * 0.1 / ( MAX(fabs(speed), 100)/100.0); // 0.05
 
 		set_target_speeds(speed*(1 - yaw_centering_term) ,-speed* (1 + yaw_centering_term));
 		speed = MAX(fabs(speed)*0.95, speed_offset) * direction_R;
@@ -420,8 +401,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	float y0 = current_y;
 
 	float distance =  get_bezier_distance(0, x0, y0, x1, y1, x2, y2, x3, y3);
-	if (distance < 900){
-		breaking_acceleration = -2;
+	if (distance < 400){
+		breaking_acceleration = -3;
 	}
 	float d_1 = speed/ramping_acceleration;
 	float d_2 = speed/breaking_acceleration + distance + deceleration_offset;
@@ -438,9 +419,10 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	if(wheel_state_L == EMERGENCY_BREAK){
 		return 0;
 	}
-	apply_smooth_or_not(is_smooth);
+	apply_smooth_or_not(fabs(distance), is_smooth);
 
 	acc_linearization_coef = sqrt(d_1);
+	dec_linearization_coef = sqrt(distance - d_2);
 
 	while(!is_idle()){
 		delay(10);
@@ -484,7 +466,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 		float radius = get_bezier_radius(t, x0, y0, x1, y1, x2, y2, x3, y3);
 
-	    speed = direction * calculate_instant_target_speed_R(d, distance);
+	    speed = direction * calculate_instant_target_speed(d, distance);
 
 	    float signed_distance =  signed_distance_to_bezier(current_x, current_y, x0, y0, x1, y1, x2, y2, x3, y3, t);
 		float phi_error = get_target_phi(t, x0, y0, x1, y1, x2, y2, x3, y3) + (PI*(1-direction) )/2 - current_phi ;
@@ -655,7 +637,7 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int encoder_tolerance = 120;
+	int encoder_tolerance = 200;
 	int pwm_tolerance = 1000;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);
@@ -674,8 +656,8 @@ void reset_speed_control_variables(){
 	filtered_target_speed_R = 0;
 	filtered_target_speed_L = 0;
 }
-void apply_smooth_or_not(int8_t is_smooth){
-	deceleration_offset = (is_smooth)? deceleration_offset_smooth : deceleration_offset_fast;
+void apply_smooth_or_not(float distance, int8_t is_smooth){
+	deceleration_offset = (is_smooth)? -((MAX(MIN(distance, 800), 100)/800) * 90 - 10 ): deceleration_offset_fast;
 	speed_offset = (is_smooth)? speed_offset_smooth : speed_offset_fast;
 	breaking_acceleration = (is_smooth)? breaking_acceleration_smooth : breaking_acceleration_speed;
 	position_max_response = default_position_max_response;
@@ -686,7 +668,8 @@ void reset_navigation_vars(){
 	trajectory = STRAIGHT;
 	control_loop_state = DISACTIVATED;
 	ramping_acceleration = 10;
-	acc_linearization_coef = 12;
+	acc_linearization_coef = 0;
+	dec_linearization_coef = 0;
 	breaking_acceleration = -2;
 	deceleration_offset = 40;
 	speed_offset = 150;

@@ -54,11 +54,11 @@ int8_t first_forward_recieved = 0;
 // speed control parameters
 float kpS_R = 15; // 5
 float kdS_R = 0; // at this frequency, derivative is too noisy to be utilized
-float kiS_R = 90; //
+float kiS_R = 200; //
 
 float kpS_L = 15; // 15
 float kdS_L = 0; //
-float kiS_L = 90; // 90
+float kiS_L = 200; // 90
 
 int timer_flag = 0;
 
@@ -79,6 +79,10 @@ int accepted_new_go_to = 0;
 int command_count = 0;
 int fail_safe_activated = 0;
 float fail_safe_counter = 0;
+
+float last_set_position_x = 0;
+float last_set_position_y = 0;
+float last_set_position_phi = 0;
 
 #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
 #define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
@@ -119,6 +123,8 @@ void reset_everything(){
 	reset_speed_control_variables();
 	reset_position_control_variables();
 	reset_position();
+
+	set_position(last_set_position_x, last_set_position_y, last_set_position_phi, last_set_position_phi);
 
 	communication_state = PC;
 
@@ -181,6 +187,9 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 15: // set_position
+										last_set_position_x = req_in->arg2;
+										last_set_position_y = req_in->arg3;
+										last_set_position_phi = req_in->arg4;
 										prepare_set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
 										emergency_recieved = 0;
 										res_out->result = true;  // x, y, speed
@@ -1127,9 +1136,9 @@ void IMU_update_function(void *argument)
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 //
-//	prepare_orientate(-90, 0, 0);
+//	prepare_orientate(180, 0, 0);
 //	delay(2000);
-//	prepare_go_to(1000, 0, 1100, 1, 1);
+//	prepare_go_to(500, 500, 1100, 1, 0);
 //	delay(700);
 //	prepare_emergency_break();
 
