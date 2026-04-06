@@ -15,8 +15,8 @@ float ramping_acceleration = 10;
 float acc_linearization_coef = 0;
 float dec_linearization_coef = 0;
 
-float breaking_acceleration = -2;
-float breaking_acceleration_speed = -2;
+float breaking_acceleration = -1.7;
+float breaking_acceleration_speed = -1.7;
 float breaking_acceleration_smooth = -1.55;
 
 float deceleration_offset = 40;
@@ -27,7 +27,7 @@ float speed_offset = 150;
 float speed_offset_fast = 150;
 float speed_offset_smooth = 80;
 
-float rotating_speed = 650;
+float rotating_speed = 600;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;
@@ -251,7 +251,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
 	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/10.0 + 10), 10); // high acceleration for small angle and low for large 200 kenet 300
-	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/2.5 + 12), -3); // same logic
+	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/2.5 + 12), -2); // same logic
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
 	direction_R = SGN(arc_length);

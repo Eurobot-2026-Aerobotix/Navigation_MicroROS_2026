@@ -376,9 +376,9 @@ int main(void)
   setup_motor_channels(&htim1, TIM_CHANNEL_4, TIM_CHANNEL_3, TIM_CHANNEL_2, TIM_CHANNEL_1);
   setup_encoder_timers(&htim3, &htim4, 14400);
   //setup_wheel_diameters(79.67706788, 80.9302886);
-  setup_wheel_diameters(63.457307833406560678205589174046, 63.418774067686835255685636818921);
+  setup_wheel_diameters(63.393850525573154117527383584872, 63.418774067686835255685636818921);
 
-  setup_wheels_spacing(188.5, 283.98401314982547824580058860284);
+  setup_wheels_spacing(188.5, 283.89675576749410147531330144952);
 
   setup_aruco_positions(61, 96.85, -76.9, -97.35);
   //setup_wheels_spacing(188.5, 342.5);
@@ -436,6 +436,15 @@ int main(void)
   robot_status.status = IDLE;
   set_target_speeds(0, 0);
   control_loop_state = SPEED;
+//
+//  rotating_speed = 300;
+//  rotate(3600, 0, 0);
+
+//  set_target_encoder_counts(0, 0);
+//  while(1){
+//	  send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
+//	  delay(10);
+//  }
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -1135,10 +1144,16 @@ void IMU_update_function(void *argument)
 	// IMU abandoned, bhim yeser brojla, a7wel
 	//update_current_yaw();
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
-//
-//	prepare_orientate(180, 0, 0);
-//	delay(2000);
-//	prepare_go_to(500, 500, 1100, 1, 0);
+//	set_position(1750, 1845, 180, 180);
+//	prepare_go_to(1750, 245, 1100, 1, 0);
+//	delay(6000);
+//	prepare_go_to(1250, 245, 1100, 1, 0);
+//	delay(6000);
+//	prepare_go_to(1750, 245, 1100, 1, 0);
+//	delay(6000);
+//	prepare_go_to(1750, 1845, 1100, 1, 0);
+//	delay(6000);
+//	prepare_orientate(0, 0, 0);
 //	delay(700);
 //	prepare_emergency_break();
 
