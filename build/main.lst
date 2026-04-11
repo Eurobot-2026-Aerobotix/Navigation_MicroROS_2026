@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
   28:Core/Src/main.c **** #include "Odometry.h"
   29:Core/Src/main.c **** #include "navigation.h"
   30:Core/Src/main.c **** #include "EKF.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 2
 
 
   31:Core/Src/main.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
   85:Core/Src/main.c **** float last_set_position_phi = 0;
   86:Core/Src/main.c **** 
   87:Core/Src/main.c **** #define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 3
 
 
   88:Core/Src/main.c **** #define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  142:Core/Src/main.c **** 	PWM_R = 0;
  143:Core/Src/main.c **** 	PWM_L = 0;
  144:Core/Src/main.c **** }
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 4
 
 
  145:Core/Src/main.c **** 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  199:Core/Src/main.c **** 										 break;
  200:Core/Src/main.c **** 									 case 17://fix x and y
  201:Core/Src/main.c **** 										 __disable_irq();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 5
 
 
  202:Core/Src/main.c **** 										 control_loop_state = DISACTIVATED;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  256:Core/Src/main.c ****     rosidl_runtime_c__String__assign(&debug_msg.data, text);
  257:Core/Src/main.c ****     rcl_publish(&debugger_publisher, &debug_msg, NULL);
  258:Core/Src/main.c **** }
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 6
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 6
 
 
  259:Core/Src/main.c **** 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  313:Core/Src/main.c **** static void MX_TIM3_Init(void);
  314:Core/Src/main.c **** static void MX_TIM4_Init(void);
  315:Core/Src/main.c **** static void MX_TIM7_Init(void);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 7
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 7
 
 
  316:Core/Src/main.c **** static void MX_USART2_UART_Init(void);
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  370:Core/Src/main.c ****   MX_TIM14_Init();
  371:Core/Src/main.c ****   MX_TIM5_Init();
  372:Core/Src/main.c ****   MX_I2C1_Init();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 8
 
 
  373:Core/Src/main.c ****   /* USER CODE BEGIN 2 */
@@ -429,7 +429,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  378:Core/Src/main.c ****   //setup_wheel_diameters(79.67706788, 80.9302886);
  379:Core/Src/main.c ****   setup_wheel_diameters(63.454032077149873579879965735627, 63.418774067686835255685636818921);
  380:Core/Src/main.c **** 
- 381:Core/Src/main.c ****   setup_wheels_spacing(188.5, 283.87941615551508767968901160362);
+ 381:Core/Src/main.c ****   setup_wheels_spacing(188.5, 283.948704880287375825474682519);
  382:Core/Src/main.c **** 
  383:Core/Src/main.c ****   setup_aruco_positions(61, 96.85, -76.9, -97.35);
  384:Core/Src/main.c ****   //setup_wheels_spacing(188.5, 342.5);
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  427:Core/Src/main.c ****   current_imu_yaw = 0;
  428:Core/Src/main.c ****   current_imu_gyro_z = 0;
  429:Core/Src/main.c ****   absolute_imu_yaw = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 9
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 9
 
 
  430:Core/Src/main.c ****   communication_state = PC;
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  484:Core/Src/main.c ****   /* add events, ... */
  485:Core/Src/main.c ****   /* USER CODE END RTOS_EVENTS */
  486:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 10
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 10
 
 
  487:Core/Src/main.c ****   /* Start scheduler */
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  541:Core/Src/main.c ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
  542:Core/Src/main.c ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
  543:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 11
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 11
 
 
  544:Core/Src/main.c ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  598:Core/Src/main.c ****   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
  599:Core/Src/main.c **** 
  600:Core/Src/main.c ****   /* USER CODE BEGIN TIM1_Init 1 */
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 12
 
 
  601:Core/Src/main.c **** 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  655:Core/Src/main.c **** 
  656:Core/Src/main.c ****   /* USER CODE END TIM1_Init 2 */
  657:Core/Src/main.c ****   HAL_TIM_MspPostInit(&htim1);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 13
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 13
 
 
  658:Core/Src/main.c **** 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  712:Core/Src/main.c ****   * @param None
  713:Core/Src/main.c ****   * @retval None
  714:Core/Src/main.c ****   */
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 14
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 14
 
 
  715:Core/Src/main.c **** static void MX_TIM4_Init(void)
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  769:Core/Src/main.c ****   /* USER CODE END TIM5_Init 0 */
  770:Core/Src/main.c **** 
  771:Core/Src/main.c ****   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 15
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 15
 
 
  772:Core/Src/main.c ****   TIM_MasterConfigTypeDef sMasterConfig = {0};
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  826:Core/Src/main.c ****   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
  827:Core/Src/main.c ****   {
  828:Core/Src/main.c ****     Error_Handler();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 16
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 16
 
 
  829:Core/Src/main.c ****   }
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  883:Core/Src/main.c ****   /* USER CODE END USART2_Init 0 */
  884:Core/Src/main.c **** 
  885:Core/Src/main.c ****   /* USER CODE BEGIN USART2_Init 1 */
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 17
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 17
 
 
  886:Core/Src/main.c **** 
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  940:Core/Src/main.c ****   __HAL_RCC_GPIOB_CLK_ENABLE();
  941:Core/Src/main.c **** 
  942:Core/Src/main.c ****   /*Configure GPIO pin Output Level */
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 18
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 18
 
 
  943:Core/Src/main.c ****   HAL_GPIO_WritePin(trig_GPIO_Port, trig_Pin, GPIO_PIN_RESET);
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  997:Core/Src/main.c ****       cubemx_transport_read
  998:Core/Src/main.c ****   );
  999:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 19
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 19
 
 
 1000:Core/Src/main.c ****   allocator = rcl_get_default_allocator();
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
 1054:Core/Src/main.c ****         system_state = AGENT_WAIT;
 1055:Core/Src/main.c ****         break;
 1056:Core/Src/main.c ****     }
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 20
 
 
 1057:Core/Src/main.c **** 
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
 1111:Core/Src/main.c **** 			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], ro
 1112:Core/Src/main.c **** 			robot_status.status = IDLE;
 1113:Core/Src/main.c **** 		}
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 21
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 21
 
 
 1114:Core/Src/main.c **** 		else if ( robot_status.status == SETTIN_POSITION){
@@ -1249,25 +1249,26 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
 1144:Core/Src/main.c **** 	// IMU abandoned, bhim yeser brojla, a7wel
 1145:Core/Src/main.c **** 	//update_current_yaw();
 1146:Core/Src/main.c **** 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gy
-1147:Core/Src/main.c **** //	rotating_speed = 300;
-1148:Core/Src/main.c **** //	set_position(1750, 1845, 180, 180);
-1149:Core/Src/main.c **** //	prepare_go_to(1750, 2755, 300, 1, 0);
-1150:Core/Src/main.c **** //	delay(10000);
-1151:Core/Src/main.c **** //	prepare_go_to(300, 2755, 300, 1, 0);
-1152:Core/Src/main.c **** //	delay(10000);
-1153:Core/Src/main.c **** //	prepare_go_to(1750, 245, 1100, 1, 0);
-1154:Core/Src/main.c **** //	delay(6000);
-1155:Core/Src/main.c **** //	prepare_go_to(1750, 1845, 1100, 1, 0);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 22
+1147:Core/Src/main.c **** //	 prepare_bezier_curve(100, 0, 200, 0, 1000, 0, 1100, 1, 0);
+1148:Core/Src/main.c **** //	rotating_speed = 300;
+1149:Core/Src/main.c **** //	set_position(1750, 1845, 180, 180);
+1150:Core/Src/main.c **** //	prepare_go_to(1000, 0, 1100, 1, 0);
+1151:Core/Src/main.c **** //	delay(10000);
+1152:Core/Src/main.c **** //	prepare_go_to(300, 2755, 300, 1, 0);
+1153:Core/Src/main.c **** //	delay(10000);
+1154:Core/Src/main.c **** //	prepare_go_to(1750, 245, 1100, 1, 0);
+1155:Core/Src/main.c **** //	delay(6000);
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 22
 
 
-1156:Core/Src/main.c **** //	delay(6000);
-1157:Core/Src/main.c **** //	prepare_orientate(0, 0, 0);
-1158:Core/Src/main.c **** //	delay(700);
-1159:Core/Src/main.c **** //	prepare_emergency_break();
-1160:Core/Src/main.c **** 
-1161:Core/Src/main.c ****     delay(60000000);
-  44              		.loc 1 1161 5 discriminator 1 view .LVU3
+1156:Core/Src/main.c **** //	prepare_go_to(1750, 1845, 1100, 1, 0);
+1157:Core/Src/main.c **** //	delay(6000);
+1158:Core/Src/main.c **** //	prepare_orientate(0, 0, 0);
+1159:Core/Src/main.c **** //	delay(700);
+1160:Core/Src/main.c **** //	prepare_emergency_break();
+1161:Core/Src/main.c **** 
+1162:Core/Src/main.c ****     delay(60000000);
+  44              		.loc 1 1162 5 discriminator 1 view .LVU3
   45 0002 0248     		ldr	r0, .L4
   46 0004 FFF7FEFF 		bl	delay
   47              	.LVL2:
@@ -1317,10 +1318,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
   88              		.loc 1 937 3 is_stmt 1 view .LVU8
   89              	.LBB11:
  937:Core/Src/main.c ****   __HAL_RCC_GPIOH_CLK_ENABLE();
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 23
+
+
   90              		.loc 1 937 3 view .LVU9
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 23
-
-
   91 0010 0194     		str	r4, [sp, #4]
  937:Core/Src/main.c ****   __HAL_RCC_GPIOH_CLK_ENABLE();
   92              		.loc 1 937 3 view .LVU10
@@ -1377,10 +1378,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  130 0044 1A6B     		ldr	r2, [r3, #48]
  131 0046 02F00102 		and	r2, r2, #1
  132 004a 0392     		str	r2, [sp, #12]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 24
+
+
  939:Core/Src/main.c ****   __HAL_RCC_GPIOB_CLK_ENABLE();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 24
-
-
  133              		.loc 1 939 3 view .LVU24
  134 004c 039A     		ldr	r2, [sp, #12]
  135              	.LBE13:
@@ -1437,10 +1438,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  173 0080 0694     		str	r4, [sp, #24]
  951:Core/Src/main.c ****   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
  174              		.loc 1 951 3 is_stmt 1 view .LVU38
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 25
+
+
  951:Core/Src/main.c ****   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 25
-
-
  175              		.loc 1 951 24 is_stmt 0 view .LVU39
  176 0082 0794     		str	r4, [sp, #28]
  952:Core/Src/main.c **** 
@@ -1497,10 +1498,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  211              		.loc 1 965 3 is_stmt 1 view .LVU56
  965:Core/Src/main.c ****   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
  212              		.loc 1 965 25 is_stmt 0 view .LVU57
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 26
+
+
  213 00a8 0894     		str	r4, [sp, #32]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 26
-
-
  966:Core/Src/main.c **** 
  214              		.loc 1 966 3 is_stmt 1 view .LVU58
  215 00aa 05A9     		add	r1, sp, #20
@@ -1557,10 +1558,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  263 0010 1A63     		str	r2, [r3, #48]
  913:Core/Src/main.c **** 
  264              		.loc 1 913 3 view .LVU64
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 27
+
+
  265 0012 1B6B     		ldr	r3, [r3, #48]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 27
-
-
  266 0014 03F40013 		and	r3, r3, #2097152
  267 0018 0193     		str	r3, [sp, #4]
  913:Core/Src/main.c **** 
@@ -1617,10 +1618,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
   91:Core/Src/main.c **** 	reset_motors_vars();
  314              		.loc 1 91 24 is_stmt 1 view -0
  315              		.cfi_startproc
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 28
+
+
  316              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 28
-
-
  317              		@ frame_needed = 0, uses_anonymous_args = 0
  318 0000 70B5     		push	{r4, r5, r6, lr}
  319              	.LCFI7:
@@ -1677,10 +1678,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  357              		.loc 1 99 17 is_stmt 0 view .LVU85
  358 002e 354B     		ldr	r3, .L16+20
  359 0030 83ED008A 		vstr.32	s16, [r3]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 29
+
+
  100:Core/Src/main.c **** 	current_acceleration_R = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 29
-
-
  360              		.loc 1 100 2 is_stmt 1 view .LVU86
  100:Core/Src/main.c **** 	current_acceleration_R = 0;
  361              		.loc 1 100 17 is_stmt 0 view .LVU87
@@ -1737,10 +1738,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  396 0066 83ED008A 		vstr.32	s16, [r3]
  110:Core/Src/main.c **** 	current_x = 0;
  397              		.loc 1 110 2 is_stmt 1 view .LVU104
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 30
+
+
  110:Core/Src/main.c **** 	current_x = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 30
-
-
  398              		.loc 1 110 25 is_stmt 0 view .LVU105
  399 006a 304B     		ldr	r3, .L16+60
  400 006c 83ED008A 		vstr.32	s16, [r3]
@@ -1797,10 +1798,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  120:Core/Src/main.c **** 
  434              		.loc 1 120 19 is_stmt 0 view .LVU123
  435 009c 2C4B     		ldr	r3, .L16+96
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 31
+
+
  436 009e 83ED008A 		vstr.32	s16, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 31
-
-
  122:Core/Src/main.c **** 	reset_speed_control_variables();
  437              		.loc 1 122 2 is_stmt 1 view .LVU124
  122:Core/Src/main.c **** 	reset_speed_control_variables();
@@ -1857,10 +1858,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  135:Core/Src/main.c **** }
  477              		.loc 1 135 2 is_stmt 1 view .LVU137
  135:Core/Src/main.c **** }
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 32
+
+
  478              		.loc 1 135 22 is_stmt 0 view .LVU138
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 32
-
-
  479 00e4 0123     		movs	r3, #1
  480 00e6 2B70     		strb	r3, [r5]
  136:Core/Src/main.c **** void shutdown(){
@@ -1917,10 +1918,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  533              	.LFB160:
 1074:Core/Src/main.c ****   /* USER CODE BEGIN executor_function */
  534              		.loc 1 1074 1 is_stmt 1 view -0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 33
+
+
  535              		.cfi_startproc
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 33
-
-
  536              		@ Volatile: function does not return.
  537              		@ args = 0, pretend = 0, frame = 8
  538              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1977,10 +1978,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  579 0038 D317     		asrs	r3, r2, #31
  580 003a C3EBA103 		rsb	r3, r3, r1, asr #2
  581 003e 03EB8303 		add	r3, r3, r3, lsl #2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 34
+
+
  582 0042 5900     		lsls	r1, r3, #1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 34
-
-
 1122:Core/Src/main.c **** 			command_history = command_history*10;
  583              		.loc 1 1122 35 discriminator 1 view .LVU151
  584 0044 8A42     		cmp	r2, r1
@@ -2037,10 +2038,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  625 0090 F9010000 		.word	.L21+1
  626              		.p2align 1
  627              	.L30:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 35
+
+
 1085:Core/Src/main.c **** 			robot_status.status = IDLE;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 35
-
-
  628              		.loc 1 1085 4 view .LVU162
 1085:Core/Src/main.c **** 			robot_status.status = IDLE;
  629              		.loc 1 1085 44 is_stmt 0 view .LVU163
@@ -2097,10 +2098,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
 1093:Core/Src/main.c **** 			robot_status.status = IDLE;
  670              		.loc 1 1093 4 is_stmt 1 view .LVU174
 1093:Core/Src/main.c **** 			robot_status.status = IDLE;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 36
+
+
  671              		.loc 1 1093 63 is_stmt 0 view .LVU175
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 36
-
-
  672 00ec 4C4C     		ldr	r4, .L35
  673 00ee D4ED027A 		vldr.32	s15, [r4, #8]
 1093:Core/Src/main.c **** 			robot_status.status = IDLE;
@@ -2157,10 +2158,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  714 0148 394A     		ldr	r2, .L35+16
  715 014a 1368     		ldr	r3, [r2]
  716 014c 013B     		subs	r3, r3, #1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 37
+
+
  717 014e 1360     		str	r3, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 37
-
-
 1100:Core/Src/main.c **** 		}
  718              		.loc 1 1100 4 is_stmt 1 view .LVU187
 1100:Core/Src/main.c **** 		}
@@ -2217,10 +2218,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  761              	.LVL29:
 1108:Core/Src/main.c **** 		}
  762              		.loc 1 1108 4 is_stmt 1 view .LVU197
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 38
+
+
 1108:Core/Src/main.c **** 		}
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 38
-
-
  763              		.loc 1 1108 24 is_stmt 0 view .LVU198
  764 01b6 0023     		movs	r3, #0
  765 01b8 2370     		strb	r3, [r4]
@@ -2277,10 +2278,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  807 0214 FFF7FEFF 		bl	reset_everything
  808              	.LVL32:
 1120:Core/Src/main.c **** 		}
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 39
+
+
  809              		.loc 1 1120 4 view .LVU208
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 39
-
-
 1120:Core/Src/main.c **** 		}
  810              		.loc 1 1120 24 is_stmt 0 view .LVU209
  811 0218 014B     		ldr	r3, .L35
@@ -2337,10 +2338,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  141:Core/Src/main.c **** 	PWM_R = 0;
  858              		.loc 1 141 2 is_stmt 1 view .LVU216
  859 0010 0120     		movs	r0, #1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 40
+
+
  860 0012 FFF7FEFF 		bl	delay
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 40
-
-
  861              	.LVL34:
  142:Core/Src/main.c **** 	PWM_L = 0;
  862              		.loc 1 142 2 view .LVU217
@@ -2397,10 +2398,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  909              		.cfi_offset 8, -20
  910              		.cfi_offset 9, -16
  911              		.cfi_offset 10, -12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 41
+
+
  912              		.cfi_offset 11, -8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 41
-
-
  913              		.cfi_offset 14, -4
  914 0004 2DED048B 		vpush.64	{d8, d9}
  915              	.LCFI14:
@@ -2457,10 +2458,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  957 003e 7400     		.2byte	(.L50-.L44)/2
  958 0040 9000     		.2byte	(.L49-.L44)/2
  959 0042 AD00     		.2byte	(.L48-.L44)/2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 42
+
+
  960 0044 C600     		.2byte	(.L47-.L44)/2
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 42
-
-
  961 0046 DA00     		.2byte	(.L46-.L44)/2
  962 0048 1E02     		.2byte	(.L45-.L44)/2
  963 004a 2502     		.2byte	(.L43-.L44)/2
@@ -2517,10 +2518,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1004              		.cfi_def_cfa_offset 36
  1005 007e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
  1006              	.LVL40:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 43
+
+
  1007              	.L55:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 43
-
-
  1008              	.LCFI18:
  1009              		.cfi_restore_state
  1010              	.LBB23:
@@ -2577,10 +2578,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1048 00ba DDE7     		b	.L41
  1049              	.LVL45:
  1050              	.L53:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 44
+
+
  169:Core/Src/main.c **** 										res_out->result = true;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 44
-
-
  1051              		.loc 1 169 11 view .LVU256
  1052 00bc FFF7FEFF 		bl	prepare_emergency_break
  1053              	.LVL46:
@@ -2637,10 +2638,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1090 00e2 0023     		movs	r3, #0
  1091 00e4 FBE7     		b	.L58
  1092              	.L66:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 45
+
+
  174:Core/Src/main.c **** 										break;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 45
-
-
  1093              		.loc 1 174 103 discriminator 5 view .LVU271
  1094 00e6 0123     		movs	r3, #1
  1095 00e8 F9E7     		b	.L58
@@ -2697,10 +2698,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1135 0136 92ED031A 		vldr.32	s2, [r2, #12]
  1136 013a D2ED020A 		vldr.32	s1, [r2, #8]
  1137 013e 92ED010A 		vldr.32	s0, [r2, #4]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 46
+
+
  1138 0142 FFF7FEFF 		bl	prepare_bezier_curve
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 46
-
-
  1139              	.LVL54:
  183:Core/Src/main.c **** 										break;
  1140              		.loc 1 183 11 is_stmt 1 view .LVU283
@@ -2757,10 +2758,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1179 018a 664B     		ldr	r3, .L71+12
  1180 018c 83ED000A 		vstr.32	s0, [r3]
  191:Core/Src/main.c **** 										last_set_position_phi = req_in->arg4;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 47
+
+
  1181              		.loc 1 191 11 is_stmt 1 view .LVU296
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 47
-
-
  191:Core/Src/main.c **** 										last_set_position_phi = req_in->arg4;
  1182              		.loc 1 191 39 is_stmt 0 view .LVU297
  1183 0190 D0ED020A 		vldr.32	s1, [r0, #8]
@@ -2817,10 +2818,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1219              		.loc 1 198 43 discriminator 1 view .LVU312
  1220 01c2 13B9     		cbnz	r3, .L59
  198:Core/Src/main.c **** 										 break;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 48
+
+
  1221              		.loc 1 198 92 discriminator 3 view .LVU313
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 48
-
-
  1222 01c4 554B     		ldr	r3, .L71+4
  1223 01c6 1B68     		ldr	r3, [r3]
  198:Core/Src/main.c **** 										 break;
@@ -2877,10 +2878,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
   14:Drivers/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
   15:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
   16:Drivers/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 49
+
+
   17:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 49
-
-
   18:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
   19:Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
   20:Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -2937,10 +2938,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
   71:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
   72:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
   73:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 50
+
+
   74:Drivers/CMSIS/Include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 50
-
-
   75:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
   76:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)                  (((struct T_UINT32 *)(x))->v)
   77:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -2997,10 +2998,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  128:Drivers/CMSIS/Include/cmsis_gcc.h ****            in the used linker script.
  129:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  130:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 51
+
+
  131:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 51
-
-
  132:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  133:Drivers/CMSIS/Include/cmsis_gcc.h ****   extern void _start(void) __NO_RETURN;
  134:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -3057,10 +3058,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  185:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
  186:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __STACK_SEAL
  187:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __STACK_SEAL              __StackSeal
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 52
+
+
  188:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 52
-
-
  189:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  190:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __TZ_STACK_SEAL_SIZE
  191:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __TZ_STACK_SEAL_SIZE      8U
@@ -3117,10 +3118,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  242:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFE()                             __ASM volatile ("wfe":::"memory")
  243:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  244:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 53
+
+
  245:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 53
-
-
  246:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Send Event
  247:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  248:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -3177,10 +3178,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  299:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
  300:Drivers/CMSIS/Include/cmsis_gcc.h ****   return result;
  301:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 54
+
+
  302:Drivers/CMSIS/Include/cmsis_gcc.h **** }
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 54
-
-
  303:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  304:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  305:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -3237,10 +3238,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  356:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  357:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  358:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Breakpoint
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 55
+
+
  359:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Causes the processor to enter Debug state.
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 55
-
-
  360:Drivers/CMSIS/Include/cmsis_gcc.h ****            Debug tools can use this to investigate system state when the instruction at a particula
  361:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    value  is ignored by the processor.
  362:Drivers/CMSIS/Include/cmsis_gcc.h ****                  If required, a debugger can use it to store additional information about the break
@@ -3297,10 +3298,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  413:Drivers/CMSIS/Include/cmsis_gcc.h ****    */
  414:Drivers/CMSIS/Include/cmsis_gcc.h ****   if (value == 0U)
  415:Drivers/CMSIS/Include/cmsis_gcc.h ****   {
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 56
+
+
  416:Drivers/CMSIS/Include/cmsis_gcc.h ****     return 32U;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 56
-
-
  417:Drivers/CMSIS/Include/cmsis_gcc.h ****   }
  418:Drivers/CMSIS/Include/cmsis_gcc.h ****   return __builtin_clz(value);
  419:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -3357,10 +3358,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  470:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  471:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   LDR Exclusive (32 bit)
  472:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a exclusive LDR instruction for 32 bit values.
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 57
+
+
  473:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to data
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 57
-
-
  474:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return        value of type uint32_t at (*ptr)
  475:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  476:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __LDREXW(volatile uint32_t *addr)
@@ -3417,10 +3418,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  527:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __STREXW(uint32_t value, volatile uint32_t *addr)
  528:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  529:Drivers/CMSIS/Include/cmsis_gcc.h ****    uint32_t result;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 58
+
+
  530:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 58
-
-
  531:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
  532:Drivers/CMSIS/Include/cmsis_gcc.h ****    return(result);
  533:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -3477,10 +3478,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  584:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  585:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  586:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 59
+
+
  587:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Rotate Right with Extend (32 bit)
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 59
-
-
  588:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Moves each bit of a bitstring right by one bit.
  589:Drivers/CMSIS/Include/cmsis_gcc.h ****            The carry input is shifted in at the left end of the bitstring.
  590:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    value  Value to rotate
@@ -3537,10 +3538,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  641:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  642:Drivers/CMSIS/Include/cmsis_gcc.h ****    return ((uint16_t) result);    /* Add explicit type cast here */
  643:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 60
+
+
  644:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 60
-
-
  645:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  646:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  647:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   LDRT Unprivileged (32 bit)
@@ -3597,10 +3598,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  698:Drivers/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
  699:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  700:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 61
+
+
  701:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Signed Saturate
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 61
-
-
  702:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Saturates a signed value.
  703:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]  value  Value to be saturated
  704:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    sat  Bit position to saturate to (1..32)
@@ -3657,10 +3658,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  755:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
  756:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  757:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Load-Acquire (8 bit)
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 62
+
+
  758:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a LDAB instruction for 8 bit value.
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 62
-
-
  759:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to data
  760:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return             value of type uint8_t at (*ptr)
  761:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -3717,10 +3718,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  812:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  813:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  814:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Store-Release (16 bit)
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 63
+
+
  815:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a STLH instruction for 16 bit values.
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 63
-
-
  816:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]  value  Value to store
  817:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to location
  818:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -3777,10 +3778,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  869:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Executes a LDA exclusive instruction for 32 bit values.
  870:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ptr  Pointer to data
  871:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return        value of type uint32_t at (*ptr)
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 64
+
+
  872:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 64
-
-
  873:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __LDAEX(volatile uint32_t *ptr)
  874:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  875:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t result;
@@ -3837,10 +3838,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  926:Drivers/CMSIS/Include/cmsis_gcc.h ****    uint32_t result;
  927:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  928:Drivers/CMSIS/Include/cmsis_gcc.h ****    __ASM volatile ("stlex %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memo
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 65
+
+
  929:Drivers/CMSIS/Include/cmsis_gcc.h ****    return(result);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 65
-
-
  930:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  931:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  932:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
@@ -3897,10 +3898,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  203:Core/Src/main.c **** 										 float front_aruco_x = req_in->arg3;
  1270              		.loc 1 203 18 is_stmt 0 view .LVU328
  1271 01e8 D0ED017A 		vldr.32	s15, [r0, #4]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 66
+
+
  1272              	.LVL63:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 66
-
-
  204:Core/Src/main.c **** 										 float front_aruco_y = req_in->arg4;
  1273              		.loc 1 204 12 is_stmt 1 view .LVU329
  204:Core/Src/main.c **** 										 float front_aruco_y = req_in->arg4;
@@ -3957,10 +3958,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1308 0218 40F0AD80 		bne	.L63
  1309              	.LBB19:
  218:Core/Src/main.c **** 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 67
+
+
  1310              		.loc 1 218 13 is_stmt 1 view .LVU347
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 67
-
-
  218:Core/Src/main.c **** 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_
  1311              		.loc 1 218 61 is_stmt 0 view .LVU348
  1312 021c 484B     		ldr	r3, .L71+40
@@ -4017,10 +4018,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  218:Core/Src/main.c **** 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_
  1356              		.loc 1 218 101 discriminator 1 view .LVU356
  1357 0270 8946     		mov	r9, r1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 68
+
+
  218:Core/Src/main.c **** 											 float y = front_aruco_y - front_aruco_relative_x*sin(robot_phi) - front_aruco_relative_
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 68
-
-
  1358              		.loc 1 218 102 discriminator 1 view .LVU357
  1359 0272 B0EE490A 		vmov.f32	s0, s18
  1360 0276 F0EE690A 		vmov.f32	s1, s19
@@ -4077,10 +4078,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1403 02c2 8946     		mov	r9, r1
  219:Core/Src/main.c **** 											 set_position(x, y, rad_to_deg(robot_phi), rad_to_deg(robot_phi));
  1404              		.loc 1 219 101 discriminator 2 view .LVU366
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 69
+
+
  1405 02c4 3246     		mov	r2, r6
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 69
-
-
  1406 02c6 3B46     		mov	r3, r7
  1407 02c8 5046     		mov	r0, r10
  1408 02ca 5946     		mov	r1, fp
@@ -4137,10 +4138,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1449              	.LBB20:
  1450              	.LBI20:
  949:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 70
+
+
  1451              		.loc 2 949 27 view .LVU377
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 70
-
-
  1452              	.LBB21:
  951:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  1453              		.loc 2 951 3 view .LVU378
@@ -4197,10 +4198,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1497              		.loc 1 216 12 discriminator 2 view .LVU385
  1498 0364 B0EE681A 		vmov.f32	s2, s17
  1499 0368 00EE905A 		vmov	s1, r5
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 71
+
+
  1500 036c 00EE108A 		vmov	s0, r8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 71
-
-
  1501 0370 FFF7FEFF 		bl	set_position
  1502              	.LVL96:
  1503 0374 CAE7     		b	.L62
@@ -4257,10 +4258,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  222:Core/Src/main.c **** 											 float y = back_aruco_y - back_aruco_relative_x*sin(robot_phi) - back_aruco_relative_y*c
  1546              		.loc 1 222 98 discriminator 1 view .LVU394
  1547 03c0 324B     		ldr	r3, .L73+4
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 72
+
+
  1548 03c2 1868     		ldr	r0, [r3]	@ float
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 72
-
-
  1549 03c4 FFF7FEFF 		bl	__aeabi_f2d
  1550              	.LVL105:
  1551 03c8 8046     		mov	r8, r0
@@ -4317,10 +4318,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1593              	.LVL114:
  223:Core/Src/main.c **** 											 set_position(x, y, rad_to_deg(robot_phi), rad_to_deg(robot_phi));
  1594              		.loc 1 223 36 discriminator 1 view .LVU404
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 73
+
+
  1595 0412 4246     		mov	r2, r8
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 73
-
-
  1596 0414 4B46     		mov	r3, r9
  1597 0416 FFF7FEFF 		bl	__aeabi_dsub
  1598              	.LVL115:
@@ -4377,10 +4378,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1641              	.LBE22:
  231:Core/Src/main.c **** 										 break;
  1642              		.loc 1 231 12 is_stmt 1 view .LVU413
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 74
+
+
  231:Core/Src/main.c **** 										 break;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 74
-
-
  1643              		.loc 1 231 64 is_stmt 0 view .LVU414
  1644 0468 094B     		ldr	r3, .L73+8
  1645 046a 1B68     		ldr	r3, [r3]
@@ -4437,10 +4438,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1687              		.thumb
  1688              		.thumb_func
  1690              	publish_odom:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 75
+
+
  1691              	.LFB145:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 75
-
-
  244:Core/Src/main.c **** 	float pos[3];
  1692              		.loc 1 244 24 is_stmt 1 view -0
  1693              		.cfi_startproc
@@ -4497,10 +4498,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  249:Core/Src/main.c **** 
  1734              		.loc 1 249 2 is_stmt 1 view .LVU436
  249:Core/Src/main.c **** 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 76
+
+
  1735              		.loc 1 249 18 is_stmt 0 view .LVU437
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 76
-
-
  1736 0030 0398     		ldr	r0, [sp, #12]	@ float
  1737 0032 FFF7FEFF 		bl	__aeabi_f2d
  1738              	.LVL131:
@@ -4557,10 +4558,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  987:Core/Src/main.c ****   rcl_ret_t ret;
  1786              		.loc 1 987 3 is_stmt 1 view .LVU443
  1787              	.LVL134:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 77
+
+
  988:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 77
-
-
  1788              		.loc 1 988 3 view .LVU444
  991:Core/Src/main.c ****       true,
  1789              		.loc 1 991 3 view .LVU445
@@ -4617,10 +4618,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1831 003c 2246     		mov	r2, r4
  1832 003e 4FF4FA70 		mov	r0, #500
  1833 0042 0021     		movs	r1, #0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 78
+
+
  1834 0044 FFF7FEFF 		bl	execute_every_n_ms
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 78
-
-
  1835              	.LVL142:
 1015:Core/Src/main.c **** 
  1836              		.loc 1 1015 9 is_stmt 1 view .LVU455
@@ -4677,10 +4678,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
 1020:Core/Src/main.c ****           std_msgs__msg__String__init(&debug_msg);
  1876              		.loc 1 1020 24 is_stmt 0 view .LVU467
  1877 0078 0224     		movs	r4, #2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 79
+
+
  1878 007a E5E7     		b	.L80
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 79
-
-
  1879              	.LVL148:
  1880              	.L83:
 1032:Core/Src/main.c ****     	    {
@@ -4737,10 +4738,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1918              		.loc 1 1050 15 view .LVU481
 1049:Core/Src/main.c ****               break;
  1919              		.loc 1 1049 28 is_stmt 0 view .LVU482
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 80
+
+
  1920 00a2 0024     		movs	r4, #0
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 80
-
-
 1050:Core/Src/main.c **** 
  1921              		.loc 1 1050 15 view .LVU483
  1922 00a4 D0E7     		b	.L80
@@ -4797,10 +4798,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  256:Core/Src/main.c ****     rcl_publish(&debugger_publisher, &debug_msg, NULL);
  1970              		.loc 1 256 5 is_stmt 0 view .LVU489
  1971 0008 FFF7FEFF 		bl	rosidl_runtime_c__String__assign
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 81
+
+
  1972              	.LVL160:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 81
-
-
  257:Core/Src/main.c **** }
  1973              		.loc 1 257 5 is_stmt 1 view .LVU490
  1974 000c 0022     		movs	r2, #0
@@ -4830,26 +4831,26 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  1999              	HAL_TIM_PeriodElapsedCallback:
  2000              	.LVL162:
  2001              	.LFB162:
-1162:Core/Src/main.c ****   }
-1163:Core/Src/main.c ****   /* USER CODE END IMU_update_function */
-1164:Core/Src/main.c **** }
-1165:Core/Src/main.c **** 
+1163:Core/Src/main.c ****   }
+1164:Core/Src/main.c ****   /* USER CODE END IMU_update_function */
+1165:Core/Src/main.c **** }
 1166:Core/Src/main.c **** 
-1167:Core/Src/main.c **** /**
-1168:Core/Src/main.c ****   * @brief  Period elapsed callback in non blocking mode
-1169:Core/Src/main.c ****   * @note   This function is called  when TIM2 interrupt took place, inside
-1170:Core/Src/main.c ****   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-1171:Core/Src/main.c ****   * a global variable "uwTick" used as application time base.
-1172:Core/Src/main.c ****   * @param  htim : TIM handle
-1173:Core/Src/main.c ****   * @retval None
-1174:Core/Src/main.c ****   */
-1175:Core/Src/main.c **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-1176:Core/Src/main.c **** {
- 2002              		.loc 1 1176 1 is_stmt 1 view -0
+1167:Core/Src/main.c **** 
+1168:Core/Src/main.c **** /**
+1169:Core/Src/main.c ****   * @brief  Period elapsed callback in non blocking mode
+1170:Core/Src/main.c ****   * @note   This function is called  when TIM2 interrupt took place, inside
+1171:Core/Src/main.c ****   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+1172:Core/Src/main.c ****   * a global variable "uwTick" used as application time base.
+1173:Core/Src/main.c ****   * @param  htim : TIM handle
+1174:Core/Src/main.c ****   * @retval None
+1175:Core/Src/main.c ****   */
+1176:Core/Src/main.c **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+1177:Core/Src/main.c **** {
+ 2002              		.loc 1 1177 1 is_stmt 1 view -0
  2003              		.cfi_startproc
  2004              		@ args = 0, pretend = 0, frame = 8
  2005              		@ frame_needed = 0, uses_anonymous_args = 0
- 2006              		.loc 1 1176 1 is_stmt 0 view .LVU493
+ 2006              		.loc 1 1177 1 is_stmt 0 view .LVU493
  2007 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
  2008              	.LCFI25:
  2009              		.cfi_def_cfa_offset 32
@@ -4857,10 +4858,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2011              		.cfi_offset 5, -28
  2012              		.cfi_offset 6, -24
  2013              		.cfi_offset 7, -20
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 82
+
+
  2014              		.cfi_offset 8, -16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 82
-
-
  2015              		.cfi_offset 9, -12
  2016              		.cfi_offset 10, -8
  2017              		.cfi_offset 14, -4
@@ -4877,133 +4878,133 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2028              	.LCFI27:
  2029              		.cfi_def_cfa_offset 64
  2030 000a 0446     		mov	r4, r0
-1177:Core/Src/main.c ****   /* USER CODE BEGIN Callback 0 */
-1178:Core/Src/main.c **** 	if (htim-> Instance == TIM7){
- 2031              		.loc 1 1178 2 is_stmt 1 view .LVU494
- 2032              		.loc 1 1178 10 is_stmt 0 view .LVU495
+1178:Core/Src/main.c ****   /* USER CODE BEGIN Callback 0 */
+1179:Core/Src/main.c **** 	if (htim-> Instance == TIM7){
+ 2031              		.loc 1 1179 2 is_stmt 1 view .LVU494
+ 2032              		.loc 1 1179 10 is_stmt 0 view .LVU495
  2033 000c 0268     		ldr	r2, [r0]
- 2034              		.loc 1 1178 5 view .LVU496
+ 2034              		.loc 1 1179 5 view .LVU496
  2035 000e 8E4B     		ldr	r3, .L173
  2036 0010 9A42     		cmp	r2, r3
  2037 0012 09D0     		beq	.L164
  2038              	.LVL163:
  2039              	.L100:
-1179:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
-1180:Core/Src/main.c **** 			PWM_L = 0;
-1181:Core/Src/main.c **** 			PWM_R = 0;
-1182:Core/Src/main.c **** 		}else{
-1183:Core/Src/main.c **** 			//update_position(skip_position_update);
-1184:Core/Src/main.c **** 			update_position(0);
-1185:Core/Src/main.c **** 			if (control_loop_state == SPEED){
-1186:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
-1187:Core/Src/main.c **** 				// right motor speed control
-1188:Core/Src/main.c **** 				float error = target_speed_R - current_speed_R;
-1189:Core/Src/main.c **** 
-1190:Core/Src/main.c **** 				speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/
-1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
-1192:Core/Src/main.c **** 
-1193:Core/Src/main.c **** 				previous_speed_error_R = error;
-1194:Core/Src/main.c **** 
-1195:Core/Src/main.c **** 				PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_
-1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
-1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
-1198:Core/Src/main.c **** 
-1199:Core/Src/main.c **** 				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) || (fabs(speed_integral_R*kiS_R)
-1200:Core/Src/main.c **** 
-1201:Core/Src/main.c **** 				// left motor speed control
-1202:Core/Src/main.c **** 				error = target_speed_L - current_speed_L;
-1203:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
-1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
-1205:Core/Src/main.c **** 
-1206:Core/Src/main.c **** 				previous_speed_error_L = error;
-1207:Core/Src/main.c **** 				previous_speed_control_time = micros();
-1208:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 83
+1180:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
+1181:Core/Src/main.c **** 			PWM_L = 0;
+1182:Core/Src/main.c **** 			PWM_R = 0;
+1183:Core/Src/main.c **** 		}else{
+1184:Core/Src/main.c **** 			//update_position(skip_position_update);
+1185:Core/Src/main.c **** 			update_position(0);
+1186:Core/Src/main.c **** 			if (control_loop_state == SPEED){
+1187:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
+1188:Core/Src/main.c **** 				// right motor speed control
+1189:Core/Src/main.c **** 				float error = target_speed_R - current_speed_R;
+1190:Core/Src/main.c **** 
+1191:Core/Src/main.c **** 				speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/
+1192:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+1193:Core/Src/main.c **** 
+1194:Core/Src/main.c **** 				previous_speed_error_R = error;
+1195:Core/Src/main.c **** 
+1196:Core/Src/main.c **** 				PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_
+1197:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+1198:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+1199:Core/Src/main.c **** 
+1200:Core/Src/main.c **** 				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) || (fabs(speed_integral_R*kiS_R)
+1201:Core/Src/main.c **** 
+1202:Core/Src/main.c **** 				// left motor speed control
+1203:Core/Src/main.c **** 				error = target_speed_L - current_speed_L;
+1204:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
+1205:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+1206:Core/Src/main.c **** 
+1207:Core/Src/main.c **** 				previous_speed_error_L = error;
+1208:Core/Src/main.c **** 				previous_speed_control_time = micros();
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 83
 
 
-1209:Core/Src/main.c **** 				PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_
-1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
-1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
-1212:Core/Src/main.c **** 
-1213:Core/Src/main.c **** 				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) || (fabs(speed_integral_L*kiS_L)
-1214:Core/Src/main.c **** 
-1215:Core/Src/main.c **** 			}else if (control_loop_state == POSITION){
-1216:Core/Src/main.c **** 				float tmp = (micros() - previous_position_control_time);
-1217:Core/Src/main.c **** 				// right motor position control
-1218:Core/Src/main.c **** 				float error = (target_encoder_count_R - encoder_count_R)/3; // it was 1000ticks encoders but no
-1219:Core/Src/main.c **** 
-1220:Core/Src/main.c **** 				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
-1221:Core/Src/main.c **** 
-1222:Core/Src/main.c **** 				position_integral_R = ( SGN(error) == SGN( previous_position_error_R ) )? position_integral_R +
-1223:Core/Src/main.c **** 
-1224:Core/Src/main.c **** 				previous_position_error_R = error;
-1225:Core/Src/main.c **** 
-1226:Core/Src/main.c **** 				PWM_R = kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R; // the first par
-1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
-1228:Core/Src/main.c **** 
-1229:Core/Src/main.c **** 				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*e
-1230:Core/Src/main.c **** 
-1231:Core/Src/main.c **** 				// left motor position control
-1232:Core/Src/main.c **** 				error = (target_encoder_count_L - encoder_count_L)/3;
-1233:Core/Src/main.c **** 
-1234:Core/Src/main.c **** 				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
-1235:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
-1236:Core/Src/main.c **** 
-1237:Core/Src/main.c **** 				previous_position_error_L = error;
-1238:Core/Src/main.c **** 
-1239:Core/Src/main.c **** 				PWM_L = kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L; // the first par
-1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
-1241:Core/Src/main.c **** 
-1242:Core/Src/main.c **** 				position_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (position_integral_L - 2*e
-1243:Core/Src/main.c **** 
-1244:Core/Src/main.c **** 				previous_position_error_L = error;
-1245:Core/Src/main.c **** 				previous_position_control_time = micros();
-1246:Core/Src/main.c **** 			}
-1247:Core/Src/main.c **** //			if ( fail_safe_activated &&
-1248:Core/Src/main.c **** //					(
-1249:Core/Src/main.c **** //						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
-1250:Core/Src/main.c **** //						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
-1251:Core/Src/main.c **** //
-1252:Core/Src/main.c **** //						||
-1253:Core/Src/main.c **** //
-1254:Core/Src/main.c **** //						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
-1255:Core/Src/main.c **** //						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
-1256:Core/Src/main.c **** //					   )
-1257:Core/Src/main.c **** //				   )
-1258:Core/Src/main.c **** //				{
-1259:Core/Src/main.c **** //					// EMERGENCY STOP
-1260:Core/Src/main.c **** //                 fail_safe_counter++;
-1261:Core/Src/main.c **** //                 if(fail_safe_counter > 250){
-1262:Core/Src/main.c **** //                	 prepare_emergency_break();
-1263:Core/Src/main.c **** //                	 stopped_because_of_collision = 1;
-1264:Core/Src/main.c **** //                 }
-1265:Core/Src/main.c **** //			}
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 84
+1209:Core/Src/main.c **** 
+1210:Core/Src/main.c **** 				PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_
+1211:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+1212:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+1213:Core/Src/main.c **** 
+1214:Core/Src/main.c **** 				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) || (fabs(speed_integral_L*kiS_L)
+1215:Core/Src/main.c **** 
+1216:Core/Src/main.c **** 			}else if (control_loop_state == POSITION){
+1217:Core/Src/main.c **** 				float tmp = (micros() - previous_position_control_time);
+1218:Core/Src/main.c **** 				// right motor position control
+1219:Core/Src/main.c **** 				float error = (target_encoder_count_R - encoder_count_R)/3; // it was 1000ticks encoders but no
+1220:Core/Src/main.c **** 
+1221:Core/Src/main.c **** 				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
+1222:Core/Src/main.c **** 
+1223:Core/Src/main.c **** 				position_integral_R = ( SGN(error) == SGN( previous_position_error_R ) )? position_integral_R +
+1224:Core/Src/main.c **** 
+1225:Core/Src/main.c **** 				previous_position_error_R = error;
+1226:Core/Src/main.c **** 
+1227:Core/Src/main.c **** 				PWM_R = kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R; // the first par
+1228:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+1229:Core/Src/main.c **** 
+1230:Core/Src/main.c **** 				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*e
+1231:Core/Src/main.c **** 
+1232:Core/Src/main.c **** 				// left motor position control
+1233:Core/Src/main.c **** 				error = (target_encoder_count_L - encoder_count_L)/3;
+1234:Core/Src/main.c **** 
+1235:Core/Src/main.c **** 				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
+1236:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
+1237:Core/Src/main.c **** 
+1238:Core/Src/main.c **** 				previous_position_error_L = error;
+1239:Core/Src/main.c **** 
+1240:Core/Src/main.c **** 				PWM_L = kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L; // the first par
+1241:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+1242:Core/Src/main.c **** 
+1243:Core/Src/main.c **** 				position_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (position_integral_L - 2*e
+1244:Core/Src/main.c **** 
+1245:Core/Src/main.c **** 				previous_position_error_L = error;
+1246:Core/Src/main.c **** 				previous_position_control_time = micros();
+1247:Core/Src/main.c **** 			}
+1248:Core/Src/main.c **** //			if ( fail_safe_activated &&
+1249:Core/Src/main.c **** //					(
+1250:Core/Src/main.c **** //						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+1251:Core/Src/main.c **** //						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+1252:Core/Src/main.c **** //
+1253:Core/Src/main.c **** //						||
+1254:Core/Src/main.c **** //
+1255:Core/Src/main.c **** //						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+1256:Core/Src/main.c **** //						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+1257:Core/Src/main.c **** //					   )
+1258:Core/Src/main.c **** //				   )
+1259:Core/Src/main.c **** //				{
+1260:Core/Src/main.c **** //					// EMERGENCY STOP
+1261:Core/Src/main.c **** //                 fail_safe_counter++;
+1262:Core/Src/main.c **** //                 if(fail_safe_counter > 250){
+1263:Core/Src/main.c **** //                	 prepare_emergency_break();
+1264:Core/Src/main.c **** //                	 stopped_because_of_collision = 1;
+1265:Core/Src/main.c **** //                 }
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 84
 
 
-1266:Core/Src/main.c **** //			else {
-1267:Core/Src/main.c **** //				 fail_safe_counter = 0;
-1268:Core/Src/main.c **** //			}
-1269:Core/Src/main.c **** 		}
-1270:Core/Src/main.c **** 		run_right_motor();
-1271:Core/Src/main.c **** 		run_left_motor();
-1272:Core/Src/main.c **** 	}
-1273:Core/Src/main.c ****   /* USER CODE END Callback 0 */
-1274:Core/Src/main.c ****   if (htim->Instance == TIM2) {
- 2040              		.loc 1 1274 3 is_stmt 1 view .LVU497
- 2041              		.loc 1 1274 11 is_stmt 0 view .LVU498
+1266:Core/Src/main.c **** //			}
+1267:Core/Src/main.c **** //			else {
+1268:Core/Src/main.c **** //				 fail_safe_counter = 0;
+1269:Core/Src/main.c **** //			}
+1270:Core/Src/main.c **** 		}
+1271:Core/Src/main.c **** 		run_right_motor();
+1272:Core/Src/main.c **** 		run_left_motor();
+1273:Core/Src/main.c **** 	}
+1274:Core/Src/main.c ****   /* USER CODE END Callback 0 */
+1275:Core/Src/main.c ****   if (htim->Instance == TIM2) {
+ 2040              		.loc 1 1275 3 is_stmt 1 view .LVU497
+ 2041              		.loc 1 1275 11 is_stmt 0 view .LVU498
  2042 0014 2368     		ldr	r3, [r4]
- 2043              		.loc 1 1274 6 view .LVU499
+ 2043              		.loc 1 1275 6 view .LVU499
  2044 0016 B3F1804F 		cmp	r3, #1073741824
  2045 001a 00F05F83 		beq	.L165
  2046              	.L99:
-1275:Core/Src/main.c ****     HAL_IncTick();
-1276:Core/Src/main.c ****   }
-1277:Core/Src/main.c ****   /* USER CODE BEGIN Callback 1 */
-1278:Core/Src/main.c **** 
-1279:Core/Src/main.c ****   /* USER CODE END Callback 1 */
-1280:Core/Src/main.c **** }
- 2047              		.loc 1 1280 1 view .LVU500
+1276:Core/Src/main.c ****     HAL_IncTick();
+1277:Core/Src/main.c ****   }
+1278:Core/Src/main.c ****   /* USER CODE BEGIN Callback 1 */
+1279:Core/Src/main.c **** 
+1280:Core/Src/main.c ****   /* USER CODE END Callback 1 */
+1281:Core/Src/main.c **** }
+ 2047              		.loc 1 1281 1 view .LVU500
  2048 001e 02B0     		add	sp, sp, #8
  2049              	.LCFI28:
  2050              		.cfi_remember_state
@@ -5023,444 +5024,444 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2064              	.L164:
  2065              	.LCFI30:
  2066              		.cfi_restore_state
-1179:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
- 2067              		.loc 1 1179 3 is_stmt 1 view .LVU501
-1179:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
- 2068              		.loc 1 1179 25 is_stmt 0 view .LVU502
+1180:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
+ 2067              		.loc 1 1180 3 is_stmt 1 view .LVU501
+1180:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
+ 2068              		.loc 1 1180 25 is_stmt 0 view .LVU502
  2069 0028 884B     		ldr	r3, .L173+4
  2070 002a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-1179:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
- 2071              		.loc 1 1179 5 view .LVU503
+1180:Core/Src/main.c **** 		if(control_loop_state == DISACTIVATED){
+ 2071              		.loc 1 1180 5 view .LVU503
  2072 002c 43B9     		cbnz	r3, .L101
-1180:Core/Src/main.c **** 			PWM_R = 0;
- 2073              		.loc 1 1180 4 is_stmt 1 view .LVU504
-1180:Core/Src/main.c **** 			PWM_R = 0;
- 2074              		.loc 1 1180 10 is_stmt 0 view .LVU505
+1181:Core/Src/main.c **** 			PWM_R = 0;
+ 2073              		.loc 1 1181 4 is_stmt 1 view .LVU504
+1181:Core/Src/main.c **** 			PWM_R = 0;
+ 2074              		.loc 1 1181 10 is_stmt 0 view .LVU505
  2075 002e 884A     		ldr	r2, .L173+8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 85
+
+
  2076 0030 1360     		str	r3, [r2]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 85
-
-
-1181:Core/Src/main.c **** 		}else{
- 2077              		.loc 1 1181 4 is_stmt 1 view .LVU506
-1181:Core/Src/main.c **** 		}else{
- 2078              		.loc 1 1181 10 is_stmt 0 view .LVU507
+1182:Core/Src/main.c **** 		}else{
+ 2077              		.loc 1 1182 4 is_stmt 1 view .LVU506
+1182:Core/Src/main.c **** 		}else{
+ 2078              		.loc 1 1182 10 is_stmt 0 view .LVU507
  2079 0032 884A     		ldr	r2, .L173+12
  2080 0034 1360     		str	r3, [r2]
  2081              	.LVL165:
  2082              	.L102:
-1270:Core/Src/main.c **** 		run_left_motor();
- 2083              		.loc 1 1270 3 is_stmt 1 view .LVU508
+1271:Core/Src/main.c **** 		run_left_motor();
+ 2083              		.loc 1 1271 3 is_stmt 1 view .LVU508
  2084 0036 FFF7FEFF 		bl	run_right_motor
  2085              	.LVL166:
-1271:Core/Src/main.c **** 	}
- 2086              		.loc 1 1271 3 view .LVU509
+1272:Core/Src/main.c **** 	}
+ 2086              		.loc 1 1272 3 view .LVU509
  2087 003a FFF7FEFF 		bl	run_left_motor
  2088              	.LVL167:
  2089 003e E9E7     		b	.L100
  2090              	.LVL168:
  2091              	.L101:
-1184:Core/Src/main.c **** 			if (control_loop_state == SPEED){
- 2092              		.loc 1 1184 4 view .LVU510
+1185:Core/Src/main.c **** 			if (control_loop_state == SPEED){
+ 2092              		.loc 1 1185 4 view .LVU510
  2093 0040 0020     		movs	r0, #0
  2094              	.LVL169:
-1184:Core/Src/main.c **** 			if (control_loop_state == SPEED){
- 2095              		.loc 1 1184 4 is_stmt 0 view .LVU511
+1185:Core/Src/main.c **** 			if (control_loop_state == SPEED){
+ 2095              		.loc 1 1185 4 is_stmt 0 view .LVU511
  2096 0042 FFF7FEFF 		bl	update_position
  2097              	.LVL170:
-1185:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
- 2098              		.loc 1 1185 4 is_stmt 1 view .LVU512
-1185:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
- 2099              		.loc 1 1185 27 is_stmt 0 view .LVU513
+1186:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
+ 2098              		.loc 1 1186 4 is_stmt 1 view .LVU512
+1186:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
+ 2099              		.loc 1 1186 27 is_stmt 0 view .LVU513
  2100 0046 814B     		ldr	r3, .L173+4
  2101 0048 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-1185:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
- 2102              		.loc 1 1185 7 view .LVU514
+1186:Core/Src/main.c **** 				float tmp = (micros() - previous_speed_control_time);
+ 2102              		.loc 1 1186 7 view .LVU514
  2103 004a 022B     		cmp	r3, #2
  2104 004c 00F03481 		beq	.L166
-1215:Core/Src/main.c **** 				float tmp = (micros() - previous_position_control_time);
- 2105              		.loc 1 1215 10 is_stmt 1 view .LVU515
-1215:Core/Src/main.c **** 				float tmp = (micros() - previous_position_control_time);
- 2106              		.loc 1 1215 13 is_stmt 0 view .LVU516
+1216:Core/Src/main.c **** 				float tmp = (micros() - previous_position_control_time);
+ 2105              		.loc 1 1216 10 is_stmt 1 view .LVU515
+1216:Core/Src/main.c **** 				float tmp = (micros() - previous_position_control_time);
+ 2106              		.loc 1 1216 13 is_stmt 0 view .LVU516
  2107 0050 032B     		cmp	r3, #3
  2108 0052 F0D1     		bne	.L102
  2109              	.LBB24:
-1216:Core/Src/main.c **** 				// right motor position control
- 2110              		.loc 1 1216 5 is_stmt 1 view .LVU517
-1216:Core/Src/main.c **** 				// right motor position control
- 2111              		.loc 1 1216 18 is_stmt 0 view .LVU518
+1217:Core/Src/main.c **** 				// right motor position control
+ 2110              		.loc 1 1217 5 is_stmt 1 view .LVU517
+1217:Core/Src/main.c **** 				// right motor position control
+ 2111              		.loc 1 1217 18 is_stmt 0 view .LVU518
  2112 0054 FFF7FEFF 		bl	micros
  2113              	.LVL171:
-1216:Core/Src/main.c **** 				// right motor position control
- 2114              		.loc 1 1216 27 discriminator 1 view .LVU519
+1217:Core/Src/main.c **** 				// right motor position control
+ 2114              		.loc 1 1217 27 discriminator 1 view .LVU519
  2115 0058 7F4B     		ldr	r3, .L173+16
  2116 005a 1B68     		ldr	r3, [r3]
  2117 005c C01A     		subs	r0, r0, r3
-1216:Core/Src/main.c **** 				// right motor position control
- 2118              		.loc 1 1216 11 discriminator 1 view .LVU520
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 86
+1217:Core/Src/main.c **** 				// right motor position control
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 86
 
 
+ 2118              		.loc 1 1217 11 discriminator 1 view .LVU520
  2119 005e 07EE900A 		vmov	s15, r0	@ int
  2120 0062 F8EEE76A 		vcvt.f32.s32	s13, s15
  2121              	.LVL172:
-1218:Core/Src/main.c **** 
- 2122              		.loc 1 1218 5 is_stmt 1 view .LVU521
-1218:Core/Src/main.c **** 
- 2123              		.loc 1 1218 43 is_stmt 0 view .LVU522
+1219:Core/Src/main.c **** 
+ 2122              		.loc 1 1219 5 is_stmt 1 view .LVU521
+1219:Core/Src/main.c **** 
+ 2123              		.loc 1 1219 43 is_stmt 0 view .LVU522
  2124 0066 7D4B     		ldr	r3, .L173+20
  2125 0068 1A68     		ldr	r2, [r3]
  2126 006a 7D4B     		ldr	r3, .L173+24
  2127 006c 1B68     		ldr	r3, [r3]
  2128 006e D21A     		subs	r2, r2, r3
-1218:Core/Src/main.c **** 
- 2129              		.loc 1 1218 61 view .LVU523
+1219:Core/Src/main.c **** 
+ 2129              		.loc 1 1219 61 view .LVU523
  2130 0070 7C4B     		ldr	r3, .L173+28
  2131 0072 83FB0213 		smull	r1, r3, r3, r2
  2132 0076 A3EBE273 		sub	r3, r3, r2, asr #31
-1218:Core/Src/main.c **** 
- 2133              		.loc 1 1218 11 view .LVU524
+1219:Core/Src/main.c **** 
+ 2133              		.loc 1 1219 11 view .LVU524
  2134 007a 07EE903A 		vmov	s15, r3	@ int
  2135 007e B8EEE77A 		vcvt.f32.s32	s14, s15
  2136              	.LVL173:
-1220:Core/Src/main.c **** 
- 2137              		.loc 1 1220 5 is_stmt 1 view .LVU525
-1220:Core/Src/main.c **** 
- 2138              		.loc 1 1220 36 is_stmt 0 view .LVU526
+1221:Core/Src/main.c **** 
+ 2137              		.loc 1 1221 5 is_stmt 1 view .LVU525
+1221:Core/Src/main.c **** 
+ 2138              		.loc 1 1221 36 is_stmt 0 view .LVU526
  2139 0082 794B     		ldr	r3, .L173+32
  2140 0084 D3ED005A 		vldr.32	s11, [r3]
  2141 0088 77EE657A 		vsub.f32	s15, s14, s11
-1220:Core/Src/main.c **** 
- 2142              		.loc 1 1220 64 view .LVU527
+1221:Core/Src/main.c **** 
+ 2142              		.loc 1 1221 64 view .LVU527
  2143 008c 9FED776A 		vldr.32	s12, .L173+36
  2144 0090 67EE867A 		vmul.f32	s15, s15, s12
-1220:Core/Src/main.c **** 
- 2145              		.loc 1 1220 72 view .LVU528
+1221:Core/Src/main.c **** 
+ 2145              		.loc 1 1221 72 view .LVU528
  2146 0094 87EEA66A 		vdiv.f32	s12, s15, s13
-1220:Core/Src/main.c **** 
- 2147              		.loc 1 1220 27 view .LVU529
+1221:Core/Src/main.c **** 
+ 2147              		.loc 1 1221 27 view .LVU529
  2148 0098 754B     		ldr	r3, .L173+40
  2149 009a 83ED006A 		vstr.32	s12, [r3]
-1222:Core/Src/main.c **** 
- 2150              		.loc 1 1222 5 is_stmt 1 view .LVU530
-1222:Core/Src/main.c **** 
- 2151              		.loc 1 1222 29 is_stmt 0 view .LVU531
+1223:Core/Src/main.c **** 
+ 2150              		.loc 1 1223 5 is_stmt 1 view .LVU530
+1223:Core/Src/main.c **** 
+ 2151              		.loc 1 1223 29 is_stmt 0 view .LVU531
  2152 009e B5EEC07A 		vcmpe.f32	s14, #0
  2153 00a2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2154 00a6 00F18482 		bmi	.L167
-1222:Core/Src/main.c **** 
- 2155              		.loc 1 1222 29 discriminator 2 view .LVU532
+1223:Core/Src/main.c **** 
+ 2155              		.loc 1 1223 29 discriminator 2 view .LVU532
  2156 00aa 0122     		movs	r2, #1
  2157              	.L114:
-1222:Core/Src/main.c **** 
- 2158              		.loc 1 1222 43 discriminator 4 view .LVU533
+1223:Core/Src/main.c **** 
+ 2158              		.loc 1 1223 43 discriminator 4 view .LVU533
  2159 00ac F5EEC05A 		vcmpe.f32	s11, #0
  2160 00b0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2161 00b4 00F18082 		bmi	.L168
-1222:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 87
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 87
 
 
- 2162              		.loc 1 1222 43 discriminator 6 view .LVU534
+1223:Core/Src/main.c **** 
+ 2162              		.loc 1 1223 43 discriminator 6 view .LVU534
  2163 00b8 0123     		movs	r3, #1
  2164              	.L116:
-1222:Core/Src/main.c **** 
- 2165              		.loc 1 1222 121 discriminator 8 view .LVU535
+1223:Core/Src/main.c **** 
+ 2165              		.loc 1 1223 121 discriminator 8 view .LVU535
  2166 00ba 9A42     		cmp	r2, r3
  2167 00bc 00F07F82 		beq	.L169
-1222:Core/Src/main.c **** 
- 2168              		.loc 1 1222 121 discriminator 10 view .LVU536
+1223:Core/Src/main.c **** 
+ 2168              		.loc 1 1223 121 discriminator 10 view .LVU536
  2169 00c0 DFED6C5A 		vldr.32	s11, .L173+44
  2170              	.L118:
-1222:Core/Src/main.c **** 
- 2171              		.loc 1 1222 25 discriminator 12 view .LVU537
+1223:Core/Src/main.c **** 
+ 2171              		.loc 1 1223 25 discriminator 12 view .LVU537
  2172 00c4 6C4B     		ldr	r3, .L173+48
  2173 00c6 C3ED005A 		vstr.32	s11, [r3]
-1224:Core/Src/main.c **** 
- 2174              		.loc 1 1224 5 is_stmt 1 view .LVU538
-1224:Core/Src/main.c **** 
- 2175              		.loc 1 1224 31 is_stmt 0 view .LVU539
+1225:Core/Src/main.c **** 
+ 2174              		.loc 1 1225 5 is_stmt 1 view .LVU538
+1225:Core/Src/main.c **** 
+ 2175              		.loc 1 1225 31 is_stmt 0 view .LVU539
  2176 00ca 674B     		ldr	r3, .L173+32
  2177 00cc 83ED007A 		vstr.32	s14, [r3]
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2178              		.loc 1 1226 5 is_stmt 1 view .LVU540
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2179              		.loc 1 1226 18 is_stmt 0 view .LVU541
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2178              		.loc 1 1227 5 is_stmt 1 view .LVU540
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2179              		.loc 1 1227 18 is_stmt 0 view .LVU541
  2180 00d0 6A4B     		ldr	r3, .L173+52
  2181 00d2 D3ED007A 		vldr.32	s15, [r3]
  2182 00d6 67EE277A 		vmul.f32	s15, s14, s15
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2183              		.loc 1 1226 32 view .LVU542
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2183              		.loc 1 1227 32 view .LVU542
  2184 00da 694B     		ldr	r3, .L173+56
  2185 00dc 93ED005A 		vldr.32	s10, [r3]
  2186 00e0 26EE056A 		vmul.f32	s12, s12, s10
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2187              		.loc 1 1226 25 view .LVU543
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2187              		.loc 1 1227 25 view .LVU543
  2188 00e4 77EE867A 		vadd.f32	s15, s15, s12
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2189              		.loc 1 1226 62 view .LVU544
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2189              		.loc 1 1227 62 view .LVU544
  2190 00e8 664B     		ldr	r3, .L173+60
  2191 00ea 93ED006A 		vldr.32	s12, [r3]
  2192 00ee 25EE866A 		vmul.f32	s12, s11, s12
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2193              		.loc 1 1226 55 view .LVU545
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2193              		.loc 1 1227 55 view .LVU545
  2194 00f2 77EE867A 		vadd.f32	s15, s15, s12
-1226:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
- 2195              		.loc 1 1226 11 view .LVU546
+1227:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_r
+ 2195              		.loc 1 1227 11 view .LVU546
  2196 00f6 FDEEE77A 		vcvt.s32.f32	s15, s15
  2197 00fa 564B     		ldr	r3, .L173+12
  2198 00fc C3ED007A 		vstr.32	s15, [r3]	@ int
-1227:Core/Src/main.c **** 
- 2199              		.loc 1 1227 5 is_stmt 1 view .LVU547
-1227:Core/Src/main.c **** 
- 2200              		.loc 1 1227 20 is_stmt 0 view .LVU548
+1228:Core/Src/main.c **** 
+ 2199              		.loc 1 1228 5 is_stmt 1 view .LVU547
+1228:Core/Src/main.c **** 
+ 2200              		.loc 1 1228 20 is_stmt 0 view .LVU548
  2201 0100 F8EEE77A 		vcvt.f32.s32	s15, s15
-1227:Core/Src/main.c **** 
- 2202              		.loc 1 1227 40 view .LVU549
+1228:Core/Src/main.c **** 
+ 2202              		.loc 1 1228 40 view .LVU549
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 88
+
+
  2203 0104 604B     		ldr	r3, .L173+64
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 88
-
-
  2204 0106 93ED005A 		vldr.32	s10, [r3]
  2205 010a 604B     		ldr	r3, .L173+68
  2206 010c 93ED006A 		vldr.32	s12, [r3]	@ int
  2207 0110 B8EEC66A 		vcvt.f32.s32	s12, s12
  2208 0114 36EE056A 		vadd.f32	s12, s12, s10
-1227:Core/Src/main.c **** 
- 2209              		.loc 1 1227 11 view .LVU550
+1228:Core/Src/main.c **** 
+ 2209              		.loc 1 1228 11 view .LVU550
  2210 0118 F4EEC67A 		vcmpe.f32	s15, s12
  2211 011c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2212 0120 40F39E82 		ble	.L157
-1227:Core/Src/main.c **** 
- 2213              		.loc 1 1227 11 discriminator 1 view .LVU551
+1228:Core/Src/main.c **** 
+ 2213              		.loc 1 1228 11 discriminator 1 view .LVU551
  2214 0124 FDEEC67A 		vcvt.s32.f32	s15, s12
  2215 0128 17EE903A 		vmov	r3, s15	@ int
  2216              	.L121:
-1227:Core/Src/main.c **** 
- 2217              		.loc 1 1227 11 discriminator 8 view .LVU552
+1228:Core/Src/main.c **** 
+ 2217              		.loc 1 1228 11 discriminator 8 view .LVU552
  2218 012c 494A     		ldr	r2, .L173+12
  2219 012e 1360     		str	r3, [r2]
-1229:Core/Src/main.c **** 
- 2220              		.loc 1 1229 5 is_stmt 1 view .LVU553
-1229:Core/Src/main.c **** 
- 2221              		.loc 1 1229 36 is_stmt 0 view .LVU554
+1230:Core/Src/main.c **** 
+ 2220              		.loc 1 1230 5 is_stmt 1 view .LVU553
+1230:Core/Src/main.c **** 
+ 2221              		.loc 1 1230 36 is_stmt 0 view .LVU554
  2222 0130 574A     		ldr	r2, .L173+72
  2223 0132 1168     		ldr	r1, [r2]
-1229:Core/Src/main.c **** 
- 2224              		.loc 1 1229 120 view .LVU555
+1230:Core/Src/main.c **** 
+ 2224              		.loc 1 1230 120 view .LVU555
  2225 0134 9942     		cmp	r1, r3
  2226 0136 01D0     		beq	.L124
-1229:Core/Src/main.c **** 
- 2227              		.loc 1 1229 48 discriminator 2 view .LVU556
+1230:Core/Src/main.c **** 
+ 2227              		.loc 1 1230 48 discriminator 2 view .LVU556
  2228 0138 CB42     		cmn	r3, r1
  2229 013a 09D1     		bne	.L125
  2230              	.L124:
-1229:Core/Src/main.c **** 
- 2231              		.loc 1 1229 98 discriminator 3 view .LVU557
+1230:Core/Src/main.c **** 
+ 2231              		.loc 1 1230 98 discriminator 3 view .LVU557
  2232 013c 37EE077A 		vadd.f32	s14, s14, s14
  2233              	.LVL174:
-1229:Core/Src/main.c **** 
- 2234              		.loc 1 1229 109 discriminator 3 view .LVU558
+1230:Core/Src/main.c **** 
+ 2234              		.loc 1 1230 109 discriminator 3 view .LVU558
  2235 0140 9FED4A6A 		vldr.32	s12, .L173+36
  2236 0144 C6EE867A 		vdiv.f32	s15, s13, s12
-1229:Core/Src/main.c **** 
- 2237              		.loc 1 1229 104 discriminator 3 view .LVU559
+1230:Core/Src/main.c **** 
+ 2237              		.loc 1 1230 104 discriminator 3 view .LVU559
  2238 0148 67EE277A 		vmul.f32	s15, s14, s15
-1229:Core/Src/main.c **** 
- 2239              		.loc 1 1229 120 discriminator 3 view .LVU560
+1230:Core/Src/main.c **** 
+ 2239              		.loc 1 1230 120 discriminator 3 view .LVU560
  2240 014c 75EEE75A 		vsub.f32	s11, s11, s15
  2241              	.L125:
-1229:Core/Src/main.c **** 
- 2242              		.loc 1 1229 25 discriminator 6 view .LVU561
+1230:Core/Src/main.c **** 
+ 2242              		.loc 1 1230 25 discriminator 6 view .LVU561
  2243 0150 494B     		ldr	r3, .L173+48
  2244 0152 C3ED005A 		vstr.32	s11, [r3]
-1232:Core/Src/main.c **** 
- 2245              		.loc 1 1232 5 is_stmt 1 view .LVU562
-1232:Core/Src/main.c **** 
- 2246              		.loc 1 1232 37 is_stmt 0 view .LVU563
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 89
+1233:Core/Src/main.c **** 
+ 2245              		.loc 1 1233 5 is_stmt 1 view .LVU562
+1233:Core/Src/main.c **** 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 89
 
 
+ 2246              		.loc 1 1233 37 is_stmt 0 view .LVU563
  2247 0156 4F4B     		ldr	r3, .L173+76
  2248 0158 1A68     		ldr	r2, [r3]
  2249 015a 4F4B     		ldr	r3, .L173+80
  2250 015c 1B68     		ldr	r3, [r3]
  2251 015e D21A     		subs	r2, r2, r3
-1232:Core/Src/main.c **** 
- 2252              		.loc 1 1232 55 view .LVU564
+1233:Core/Src/main.c **** 
+ 2252              		.loc 1 1233 55 view .LVU564
  2253 0160 404B     		ldr	r3, .L173+28
  2254 0162 83FB0203 		smull	r0, r3, r3, r2
  2255 0166 A3EBE273 		sub	r3, r3, r2, asr #31
-1232:Core/Src/main.c **** 
- 2256              		.loc 1 1232 11 view .LVU565
+1233:Core/Src/main.c **** 
+ 2256              		.loc 1 1233 11 view .LVU565
  2257 016a 07EE903A 		vmov	s15, r3	@ int
  2258 016e B8EEE77A 		vcvt.f32.s32	s14, s15
  2259              	.LVL175:
-1234:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
- 2260              		.loc 1 1234 5 is_stmt 1 view .LVU566
-1234:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
- 2261              		.loc 1 1234 36 is_stmt 0 view .LVU567
+1235:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
+ 2260              		.loc 1 1235 5 is_stmt 1 view .LVU566
+1235:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
+ 2261              		.loc 1 1235 36 is_stmt 0 view .LVU567
  2262 0172 4A4B     		ldr	r3, .L173+84
  2263 0174 D3ED005A 		vldr.32	s11, [r3]
  2264 0178 77EE657A 		vsub.f32	s15, s14, s11
-1234:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
- 2265              		.loc 1 1234 64 view .LVU568
+1235:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
+ 2265              		.loc 1 1235 64 view .LVU568
  2266 017c 9FED3B6A 		vldr.32	s12, .L173+36
  2267 0180 67EE867A 		vmul.f32	s15, s15, s12
-1234:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
- 2268              		.loc 1 1234 72 view .LVU569
+1235:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
+ 2268              		.loc 1 1235 72 view .LVU569
  2269 0184 87EEA66A 		vdiv.f32	s12, s15, s13
-1234:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
- 2270              		.loc 1 1234 27 view .LVU570
+1235:Core/Src/main.c **** 				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + 
+ 2270              		.loc 1 1235 27 view .LVU570
  2271 0188 454B     		ldr	r3, .L173+88
  2272 018a 83ED006A 		vstr.32	s12, [r3]
-1235:Core/Src/main.c **** 
- 2273              		.loc 1 1235 5 is_stmt 1 view .LVU571
-1235:Core/Src/main.c **** 
- 2274              		.loc 1 1235 29 is_stmt 0 view .LVU572
+1236:Core/Src/main.c **** 
+ 2273              		.loc 1 1236 5 is_stmt 1 view .LVU571
+1236:Core/Src/main.c **** 
+ 2274              		.loc 1 1236 29 is_stmt 0 view .LVU572
  2275 018e B5EEC07A 		vcmpe.f32	s14, #0
  2276 0192 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2277 0196 00F17982 		bmi	.L170
-1235:Core/Src/main.c **** 
- 2278              		.loc 1 1235 29 discriminator 2 view .LVU573
+1236:Core/Src/main.c **** 
+ 2278              		.loc 1 1236 29 discriminator 2 view .LVU573
  2279 019a 0122     		movs	r2, #1
  2280              	.L126:
-1235:Core/Src/main.c **** 
- 2281              		.loc 1 1235 43 discriminator 4 view .LVU574
+1236:Core/Src/main.c **** 
+ 2281              		.loc 1 1236 43 discriminator 4 view .LVU574
  2282 019c F5EEC05A 		vcmpe.f32	s11, #0
  2283 01a0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2284 01a4 00F17582 		bmi	.L171
-1235:Core/Src/main.c **** 
- 2285              		.loc 1 1235 43 discriminator 6 view .LVU575
+1236:Core/Src/main.c **** 
+ 2285              		.loc 1 1236 43 discriminator 6 view .LVU575
  2286 01a8 0123     		movs	r3, #1
  2287              	.L128:
-1235:Core/Src/main.c **** 
- 2288              		.loc 1 1235 120 discriminator 8 view .LVU576
+1236:Core/Src/main.c **** 
+ 2288              		.loc 1 1236 120 discriminator 8 view .LVU576
  2289 01aa 9A42     		cmp	r2, r3
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 90
+
+
  2290 01ac 00F07482 		beq	.L172
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 90
-
-
-1235:Core/Src/main.c **** 
- 2291              		.loc 1 1235 120 discriminator 10 view .LVU577
+1236:Core/Src/main.c **** 
+ 2291              		.loc 1 1236 120 discriminator 10 view .LVU577
  2292 01b0 DFED305A 		vldr.32	s11, .L173+44
  2293              	.L130:
-1235:Core/Src/main.c **** 
- 2294              		.loc 1 1235 25 discriminator 12 view .LVU578
+1236:Core/Src/main.c **** 
+ 2294              		.loc 1 1236 25 discriminator 12 view .LVU578
  2295 01b4 3B4B     		ldr	r3, .L173+92
  2296 01b6 C3ED005A 		vstr.32	s11, [r3]
-1237:Core/Src/main.c **** 
- 2297              		.loc 1 1237 5 is_stmt 1 view .LVU579
-1237:Core/Src/main.c **** 
- 2298              		.loc 1 1237 31 is_stmt 0 view .LVU580
+1238:Core/Src/main.c **** 
+ 2297              		.loc 1 1238 5 is_stmt 1 view .LVU579
+1238:Core/Src/main.c **** 
+ 2298              		.loc 1 1238 31 is_stmt 0 view .LVU580
  2299 01ba 384B     		ldr	r3, .L173+84
  2300 01bc 83ED007A 		vstr.32	s14, [r3]
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2301              		.loc 1 1239 5 is_stmt 1 view .LVU581
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2302              		.loc 1 1239 18 is_stmt 0 view .LVU582
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2301              		.loc 1 1240 5 is_stmt 1 view .LVU581
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2302              		.loc 1 1240 18 is_stmt 0 view .LVU582
  2303 01c0 394B     		ldr	r3, .L173+96
  2304 01c2 D3ED007A 		vldr.32	s15, [r3]
  2305 01c6 67EE277A 		vmul.f32	s15, s14, s15
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2306              		.loc 1 1239 32 view .LVU583
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2306              		.loc 1 1240 32 view .LVU583
  2307 01ca 384B     		ldr	r3, .L173+100
  2308 01cc D3ED004A 		vldr.32	s9, [r3]
  2309 01d0 26EE246A 		vmul.f32	s12, s12, s9
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2310              		.loc 1 1239 25 view .LVU584
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2310              		.loc 1 1240 25 view .LVU584
  2311 01d4 77EE867A 		vadd.f32	s15, s15, s12
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2312              		.loc 1 1239 62 view .LVU585
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2312              		.loc 1 1240 62 view .LVU585
  2313 01d8 354B     		ldr	r3, .L173+104
  2314 01da 93ED006A 		vldr.32	s12, [r3]
  2315 01de 25EE866A 		vmul.f32	s12, s11, s12
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2316              		.loc 1 1239 55 view .LVU586
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2316              		.loc 1 1240 55 view .LVU586
  2317 01e2 77EE867A 		vadd.f32	s15, s15, s12
-1239:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
- 2318              		.loc 1 1239 11 view .LVU587
+1240:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_r
+ 2318              		.loc 1 1240 11 view .LVU587
  2319 01e6 FDEEE77A 		vcvt.s32.f32	s15, s15
  2320 01ea 194B     		ldr	r3, .L173+8
  2321 01ec C3ED007A 		vstr.32	s15, [r3]	@ int
-1240:Core/Src/main.c **** 
- 2322              		.loc 1 1240 5 is_stmt 1 view .LVU588
-1240:Core/Src/main.c **** 
- 2323              		.loc 1 1240 20 is_stmt 0 view .LVU589
+1241:Core/Src/main.c **** 
+ 2322              		.loc 1 1241 5 is_stmt 1 view .LVU588
+1241:Core/Src/main.c **** 
+ 2323              		.loc 1 1241 20 is_stmt 0 view .LVU589
  2324 01f0 F8EEE77A 		vcvt.f32.s32	s15, s15
-1240:Core/Src/main.c **** 
- 2325              		.loc 1 1240 40 view .LVU590
+1241:Core/Src/main.c **** 
+ 2325              		.loc 1 1241 40 view .LVU590
  2326 01f4 2F4B     		ldr	r3, .L173+108
  2327 01f6 93ED006A 		vldr.32	s12, [r3]	@ int
  2328 01fa B8EEC66A 		vcvt.f32.s32	s12, s12
  2329 01fe 36EE056A 		vadd.f32	s12, s12, s10
-1240:Core/Src/main.c **** 
- 2330              		.loc 1 1240 11 view .LVU591
+1241:Core/Src/main.c **** 
+ 2330              		.loc 1 1241 11 view .LVU591
  2331 0202 F4EEC67A 		vcmpe.f32	s15, s12
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 91
+
+
  2332 0206 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 91
-
-
  2333 020a 40F35182 		ble	.L161
-1240:Core/Src/main.c **** 
- 2334              		.loc 1 1240 11 discriminator 1 view .LVU592
+1241:Core/Src/main.c **** 
+ 2334              		.loc 1 1241 11 discriminator 1 view .LVU592
  2335 020e FDEEC67A 		vcvt.s32.f32	s15, s12
  2336 0212 17EE903A 		vmov	r3, s15	@ int
  2337              	.L133:
-1240:Core/Src/main.c **** 
- 2338              		.loc 1 1240 11 discriminator 8 view .LVU593
+1241:Core/Src/main.c **** 
+ 2338              		.loc 1 1241 11 discriminator 8 view .LVU593
  2339 0216 0E4A     		ldr	r2, .L173+8
  2340 0218 1360     		str	r3, [r2]
-1242:Core/Src/main.c **** 
- 2341              		.loc 1 1242 5 is_stmt 1 view .LVU594
-1242:Core/Src/main.c **** 
- 2342              		.loc 1 1242 120 is_stmt 0 view .LVU595
+1243:Core/Src/main.c **** 
+ 2341              		.loc 1 1243 5 is_stmt 1 view .LVU594
+1243:Core/Src/main.c **** 
+ 2342              		.loc 1 1243 120 is_stmt 0 view .LVU595
  2343 021a 9942     		cmp	r1, r3
  2344 021c 01D0     		beq	.L136
-1242:Core/Src/main.c **** 
- 2345              		.loc 1 1242 48 discriminator 2 view .LVU596
+1243:Core/Src/main.c **** 
+ 2345              		.loc 1 1243 48 discriminator 2 view .LVU596
  2346 021e CB42     		cmn	r3, r1
  2347 0220 09D1     		bne	.L137
  2348              	.L136:
-1242:Core/Src/main.c **** 
- 2349              		.loc 1 1242 98 discriminator 3 view .LVU597
+1243:Core/Src/main.c **** 
+ 2349              		.loc 1 1243 98 discriminator 3 view .LVU597
  2350 0222 37EE077A 		vadd.f32	s14, s14, s14
  2351              	.LVL176:
-1242:Core/Src/main.c **** 
- 2352              		.loc 1 1242 109 discriminator 3 view .LVU598
+1243:Core/Src/main.c **** 
+ 2352              		.loc 1 1243 109 discriminator 3 view .LVU598
  2353 0226 9FED116A 		vldr.32	s12, .L173+36
  2354 022a C6EE867A 		vdiv.f32	s15, s13, s12
-1242:Core/Src/main.c **** 
- 2355              		.loc 1 1242 104 discriminator 3 view .LVU599
+1243:Core/Src/main.c **** 
+ 2355              		.loc 1 1243 104 discriminator 3 view .LVU599
  2356 022e 67EE277A 		vmul.f32	s15, s14, s15
-1242:Core/Src/main.c **** 
- 2357              		.loc 1 1242 120 discriminator 3 view .LVU600
+1243:Core/Src/main.c **** 
+ 2357              		.loc 1 1243 120 discriminator 3 view .LVU600
  2358 0232 75EEE75A 		vsub.f32	s11, s11, s15
  2359              	.L137:
-1242:Core/Src/main.c **** 
- 2360              		.loc 1 1242 25 discriminator 6 view .LVU601
+1243:Core/Src/main.c **** 
+ 2360              		.loc 1 1243 25 discriminator 6 view .LVU601
  2361 0236 1B4B     		ldr	r3, .L173+92
  2362 0238 C3ED005A 		vstr.32	s11, [r3]
-1244:Core/Src/main.c **** 				previous_position_control_time = micros();
- 2363              		.loc 1 1244 5 is_stmt 1 view .LVU602
-1245:Core/Src/main.c **** 			}
- 2364              		.loc 1 1245 5 view .LVU603
-1245:Core/Src/main.c **** 			}
- 2365              		.loc 1 1245 38 is_stmt 0 view .LVU604
+1245:Core/Src/main.c **** 				previous_position_control_time = micros();
+ 2363              		.loc 1 1245 5 is_stmt 1 view .LVU602
+1246:Core/Src/main.c **** 			}
+ 2364              		.loc 1 1246 5 view .LVU603
+1246:Core/Src/main.c **** 			}
+ 2365              		.loc 1 1246 38 is_stmt 0 view .LVU604
  2366 023c FFF7FEFF 		bl	micros
  2367              	.LVL177:
-1245:Core/Src/main.c **** 			}
- 2368              		.loc 1 1245 36 discriminator 1 view .LVU605
+1246:Core/Src/main.c **** 			}
+ 2368              		.loc 1 1246 36 discriminator 1 view .LVU605
  2369 0240 054B     		ldr	r3, .L173+16
  2370 0242 1860     		str	r0, [r3]
  2371 0244 F7E6     		b	.L102
  2372              	.L174:
  2373 0246 00BF     		.align	2
  2374              	.L173:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 92
+
+
  2375 0248 00140040 		.word	1073746944
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 92
-
-
  2376 024c 00000000 		.word	control_loop_state
  2377 0250 00000000 		.word	PWM_L
  2378 0254 00000000 		.word	PWM_R
@@ -5490,45 +5491,45 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2402 02b4 00000000 		.word	PWM_L_forward_min
  2403              	.LVL178:
  2404              	.L166:
-1245:Core/Src/main.c **** 			}
- 2405              		.loc 1 1245 36 discriminator 1 view .LVU606
+1246:Core/Src/main.c **** 			}
+ 2405              		.loc 1 1246 36 discriminator 1 view .LVU606
  2406              	.LBE24:
  2407              	.LBB25:
-1186:Core/Src/main.c **** 				// right motor speed control
- 2408              		.loc 1 1186 5 is_stmt 1 view .LVU607
-1186:Core/Src/main.c **** 				// right motor speed control
- 2409              		.loc 1 1186 18 is_stmt 0 view .LVU608
+1187:Core/Src/main.c **** 				// right motor speed control
+ 2408              		.loc 1 1187 5 is_stmt 1 view .LVU607
+1187:Core/Src/main.c **** 				// right motor speed control
+ 2409              		.loc 1 1187 18 is_stmt 0 view .LVU608
  2410 02b8 FFF7FEFF 		bl	micros
  2411              	.LVL179:
-1186:Core/Src/main.c **** 				// right motor speed control
- 2412              		.loc 1 1186 27 discriminator 1 view .LVU609
+1187:Core/Src/main.c **** 				// right motor speed control
+ 2412              		.loc 1 1187 27 discriminator 1 view .LVU609
  2413 02bc D04B     		ldr	r3, .L175+40
  2414 02be 1B68     		ldr	r3, [r3]
  2415 02c0 C01A     		subs	r0, r0, r3
-1186:Core/Src/main.c **** 				// right motor speed control
- 2416              		.loc 1 1186 11 discriminator 1 view .LVU610
+1187:Core/Src/main.c **** 				// right motor speed control
+ 2416              		.loc 1 1187 11 discriminator 1 view .LVU610
  2417 02c2 07EE900A 		vmov	s15, r0	@ int
  2418 02c6 F8EEE78A 		vcvt.f32.s32	s17, s15
  2419              	.LVL180:
-1188:Core/Src/main.c **** 
- 2420              		.loc 1 1188 5 is_stmt 1 view .LVU611
-1188:Core/Src/main.c **** 
- 2421              		.loc 1 1188 34 is_stmt 0 view .LVU612
+1189:Core/Src/main.c **** 
+ 2420              		.loc 1 1189 5 is_stmt 1 view .LVU611
+1189:Core/Src/main.c **** 
+ 2421              		.loc 1 1189 34 is_stmt 0 view .LVU612
  2422 02ca CE4B     		ldr	r3, .L175+44
  2423 02cc 93ED00AA 		vldr.32	s20, [r3]
  2424 02d0 CD4B     		ldr	r3, .L175+48
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 93
+
+
  2425 02d2 93ED008A 		vldr.32	s16, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 93
-
-
-1188:Core/Src/main.c **** 
- 2426              		.loc 1 1188 11 view .LVU613
+1189:Core/Src/main.c **** 
+ 2426              		.loc 1 1189 11 view .LVU613
  2427 02d6 3AEE488A 		vsub.f32	s16, s20, s16
  2428              	.LVL181:
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2429              		.loc 1 1190 5 is_stmt 1 view .LVU614
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2430              		.loc 1 1190 44 is_stmt 0 view .LVU615
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2429              		.loc 1 1191 5 is_stmt 1 view .LVU614
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2430              		.loc 1 1191 44 is_stmt 0 view .LVU615
  2431 02da DFF87CA3 		ldr	r10, .L175+128
  2432 02de DAF80000 		ldr	r0, [r10]	@ float
  2433 02e2 FFF7FEFF 		bl	__aeabi_f2d
@@ -5538,30 +5539,30 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2437 02ec FFF7FEFF 		bl	__aeabi_dmul
  2438              	.LVL183:
  2439 02f0 CDE90001 		strd	r0, [sp]
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2440              		.loc 1 1190 66 view .LVU616
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2440              		.loc 1 1191 66 view .LVU616
  2441 02f4 C54D     		ldr	r5, .L175+52
  2442 02f6 D5ED007A 		vldr.32	s15, [r5]
  2443 02fa 78EE677A 		vsub.f32	s15, s16, s15
  2444 02fe 17EE900A 		vmov	r0, s15
  2445 0302 FFF7FEFF 		bl	__aeabi_f2d
  2446              	.LVL184:
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2447              		.loc 1 1190 58 view .LVU617
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2447              		.loc 1 1191 58 view .LVU617
  2448 0306 B6A3     		adr	r3, .L175+8
  2449 0308 D3E90023 		ldrd	r2, [r3]
  2450 030c FFF7FEFF 		bl	__aeabi_dmul
  2451              	.LVL185:
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2452              		.loc 1 1190 91 view .LVU618
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2452              		.loc 1 1191 91 view .LVU618
  2453 0310 B5A3     		adr	r3, .L175+16
  2454 0312 D3E90023 		ldrd	r2, [r3]
  2455 0316 FFF7FEFF 		bl	__aeabi_dmul
  2456              	.LVL186:
  2457 031a 8046     		mov	r8, r0
  2458 031c 8946     		mov	r9, r1
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2459              		.loc 1 1190 99 view .LVU619
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2459              		.loc 1 1191 99 view .LVU619
  2460 031e 18EE900A 		vmov	r0, s17
  2461 0322 FFF7FEFF 		bl	__aeabi_f2d
  2462              	.LVL187:
@@ -5575,45 +5576,45 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2470              	.LVL188:
  2471 0336 0246     		mov	r2, r0
  2472 0338 0B46     		mov	r3, r1
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2473              		.loc 1 1190 51 view .LVU620
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2473              		.loc 1 1191 51 view .LVU620
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 94
+
+
  2474 033a DDE90001 		ldrd	r0, [sp]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 94
-
-
  2475 033e FFF7FEFF 		bl	__aeabi_dadd
  2476              	.LVL189:
  2477 0342 FFF7FEFF 		bl	__aeabi_d2f
  2478              	.LVL190:
  2479 0346 09EE100A 		vmov	s18, r0
-1190:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
- 2480              		.loc 1 1190 24 view .LVU621
+1191:Core/Src/main.c **** 				speed_integral_R += error*(tmp/1000000);
+ 2480              		.loc 1 1191 24 view .LVU621
  2481 034a CAF80000 		str	r0, [r10]	@ float
-1191:Core/Src/main.c **** 
- 2482              		.loc 1 1191 5 is_stmt 1 view .LVU622
-1191:Core/Src/main.c **** 
- 2483              		.loc 1 1191 35 is_stmt 0 view .LVU623
+1192:Core/Src/main.c **** 
+ 2482              		.loc 1 1192 5 is_stmt 1 view .LVU622
+1192:Core/Src/main.c **** 
+ 2483              		.loc 1 1192 35 is_stmt 0 view .LVU623
  2484 034e DFEDB07A 		vldr.32	s15, .L175+56
  2485 0352 C8EEA79A 		vdiv.f32	s19, s17, s15
-1191:Core/Src/main.c **** 
- 2486              		.loc 1 1191 30 view .LVU624
+1192:Core/Src/main.c **** 
+ 2486              		.loc 1 1192 30 view .LVU624
  2487 0356 69EE888A 		vmul.f32	s17, s19, s16
  2488              	.LVL191:
-1191:Core/Src/main.c **** 
- 2489              		.loc 1 1191 22 view .LVU625
+1192:Core/Src/main.c **** 
+ 2489              		.loc 1 1192 22 view .LVU625
  2490 035a AE4B     		ldr	r3, .L175+60
  2491 035c D3ED007A 		vldr.32	s15, [r3]
  2492 0360 78EEA78A 		vadd.f32	s17, s17, s15
  2493 0364 C3ED008A 		vstr.32	s17, [r3]
-1193:Core/Src/main.c **** 
- 2494              		.loc 1 1193 5 is_stmt 1 view .LVU626
-1193:Core/Src/main.c **** 
- 2495              		.loc 1 1193 28 is_stmt 0 view .LVU627
+1194:Core/Src/main.c **** 
+ 2494              		.loc 1 1194 5 is_stmt 1 view .LVU626
+1194:Core/Src/main.c **** 
+ 2495              		.loc 1 1194 28 is_stmt 0 view .LVU627
  2496 0368 85ED008A 		vstr.32	s16, [r5]
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2497              		.loc 1 1195 5 is_stmt 1 view .LVU628
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2498              		.loc 1 1195 18 is_stmt 0 view .LVU629
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2497              		.loc 1 1196 5 is_stmt 1 view .LVU628
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2498              		.loc 1 1196 18 is_stmt 0 view .LVU629
  2499 036c AA4D     		ldr	r5, .L175+64
  2500 036e 2868     		ldr	r0, [r5]
  2501 0370 FFF7FEFF 		bl	__aeabi_i2d
@@ -5624,171 +5625,171 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2506              	.LVL193:
  2507 037e 8046     		mov	r8, r0
  2508 0380 8946     		mov	r9, r1
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2509              		.loc 1 1195 52 view .LVU630
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2509              		.loc 1 1196 52 view .LVU630
  2510 0382 A64B     		ldr	r3, .L175+68
  2511 0384 93ED007A 		vldr.32	s14, [r3]
  2512 0388 28EE077A 		vmul.f32	s14, s16, s14
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2513              		.loc 1 1195 45 view .LVU631
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2513              		.loc 1 1196 45 view .LVU631
  2514 038c A44B     		ldr	r3, .L175+72
  2515 038e D3ED007A 		vldr.32	s15, [r3]	@ int
  2516 0392 F8EEE77A 		vcvt.f32.s32	s15, s15
  2517 0396 77EE877A 		vadd.f32	s15, s15, s14
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2518              		.loc 1 1195 66 view .LVU632
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2518              		.loc 1 1196 66 view .LVU632
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 95
+
+
  2519 039a A24B     		ldr	r3, .L175+76
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 95
-
-
  2520 039c 93ED007A 		vldr.32	s14, [r3]
  2521 03a0 29EE079A 		vmul.f32	s18, s18, s14
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2522              		.loc 1 1195 59 view .LVU633
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2522              		.loc 1 1196 59 view .LVU633
  2523 03a4 77EE897A 		vadd.f32	s15, s15, s18
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2524              		.loc 1 1195 93 view .LVU634
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2524              		.loc 1 1196 93 view .LVU634
  2525 03a8 9F4B     		ldr	r3, .L175+80
  2526 03aa 93ED009A 		vldr.32	s18, [r3]
  2527 03ae 28EE899A 		vmul.f32	s18, s17, s18
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2528              		.loc 1 1195 86 view .LVU635
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2528              		.loc 1 1196 86 view .LVU635
  2529 03b2 77EE897A 		vadd.f32	s15, s15, s18
  2530 03b6 17EE900A 		vmov	r0, s15
  2531 03ba FFF7FEFF 		bl	__aeabi_f2d
  2532              	.LVL194:
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2533              		.loc 1 1195 29 view .LVU636
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2533              		.loc 1 1196 29 view .LVU636
  2534 03be 8EA3     		adr	r3, .L175+32
  2535 03c0 D3E90023 		ldrd	r2, [r3]
  2536 03c4 FFF7FEFF 		bl	__aeabi_dmul
  2537              	.LVL195:
  2538 03c8 0246     		mov	r2, r0
  2539 03ca 0B46     		mov	r3, r1
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2540              		.loc 1 1195 23 view .LVU637
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2540              		.loc 1 1196 23 view .LVU637
  2541 03cc 4046     		mov	r0, r8
  2542 03ce 4946     		mov	r1, r9
  2543 03d0 FFF7FEFF 		bl	__aeabi_dadd
  2544              	.LVL196:
-1195:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
- 2545              		.loc 1 1195 11 view .LVU638
+1196:Core/Src/main.c **** 				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+ 2545              		.loc 1 1196 11 view .LVU638
  2546 03d4 FFF7FEFF 		bl	__aeabi_d2iz
  2547              	.LVL197:
  2548 03d8 2860     		str	r0, [r5]
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2549              		.loc 1 1196 5 is_stmt 1 view .LVU639
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2550              		.loc 1 1196 20 is_stmt 0 view .LVU640
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ 2549              		.loc 1 1197 5 is_stmt 1 view .LVU639
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ 2550              		.loc 1 1197 20 is_stmt 0 view .LVU640
  2551 03da 944B     		ldr	r3, .L175+84
  2552 03dc 1D68     		ldr	r5, [r3]
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2553              		.loc 1 1196 40 view .LVU641
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ 2553              		.loc 1 1197 40 view .LVU641
  2554 03de A842     		cmp	r0, r5
  2555 03e0 04DC     		bgt	.L139
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2556              		.loc 1 1196 51 discriminator 1 view .LVU642
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ 2556              		.loc 1 1197 51 discriminator 1 view .LVU642
  2557 03e2 6B42     		rsbs	r3, r5, #0
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2558              		.loc 1 1196 40 discriminator 1 view .LVU643
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ 2558              		.loc 1 1197 40 discriminator 1 view .LVU643
  2559 03e4 8342     		cmp	r3, r0
  2560 03e6 B8BF     		it	lt
  2561 03e8 0346     		movlt	r3, r0
  2562 03ea 00E0     		b	.L104
  2563              	.L139:
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2564              		.loc 1 1196 40 discriminator 2 view .LVU644
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 96
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 96
 
 
+ 2564              		.loc 1 1197 40 discriminator 2 view .LVU644
  2565 03ec 2B46     		mov	r3, r5
  2566              	.L104:
-1196:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
- 2567              		.loc 1 1196 11 discriminator 4 view .LVU645
+1197:Core/Src/main.c **** 				PWM_R = (target_speed_R == 0)?0: PWM_R;
+ 2567              		.loc 1 1197 11 discriminator 4 view .LVU645
  2568 03ee 8A4A     		ldr	r2, .L175+64
  2569 03f0 1360     		str	r3, [r2]
-1197:Core/Src/main.c **** 
- 2570              		.loc 1 1197 5 is_stmt 1 view .LVU646
-1197:Core/Src/main.c **** 
- 2571              		.loc 1 1197 36 is_stmt 0 view .LVU647
+1198:Core/Src/main.c **** 
+ 2570              		.loc 1 1198 5 is_stmt 1 view .LVU646
+1198:Core/Src/main.c **** 
+ 2571              		.loc 1 1198 36 is_stmt 0 view .LVU647
  2572 03f2 B5EE40AA 		vcmp.f32	s20, #0
  2573 03f6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2574 03fa 00D1     		bne	.L105
-1197:Core/Src/main.c **** 
- 2575              		.loc 1 1197 36 discriminator 2 view .LVU648
+1198:Core/Src/main.c **** 
+ 2575              		.loc 1 1198 36 discriminator 2 view .LVU648
  2576 03fc 0023     		movs	r3, #0
  2577              	.L105:
-1197:Core/Src/main.c **** 
- 2578              		.loc 1 1197 11 discriminator 4 view .LVU649
+1198:Core/Src/main.c **** 
+ 2578              		.loc 1 1198 11 discriminator 4 view .LVU649
  2579 03fe 864A     		ldr	r2, .L175+64
  2580 0400 1360     		str	r3, [r2]
-1199:Core/Src/main.c **** 
- 2581              		.loc 1 1199 5 is_stmt 1 view .LVU650
-1199:Core/Src/main.c **** 
- 2582              		.loc 1 1199 158 is_stmt 0 view .LVU651
+1200:Core/Src/main.c **** 
+ 2581              		.loc 1 1200 5 is_stmt 1 view .LVU650
+1200:Core/Src/main.c **** 
+ 2582              		.loc 1 1200 158 is_stmt 0 view .LVU651
  2583 0402 9D42     		cmp	r5, r3
  2584 0404 13D0     		beq	.L106
-1199:Core/Src/main.c **** 
- 2585              		.loc 1 1199 45 discriminator 2 view .LVU652
+1200:Core/Src/main.c **** 
+ 2585              		.loc 1 1200 45 discriminator 2 view .LVU652
  2586 0406 EB42     		cmn	r3, r5
  2587 0408 11D0     		beq	.L106
-1199:Core/Src/main.c **** 
- 2588              		.loc 1 1199 72 discriminator 4 view .LVU653
+1200:Core/Src/main.c **** 
+ 2588              		.loc 1 1200 72 discriminator 4 view .LVU653
  2589 040a F0EEC97A 		vabs.f32	s15, s18
  2590 040e 17EE900A 		vmov	r0, s15
  2591 0412 FFF7FEFF 		bl	__aeabi_f2d
  2592              	.LVL198:
  2593 0416 8046     		mov	r8, r0
  2594 0418 8946     		mov	r9, r1
-1199:Core/Src/main.c **** 
- 2595              		.loc 1 1199 101 discriminator 4 view .LVU654
+1200:Core/Src/main.c **** 
+ 2595              		.loc 1 1200 101 discriminator 4 view .LVU654
  2596 041a 2846     		mov	r0, r5
  2597 041c FFF7FEFF 		bl	__aeabi_i2d
  2598              	.LVL199:
  2599 0420 0246     		mov	r2, r0
  2600 0422 0B46     		mov	r3, r1
-1199:Core/Src/main.c **** 
- 2601              		.loc 1 1199 68 discriminator 4 view .LVU655
+1200:Core/Src/main.c **** 
+ 2601              		.loc 1 1200 68 discriminator 4 view .LVU655
  2602 0424 4046     		mov	r0, r8
  2603 0426 4946     		mov	r1, r9
  2604 0428 FFF7FEFF 		bl	__aeabi_dcmpgt
  2605              	.LVL200:
  2606 042c 28B1     		cbz	r0, .L107
  2607              	.L106:
-1199:Core/Src/main.c **** 
- 2608              		.loc 1 1199 136 discriminator 5 view .LVU656
+1200:Core/Src/main.c **** 
+ 2608              		.loc 1 1200 136 discriminator 5 view .LVU656
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 97
+
+
  2609 042e 38EE088A 		vadd.f32	s16, s16, s16
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 97
-
-
  2610              	.LVL201:
-1199:Core/Src/main.c **** 
- 2611              		.loc 1 1199 142 discriminator 5 view .LVU657
+1200:Core/Src/main.c **** 
+ 2611              		.loc 1 1200 142 discriminator 5 view .LVU657
  2612 0432 69EE887A 		vmul.f32	s15, s19, s16
-1199:Core/Src/main.c **** 
- 2613              		.loc 1 1199 158 discriminator 5 view .LVU658
+1200:Core/Src/main.c **** 
+ 2613              		.loc 1 1200 158 discriminator 5 view .LVU658
  2614 0436 78EEE78A 		vsub.f32	s17, s17, s15
  2615              	.L107:
-1199:Core/Src/main.c **** 
- 2616              		.loc 1 1199 22 discriminator 8 view .LVU659
+1200:Core/Src/main.c **** 
+ 2616              		.loc 1 1200 22 discriminator 8 view .LVU659
  2617 043a 764B     		ldr	r3, .L175+60
  2618 043c C3ED008A 		vstr.32	s17, [r3]
-1202:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
- 2619              		.loc 1 1202 5 is_stmt 1 view .LVU660
-1202:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
- 2620              		.loc 1 1202 28 is_stmt 0 view .LVU661
+1203:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
+ 2619              		.loc 1 1203 5 is_stmt 1 view .LVU660
+1203:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
+ 2620              		.loc 1 1203 28 is_stmt 0 view .LVU661
  2621 0440 7B4B     		ldr	r3, .L175+88
  2622 0442 93ED008A 		vldr.32	s16, [r3]
  2623 0446 7B4B     		ldr	r3, .L175+92
  2624 0448 D3ED007A 		vldr.32	s15, [r3]
-1202:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
- 2625              		.loc 1 1202 11 view .LVU662
+1203:Core/Src/main.c **** 				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/
+ 2625              		.loc 1 1203 11 view .LVU662
  2626 044c 38EE678A 		vsub.f32	s16, s16, s15
  2627              	.LVL202:
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2628              		.loc 1 1203 5 is_stmt 1 view .LVU663
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2629              		.loc 1 1203 44 is_stmt 0 view .LVU664
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2628              		.loc 1 1204 5 is_stmt 1 view .LVU663
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2629              		.loc 1 1204 44 is_stmt 0 view .LVU664
  2630 0450 794D     		ldr	r5, .L175+96
  2631 0452 2868     		ldr	r0, [r5]	@ float
  2632 0454 FFF7FEFF 		bl	__aeabi_f2d
@@ -5799,241 +5800,241 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2637              	.LVL204:
  2638 0462 8046     		mov	r8, r0
  2639 0464 8946     		mov	r9, r1
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2640              		.loc 1 1203 66 view .LVU665
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2640              		.loc 1 1204 66 view .LVU665
  2641 0466 DFF8F4A1 		ldr	r10, .L175+132
  2642 046a DAED007A 		vldr.32	s15, [r10]
  2643 046e 78EE677A 		vsub.f32	s15, s16, s15
  2644 0472 17EE900A 		vmov	r0, s15
  2645 0476 FFF7FEFF 		bl	__aeabi_f2d
  2646              	.LVL205:
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2647              		.loc 1 1203 58 view .LVU666
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2647              		.loc 1 1204 58 view .LVU666
  2648 047a 59A3     		adr	r3, .L175+8
  2649 047c D3E90023 		ldrd	r2, [r3]
  2650 0480 FFF7FEFF 		bl	__aeabi_dmul
  2651              	.LVL206:
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2652              		.loc 1 1203 91 view .LVU667
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2652              		.loc 1 1204 91 view .LVU667
  2653 0484 58A3     		adr	r3, .L175+16
  2654 0486 D3E90023 		ldrd	r2, [r3]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 98
+
+
  2655 048a FFF7FEFF 		bl	__aeabi_dmul
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 98
-
-
  2656              	.LVL207:
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2657              		.loc 1 1203 99 view .LVU668
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2657              		.loc 1 1204 99 view .LVU668
  2658 048e 3246     		mov	r2, r6
  2659 0490 3B46     		mov	r3, r7
  2660 0492 FFF7FEFF 		bl	__aeabi_ddiv
  2661              	.LVL208:
  2662 0496 0246     		mov	r2, r0
  2663 0498 0B46     		mov	r3, r1
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2664              		.loc 1 1203 51 view .LVU669
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2664              		.loc 1 1204 51 view .LVU669
  2665 049a 4046     		mov	r0, r8
  2666 049c 4946     		mov	r1, r9
  2667 049e FFF7FEFF 		bl	__aeabi_dadd
  2668              	.LVL209:
  2669 04a2 FFF7FEFF 		bl	__aeabi_d2f
  2670              	.LVL210:
-1203:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
- 2671              		.loc 1 1203 24 view .LVU670
+1204:Core/Src/main.c **** 				speed_integral_L += error*(tmp/1000000);
+ 2671              		.loc 1 1204 24 view .LVU670
  2672 04a6 2860     		str	r0, [r5]	@ float
-1204:Core/Src/main.c **** 
- 2673              		.loc 1 1204 5 is_stmt 1 view .LVU671
-1204:Core/Src/main.c **** 
- 2674              		.loc 1 1204 30 is_stmt 0 view .LVU672
+1205:Core/Src/main.c **** 
+ 2673              		.loc 1 1205 5 is_stmt 1 view .LVU671
+1205:Core/Src/main.c **** 
+ 2674              		.loc 1 1205 30 is_stmt 0 view .LVU672
  2675 04a8 29EE887A 		vmul.f32	s14, s19, s16
-1204:Core/Src/main.c **** 
- 2676              		.loc 1 1204 22 view .LVU673
+1205:Core/Src/main.c **** 
+ 2676              		.loc 1 1205 22 view .LVU673
  2677 04ac DFF8A091 		ldr	r9, .L175+120
  2678 04b0 D9ED007A 		vldr.32	s15, [r9]
  2679 04b4 77EE877A 		vadd.f32	s15, s15, s14
  2680 04b8 C9ED007A 		vstr.32	s15, [r9]
-1206:Core/Src/main.c **** 				previous_speed_control_time = micros();
- 2681              		.loc 1 1206 5 is_stmt 1 view .LVU674
-1206:Core/Src/main.c **** 				previous_speed_control_time = micros();
- 2682              		.loc 1 1206 28 is_stmt 0 view .LVU675
+1207:Core/Src/main.c **** 				previous_speed_control_time = micros();
+ 2681              		.loc 1 1207 5 is_stmt 1 view .LVU674
+1207:Core/Src/main.c **** 				previous_speed_control_time = micros();
+ 2682              		.loc 1 1207 28 is_stmt 0 view .LVU675
  2683 04bc 8AED008A 		vstr.32	s16, [r10]
-1207:Core/Src/main.c **** 
- 2684              		.loc 1 1207 5 is_stmt 1 view .LVU676
-1207:Core/Src/main.c **** 
- 2685              		.loc 1 1207 35 is_stmt 0 view .LVU677
+1208:Core/Src/main.c **** 
+ 2684              		.loc 1 1208 5 is_stmt 1 view .LVU676
+1208:Core/Src/main.c **** 
+ 2685              		.loc 1 1208 35 is_stmt 0 view .LVU677
  2686 04c0 FFF7FEFF 		bl	micros
  2687              	.LVL211:
-1207:Core/Src/main.c **** 
- 2688              		.loc 1 1207 33 discriminator 1 view .LVU678
+1208:Core/Src/main.c **** 
+ 2688              		.loc 1 1208 33 discriminator 1 view .LVU678
  2689 04c4 4E4B     		ldr	r3, .L175+40
  2690 04c6 1860     		str	r0, [r3]
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2691              		.loc 1 1209 5 is_stmt 1 view .LVU679
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2692              		.loc 1 1209 18 is_stmt 0 view .LVU680
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2691              		.loc 1 1210 5 is_stmt 1 view .LVU679
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2692              		.loc 1 1210 18 is_stmt 0 view .LVU680
  2693 04c8 DFF88081 		ldr	r8, .L175+116
  2694 04cc D8F80000 		ldr	r0, [r8]
  2695 04d0 FFF7FEFF 		bl	__aeabi_i2d
  2696              	.LVL212:
  2697 04d4 46A3     		adr	r3, .L175+24
  2698 04d6 D3E90023 		ldrd	r2, [r3]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 99
+
+
  2699 04da FFF7FEFF 		bl	__aeabi_dmul
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 99
-
-
  2700              	.LVL213:
  2701 04de 0646     		mov	r6, r0
  2702 04e0 0F46     		mov	r7, r1
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2703              		.loc 1 1209 52 view .LVU681
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2703              		.loc 1 1210 52 view .LVU681
  2704 04e2 564B     		ldr	r3, .L175+100
  2705 04e4 93ED007A 		vldr.32	s14, [r3]
  2706 04e8 28EE077A 		vmul.f32	s14, s16, s14
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2707              		.loc 1 1209 45 view .LVU682
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2707              		.loc 1 1210 45 view .LVU682
  2708 04ec 544B     		ldr	r3, .L175+104
  2709 04ee D3ED007A 		vldr.32	s15, [r3]	@ int
  2710 04f2 F8EEE77A 		vcvt.f32.s32	s15, s15
  2711 04f6 77EE877A 		vadd.f32	s15, s15, s14
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2712              		.loc 1 1209 66 view .LVU683
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2712              		.loc 1 1210 66 view .LVU683
  2713 04fa 524B     		ldr	r3, .L175+108
  2714 04fc 93ED007A 		vldr.32	s14, [r3]
  2715 0500 D5ED006A 		vldr.32	s13, [r5]
  2716 0504 27EE267A 		vmul.f32	s14, s14, s13
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2717              		.loc 1 1209 59 view .LVU684
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2717              		.loc 1 1210 59 view .LVU684
  2718 0508 77EE877A 		vadd.f32	s15, s15, s14
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2719              		.loc 1 1209 93 view .LVU685
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2719              		.loc 1 1210 93 view .LVU685
  2720 050c D9ED008A 		vldr.32	s17, [r9]
  2721 0510 4D4B     		ldr	r3, .L175+112
  2722 0512 93ED009A 		vldr.32	s18, [r3]
  2723 0516 28EE899A 		vmul.f32	s18, s17, s18
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2724              		.loc 1 1209 86 view .LVU686
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2724              		.loc 1 1210 86 view .LVU686
  2725 051a 77EE897A 		vadd.f32	s15, s15, s18
  2726 051e 17EE900A 		vmov	r0, s15
  2727 0522 FFF7FEFF 		bl	__aeabi_f2d
  2728              	.LVL214:
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2729              		.loc 1 1209 29 view .LVU687
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2729              		.loc 1 1210 29 view .LVU687
  2730 0526 34A3     		adr	r3, .L175+32
  2731 0528 D3E90023 		ldrd	r2, [r3]
  2732 052c FFF7FEFF 		bl	__aeabi_dmul
  2733              	.LVL215:
  2734 0530 0246     		mov	r2, r0
  2735 0532 0B46     		mov	r3, r1
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2736              		.loc 1 1209 23 view .LVU688
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2736              		.loc 1 1210 23 view .LVU688
  2737 0534 3046     		mov	r0, r6
  2738 0536 3946     		mov	r1, r7
  2739 0538 FFF7FEFF 		bl	__aeabi_dadd
  2740              	.LVL216:
-1209:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
- 2741              		.loc 1 1209 11 view .LVU689
+1210:Core/Src/main.c **** 				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+ 2741              		.loc 1 1210 11 view .LVU689
  2742 053c FFF7FEFF 		bl	__aeabi_d2iz
  2743              	.LVL217:
  2744 0540 C8F80000 		str	r0, [r8]
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
- 2745              		.loc 1 1210 5 is_stmt 1 view .LVU690
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 100
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2745              		.loc 1 1211 5 is_stmt 1 view .LVU690
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 100
 
 
- 2746              		.loc 1 1210 20 is_stmt 0 view .LVU691
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2746              		.loc 1 1211 20 is_stmt 0 view .LVU691
  2747 0544 394B     		ldr	r3, .L175+84
  2748 0546 1D68     		ldr	r5, [r3]
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
- 2749              		.loc 1 1210 40 view .LVU692
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2749              		.loc 1 1211 40 view .LVU692
  2750 0548 A842     		cmp	r0, r5
  2751 054a 04DC     		bgt	.L140
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
- 2752              		.loc 1 1210 51 discriminator 1 view .LVU693
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2752              		.loc 1 1211 51 discriminator 1 view .LVU693
  2753 054c 6B42     		rsbs	r3, r5, #0
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
- 2754              		.loc 1 1210 40 discriminator 1 view .LVU694
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2754              		.loc 1 1211 40 discriminator 1 view .LVU694
  2755 054e 8342     		cmp	r3, r0
  2756 0550 B8BF     		it	lt
  2757 0552 0346     		movlt	r3, r0
  2758 0554 00E0     		b	.L109
  2759              	.L140:
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
- 2760              		.loc 1 1210 40 discriminator 2 view .LVU695
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2760              		.loc 1 1211 40 discriminator 2 view .LVU695
  2761 0556 2B46     		mov	r3, r5
  2762              	.L109:
-1210:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
- 2763              		.loc 1 1210 11 discriminator 4 view .LVU696
+1211:Core/Src/main.c **** 				PWM_L = (target_speed_L == 0)?0: PWM_L;
+ 2763              		.loc 1 1211 11 discriminator 4 view .LVU696
  2764 0558 3C4A     		ldr	r2, .L175+116
  2765 055a 1360     		str	r3, [r2]
-1211:Core/Src/main.c **** 
- 2766              		.loc 1 1211 5 is_stmt 1 view .LVU697
-1211:Core/Src/main.c **** 
- 2767              		.loc 1 1211 29 is_stmt 0 view .LVU698
+1212:Core/Src/main.c **** 
+ 2766              		.loc 1 1212 5 is_stmt 1 view .LVU697
+1212:Core/Src/main.c **** 
+ 2767              		.loc 1 1212 29 is_stmt 0 view .LVU698
  2768 055c 344A     		ldr	r2, .L175+88
  2769 055e D2ED007A 		vldr.32	s15, [r2]
-1211:Core/Src/main.c **** 
- 2770              		.loc 1 1211 36 view .LVU699
+1212:Core/Src/main.c **** 
+ 2770              		.loc 1 1212 36 view .LVU699
  2771 0562 F5EE407A 		vcmp.f32	s15, #0
  2772 0566 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2773 056a 00D1     		bne	.L110
-1211:Core/Src/main.c **** 
- 2774              		.loc 1 1211 36 discriminator 2 view .LVU700
+1212:Core/Src/main.c **** 
+ 2774              		.loc 1 1212 36 discriminator 2 view .LVU700
  2775 056c 0023     		movs	r3, #0
  2776              	.L110:
-1211:Core/Src/main.c **** 
- 2777              		.loc 1 1211 11 discriminator 4 view .LVU701
+1212:Core/Src/main.c **** 
+ 2777              		.loc 1 1212 11 discriminator 4 view .LVU701
  2778 056e 374A     		ldr	r2, .L175+116
  2779 0570 1360     		str	r3, [r2]
-1213:Core/Src/main.c **** 
- 2780              		.loc 1 1213 5 is_stmt 1 view .LVU702
-1213:Core/Src/main.c **** 
- 2781              		.loc 1 1213 158 is_stmt 0 view .LVU703
+1214:Core/Src/main.c **** 
+ 2780              		.loc 1 1214 5 is_stmt 1 view .LVU702
+1214:Core/Src/main.c **** 
+ 2781              		.loc 1 1214 158 is_stmt 0 view .LVU703
  2782 0572 9D42     		cmp	r5, r3
  2783 0574 13D0     		beq	.L111
-1213:Core/Src/main.c **** 
- 2784              		.loc 1 1213 45 discriminator 2 view .LVU704
+1214:Core/Src/main.c **** 
+ 2784              		.loc 1 1214 45 discriminator 2 view .LVU704
  2785 0576 EB42     		cmn	r3, r5
  2786 0578 11D0     		beq	.L111
-1213:Core/Src/main.c **** 
- 2787              		.loc 1 1213 72 discriminator 4 view .LVU705
+1214:Core/Src/main.c **** 
+ 2787              		.loc 1 1214 72 discriminator 4 view .LVU705
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 101
+
+
  2788 057a F0EEC97A 		vabs.f32	s15, s18
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 101
-
-
  2789 057e 17EE900A 		vmov	r0, s15
  2790 0582 FFF7FEFF 		bl	__aeabi_f2d
  2791              	.LVL218:
  2792 0586 0646     		mov	r6, r0
  2793 0588 0F46     		mov	r7, r1
-1213:Core/Src/main.c **** 
- 2794              		.loc 1 1213 101 discriminator 4 view .LVU706
+1214:Core/Src/main.c **** 
+ 2794              		.loc 1 1214 101 discriminator 4 view .LVU706
  2795 058a 2846     		mov	r0, r5
  2796 058c FFF7FEFF 		bl	__aeabi_i2d
  2797              	.LVL219:
  2798 0590 0246     		mov	r2, r0
  2799 0592 0B46     		mov	r3, r1
-1213:Core/Src/main.c **** 
- 2800              		.loc 1 1213 68 discriminator 4 view .LVU707
+1214:Core/Src/main.c **** 
+ 2800              		.loc 1 1214 68 discriminator 4 view .LVU707
  2801 0594 3046     		mov	r0, r6
  2802 0596 3946     		mov	r1, r7
  2803 0598 FFF7FEFF 		bl	__aeabi_dcmpgt
  2804              	.LVL220:
  2805 059c 28B1     		cbz	r0, .L112
  2806              	.L111:
-1213:Core/Src/main.c **** 
- 2807              		.loc 1 1213 136 discriminator 5 view .LVU708
+1214:Core/Src/main.c **** 
+ 2807              		.loc 1 1214 136 discriminator 5 view .LVU708
  2808 059e 38EE088A 		vadd.f32	s16, s16, s16
  2809              	.LVL221:
-1213:Core/Src/main.c **** 
- 2810              		.loc 1 1213 142 discriminator 5 view .LVU709
+1214:Core/Src/main.c **** 
+ 2810              		.loc 1 1214 142 discriminator 5 view .LVU709
  2811 05a2 69EE889A 		vmul.f32	s19, s19, s16
-1213:Core/Src/main.c **** 
- 2812              		.loc 1 1213 158 discriminator 5 view .LVU710
+1214:Core/Src/main.c **** 
+ 2812              		.loc 1 1214 158 discriminator 5 view .LVU710
  2813 05a6 78EEE98A 		vsub.f32	s17, s17, s19
  2814              	.L112:
-1213:Core/Src/main.c **** 
- 2815              		.loc 1 1213 22 discriminator 8 view .LVU711
+1214:Core/Src/main.c **** 
+ 2815              		.loc 1 1214 22 discriminator 8 view .LVU711
  2816 05aa 294B     		ldr	r3, .L175+120
  2817 05ac C3ED008A 		vstr.32	s17, [r3]
  2818              	.LBE25:
@@ -6041,32 +6042,32 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2820              	.LVL222:
  2821              	.L167:
  2822              	.LBB26:
-1222:Core/Src/main.c **** 
- 2823              		.loc 1 1222 29 discriminator 1 view .LVU712
+1223:Core/Src/main.c **** 
+ 2823              		.loc 1 1223 29 discriminator 1 view .LVU712
  2824 05b2 4FF0FF32 		mov	r2, #-1
  2825 05b6 79E5     		b	.L114
  2826              	.L168:
-1222:Core/Src/main.c **** 
- 2827              		.loc 1 1222 43 discriminator 5 view .LVU713
+1223:Core/Src/main.c **** 
+ 2827              		.loc 1 1223 43 discriminator 5 view .LVU713
  2828 05b8 4FF0FF33 		mov	r3, #-1
  2829 05bc 7DE5     		b	.L116
  2830              	.L169:
-1222:Core/Src/main.c **** 
- 2831              		.loc 1 1222 111 discriminator 9 view .LVU714
+1223:Core/Src/main.c **** 
+ 2831              		.loc 1 1223 111 discriminator 9 view .LVU714
  2832 05be DFED147A 		vldr.32	s15, .L175+56
  2833 05c2 C6EEA75A 		vdiv.f32	s11, s13, s15
-1222:Core/Src/main.c **** 
- 2834              		.loc 1 1222 106 discriminator 9 view .LVU715
+1223:Core/Src/main.c **** 
+ 2834              		.loc 1 1223 106 discriminator 9 view .LVU715
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 102
+
+
  2835 05c6 65EE875A 		vmul.f32	s11, s11, s14
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 102
-
-
-1222:Core/Src/main.c **** 
- 2836              		.loc 1 1222 99 discriminator 9 view .LVU716
+1223:Core/Src/main.c **** 
+ 2836              		.loc 1 1223 99 discriminator 9 view .LVU716
  2837 05ca 224B     		ldr	r3, .L175+124
  2838 05cc D3ED007A 		vldr.32	s15, [r3]
-1222:Core/Src/main.c **** 
- 2839              		.loc 1 1222 121 discriminator 9 view .LVU717
+1223:Core/Src/main.c **** 
+ 2839              		.loc 1 1223 121 discriminator 9 view .LVU717
  2840 05d0 75EEA75A 		vadd.f32	s11, s11, s15
  2841 05d4 76E5     		b	.L118
  2842              	.L176:
@@ -6107,93 +6108,93 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2877 0658 00000000 		.word	speed_derivative_R
  2878 065c 00000000 		.word	previous_speed_error_L
  2879              	.L157:
-1227:Core/Src/main.c **** 
- 2880              		.loc 1 1227 138 discriminator 2 view .LVU718
+1228:Core/Src/main.c **** 
+ 2880              		.loc 1 1228 138 discriminator 2 view .LVU718
  2881 0660 204B     		ldr	r3, .L177
  2882 0662 93ED006A 		vldr.32	s12, [r3]	@ int
  2883 0666 B8EEC66A 		vcvt.f32.s32	s12, s12
  2884 066a 36EE456A 		vsub.f32	s12, s12, s10
-1227:Core/Src/main.c **** 
- 2885              		.loc 1 1227 11 discriminator 2 view .LVU719
+1228:Core/Src/main.c **** 
+ 2885              		.loc 1 1228 11 discriminator 2 view .LVU719
  2886 066e F4EEC67A 		vcmpe.f32	s15, s12
  2887 0672 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 103
+
+
  2888 0676 04D5     		bpl	.L158
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 103
-
-
-1227:Core/Src/main.c **** 
- 2889              		.loc 1 1227 11 discriminator 4 view .LVU720
+1228:Core/Src/main.c **** 
+ 2889              		.loc 1 1228 11 discriminator 4 view .LVU720
  2890 0678 FDEEC67A 		vcvt.s32.f32	s15, s12
  2891 067c 17EE903A 		vmov	r3, s15	@ int
  2892 0680 54E5     		b	.L121
  2893              	.L158:
-1227:Core/Src/main.c **** 
- 2894              		.loc 1 1227 11 discriminator 5 view .LVU721
+1228:Core/Src/main.c **** 
+ 2894              		.loc 1 1228 11 discriminator 5 view .LVU721
  2895 0682 FDEEE77A 		vcvt.s32.f32	s15, s15
  2896 0686 17EE903A 		vmov	r3, s15	@ int
  2897 068a 4FE5     		b	.L121
  2898              	.L170:
-1235:Core/Src/main.c **** 
- 2899              		.loc 1 1235 29 discriminator 1 view .LVU722
+1236:Core/Src/main.c **** 
+ 2899              		.loc 1 1236 29 discriminator 1 view .LVU722
  2900 068c 4FF0FF32 		mov	r2, #-1
  2901 0690 84E5     		b	.L126
  2902              	.L171:
-1235:Core/Src/main.c **** 
- 2903              		.loc 1 1235 43 discriminator 5 view .LVU723
+1236:Core/Src/main.c **** 
+ 2903              		.loc 1 1236 43 discriminator 5 view .LVU723
  2904 0692 4FF0FF33 		mov	r3, #-1
  2905 0696 88E5     		b	.L128
  2906              	.L172:
-1235:Core/Src/main.c **** 
- 2907              		.loc 1 1235 110 discriminator 9 view .LVU724
+1236:Core/Src/main.c **** 
+ 2907              		.loc 1 1236 110 discriminator 9 view .LVU724
  2908 0698 DFED137A 		vldr.32	s15, .L177+4
  2909 069c C6EEA75A 		vdiv.f32	s11, s13, s15
-1235:Core/Src/main.c **** 
- 2910              		.loc 1 1235 105 discriminator 9 view .LVU725
+1236:Core/Src/main.c **** 
+ 2910              		.loc 1 1236 105 discriminator 9 view .LVU725
  2911 06a0 65EE875A 		vmul.f32	s11, s11, s14
-1235:Core/Src/main.c **** 
- 2912              		.loc 1 1235 98 discriminator 9 view .LVU726
+1236:Core/Src/main.c **** 
+ 2912              		.loc 1 1236 98 discriminator 9 view .LVU726
  2913 06a4 114B     		ldr	r3, .L177+8
  2914 06a6 D3ED007A 		vldr.32	s15, [r3]
-1235:Core/Src/main.c **** 
- 2915              		.loc 1 1235 120 discriminator 9 view .LVU727
+1236:Core/Src/main.c **** 
+ 2915              		.loc 1 1236 120 discriminator 9 view .LVU727
  2916 06aa 75EEA75A 		vadd.f32	s11, s11, s15
  2917 06ae 81E5     		b	.L130
  2918              	.L161:
-1240:Core/Src/main.c **** 
- 2919              		.loc 1 1240 138 discriminator 2 view .LVU728
+1241:Core/Src/main.c **** 
+ 2919              		.loc 1 1241 138 discriminator 2 view .LVU728
  2920 06b0 0F4B     		ldr	r3, .L177+12
  2921 06b2 93ED006A 		vldr.32	s12, [r3]	@ int
  2922 06b6 B8EEC66A 		vcvt.f32.s32	s12, s12
  2923 06ba 36EE456A 		vsub.f32	s12, s12, s10
-1240:Core/Src/main.c **** 
- 2924              		.loc 1 1240 11 discriminator 2 view .LVU729
+1241:Core/Src/main.c **** 
+ 2924              		.loc 1 1241 11 discriminator 2 view .LVU729
  2925 06be F4EEC67A 		vcmpe.f32	s15, s12
  2926 06c2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  2927 06c6 04D5     		bpl	.L162
-1240:Core/Src/main.c **** 
- 2928              		.loc 1 1240 11 discriminator 4 view .LVU730
+1241:Core/Src/main.c **** 
+ 2928              		.loc 1 1241 11 discriminator 4 view .LVU730
  2929 06c8 FDEEC67A 		vcvt.s32.f32	s15, s12
  2930 06cc 17EE903A 		vmov	r3, s15	@ int
  2931 06d0 A1E5     		b	.L133
  2932              	.L162:
-1240:Core/Src/main.c **** 
- 2933              		.loc 1 1240 11 discriminator 5 view .LVU731
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 104
+1241:Core/Src/main.c **** 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 104
 
 
+ 2933              		.loc 1 1241 11 discriminator 5 view .LVU731
  2934 06d2 FDEEE77A 		vcvt.s32.f32	s15, s15
  2935 06d6 17EE903A 		vmov	r3, s15	@ int
  2936 06da 9CE5     		b	.L133
  2937              	.LVL223:
  2938              	.L165:
-1240:Core/Src/main.c **** 
- 2939              		.loc 1 1240 11 discriminator 5 view .LVU732
+1241:Core/Src/main.c **** 
+ 2939              		.loc 1 1241 11 discriminator 5 view .LVU732
  2940              	.LBE26:
-1275:Core/Src/main.c ****   }
- 2941              		.loc 1 1275 5 is_stmt 1 view .LVU733
+1276:Core/Src/main.c ****   }
+ 2941              		.loc 1 1276 5 is_stmt 1 view .LVU733
  2942 06dc FFF7FEFF 		bl	HAL_IncTick
  2943              	.LVL224:
- 2944              		.loc 1 1280 1 is_stmt 0 view .LVU734
+ 2944              		.loc 1 1281 1 is_stmt 0 view .LVU734
  2945 06e0 9DE4     		b	.L99
  2946              	.L178:
  2947 06e2 00BF     		.align	2
@@ -6212,23 +6213,23 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2961              		.thumb_func
  2963              	Error_Handler:
  2964              	.LFB163:
-1281:Core/Src/main.c **** 
-1282:Core/Src/main.c **** /**
-1283:Core/Src/main.c ****   * @brief  This function is executed in case of error occurrence.
-1284:Core/Src/main.c ****   * @retval None
-1285:Core/Src/main.c ****   */
-1286:Core/Src/main.c **** void Error_Handler(void)
-1287:Core/Src/main.c **** {
- 2965              		.loc 1 1287 1 is_stmt 1 view -0
+1282:Core/Src/main.c **** 
+1283:Core/Src/main.c **** /**
+1284:Core/Src/main.c ****   * @brief  This function is executed in case of error occurrence.
+1285:Core/Src/main.c ****   * @retval None
+1286:Core/Src/main.c ****   */
+1287:Core/Src/main.c **** void Error_Handler(void)
+1288:Core/Src/main.c **** {
+ 2965              		.loc 1 1288 1 is_stmt 1 view -0
  2966              		.cfi_startproc
  2967              		@ Volatile: function does not return.
  2968              		@ args = 0, pretend = 0, frame = 0
  2969              		@ frame_needed = 0, uses_anonymous_args = 0
  2970              		@ link register save eliminated.
-1288:Core/Src/main.c ****   /* USER CODE BEGIN Error_Handler_Debug */
-1289:Core/Src/main.c ****   /* User can add his own implementation to report the HAL error return state */
-1290:Core/Src/main.c ****   __disable_irq();
- 2971              		.loc 1 1290 3 view .LVU736
+1289:Core/Src/main.c ****   /* USER CODE BEGIN Error_Handler_Debug */
+1290:Core/Src/main.c ****   /* User can add his own implementation to report the HAL error return state */
+1291:Core/Src/main.c ****   __disable_irq();
+ 2971              		.loc 1 1291 3 view .LVU736
  2972              	.LBB27:
  2973              	.LBI27:
  960:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -6237,23 +6238,23 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  2976              		.loc 2 962 3 view .LVU738
  2977              		.syntax unified
  2978              	@ 962 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 105
+
+
  2979 0000 72B6     		cpsid i
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 105
-
-
  2980              	@ 0 "" 2
  2981              		.thumb
  2982              		.syntax unified
  2983              	.L180:
  2984              	.LBE28:
  2985              	.LBE27:
-1291:Core/Src/main.c ****   while (1)
- 2986              		.loc 1 1291 3 view .LVU739
-1292:Core/Src/main.c ****   {
-1293:Core/Src/main.c ****   }
- 2987              		.loc 1 1293 3 view .LVU740
-1291:Core/Src/main.c ****   while (1)
- 2988              		.loc 1 1291 9 view .LVU741
+1292:Core/Src/main.c ****   while (1)
+ 2986              		.loc 1 1292 3 view .LVU739
+1293:Core/Src/main.c ****   {
+1294:Core/Src/main.c ****   }
+ 2987              		.loc 1 1294 3 view .LVU740
+1292:Core/Src/main.c ****   while (1)
+ 2988              		.loc 1 1292 9 view .LVU741
  2989 0002 FEE7     		b	.L180
  2990              		.cfi_endproc
  2991              	.LFE163:
@@ -6297,10 +6298,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3026 0016 0F94     		str	r4, [sp, #60]
  598:Core/Src/main.c **** 
  3027              		.loc 1 598 3 is_stmt 1 view .LVU747
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 106
+
+
  598:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 106
-
-
  3028              		.loc 1 598 34 is_stmt 0 view .LVU748
  3029 0018 2022     		movs	r2, #32
  3030 001a 2146     		mov	r1, r4
@@ -6357,10 +6358,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3064 003e 3CD1     		bne	.L190
  614:Core/Src/main.c ****   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
  3065              		.loc 1 614 3 is_stmt 1 view .LVU766
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 107
+
+
  614:Core/Src/main.c ****   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 107
-
-
  3066              		.loc 1 614 37 is_stmt 0 view .LVU767
  3067 0040 0023     		movs	r3, #0
  3068 0042 1093     		str	r3, [sp, #64]
@@ -6417,10 +6418,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3101              		.loc 1 626 3 is_stmt 1 view .LVU785
  626:Core/Src/main.c ****   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
  3102              		.loc 1 626 26 is_stmt 0 view .LVU786
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 108
+
+
  3103 0062 0F92     		str	r2, [sp, #60]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 108
-
-
  627:Core/Src/main.c ****   {
  3104              		.loc 1 627 3 is_stmt 1 view .LVU787
  627:Core/Src/main.c ****   {
@@ -6477,10 +6478,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  644:Core/Src/main.c ****   sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
  3143              		.loc 1 644 3 is_stmt 1 view .LVU801
  644:Core/Src/main.c ****   sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 109
+
+
  3144              		.loc 1 644 41 is_stmt 0 view .LVU802
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 109
-
-
  3145 0096 0293     		str	r3, [sp, #8]
  645:Core/Src/main.c ****   sBreakDeadTimeConfig.DeadTime = 0;
  3146              		.loc 1 645 3 is_stmt 1 view .LVU803
@@ -6537,10 +6538,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3183              		.cfi_restore_state
  612:Core/Src/main.c ****   }
  3184              		.loc 1 612 5 is_stmt 1 view .LVU818
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 110
+
+
  3185 00ba FFF7FEFF 		bl	Error_Handler
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 110
-
-
  3186              	.LVL234:
  3187              	.L191:
  618:Core/Src/main.c ****   }
@@ -6597,10 +6598,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3234              		.cfi_offset 14, -4
  3235 0002 8DB0     		sub	sp, sp, #52
  3236              	.LCFI36:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 111
+
+
  3237              		.cfi_def_cfa_offset 56
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 111
-
-
  673:Core/Src/main.c ****   TIM_MasterConfigTypeDef sMasterConfig = {0};
  3238              		.loc 1 673 3 view .LVU826
  673:Core/Src/main.c ****   TIM_MasterConfigTypeDef sMasterConfig = {0};
@@ -6657,10 +6658,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3273 0028 0323     		movs	r3, #3
  3274 002a 0393     		str	r3, [sp, #12]
  686:Core/Src/main.c ****   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 112
+
+
  3275              		.loc 1 686 3 is_stmt 1 view .LVU844
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 112
-
-
  687:Core/Src/main.c ****   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
  3276              		.loc 1 687 3 view .LVU845
  687:Core/Src/main.c ****   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
@@ -6717,10 +6718,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  708:Core/Src/main.c **** 
  3310              		.loc 1 708 1 view .LVU864
  3311 004a 0DB0     		add	sp, sp, #52
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 113
+
+
  3312              	.LCFI37:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 113
-
-
  3313              		.cfi_remember_state
  3314              		.cfi_def_cfa_offset 4
  3315              		@ sp needed
@@ -6777,10 +6778,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  723:Core/Src/main.c **** 
  3362              		.loc 1 723 27 is_stmt 0 view .LVU871
  3363 000e 0023     		movs	r3, #0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 114
+
+
  3364 0010 0193     		str	r3, [sp, #4]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 114
-
-
  3365 0012 0293     		str	r3, [sp, #8]
  728:Core/Src/main.c ****   htim4.Init.Prescaler = 0;
  3366              		.loc 1 728 3 is_stmt 1 view .LVU872
@@ -6837,10 +6838,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3398              		.loc 1 739 3 view .LVU891
  740:Core/Src/main.c ****   sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
  3399              		.loc 1 740 3 view .LVU892
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 115
+
+
  740:Core/Src/main.c ****   sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 115
-
-
  3400              		.loc 1 740 24 is_stmt 0 view .LVU893
  3401 0030 0993     		str	r3, [sp, #36]
  741:Core/Src/main.c ****   sConfig.IC2Filter = 0;
@@ -6897,10 +6898,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3439              	.L212:
  751:Core/Src/main.c ****   }
  3440              		.loc 1 751 5 view .LVU908
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 116
+
+
  3441 0054 FFF7FEFF 		bl	Error_Handler
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 116
-
-
  3442              	.LVL250:
  3443              	.L214:
  3444              		.align	2
@@ -6957,10 +6958,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3489 001e 019A     		ldr	r2, [sp, #4]
  3490              	.LBE29:
  819:Core/Src/main.c ****   /* USER CODE END TIM7_Init 1 */
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 117
+
+
  3491              		.loc 1 819 3 view .LVU917
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 117
-
-
  821:Core/Src/main.c ****   htim7.Init.Prescaler = 83;
  3492              		.loc 1 821 3 view .LVU918
  821:Core/Src/main.c ****   htim7.Init.Prescaler = 83;
@@ -7017,10 +7018,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3526 0040 02A9     		add	r1, sp, #8
  3527 0042 0648     		ldr	r0, .L221+4
  3528 0044 FFF7FEFF 		bl	HAL_TIMEx_MasterConfigSynchronization
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 118
+
+
  3529              	.LVL252:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 118
-
-
  832:Core/Src/main.c ****   {
  3530              		.loc 1 832 6 discriminator 1 view .LVU937
  3531 0048 20B9     		cbnz	r0, .L220
@@ -7077,10 +7078,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3578 0004 0A4B     		ldr	r3, .L227+4
  3579 0006 0360     		str	r3, [r0]
  889:Core/Src/main.c ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 119
+
+
  3580              		.loc 1 889 3 is_stmt 1 view .LVU944
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 119
-
-
  889:Core/Src/main.c ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
  3581              		.loc 1 889 24 is_stmt 0 view .LVU945
  3582 0008 4FF4E133 		mov	r3, #115200
@@ -7137,10 +7138,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3616              	.L228:
  3617 002a 00BF     		.align	2
  3618              	.L227:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 120
+
+
  3619 002c 00000000 		.word	huart2
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 120
-
-
  3620 0030 00440040 		.word	1073759232
  3621              		.cfi_endproc
  3622              	.LFE156:
@@ -7197,10 +7198,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3662 0016 8361     		str	r3, [r0, #24]
  863:Core/Src/main.c ****   {
  3663              		.loc 1 863 3 is_stmt 1 view .LVU976
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 121
+
+
  863:Core/Src/main.c ****   {
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 121
-
-
  3664              		.loc 1 863 7 is_stmt 0 view .LVU977
  3665 0018 FFF7FEFF 		bl	HAL_TIM_Base_Init
  3666              	.LVL257:
@@ -7257,10 +7258,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3711 000e 0093     		str	r3, [sp]
  3712 0010 0193     		str	r3, [sp, #4]
  777:Core/Src/main.c ****   htim5.Init.Prescaler = 83;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 122
+
+
  3713              		.loc 1 777 3 is_stmt 1 view .LVU986
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 122
-
-
  777:Core/Src/main.c ****   htim5.Init.Prescaler = 83;
  3714              		.loc 1 777 18 is_stmt 0 view .LVU987
  3715 0012 1348     		ldr	r0, .L243
@@ -7317,10 +7318,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3749 0038 FFF7FEFF 		bl	HAL_TIM_ConfigClockSource
  3750              	.LVL260:
  788:Core/Src/main.c ****   {
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 123
+
+
  3751              		.loc 1 788 6 discriminator 1 view .LVU1005
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 123
-
-
  3752 003c 60B9     		cbnz	r0, .L241
  792:Core/Src/main.c ****   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
  3753              		.loc 1 792 3 is_stmt 1 view .LVU1006
@@ -7377,10 +7378,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3794              		.cfi_endproc
  3795              	.LFE153:
  3797              		.section	.text.MX_I2C1_Init,"ax",%progbits
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 124
+
+
  3798              		.align	1
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 124
-
-
  3799              		.syntax unified
  3800              		.thumb
  3801              		.thumb_func
@@ -7437,10 +7438,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3838              		.loc 1 571 26 is_stmt 0 view .LVU1031
  3839 001a 8361     		str	r3, [r0, #24]
  572:Core/Src/main.c ****   hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 125
+
+
  3840              		.loc 1 572 3 is_stmt 1 view .LVU1032
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 125
-
-
  572:Core/Src/main.c ****   hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
  3841              		.loc 1 572 30 is_stmt 0 view .LVU1033
  3842 001c C361     		str	r3, [r0, #28]
@@ -7497,10 +7498,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  509:Core/Src/main.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  3887              		.loc 1 509 3 view .LVU1042
  509:Core/Src/main.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 126
+
+
  3888              		.loc 1 509 22 is_stmt 0 view .LVU1043
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 126
-
-
  3889 0004 3422     		movs	r2, #52
  3890 0006 0021     		movs	r1, #0
  3891 0008 07A8     		add	r0, sp, #28
@@ -7557,10 +7558,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3930 0040 0A68     		ldr	r2, [r1]
  3931 0042 02F44042 		and	r2, r2, #49152
  3932 0046 0192     		str	r2, [sp, #4]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 127
+
+
  515:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 127
-
-
  3933              		.loc 1 515 3 view .LVU1056
  3934 0048 019A     		ldr	r2, [sp, #4]
  3935              	.LBE31:
@@ -7617,10 +7618,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  3967              		.loc 1 528 30 is_stmt 0 view .LVU1075
  3968 0066 1292     		str	r2, [sp, #72]
  529:Core/Src/main.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 128
+
+
  3969              		.loc 1 529 3 is_stmt 1 view .LVU1076
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 128
-
-
  529:Core/Src/main.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
  3970              		.loc 1 529 30 is_stmt 0 view .LVU1077
  3971 0068 1392     		str	r2, [sp, #76]
@@ -7677,10 +7678,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4005              		.loc 1 548 1 view .LVU1094
  4006 008e 15B0     		add	sp, sp, #84
  4007              	.LCFI56:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 129
+
+
  4008              		.cfi_remember_state
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 129
-
-
  4009              		.cfi_def_cfa_offset 4
  4010              		@ sp needed
  4011 0090 5DF804FB 		ldr	pc, [sp], #4
@@ -7737,10 +7738,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4058              		.loc 1 363 3 view .LVU1100
  4059 000c FFF7FEFF 		bl	MX_GPIO_Init
  4060              	.LVL274:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 130
+
+
  364:Core/Src/main.c ****   MX_TIM1_Init();
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 130
-
-
  4061              		.loc 1 364 3 view .LVU1101
  4062 0010 FFF7FEFF 		bl	MX_DMA_Init
  4063              	.LVL275:
@@ -7797,10 +7798,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4104 0052 FFF7FEFF 		bl	setup_encoder_timers
  4105              	.LVL285:
  379:Core/Src/main.c **** 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 131
+
+
  4106              		.loc 1 379 3 view .LVU1112
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 131
-
-
  4107 0056 DFED610A 		vldr.32	s1, .L262+12
  4108 005a 9FED610A 		vldr.32	s0, .L262+16
  4109 005e FFF7FEFF 		bl	setup_wheel_diameters
@@ -7857,10 +7858,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4151 00b4 2846     		mov	r0, r5
  4152 00b6 FFF7FEFF 		bl	HAL_TIM_PWM_Start
  4153              	.LVL293:
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 132
+
+
  395:Core/Src/main.c ****   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 132
-
-
  4154              		.loc 1 395 3 view .LVU1122
  4155 00ba 0821     		movs	r1, #8
  4156 00bc 2846     		mov	r0, r5
@@ -7917,10 +7918,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4194 00f8 83ED008A 		vstr.32	s16, [r3]
  409:Core/Src/main.c ****   current_acceleration_R = 0;
  4195              		.loc 1 409 3 is_stmt 1 view .LVU1136
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 133
+
+
  409:Core/Src/main.c ****   current_acceleration_R = 0;
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 133
-
-
  4196              		.loc 1 409 18 is_stmt 0 view .LVU1137
  4197 00fc 494B     		ldr	r3, .L262+84
  4198 00fe 83ED008A 		vstr.32	s16, [r3]
@@ -7977,10 +7978,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  419:Core/Src/main.c ****   current_x = 0;
  4232              		.loc 1 419 26 is_stmt 0 view .LVU1155
  4233 0130 454B     		ldr	r3, .L262+120
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 134
+
+
  4234 0132 83ED008A 		vstr.32	s16, [r3]
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 134
-
-
  420:Core/Src/main.c ****   current_y = 0;
  4235              		.loc 1 420 3 is_stmt 1 view .LVU1156
  420:Core/Src/main.c ****   current_y = 0;
@@ -8037,10 +8038,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4270 0164 83ED008A 		vstr.32	s16, [r3]
  430:Core/Src/main.c **** 
  4271              		.loc 1 430 3 is_stmt 1 view .LVU1174
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 135
+
+
  430:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 135
-
-
  4272              		.loc 1 430 23 is_stmt 0 view .LVU1175
  4273 0168 414B     		ldr	r3, .L262+160
  4274 016a 1C70     		strb	r4, [r3]
@@ -8097,10 +8098,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4312              		.loc 1 471 21 discriminator 1 view .LVU1188
  4313 01aa 364B     		ldr	r3, .L262+180
  4314 01ac 1860     		str	r0, [r3]
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 136
+
+
  474:Core/Src/main.c **** 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 136
-
-
  4315              		.loc 1 474 3 is_stmt 1 view .LVU1189
  474:Core/Src/main.c **** 
  4316              		.loc 1 474 20 is_stmt 0 view .LVU1190
@@ -8146,7 +8147,7 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4348 01d8 00000000 		.word	htim3
  4349 01dc D3AC7D42 		.word	1115532499
  4350 01e0 EED07D42 		.word	1115541742
- 4351 01e4 91F08D43 		.word	1133375633
+ 4351 01e4 6FF98D43 		.word	1133377903
  4352 01e8 00803C43 		.word	1128038400
  4353 01ec 33B3C2C2 		.word	-1027427533
  4354 01f0 CDCC99C2 		.word	-1030107955
@@ -8157,10 +8158,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4359 0204 000C0040 		.word	1073744896
  4360 0208 00000000 		.word	htim5
  4361 020c 00000000 		.word	0
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 137
+
+
  4362 0210 00000000 		.word	current_speed_R
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 137
-
-
  4363 0214 00000000 		.word	current_speed_L
  4364 0218 00000000 		.word	previous_speed_R
  4365 021c 00000000 		.word	previous_speed_L
@@ -8217,10 +8218,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4413 0014 D0070000 		.word	2000
  4414 0018 08000000 		.word	8
  4415 001c 00000000 		.space	8
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 138
+
+
  4415      00000000 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 138
-
-
  4416              		.global	IMU_update_taskHandle
  4417              		.section	.bss.IMU_update_taskHandle,"aw",%nobits
  4418              		.align	2
@@ -8277,10 +8278,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4467              		.global	hdma_usart2_tx
  4468              		.section	.bss.hdma_usart2_tx,"aw",%nobits
  4469              		.align	2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 139
+
+
  4472              	hdma_usart2_tx:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 139
-
-
  4473 0000 00000000 		.space	96
  4473      00000000 
  4473      00000000 
@@ -8337,10 +8338,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4514              	htim4:
  4515 0000 00000000 		.space	72
  4515      00000000 
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 140
+
+
  4515      00000000 
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 140
-
-
  4515      00000000 
  4515      00000000 
  4516              		.global	htim3
@@ -8397,10 +8398,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4563              	last_set_position_y:
  4564 0000 00000000 		.space	4
  4565              		.global	last_set_position_x
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 141
+
+
  4566              		.section	.bss.last_set_position_x,"aw",%nobits
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 141
-
-
  4567              		.align	2
  4570              	last_set_position_x:
  4571 0000 00000000 		.space	4
@@ -8457,10 +8458,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4642              		.global	kpP_R
  4643              		.section	.data.kpP_R,"aw"
  4644              		.align	2
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 142
+
+
  4647              	kpP_R:
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 142
-
-
  4648 0000 00002041 		.word	1092616192
  4649              		.global	timer_flag
  4650              		.section	.bss.timer_flag,"aw",%nobits
@@ -8517,10 +8518,10 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4717              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
  4718              		.file 15 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
  4719              		.file 16 "libmicroros/uros_include/rcutils/rcutils/allocator.h"
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 143
+
+
  4720              		.file 17 "libmicroros/uros_include/rcl/rcl/allocator.h"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 143
-
-
  4721              		.file 18 "libmicroros/uros_include/rmw/rmw/ret_types.h"
  4722              		.file 19 "libmicroros/uros_include/rcutils/rcutils/time.h"
  4723              		.file 20 "libmicroros/uros_include/rmw/rmw/time.h"
@@ -8570,175 +8571,175 @@ ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 1
  4767              		.file 64 "libmicroros/uros_include/rosidl_runtime_c/rosidl_runtime_c/string_functions.h"
  4768              		.file 65 "C:\\ST\\STM32CubeIDE_1.19.0\\STM32CubeIDE\\plugins\\com.st.stm32cube.ide.mcu.externaltoo
  4769              		.file 66 "<built-in>"
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 144
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 144
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:21     .text.IMU_update_function:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:27     .text.IMU_update_function:00000000 IMU_update_function
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:53     .text.IMU_update_function:0000000c $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:58     .text.MX_GPIO_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:63     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:228    .text.MX_GPIO_Init:000000b8 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:235    .text.MX_DMA_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:240    .text.MX_DMA_Init:00000000 MX_DMA_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:301    .text.MX_DMA_Init:00000040 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:306    .text.reset_everything:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:312    .text.reset_everything:00000000 reset_everything
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:491    .text.reset_everything:000000f0 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4556   .bss.last_set_position_phi:00000000 last_set_position_phi
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4563   .bss.last_set_position_y:00000000 last_set_position_y
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4570   .bss.last_set_position_x:00000000 last_set_position_x
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:526    .text.executor_function:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:532    .text.executor_function:00000000 executor_function
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:616    .text.executor_function:0000006c $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:626    .text.executor_function:00000094 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:818    .text.executor_function:00000220 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4598   .bss.accepted_new_go_to:00000000 accepted_new_go_to
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4591   .bss.command_count:00000000 command_count
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:827    .text.shutdown:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:833    .text.shutdown:00000000 shutdown
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:876    .text.shutdown:00000024 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:888    .text.service_callback:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:894    .text.service_callback:00000000 service_callback
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:948    .text.service_callback:0000002c $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:964    .text.service_callback:0000004c $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1470   .text.service_callback:00000318 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1485   .text.service_callback:00000348 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1676   .text.service_callback:00000488 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1684   .text.publish_odom:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1690   .text.publish_odom:00000000 publish_odom
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1756   .text.publish_odom:00000048 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4549   .bss.pose_msg:00000000 pose_msg
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1763   .text.StartDefaultTask:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1769   .text.StartDefaultTask:00000000 StartDefaultTask
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1852   .text.StartDefaultTask:00000058 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1856   .text.StartDefaultTask:00000068 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1933   .text.StartDefaultTask:000000ac $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4486   .bss.huart2:00000000 huart2
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4542   .bss.debug_msg:00000000 debug_msg
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1946   .text.publish_debug:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1952   .text.publish_debug:00000000 publish_debug
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1984   .text.publish_debug:00000018 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1993   .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:1999   .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2375   .text.HAL_TIM_PeriodElapsedCallback:00000248 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4647   .data.kpP_R:00000000 kpP_R
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4640   .data.kdP_R:00000000 kdP_R
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4633   .data.kiP_R:00000000 kiP_R
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4626   .data.kpP_L:00000000 kpP_L
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4619   .data.kdP_L:00000000 kdP_L
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4612   .data.kiP_L:00000000 kiP_L
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 145
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:21     .text.IMU_update_function:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:27     .text.IMU_update_function:00000000 IMU_update_function
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:53     .text.IMU_update_function:0000000c $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:58     .text.MX_GPIO_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:63     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:228    .text.MX_GPIO_Init:000000b8 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:235    .text.MX_DMA_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:240    .text.MX_DMA_Init:00000000 MX_DMA_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:301    .text.MX_DMA_Init:00000040 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:306    .text.reset_everything:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:312    .text.reset_everything:00000000 reset_everything
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:491    .text.reset_everything:000000f0 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4556   .bss.last_set_position_phi:00000000 last_set_position_phi
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4563   .bss.last_set_position_y:00000000 last_set_position_y
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4570   .bss.last_set_position_x:00000000 last_set_position_x
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:526    .text.executor_function:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:532    .text.executor_function:00000000 executor_function
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:616    .text.executor_function:0000006c $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:626    .text.executor_function:00000094 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:818    .text.executor_function:00000220 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4598   .bss.accepted_new_go_to:00000000 accepted_new_go_to
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4591   .bss.command_count:00000000 command_count
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:827    .text.shutdown:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:833    .text.shutdown:00000000 shutdown
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:876    .text.shutdown:00000024 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:888    .text.service_callback:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:894    .text.service_callback:00000000 service_callback
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:948    .text.service_callback:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:964    .text.service_callback:0000004c $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1470   .text.service_callback:00000318 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1485   .text.service_callback:00000348 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1676   .text.service_callback:00000488 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1684   .text.publish_odom:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1690   .text.publish_odom:00000000 publish_odom
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1756   .text.publish_odom:00000048 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4549   .bss.pose_msg:00000000 pose_msg
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1763   .text.StartDefaultTask:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1769   .text.StartDefaultTask:00000000 StartDefaultTask
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1852   .text.StartDefaultTask:00000058 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1856   .text.StartDefaultTask:00000068 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1933   .text.StartDefaultTask:000000ac $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4486   .bss.huart2:00000000 huart2
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4542   .bss.debug_msg:00000000 debug_msg
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1946   .text.publish_debug:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1952   .text.publish_debug:00000000 publish_debug
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1984   .text.publish_debug:00000018 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1993   .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:1999   .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2375   .text.HAL_TIM_PeriodElapsedCallback:00000248 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4647   .data.kpP_R:00000000 kpP_R
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4640   .data.kdP_R:00000000 kdP_R
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4633   .data.kiP_R:00000000 kiP_R
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4626   .data.kpP_L:00000000 kpP_L
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4619   .data.kdP_L:00000000 kdP_L
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4612   .data.kiP_L:00000000 kiP_L
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 145
 
 
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2410   .text.HAL_TIM_PeriodElapsedCallback:000002b8 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2845   .text.HAL_TIM_PeriodElapsedCallback:000005d8 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4696   .data.kpS_R:00000000 kpS_R
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4689   .bss.kdS_R:00000000 kdS_R
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4682   .data.kiS_R:00000000 kiS_R
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4675   .data.kpS_L:00000000 kpS_L
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4668   .bss.kdS_L:00000000 kdS_L
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4661   .data.kiS_L:00000000 kiS_L
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2881   .text.HAL_TIM_PeriodElapsedCallback:00000660 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2949   .text.HAL_TIM_PeriodElapsedCallback:000006e4 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2957   .text.Error_Handler:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2963   .text.Error_Handler:00000000 Error_Handler
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2994   .text.MX_TIM1_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:2999   .text.MX_TIM1_Init:00000000 MX_TIM1_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3214   .text.MX_TIM1_Init:000000d8 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4528   .bss.htim1:00000000 htim1
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3220   .text.MX_TIM3_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3225   .text.MX_TIM3_Init:00000000 MX_TIM3_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3330   .text.MX_TIM3_Init:00000058 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4521   .bss.htim3:00000000 htim3
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3336   .text.MX_TIM4_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3341   .text.MX_TIM4_Init:00000000 MX_TIM4_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3446   .text.MX_TIM4_Init:00000058 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4514   .bss.htim4:00000000 htim4
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3452   .text.MX_TIM7_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3457   .text.MX_TIM7_Init:00000000 MX_TIM7_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3552   .text.MX_TIM7_Init:00000058 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4500   .bss.htim7:00000000 htim7
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3559   .text.MX_USART2_UART_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3564   .text.MX_USART2_UART_Init:00000000 MX_USART2_UART_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3619   .text.MX_USART2_UART_Init:0000002c $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3625   .text.MX_TIM14_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3630   .text.MX_TIM14_Init:00000000 MX_TIM14_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3678   .text.MX_TIM14_Init:00000024 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4493   .bss.htim14:00000000 htim14
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3684   .text.MX_TIM5_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3689   .text.MX_TIM5_Init:00000000 MX_TIM5_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3792   .text.MX_TIM5_Init:00000060 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4507   .bss.htim5:00000000 htim5
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3798   .text.MX_I2C1_Init:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3803   .text.MX_I2C1_Init:00000000 MX_I2C1_Init
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3861   .text.MX_I2C1_Init:0000002c $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4535   .bss.hi2c1:00000000 hi2c1
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3868   .text.SystemClock_Config:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:3874   .text.SystemClock_Config:00000000 SystemClock_Config
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4025   .text.SystemClock_Config:0000009c $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4031   .text.main:00000000 $t
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4037   .text.main:00000000 main
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4346   .text.main:000001d0 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4454   .rodata.defaultTask_attributes:00000000 defaultTask_attributes
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4465   .bss.defaultTaskHandle:00000000 defaultTaskHandle
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4432   .rodata.executor_attributes:00000000 executor_attributes
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4443   .bss.executorHandle:00000000 executorHandle
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4410   .rodata.IMU_update_task_attributes:00000000 IMU_update_task_attributes
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4421   .bss.IMU_update_taskHandle:00000000 IMU_update_taskHandle
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4403   .rodata.str1.4:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4407   .rodata.IMU_update_task_attributes:00000000 $d
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 146
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2410   .text.HAL_TIM_PeriodElapsedCallback:000002b8 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2845   .text.HAL_TIM_PeriodElapsedCallback:000005d8 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4696   .data.kpS_R:00000000 kpS_R
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4689   .bss.kdS_R:00000000 kdS_R
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4682   .data.kiS_R:00000000 kiS_R
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4675   .data.kpS_L:00000000 kpS_L
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4668   .bss.kdS_L:00000000 kdS_L
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4661   .data.kiS_L:00000000 kiS_L
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2881   .text.HAL_TIM_PeriodElapsedCallback:00000660 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2949   .text.HAL_TIM_PeriodElapsedCallback:000006e4 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2957   .text.Error_Handler:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2963   .text.Error_Handler:00000000 Error_Handler
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2994   .text.MX_TIM1_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:2999   .text.MX_TIM1_Init:00000000 MX_TIM1_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3214   .text.MX_TIM1_Init:000000d8 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4528   .bss.htim1:00000000 htim1
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3220   .text.MX_TIM3_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3225   .text.MX_TIM3_Init:00000000 MX_TIM3_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3330   .text.MX_TIM3_Init:00000058 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4521   .bss.htim3:00000000 htim3
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3336   .text.MX_TIM4_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3341   .text.MX_TIM4_Init:00000000 MX_TIM4_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3446   .text.MX_TIM4_Init:00000058 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4514   .bss.htim4:00000000 htim4
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3452   .text.MX_TIM7_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3457   .text.MX_TIM7_Init:00000000 MX_TIM7_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3552   .text.MX_TIM7_Init:00000058 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4500   .bss.htim7:00000000 htim7
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3559   .text.MX_USART2_UART_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3564   .text.MX_USART2_UART_Init:00000000 MX_USART2_UART_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3619   .text.MX_USART2_UART_Init:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3625   .text.MX_TIM14_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3630   .text.MX_TIM14_Init:00000000 MX_TIM14_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3678   .text.MX_TIM14_Init:00000024 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4493   .bss.htim14:00000000 htim14
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3684   .text.MX_TIM5_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3689   .text.MX_TIM5_Init:00000000 MX_TIM5_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3792   .text.MX_TIM5_Init:00000060 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4507   .bss.htim5:00000000 htim5
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3798   .text.MX_I2C1_Init:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3803   .text.MX_I2C1_Init:00000000 MX_I2C1_Init
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3861   .text.MX_I2C1_Init:0000002c $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4535   .bss.hi2c1:00000000 hi2c1
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3868   .text.SystemClock_Config:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:3874   .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4025   .text.SystemClock_Config:0000009c $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4031   .text.main:00000000 $t
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4037   .text.main:00000000 main
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4346   .text.main:000001d0 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4454   .rodata.defaultTask_attributes:00000000 defaultTask_attributes
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4465   .bss.defaultTaskHandle:00000000 defaultTaskHandle
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4432   .rodata.executor_attributes:00000000 executor_attributes
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4443   .bss.executorHandle:00000000 executorHandle
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4410   .rodata.IMU_update_task_attributes:00000000 IMU_update_task_attributes
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4421   .bss.IMU_update_taskHandle:00000000 IMU_update_taskHandle
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4403   .rodata.str1.4:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4407   .rodata.IMU_update_task_attributes:00000000 $d
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 146
 
 
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4418   .bss.IMU_update_taskHandle:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4429   .rodata.executor_attributes:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4440   .bss.executorHandle:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4451   .rodata.defaultTask_attributes:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4462   .bss.defaultTaskHandle:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4472   .bss.hdma_usart2_tx:00000000 hdma_usart2_tx
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4469   .bss.hdma_usart2_tx:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4479   .bss.hdma_usart2_rx:00000000 hdma_usart2_rx
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4476   .bss.hdma_usart2_rx:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4483   .bss.huart2:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4490   .bss.htim14:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4497   .bss.htim7:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4504   .bss.htim5:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4511   .bss.htim4:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4518   .bss.htim3:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4525   .bss.htim1:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4532   .bss.hi2c1:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4539   .bss.debug_msg:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4546   .bss.pose_msg:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4553   .bss.last_set_position_phi:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4560   .bss.last_set_position_y:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4567   .bss.last_set_position_x:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4577   .bss.fail_safe_counter:00000000 fail_safe_counter
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4574   .bss.fail_safe_counter:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4584   .bss.fail_safe_activated:00000000 fail_safe_activated
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4581   .bss.fail_safe_activated:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4588   .bss.command_count:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4595   .bss.accepted_new_go_to:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4605   .bss.step:00000000 step
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4602   .bss.step:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4609   .data.kiP_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4616   .data.kdP_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4623   .data.kpP_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4630   .data.kiP_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4637   .data.kdP_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4644   .data.kpP_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4654   .bss.timer_flag:00000000 timer_flag
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4651   .bss.timer_flag:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4658   .data.kiS_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4665   .bss.kdS_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4672   .data.kpS_L:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4679   .data.kiS_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4686   .bss.kdS_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4693   .data.kpS_R:00000000 $d
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4702   .bss.first_forward_recieved:00000000 first_forward_recieved
-C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s:4703   .bss.first_forward_recieved:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4418   .bss.IMU_update_taskHandle:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4429   .rodata.executor_attributes:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4440   .bss.executorHandle:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4451   .rodata.defaultTask_attributes:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4462   .bss.defaultTaskHandle:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4472   .bss.hdma_usart2_tx:00000000 hdma_usart2_tx
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4469   .bss.hdma_usart2_tx:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4479   .bss.hdma_usart2_rx:00000000 hdma_usart2_rx
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4476   .bss.hdma_usart2_rx:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4483   .bss.huart2:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4490   .bss.htim14:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4497   .bss.htim7:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4504   .bss.htim5:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4511   .bss.htim4:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4518   .bss.htim3:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4525   .bss.htim1:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4532   .bss.hi2c1:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4539   .bss.debug_msg:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4546   .bss.pose_msg:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4553   .bss.last_set_position_phi:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4560   .bss.last_set_position_y:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4567   .bss.last_set_position_x:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4577   .bss.fail_safe_counter:00000000 fail_safe_counter
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4574   .bss.fail_safe_counter:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4584   .bss.fail_safe_activated:00000000 fail_safe_activated
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4581   .bss.fail_safe_activated:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4588   .bss.command_count:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4595   .bss.accepted_new_go_to:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4605   .bss.step:00000000 step
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4602   .bss.step:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4609   .data.kiP_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4616   .data.kdP_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4623   .data.kpP_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4630   .data.kiP_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4637   .data.kdP_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4644   .data.kpP_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4654   .bss.timer_flag:00000000 timer_flag
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4651   .bss.timer_flag:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4658   .data.kiS_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4665   .bss.kdS_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4672   .data.kpS_L:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4679   .data.kiS_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4686   .bss.kdS_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4693   .data.kpS_R:00000000 $d
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4702   .bss.first_forward_recieved:00000000 first_forward_recieved
+C:\Users\monji\AppData\Local\Temp\ccANcRNR.s:4703   .bss.first_forward_recieved:00000000 $d
 
 UNDEFINED SYMBOLS
 delay
@@ -8750,7 +8751,7 @@ reset_motors_vars
 reset_odometry_vars
 reset_navigation_vars
 reset_speed_control_variables
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 147
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 147
 
 
 reset_position_control_variables
@@ -8810,7 +8811,7 @@ emergency_recieved
 reached_destination
 front_aruco_relative_y
 front_aruco_relative_x
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 148
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 148
 
 
 back_aruco_relative_y
@@ -8870,7 +8871,7 @@ HAL_TIMEx_MasterConfigSynchronization
 HAL_TIM_PWM_ConfigChannel
 HAL_TIMEx_ConfigBreakDeadTime
 HAL_TIM_MspPostInit
-ARM GAS  C:\Users\monji\AppData\Local\Temp\cc3jYHQK.s 			page 149
+ARM GAS  C:\Users\monji\AppData\Local\Temp\ccANcRNR.s 			page 149
 
 
 HAL_TIM_Encoder_Init
