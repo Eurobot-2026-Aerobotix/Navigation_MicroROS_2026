@@ -64,13 +64,13 @@ int timer_flag = 0;
 
 
 // position control parameters
-float kpP_R = 10;
-float kdP_R = 0.8;
-float kiP_R = 90;
+float kpP_R = 15;
+float kdP_R = 1.8;
+float kiP_R = 75;
 
-float kpP_L = 10;
-float kdP_L = 0.8;
-float kiP_L = 90;
+float kpP_L = 15;
+float kdP_L = 1.8;
+float kiP_L = 75;
 
 
 int step = 0;
