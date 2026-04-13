@@ -28,6 +28,7 @@ float speed_offset_fast = 150;
 float speed_offset_smooth = 80;
 
 float rotating_speed = 600;
+float creep_speed = 200;
 int8_t direction_R;
 int8_t direction_L;
 float cruise_speed_R;
@@ -37,6 +38,7 @@ float turning_radius;
 float filtered_target_speed_R = 0;
 float filtered_target_speed_L = 0;
 float speed_filter = 0.95;
+float clearance_from_crates = 3;
 
 int8_t reached_destination = 1;
 int command_history = 0;
@@ -201,6 +203,102 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	wheel_state_L = DEAD_STOP;
 	return 0;
 }
+
+int creep_forward(float max_distance, float target_x, float target_y){
+	float direction = SGN(max_distance);
+	float distance = fabs(max_distance);
+	float speed = creep_speed;
+	while(!is_idle()){
+		delay(10);
+	};
+	reset_speed_control_variables();
+	direction_R = 1;
+	direction_L = 1;
+
+	float starting_x = current_x;
+	float starting_y = current_y;
+
+	// all of these formulas are derived from a ramp graph: speed = f(distance)
+	float x1 = speed/ramping_acceleration;
+	float x2 = speed/breaking_acceleration + distance + deceleration_offset;
+
+	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
+		float intersection_x = (breaking_acceleration*(distance+deceleration_offset))/(breaking_acceleration - ramping_acceleration);
+		float intersection_speed = ramping_acceleration * intersection_x;
+		speed = intersection_speed*0.9;
+		x1 = speed/ramping_acceleration;
+		x2 = speed/breaking_acceleration + distance + deceleration_offset;
+	}
+	acc_linearization_coef = sqrt(x1);
+	dec_linearization_coef = sqrt(distance - x2);
+
+	cruise_speed_R = speed;
+	cruise_speed_L = speed;
+	float distance_to_target = distance;
+	float previous_distance_to_target = distance;
+	float x = 0;
+
+	wheel_state_R = ACCELERATING;
+	wheel_state_L = ACCELERATING;
+	trajectory = STRAIGHT;
+	control_loop_state = SPEED;
+	starting_phi = absolute_phi;
+	int collision_counter = 0;
+	float lane_correction_term;
+	while (distance_to_target > 1 && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
+		x = MAX(distance - distance_to_target, 0);
+		if (wheel_state_R == ACCELERATING && x > x1 ){
+			wheel_state_R = CRUISING;
+			wheel_state_L = CRUISING;
+		}else if (wheel_state_R == CRUISING && x > x2){
+			wheel_state_R = CONTROLLED_BREAK;
+			wheel_state_L = CONTROLLED_BREAK;
+		}else if (wheel_state_R == EMERGENCY_BREAK){
+			emergency_break();
+			return 0;
+		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
+		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_y - starting_y, target_x - starting_x) );
+		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
+		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 3 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
+		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)) + phi_correction_term; // the first coefficient is tunable
+		lane_correction_term = MIN(MAX(lane_correction_term, -0.1), 0.1);
+
+		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term));
+		delay(4);
+		previous_distance_to_target = distance_to_target;
+		distance_to_target = get_distance_to(target_x, target_y);
+
+		if ( (fabs(PWM_R) > STOP_PWM_THRESHOLD && fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+			|| (fabs(PWM_L) > STOP_PWM_THRESHOLD && fabs(current_speed_L) < STOP_SPEED_THRESHOLD) ){
+				// EMERGENCY STOP
+			 collision_counter++;
+			 if(collision_counter > 50){
+				 stop_motors();
+				 reached_destination = 1;
+				 set_target_encoder_counts(encoder_count_R - direction * distance_to_ticks(clearance_from_crates, wheel_diameter_R), encoder_count_L - direction * distance_to_ticks(clearance_from_crates, wheel_diameter_L));
+				 wheel_state_R = DEAD_STOP;
+				 wheel_state_L = DEAD_STOP;
+				 return 0;
+			 }
+		}
+		else {
+			 collision_counter = 0;
+		}
+
+		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+	}
+	stop_motors();
+	reached_destination = 1;
+	set_target_encoder_counts(encoder_count_R, encoder_count_L - (calculate_instant_target_phi(distance, distance) - absolute_phi)*dead_wheels_spacing*CPR / (wheel_diameter_L*PI) ); // the second part is there to fix any last minute fuck ups, concerning the phi
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
+	return 0;
+}
+
 int move_forward(float distance, float speed, int8_t is_smooth){
 	float target_x = current_x + distance*cos(current_phi);
 	float target_y = current_y + distance*sin(current_phi);
@@ -543,6 +641,32 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	}
 	return 0;
 }
+
+int creep_to(float x, float y, int direction){
+	while(!is_idle()){
+		delay(10);
+	}
+	float angle = normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 );
+	while (fabs(normalize_angle(angle - current_phi)) > deg_to_rad(1)){
+		orientate(angle, 1 , 0);
+		if(emergency_recieved == 1){
+			return 0;
+		}
+		while(!is_idle()){
+			delay(10);
+		}
+		if (control_loop_state == SHUTDOWN ){
+			return 0;
+		}
+
+	}
+	delay(50);
+	if (get_distance_to(x, y) > 2){
+		creep_forward(direction * get_distance_to(x, y), x, y);
+	}
+	return 0;
+}
+
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
@@ -551,6 +675,18 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 	robot_status.arguments[1] = y;
 	robot_status.arguments[2] = speed;
 	robot_status.arguments[3] = is_smooth;
+	target_command_x = x;
+	target_command_y = y;
+	target_command_phi = atan2(y - current_y, x - current_x);
+	emergency_recieved = 0;
+	command_history = command_history*10 + robot_status.status;
+}
+void prepare_creep_to(float x, float y, int direction){
+	reached_destination = 0;
+	stopped_because_of_collision = 0;
+	robot_status.status = (direction == 1)?CREEPIN_TO : CREEPIN_TO_BACKWARDS;
+	robot_status.arguments[0] = x;
+	robot_status.arguments[1] = y;
 	target_command_x = x;
 	target_command_y = y;
 	target_command_phi = atan2(y - current_y, x - current_x);
