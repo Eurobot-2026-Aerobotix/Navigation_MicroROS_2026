@@ -135,6 +135,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
 			return 0;
+		}else if (wheel_state_R == SOFT_STOP){
+			soft_stop();
+			return 0;
 		}
 		if (control_loop_state == SHUTDOWN ){
 			return 0;
@@ -188,6 +191,9 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		}
 		if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			return 0;
+		}else if (wheel_state_R == SOFT_STOP){
+			soft_stop();
 			return 0;
 		}
 		if (control_loop_state == SHUTDOWN ){
@@ -255,6 +261,9 @@ int creep_forward(float max_distance, float target_x, float target_y){
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			return 0;
+		}else if (wheel_state_R == SOFT_STOP){
+			soft_stop();
 			return 0;
 		}
 		if (control_loop_state == SHUTDOWN ){
@@ -406,6 +415,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
 			return 0;
+		}else if (wheel_state_R == SOFT_STOP){
+			soft_stop();
+			return 0;
 		}
 		if (control_loop_state == SHUTDOWN ){
 			return 0;
@@ -456,6 +468,9 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
 			return 0;
+		}else if (wheel_state_R == SOFT_STOP){
+			soft_stop();
+			return 0;
 		}
 		if (control_loop_state == SHUTDOWN ){
 			return 0;
@@ -489,6 +504,9 @@ int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 			angle += 2*PI;
 		}
 		previous_speed_control_time = micros();
+		if (wheel_state_R = EMERGENCY_BREAK || wheel_state_R == SOFT_STOP){
+			return 0;
+		}
 		return rotate(angle, 1, is_smooth);
 	}
 	return 0;
@@ -515,6 +533,8 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 
 	orientate(atan2(y1-y0, x1-x0) + PI*(-direction+1)/2, 1, 0);
 	if(wheel_state_L == EMERGENCY_BREAK){
+		return 0;
+	}else if (wheel_state_R == SOFT_STOP){
 		return 0;
 	}
 	apply_smooth_or_not(fabs(distance), is_smooth);
@@ -553,6 +573,9 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 			wheel_state_L = CONTROLLED_BREAK;
 		}else if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
+			return 0;
+		}else if (wheel_state_R == SOFT_STOP){
+			soft_stop();
 			return 0;
 		}
 		if (control_loop_state == SHUTDOWN ){
@@ -636,6 +659,9 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 
 	}
 	delay(50);
+	if (wheel_state_R = EMERGENCY_BREAK || wheel_state_R == SOFT_STOP){
+		return 0;
+	}
 	if (get_distance_to(x, y) > 2){
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	}
@@ -655,12 +681,15 @@ int creep_to(float x, float y, int direction){
 		while(!is_idle()){
 			delay(10);
 		}
-		if (control_loop_state == SHUTDOWN ){
+		if (control_loop_state == SHUTDOWN){
 			return 0;
 		}
 
 	}
 	delay(50);
+	if (wheel_state_R = EMERGENCY_BREAK || wheel_state_R == SOFT_STOP){
+		return 0;
+	}
 	if (get_distance_to(x, y) > 2){
 		creep_forward(direction * get_distance_to(x, y), x, y);
 	}
@@ -719,6 +748,20 @@ void prepare_emergency_break(){
 	wheel_state_L = EMERGENCY_BREAK;
 	wheel_state_R = EMERGENCY_BREAK;
 	command_history = command_history*10 + 9;
+}
+void prepare_soft_stop(){
+	stopped_because_of_collision = 0;
+	wheel_state_L = SOFT_STOP;
+	wheel_state_R = SOFT_STOP;
+}
+void soft_stop(){
+	control_loop_state = SPEED;
+	set_target_speeds(0, 0);
+	stop_motors();
+	delay(800);
+	set_target_encoder_counts(encoder_count_R, encoder_count_L);
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
 }
 void emergency_break(){
 	emergency_recieved = 1;

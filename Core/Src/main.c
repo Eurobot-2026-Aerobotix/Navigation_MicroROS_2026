@@ -232,11 +232,15 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 break;
 									 case 20: // creep to
 										 prepare_creep_to(req_in->arg2, req_in->arg3, 1);
-										 res_out->result = true;  // x, y, speed
+										 res_out->result = true;  // x, y
 										 break;
 									 case 21: // creep to backwards
 										 prepare_creep_to(req_in->arg2, req_in->arg3, -1);
-										 res_out->result = true;  // x, y, speed
+										 res_out->result = true;  // x, y
+										 break;
+									 case 22: // creep to backwards
+										 prepare_soft_stop();
+										 res_out->result = true;
 										 break;
 									 default:
 										  res_out->result = false;

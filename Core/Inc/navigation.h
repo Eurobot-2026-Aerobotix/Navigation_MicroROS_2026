@@ -15,6 +15,7 @@ enum Wheel_state{
 	ACCELERATING,
 	CONTROLLED_BREAK,
 	EMERGENCY_BREAK,
+	SOFT_STOP,
 	CRUISING // holding the same speed
 }; // other states will be added, like doing a curve
 
@@ -99,6 +100,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 int go_to(float x, float y, float speed, int direction, int8_t is_smooth);// will return 0 if target has been reached successfully or 1 if some error happened in rotation, 2 if some error happened in moving forward
 int creep_to(float x, float y, int direction);
 void emergency_break();
+void soft_stop();
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
 int8_t is_idle();
 void reset_speed_control_variables();
@@ -108,6 +110,7 @@ void prepare_creep_to(float x, float y, int direction);
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth);
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth);
 void prepare_emergency_break();
+void prepare_soft_stop();
 void prepare_reset();
 void prepare_set_position(float x, float y, float phi, float absolute_phi);
 void reset_navigation_vars();
