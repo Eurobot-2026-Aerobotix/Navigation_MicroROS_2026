@@ -1177,7 +1177,9 @@ void IMU_update_function(void *argument)
 //	prepare_emergency_break();
 //
 //	prepare_go_to(100, 100, 1100, 1, 0);
-//	delay(400);
+//	delay(1000);
+//	prepare_go_to(200, 100, 1100, 1, 0);
+//	delay(1000);
 
     delay(60000000);
   }

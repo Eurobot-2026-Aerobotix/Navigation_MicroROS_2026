@@ -504,7 +504,7 @@ int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 			angle += 2*PI;
 		}
 		previous_speed_control_time = micros();
-		if ((wheel_state_R = EMERGENCY_BREAK) || (wheel_state_R == SOFT_STOP)){
+		if ((wheel_state_R == EMERGENCY_BREAK) || (wheel_state_R == SOFT_STOP)){
 			return 0;
 		}
 		return rotate(angle, 1, is_smooth);
@@ -816,8 +816,8 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int encoder_tolerance = 200;
-	int pwm_tolerance = 1000;
+	int encoder_tolerance = 500;
+	int pwm_tolerance = 2000;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);
 	return right_wheel_idle && left_wheel_idle;
