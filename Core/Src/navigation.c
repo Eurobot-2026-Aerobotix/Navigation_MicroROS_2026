@@ -504,7 +504,7 @@ int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 			angle += 2*PI;
 		}
 		previous_speed_control_time = micros();
-		if (wheel_state_R = EMERGENCY_BREAK || wheel_state_R == SOFT_STOP){
+		if ((wheel_state_R = EMERGENCY_BREAK) || (wheel_state_R == SOFT_STOP)){
 			return 0;
 		}
 		return rotate(angle, 1, is_smooth);
@@ -659,7 +659,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 
 	}
 	delay(50);
-	if (wheel_state_R = EMERGENCY_BREAK || wheel_state_R == SOFT_STOP){
+	if ((wheel_state_R == EMERGENCY_BREAK) || (wheel_state_R == SOFT_STOP)){
 		return 0;
 	}
 	if (get_distance_to(x, y) > 2){
@@ -687,7 +687,7 @@ int creep_to(float x, float y, int direction){
 
 	}
 	delay(50);
-	if (wheel_state_R = EMERGENCY_BREAK || wheel_state_R == SOFT_STOP){
+	if ((wheel_state_R == EMERGENCY_BREAK) || (wheel_state_R == SOFT_STOP)){
 		return 0;
 	}
 	if (get_distance_to(x, y) > 2){

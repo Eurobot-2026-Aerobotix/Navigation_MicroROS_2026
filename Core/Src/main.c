@@ -238,7 +238,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										 prepare_creep_to(req_in->arg2, req_in->arg3, -1);
 										 res_out->result = true;  // x, y
 										 break;
-									 case 22: // creep to backwards
+									 case 22: // soft stop
 										 prepare_soft_stop();
 										 res_out->result = true;
 										 break;
@@ -1175,6 +1175,9 @@ void IMU_update_function(void *argument)
 //	prepare_orientate(0, 0, 0);
 //	delay(700);
 //	prepare_emergency_break();
+//
+//	prepare_go_to(100, 100, 1100, 1, 0);
+//	delay(400);
 
     delay(60000000);
   }

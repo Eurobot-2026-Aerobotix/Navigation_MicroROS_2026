@@ -15,8 +15,8 @@ enum Wheel_state{
 	ACCELERATING,
 	CONTROLLED_BREAK,
 	EMERGENCY_BREAK,
-	SOFT_STOP,
-	CRUISING // holding the same speed
+	CRUISING, // holding the same speed
+	SOFT_STOP
 }; // other states will be added, like doing a curve
 
 enum Trajectory{
