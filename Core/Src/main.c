@@ -1163,8 +1163,8 @@ void IMU_update_function(void *argument)
 	//send_values_to_usart(absolute_imu_yaw*100, absolute_phi*100, current_imu_yaw*100, current_imu_gyro_z*100);
 //	 prepare_bezier_curve(100, 0, 200, 0, 1000, 0, 1100, 1, 0);
 //	rotating_speed = 300;
-//	set_position(1750, 1845, 180, 180);
-//	prepare_go_to(1000, 0, 1100, 1, 0);
+//	set_position(1000, 300, 0, 0);
+//	prepare_go_to(1564.1242789363898, 364.12427893639006, 900, -1, 0);
 //	delay(10000);
 //	prepare_go_to(300, 2755, 300, 1, 0);
 //	delay(10000);

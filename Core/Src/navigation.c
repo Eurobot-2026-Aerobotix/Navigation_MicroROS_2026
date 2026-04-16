@@ -50,6 +50,11 @@ int emergency_recieved = 0;
 int stopped_because_of_collision = 0;
 float reached_destination_time = 0.35;
 
+static float strip_float_part(float value)
+{
+	return (float)((int)value);
+}
+
 float estimate_time_remaining_profile(float x, float distance, float x1, float x2)
 {
     float D = distance + deceleration_offset;
@@ -697,6 +702,9 @@ int creep_to(float x, float y, int direction){
 }
 
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
+	x = strip_float_part(x);
+	y = strip_float_part(y);
+	speed = strip_float_part(speed);
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
 	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
@@ -711,6 +719,8 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 	command_history = command_history*10 + robot_status.status;
 }
 void prepare_creep_to(float x, float y, int direction){
+	x = strip_float_part(x);
+	y = strip_float_part(y);
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
 	robot_status.status = (direction == 1)?CREEPIN_TO : CREEPIN_TO_BACKWARDS;
@@ -723,6 +733,13 @@ void prepare_creep_to(float x, float y, int direction){
 	command_history = command_history*10 + robot_status.status;
 }
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
+	x1 = strip_float_part(x1);
+	y1 = strip_float_part(y1);
+	x2 = strip_float_part(x2);
+	y2 = strip_float_part(y2);
+	x3 = strip_float_part(x3);
+	y3 = strip_float_part(y3);
+	speed = strip_float_part(speed);
 	reached_destination = 0;
 	robot_status.status = (direction == 1)? BEZIER_CURVIN : BEZIER_CURVIN_BACKWARDS;
 	stopped_because_of_collision = 0;
@@ -736,6 +753,7 @@ void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, floa
 	robot_status.arguments[7] = is_smooth;
 }
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
+	orientation = strip_float_part(orientation);
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
 	robot_status.status = ORIENTATIN;
@@ -798,6 +816,10 @@ void prepare_reset(){
 	robot_status.status = RESETIN;
 }
 void prepare_set_position(float x, float y, float phi, float absolute_phi){
+	x = strip_float_part(x);
+	y = strip_float_part(y);
+	phi = strip_float_part(phi);
+	absolute_phi = strip_float_part(absolute_phi);
 	robot_status.status = SETTIN_POSITION;
 	robot_status.arguments[0] = x;
 	robot_status.arguments[1] = y;
