@@ -84,10 +84,6 @@ float last_set_position_x = 0;
 float last_set_position_y = 0;
 float last_set_position_phi = 0;
 
-#define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
-#define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
-
-
 void reset_everything(){
 	reset_motors_vars();
 	reset_odometry_vars();
@@ -233,6 +229,14 @@ void service_callback(const void *request_msg, void *response_msg) {
 									 case 19: // shutdown
 										 shutdown();
 										 res_out->result = true;
+										 break;
+									 case 20: // creep to
+										 prepare_creep_to(req_in->arg2, req_in->arg3, 1);
+										 res_out->result = true;  // x, y, speed
+										 break;
+									 case 21: // creep to backwards
+										 prepare_creep_to(req_in->arg2, req_in->arg3, -1);
+										 res_out->result = true;  // x, y, speed
 										 break;
 									 default:
 										  res_out->result = false;
@@ -1117,6 +1121,15 @@ void executor_function(void *argument)
 		}
 		else if ( robot_status.status == RESETIN){
 			reset_everything();
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == CREEPIN_TO){
+			creep_to(robot_status.arguments[0], robot_status.arguments[1], 1);
+			command_count--;
+			robot_status.status = IDLE;
+		}
+		else if ( robot_status.status == CREEPIN_TO_BACKWARDS){
+			creep_to(robot_status.arguments[0], robot_status.arguments[1], -1);
 			robot_status.status = IDLE;
 		}
 		if (robot_status.status == IDLE && command_history%10 != 0){
