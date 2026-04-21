@@ -327,9 +327,6 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = (dead_wheels_spacing/2) * fabs(target_phi - absolute_phi);
-		if ((robot_status.status == ORIENTATIN) && (hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time)){
-			reached_destination = 1;
-		}
 
 		send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
 		//send_values_to_usart(absolute_phi*100, current_phi*100, 0, 0);
@@ -352,9 +349,6 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 		previous_distance_to_target = distance_to_target;
 		delay(2);
 		distance_to_target = dead_wheels_spacing * fabs(target_phi - absolute_phi);
-		if ((robot_status.status == ORIENTATIN) && (hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time)){
-			reached_destination = 1;
-		}
 		if (wheel_state_R == EMERGENCY_BREAK){
 			emergency_break();
 			return 0;
