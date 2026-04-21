@@ -15,7 +15,8 @@ enum Wheel_state{
 	ACCELERATING,
 	CONTROLLED_BREAK,
 	EMERGENCY_BREAK,
-	CRUISING // holding the same speed
+	CRUISING,
+	SOFT_STOP// holding the same speed
 }; // other states will be added, like doing a curve
 
 enum Trajectory{
@@ -87,6 +88,7 @@ extern int target_command_phi;
 extern int emergency_recieved;
 extern int stopped_because_of_collision;
 
+extern float oops;
 int move_forward(float distance, float speed, int8_t is_smooth); // will return 0 if target has been reached successfully or 1 if it could not be reached
 int move_forward_full(float distance, float speed, float target_x, float target_y, int8_t is_smooth);
 int creep_forward(float max_distance, float target_x, float target_y);
@@ -113,4 +115,7 @@ void prepare_set_position(float x, float y, float phi, float absolute_phi);
 void reset_navigation_vars();
 float estimate_time_remaining_profile(float x, float distance, float x1, float x2);
 float hybrid_arrival_time(float x, float distance, float x1, float x2, float distance_to_target);
+
+void soft_stop();
+void prepare_soft_stop();
 #endif /* INC_NAVIGATION_H_ */

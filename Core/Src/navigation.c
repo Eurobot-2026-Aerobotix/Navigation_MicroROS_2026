@@ -49,7 +49,20 @@ int target_command_phi = 0;
 int emergency_recieved = 0;
 int stopped_because_of_collision = 0;
 float reached_destination_time = 0.35;
-
+void soft_stop(){
+	control_loop_state = SPEED;
+	set_target_speeds(0, 0);
+	stop_motors();
+	delay(800);
+	set_target_encoder_counts(encoder_count_R, encoder_count_L);
+	wheel_state_R = DEAD_STOP;
+	wheel_state_L = DEAD_STOP;
+}
+void prepare_soft_stop(){
+	stopped_because_of_collision = 0;
+	wheel_state_L = SOFT_STOP;
+	wheel_state_R = SOFT_STOP;
+}
 int creep_forward(float max_distance, float target_x, float target_y){
 	float direction = SGN(max_distance);
 	float distance = fabs(max_distance);
@@ -226,6 +239,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	float lane_correction_term;
 	float phase_two_distance = 10 * (distance/300.0);
 	while (distance_to_target > phase_two_distance && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
+		oops += 100 ;
 		x = MAX(distance - distance_to_target, 0);
 		if (wheel_state_R == ACCELERATING && x > x1 ){
 			wheel_state_R = CRUISING;
@@ -255,7 +269,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			reached_destination = 1;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(distance_to_target, oops, target_speed_L, target_speed_R);
 	}
 	// completing the last part of distance separately, so the break happens on point
 	// calculating the distance to move that  results in the robot being the closest to target point, i can't explain the math in code unfortunately
@@ -295,7 +309,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 			return 0;
 		}
 
-		//send_values_to_usart(current_speed_L, current_speed_R, target_speed_L, target_speed_R);
+		send_values_to_usart(distance_to_target, oops, target_speed_L, target_speed_R);
 	}
 	stop_motors();
 	reached_destination = 1;
@@ -636,6 +650,7 @@ int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	}
 	delay(50);
 	if (get_distance_to(x, y) > 2){
+		oops = 100	 ;
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	}
 	return 0;
@@ -770,7 +785,7 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int encoder_tolerance = 180;
+	int encoder_tolerance = 150;
 	int pwm_tolerance = 800;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);

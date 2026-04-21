@@ -84,6 +84,8 @@ float last_set_position_x = 0;
 float last_set_position_y = 0;
 float last_set_position_phi = 0;
 
+float oops = 0 ;
+
 void reset_everything(){
 	reset_motors_vars();
 	reset_odometry_vars();
@@ -167,7 +169,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle() && (robot_status.status == IDLE) && (command_count == 0))? true: false;
+										res_out->result = (is_idle() && (robot_status.status == IDLE))? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -237,6 +239,10 @@ void service_callback(const void *request_msg, void *response_msg) {
 									 case 21: // creep to backwards
 										 prepare_creep_to(req_in->arg2, req_in->arg3, -1);
 										 res_out->result = true;  // x, y, speed
+										 break;
+									 case 22: // soft stop
+										 prepare_soft_stop();
+										 res_out->result = true;
 										 break;
 									 default:
 										  res_out->result = false;
@@ -1160,8 +1166,39 @@ void IMU_update_function(void *argument)
 //	 prepare_bezier_curve(100, 0, 200, 0, 1000, 0, 1100, 1, 0);
 //	rotating_speed = 300;
 //	set_position(1750, 1845, 180, 180);
-//	prepare_go_to(1000, 0, 1100, 1, 0);
-//	delay(10000);
+//	prepare_go_to(800, 0, 1100, 1, 0);
+//	delay(7000);
+//	prepare_soft_stop();
+//	delay(2000);
+
+//	while((is_idle() && robot_status.status == IDLE && (command_count == 0)) || reached_destination ){
+//		vTaskDelay(10);
+//	}
+//
+//	prepare_go_to(0, 0, 1100, -1, 0);
+//	delay(7000);
+//	prepare_go_to(800, 0, 1100, 1, 0);
+//	delay(7000);
+//	prepare_soft_stop();
+//	delay(2000);
+//
+//	//	while((is_idle() && robot_status.status == IDLE && (command_count == 0)) || reached_destination ){
+//	//		vTaskDelay(10);
+//	//	}
+//	//
+//	prepare_go_to(0, 0, 1100, -1, 0);
+//	delay(2000);
+//	while((is_idle() && robot_status.status == IDLE && (command_count == 0)) || reached_destination ){
+//		vTaskDelay(10);
+//	}
+//	prepare_go_to(800, 0, 1100, 1, 0);
+//	delay(2000);
+////	while((is_idle() && robot_status.status == IDLE && (command_count == 0)) || reached_destination ){
+////		vTaskDelay(10);
+////	}
+//	prepare_go_to(0, 0, 1100, -1, 0);
+
+
 //	prepare_go_to(300, 2755, 300, 1, 0);
 //	delay(10000);
 //	prepare_go_to(1750, 245, 1100, 1, 0);
