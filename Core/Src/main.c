@@ -65,11 +65,11 @@ int timer_flag = 0;
 
 // position control parameters
 float kpP_R = 15;
-float kdP_R = 1.8;
+float kdP_R = 1.2;
 float kiP_R = 75;
 
 float kpP_L = 15;
-float kdP_L = 1.8;
+float kdP_L = 1.2;
 float kiP_L = 75;
 
 
@@ -382,7 +382,7 @@ int main(void)
   //setup_wheel_diameters(79.67706788, 80.9302886);
   setup_wheel_diameters(63.454032077149873579879965735627, 63.418774067686835255685636818921);
 
-  setup_wheels_spacing(188.5, 283.948704880287375825474682519);
+  setup_wheels_spacing(188.5, 283.82412402809132941752812101901);
 
   setup_aruco_positions(61, 96.85, -76.9, -97.35);
   //setup_wheels_spacing(188.5, 342.5);
@@ -1160,9 +1160,9 @@ void IMU_update_function(void *argument)
 //	 prepare_bezier_curve(100, 0, 200, 0, 1000, 0, 1100, 1, 0);
 //	rotating_speed = 300;
 //	set_position(1750, 1845, 180, 180);
-//	prepare_go_to(1000, 0, 1100, 1, 0);
+//	prepare_go_to(2000, 0, 1100, 1, 0);
 //	delay(10000);
-//	prepare_go_to(300, 2755, 300, 1, 0);
+//	prepare_go_to(0, 0, 1100, 1, 1);
 //	delay(10000);
 //	prepare_go_to(1750, 245, 1100, 1, 0);
 //	delay(6000);
@@ -1171,6 +1171,8 @@ void IMU_update_function(void *argument)
 //	prepare_orientate(0, 0, 0);
 //	delay(700);
 //	prepare_emergency_break();
+//
+//	prepare_creep_to(100, 0, 1);
 
     delay(60000000);
   }

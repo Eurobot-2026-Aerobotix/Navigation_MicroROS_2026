@@ -11,7 +11,7 @@ enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
-float ramping_acceleration = 10;
+float ramping_acceleration = 10.5;
 float acc_linearization_coef = 0;
 float dec_linearization_coef = 0;
 
@@ -27,7 +27,7 @@ float speed_offset = 150;
 float speed_offset_fast = 150;
 float speed_offset_smooth = 80;
 
-float rotating_speed = 600;
+float rotating_speed = 900;
 float creep_speed = 200;
 int8_t direction_R;
 int8_t direction_L;
@@ -38,7 +38,7 @@ float turning_radius;
 float filtered_target_speed_R = 0;
 float filtered_target_speed_L = 0;
 float speed_filter = 0.95;
-float clearance_from_crates = 4;
+float clearance_from_crates = 7;
 
 int8_t reached_destination = 1;
 int command_history = 0;
@@ -91,7 +91,7 @@ int creep_forward(float max_distance, float target_x, float target_y){
 	starting_phi = absolute_phi;
 	int collision_counter = 0;
 	float lane_correction_term;
-	while (distance_to_target > 1 && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
+	while (distance_to_target > 1 ){
 		x = MAX(distance - distance_to_target, 0);
 		if (wheel_state_R == ACCELERATING && x > x1 ){
 			wheel_state_R = CRUISING;
@@ -116,7 +116,7 @@ int creep_forward(float max_distance, float target_x, float target_y){
 		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term));
 		delay(4);
 		previous_distance_to_target = distance_to_target;
-		distance_to_target = get_distance_to(target_x, target_y);
+		distance_to_target = distance - get_distance_to(starting_x, starting_y);
 
 		if ( (fabs(PWM_R) > STOP_PWM_THRESHOLD && fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
 			|| (fabs(PWM_L) > STOP_PWM_THRESHOLD && fabs(current_speed_L) < STOP_SPEED_THRESHOLD) ){
@@ -347,7 +347,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	};
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
-	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/10.0 + 10), 10); // high acceleration for small angle and low for large 200 kenet 300
+	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/16.0 + 10), 10); // high acceleration for small angle and low for large 200 kenet 300
 	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/2.5 + 12), -2); // same logic
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
