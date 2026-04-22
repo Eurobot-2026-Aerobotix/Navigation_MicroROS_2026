@@ -1168,7 +1168,7 @@ void IMU_update_function(void *argument)
 //	delay(6000);
 //	prepare_go_to(1750, 1845, 1100, 1, 0);
 //	delay(6000);
-//	prepare_orientate(0, 0, 0);
+//	prepare_orientate(180, 0, 0);
 //	delay(700);
 //	prepare_emergency_break();
 //
