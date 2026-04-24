@@ -110,10 +110,12 @@ int creep_forward(float max_distance, float target_x, float target_y){
 		float deviation_angle = normalize_angle(atan2(current_y - starting_y, current_x - starting_x) - atan2(target_y - starting_y, target_x - starting_x) );
 		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
 		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 3 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
-		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)) + phi_correction_term; // the first coefficient is tunable
-		lane_correction_term = MIN(MAX(lane_correction_term, -0.1), 0.1);
+		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)); // the first coefficient is tunable
+		float slow_down_factor = fabs(lane_correction_term)*0.5;
+		lane_correction_term +=  + phi_correction_term;
+		lane_correction_term = MIN(MAX(lane_correction_term, -0.2), 0.2);
 
-		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term));
+		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) * slow_down_factor ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term) * slow_down_factor);
 		delay(4);
 		previous_distance_to_target = distance_to_target;
 		distance_to_target = distance - get_distance_to(starting_x, starting_y);
