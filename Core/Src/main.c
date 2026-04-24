@@ -151,7 +151,6 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 5: // go to
-										command_count++;
 										prepare_go_to(req_in->arg2, req_in->arg3, req_in->arg4, 1, req_in->arg5);
 										res_out->result = true;  // x, y, speed
 										break;
@@ -167,7 +166,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle() && (robot_status.status == IDLE) && (command_count == 0))? true: false;
+										res_out->result = (is_idle() && (robot_status.status == IDLE) )? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -1100,7 +1099,6 @@ void executor_function(void *argument)
 		else if ( robot_status.status == GOIN_TO){
 			accepted_new_go_to++;
 			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
-			command_count--;
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
@@ -1125,7 +1123,6 @@ void executor_function(void *argument)
 		}
 		else if ( robot_status.status == CREEPIN_TO){
 			creep_to(robot_status.arguments[0], robot_status.arguments[1], 1);
-			command_count--;
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == CREEPIN_TO_BACKWARDS){
