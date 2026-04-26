@@ -72,6 +72,8 @@ float kpP_L = 15;
 float kdP_L = 1.2;
 float kiP_L = 75;
 
+float error = 0;
+float dt = 0.0001;
 
 int step = 0;
 
@@ -139,6 +141,10 @@ void shutdown(){
 	PWM_L = 0;
 }
 
+float rfp(float x) { // meaning remove floating part
+    return (float)((int)x);
+}
+
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
@@ -190,7 +196,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 16:
-										 res_out->result = ( (is_idle() && robot_status.status == IDLE && (command_count == 0)) || reached_destination )? true: false;
+										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
 										 break;
 									 case 17://fix x and y
 										 __disable_irq();
@@ -287,21 +293,21 @@ DMA_HandleTypeDef hdma_usart2_tx;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 2000 * 4,
+  .stack_size = 2050 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for executor */
 osThreadId_t executorHandle;
 const osThreadAttr_t executor_attributes = {
   .name = "executor",
-  .stack_size = 700 * 4,
+  .stack_size = 750 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for IMU_update_task */
 osThreadId_t IMU_update_taskHandle;
 const osThreadAttr_t IMU_update_task_attributes = {
   .name = "IMU_update_task",
-  .stack_size = 500 * 4,
+  .stack_size = 400 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
 /* USER CODE BEGIN PV */
@@ -1093,24 +1099,24 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ORIENTATIN){
-			orientate(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2]);
+			orientate(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO){
 			accepted_new_go_to++;
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], 1, robot_status.arguments[3]);
+			go_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), 1, rfp(robot_status.arguments[3]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
-			go_to(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], -1, robot_status.arguments[3]);
+			go_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), -1, rfp(robot_status.arguments[3]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], 1, robot_status.arguments[7]);
+			bezier_curve(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), rfp(robot_status.arguments[3]), rfp(robot_status.arguments[4]), rfp(robot_status.arguments[5]), rfp(robot_status.arguments[6]), 1, rfp(robot_status.arguments[7]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
-			bezier_curve(robot_status.arguments[0], robot_status.arguments[1], robot_status.arguments[2], robot_status.arguments[3], robot_status.arguments[4], robot_status.arguments[5], robot_status.arguments[6], -1, robot_status.arguments[7]);
+			bezier_curve(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), rfp(robot_status.arguments[3]), rfp(robot_status.arguments[4]), rfp(robot_status.arguments[5]), rfp(robot_status.arguments[6]), -1, rfp(robot_status.arguments[7]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == SETTIN_POSITION){
@@ -1122,11 +1128,11 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == CREEPIN_TO){
-			creep_to(robot_status.arguments[0], robot_status.arguments[1], 1);
+			creep_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), 1);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == CREEPIN_TO_BACKWARDS){
-			creep_to(robot_status.arguments[0], robot_status.arguments[1], -1);
+			creep_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), -1);
 			robot_status.status = IDLE;
 		}
 		if (robot_status.status == IDLE && command_history%10 != 0){
@@ -1196,66 +1202,74 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			//update_position(skip_position_update);
 			update_position(0);
 			if (control_loop_state == SPEED){
-				float tmp = (micros() - previous_speed_control_time);
-				// right motor speed control
-				float error = target_speed_R - current_speed_R;
+				dt = (micros() - previous_speed_control_time);
+				if (dt > 100){
+					// right motor speed control
+					float error = target_speed_R - current_speed_R;
 
-				speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/tmp; // unit = mm/s²
-				speed_integral_R += error*(tmp/1000000);
+					speed_derivative_R = speed_derivative_R*0.999 + 0.001*(error - previous_speed_error_R)*1000000/dt; // unit = mm/s²
+					speed_integral_R += error*(dt/1000000);
 
-				previous_speed_error_R = error;
+					previous_speed_error_R = error;
 
-				PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
-				PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
-				PWM_R = (target_speed_R == 0)?0: PWM_R;
+					PWM_R = PWM_R*0.2 + 0.8 * (PWM_offset_R + kpS_R*error + kdS_R*speed_derivative_R + kiS_R*speed_integral_R); // the first part is a simple filter to reduce jitter
+					PWM_R = (PWM_R > PWM_max)? PWM_max : (PWM_R < -PWM_max)? -PWM_max : PWM_R;
+					PWM_R = (target_speed_R == 0)?0: PWM_R;
 
-				speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) || (fabs(speed_integral_R*kiS_R) > PWM_max) )? (speed_integral_R - 2*error*(tmp/1000000)) : speed_integral_R;
+					speed_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) || (fabs(speed_integral_R*kiS_R) > PWM_max) )? (speed_integral_R - 2*error*(dt/1000000)) : speed_integral_R;
 
-				// left motor speed control
-				error = target_speed_L - current_speed_L;
-				speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/tmp; // unit = mm/s²
-				speed_integral_L += error*(tmp/1000000);
+					// left motor speed control
+					error = target_speed_L - current_speed_L;
+					speed_derivative_L = speed_derivative_L*0.999 + 0.001*(error - previous_speed_error_L)*1000000/dt; // unit = mm/s²
+					speed_integral_L += error*(dt/1000000);
 
-				previous_speed_error_L = error;
-				previous_speed_control_time = micros();
+					previous_speed_error_L = error;
+					previous_speed_control_time = micros();
 
-				PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
-				PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
-				PWM_L = (target_speed_L == 0)?0: PWM_L;
+					PWM_L = PWM_L*0.2 + 0.8 * (PWM_offset_L + kpS_L*error + kdS_L*speed_derivative_L + kiS_L*speed_integral_L);
+					PWM_L = (PWM_L > PWM_max)? PWM_max : (PWM_L < -PWM_max)? -PWM_max : PWM_L;
+					PWM_L = (target_speed_L == 0)?0: PWM_L;
 
-				speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) || (fabs(speed_integral_L*kiS_L) > PWM_max) )? (speed_integral_L - 2*error*(tmp/1000000)) : speed_integral_L;
+					speed_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) || (fabs(speed_integral_L*kiS_L) > PWM_max) )? (speed_integral_L - 2*error*(dt/1000000)) : speed_integral_L;
+				}
 
 			}else if (control_loop_state == POSITION){
-				float tmp = (micros() - previous_position_control_time);
-				// right motor position control
-				float error = (target_encoder_count_R - encoder_count_R)/3; // it was 1000ticks encoders but now it is 3600, i don't wanna tune it again
+				dt = (micros() - previous_position_control_time);
+				if (dt > 100){
+					// right motor position control
+					error = (target_encoder_count_R - encoder_count_R)/3; // /3 because it was 1000ticks encoders but now it is 3600, i don't wanna tune it again
 
-				position_derivative_R = (error - previous_position_error_R)*1000000/tmp; // unit = tick/s²
+					position_derivative_R = (error - previous_position_error_R)*1000000/dt; // unit = tick/s²
 
-				position_integral_R = ( SGN(error) == SGN( previous_position_error_R ) )? position_integral_R + error*(tmp/1000000) : 0;
+					position_integral_R = ( SGN(error) == SGN( previous_position_error_R ) )? position_integral_R + error*(dt/1000000) : 0;
 
-				previous_position_error_R = error;
+					previous_position_error_R = error;
 
-				PWM_R = kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R; // the first part is a simple filter to reduce jitter
-				PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_response : (PWM_R < PWM_R_backward_min - position_max_response)? PWM_R_backward_min - position_max_response : PWM_R;
+					PWM_R = kpP_R*error + kdP_R*position_derivative_R + kiP_R*position_integral_R; // the first part is a simple filter to reduce jitter
+					PWM_R = (PWM_R > PWM_R_forward_min + position_max_response)? PWM_R_forward_min + position_max_response : (PWM_R < PWM_R_backward_min - position_max_response)? PWM_R_backward_min - position_max_response : PWM_R;
 
-				position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(tmp/1000000)) : position_integral_R;
+					position_integral_R = ( (PWM_R == PWM_max) || (PWM_R == -PWM_max) )? (position_integral_R - 2*error*(dt/1000000)) : position_integral_R;
 
-				// left motor position control
-				error = (target_encoder_count_L - encoder_count_L)/3;
+					// left motor position control
+					error = (target_encoder_count_L - encoder_count_L)/3;
 
-				position_derivative_L = (error - previous_position_error_L)*1000000/tmp; // unit = mm/s²
-				position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + error*(tmp/1000000) : 0;
+					position_derivative_L = (error - previous_position_error_L)*1000000/dt; // unit = mm/s²
+					position_integral_L = ( SGN(error) == SGN( previous_position_error_L) )? position_integral_L + error*(dt/1000000) : 0;
 
-				previous_position_error_L = error;
+					previous_position_error_L = error;
 
-				PWM_L = kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L; // the first part is a simple filter to reduce jitter
-				PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_response : (PWM_L < PWM_L_backward_min - position_max_response)? PWM_L_backward_min - position_max_response : PWM_L;
+					PWM_L = kpP_L*error + kdP_L*position_derivative_L + kiP_L*position_integral_L; // the first part is a simple filter to reduce jitter
+					PWM_L = (PWM_L > PWM_L_forward_min + position_max_response)? PWM_L_forward_min + position_max_response : (PWM_L < PWM_L_backward_min - position_max_response)? PWM_L_backward_min - position_max_response : PWM_L;
 
-				position_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (position_integral_L - 2*error*(tmp/1000000)) : position_integral_L;
+					position_integral_L = ( (PWM_L == PWM_max) || (PWM_L == -PWM_max) )? (position_integral_L - 2*error*(dt/1000000)) : position_integral_L;
 
-				previous_position_error_L = error;
-				previous_position_control_time = micros();
+					previous_position_error_L = error;
+					previous_position_control_time = micros();
+
+					if ( (abs(encoder_count_R - target_encoder_count_R) > 20000 ) && (abs(error) > 20000 ) ){
+						set_target_encoder_counts(encoder_count_R, encoder_count_L);
+					}
+				}
 			}
 //			if ( fail_safe_activated &&
 //					(

@@ -664,7 +664,6 @@ int creep_to(float x, float y, int direction){
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
-	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
 	robot_status.arguments[0] = x;
 	robot_status.arguments[1] = y;
 	robot_status.arguments[2] = speed;
@@ -673,12 +672,12 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 	target_command_y = y;
 	target_command_phi = atan2(y - current_y, x - current_x);
 	emergency_recieved = 0;
+	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
 	command_history = command_history*10 + robot_status.status;
 }
 void prepare_creep_to(float x, float y, int direction){
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
-	robot_status.status = (direction == 1)?CREEPIN_TO : CREEPIN_TO_BACKWARDS;
 	robot_status.arguments[0] = x;
 	robot_status.arguments[1] = y;
 	target_command_x = x;
@@ -686,10 +685,10 @@ void prepare_creep_to(float x, float y, int direction){
 	target_command_phi = atan2(y - current_y, x - current_x);
 	emergency_recieved = 0;
 	command_history = command_history*10 + robot_status.status;
+	robot_status.status = (direction == 1)?CREEPIN_TO : CREEPIN_TO_BACKWARDS;
 }
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
 	reached_destination = 0;
-	robot_status.status = (direction == 1)? BEZIER_CURVIN : BEZIER_CURVIN_BACKWARDS;
 	stopped_because_of_collision = 0;
 	robot_status.arguments[0] = x1;//x1
 	robot_status.arguments[1] = y1;//y1
@@ -699,14 +698,15 @@ void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, floa
 	robot_status.arguments[5] = y3;//y3
 	robot_status.arguments[6] = speed;//speed
 	robot_status.arguments[7] = is_smooth;
+	robot_status.status = (direction == 1)? BEZIER_CURVIN : BEZIER_CURVIN_BACKWARDS;
 }
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	reached_destination = 0;
 	stopped_because_of_collision = 0;
-	robot_status.status = ORIENTATIN;
 	robot_status.arguments[0] = orientation;
 	robot_status.arguments[1] = is_radian;
 	robot_status.arguments[2] = is_smooth;
+	robot_status.status = ORIENTATIN;
 }
 void prepare_emergency_break(){
 	stopped_because_of_collision = 0;
