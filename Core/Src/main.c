@@ -79,7 +79,7 @@ int step = 0;
 
 int accepted_new_go_to = 0;
 int command_count = 0;
-int fail_safe_activated = 0;
+int fail_safe_activated = 1;
 float fail_safe_counter = 0;
 
 float last_set_position_x = 0;
@@ -1271,28 +1271,28 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					}
 				}
 			}
-//			if ( fail_safe_activated &&
-//					(
-//						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
-//						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
-//
-//						||
-//
-//						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
-//						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
-//					   )
-//				   )
-//				{
-//					// EMERGENCY STOP
-//                 fail_safe_counter++;
-//                 if(fail_safe_counter > 250){
-//                	 prepare_emergency_break();
-//                	 stopped_because_of_collision = 1;
-//                 }
-//			}
-//			else {
-//				 fail_safe_counter = 0;
-//			}
+			if ( fail_safe_activated &&
+					(
+						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
+						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
+
+						||
+
+						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
+						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
+					   )
+				   )
+				{
+					// EMERGENCY STOP
+                 fail_safe_counter++;
+                 if(fail_safe_counter > 250){
+                	 prepare_emergency_break();
+                	 stopped_because_of_collision = 1;
+                 }
+			}
+			else {
+				 fail_safe_counter = 0;
+			}
 		}
 		run_right_motor();
 		run_left_motor();

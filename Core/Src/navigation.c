@@ -38,7 +38,7 @@ float turning_radius;
 float filtered_target_speed_R = 0;
 float filtered_target_speed_L = 0;
 float speed_filter = 0.95;
-float clearance_from_crates = 7;
+float clearance_from_crates = 11;
 
 int8_t reached_destination = 1;
 int command_history = 0;
