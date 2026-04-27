@@ -27,7 +27,7 @@ float speed_offset = 150;
 float speed_offset_fast = 150;
 float speed_offset_smooth = 80;
 
-float rotating_speed = 880;
+float rotating_speed = 1000;
 float creep_speed = 200;
 int8_t direction_R;
 int8_t direction_L;
@@ -350,11 +350,12 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	};
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
-	float rotating_ramping_acceleration = MAX(200/(fabs(rad_to_deg(angle))/16.0 + 10), 13); // high acceleration for small angle and low for large 200 kenet 300
-	float rotating_breaking_acceleration = MIN(-120/(fabs(rad_to_deg(angle))/2.5 + 12), -2.2); // same logic
+	float rotating_ramping_acceleration = 20; // high acceleration for small angle and low for large
+	float rotating_breaking_acceleration = -MIN(MAX(150.0/fabs(rad_to_deg(angle) - 4.1) + 1.5, 2.5), 25.0);; // same logic
 	float arc_length = (dead_wheels_spacing/2) * angle;
 
 	direction_R = SGN(arc_length);
+
 	direction_L = -direction_R;
 
 	// all of these formulas are derived from a ramp graph: speed = f(distance)
@@ -367,7 +368,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 	if (x2 <= x1){ // correcting the cruising speed if it is too high to reach using the current ramp and break
 		float intersection_x = (rotating_breaking_acceleration*distance)/(rotating_breaking_acceleration - rotating_ramping_acceleration);
 		float intersection_speed = rotating_ramping_acceleration * intersection_x;
-		speed = 0.9 * intersection_speed;
+		speed = 0.95 * intersection_speed;
 		x1 = speed/rotating_ramping_acceleration;
 		x2 = speed/rotating_breaking_acceleration + distance;
 	}
