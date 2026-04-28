@@ -1048,9 +1048,9 @@ void StartDefaultTask(void *argument)
 		  if (ret == RCL_RET_OK)
 		  {
 			publish_odom();
-//			char buf[20];
-//			snprintf(buf, sizeof(buf), "%d", (int)((debugger*100000/(float)micros())));
-//			publish_debug(buf);
+			char buf[20];
+			snprintf(buf, sizeof(buf), "%d", (int)(robot_status.status + control_loop_state*100 + (int)rad_to_deg(current_phi)*10000));
+			publish_debug(buf);
 		  }
 		  break;
       case AGENT_DISCONNECTED:
