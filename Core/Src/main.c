@@ -80,7 +80,7 @@ int step = 0;
 int accepted_new_go_to = 0;
 int command_count = 0;
 int fail_safe_activated = 1;
-float fail_safe_counter = 0;
+int fail_safe_counter = 0;
 
 float last_set_position_x = 0;
 float last_set_position_y = 0;
@@ -172,7 +172,7 @@ void service_callback(const void *request_msg, void *response_msg) {
 										break;
 
 									 case 11: // is the robot idle
-										res_out->result = (is_idle() && (robot_status.status == IDLE) )? true: false;
+										res_out->result = (robot_status.status == IDLE)? true: false;
 										break;
 
 									 case 12: // go to backwards
@@ -192,11 +192,14 @@ void service_callback(const void *request_msg, void *response_msg) {
 										last_set_position_y = req_in->arg3;
 										last_set_position_phi = req_in->arg4;
 										prepare_set_position(req_in->arg2, req_in->arg3, req_in->arg4, req_in->arg4);
-										emergency_recieved = 0;
 										res_out->result = true;  // x, y, speed
 										break;
 									 case 16:
-										 res_out->result = ( (is_idle() && robot_status.status == IDLE) || reached_destination )? true: false;
+										 res_out->result = (
+												 	 	 		 (robot_status.status == IDLE)
+															 	 ||
+															 	 reached_destination
+															)? true: false;
 										 break;
 									 case 17://fix x and y
 										 __disable_irq();
@@ -448,7 +451,7 @@ int main(void)
 //
 //  rotating_speed = 300;
 //  rotate(3600, 0, 0);
-
+//
 //  set_target_encoder_counts(0, 0);
 //  while(1){
 //	  send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
@@ -1266,7 +1269,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					previous_position_error_L = error;
 					previous_position_control_time = micros();
 
-					if ( (abs(encoder_count_R - target_encoder_count_R) > 20000 ) && (abs(error) > 20000 ) ){
+					if (
+							(
+								(wheel_state_L == EMERGENCY_BREAK)
+								&&
+								(abs(encoder_count_R - target_encoder_count_R) > 10000 )
+								&&
+								(abs(target_encoder_count_L - encoder_count_L) > 10000 )
+							)
+							||
+							(
+								(wheel_state_L != EMERGENCY_BREAK)
+								&&
+								(abs(encoder_count_R - target_encoder_count_R) > 1500 )
+								&&
+								(abs(target_encoder_count_L - encoder_count_L) > 1500 )
+							)
+						){
 						set_target_encoder_counts(encoder_count_R, encoder_count_L);
 					}
 				}
@@ -1285,7 +1304,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				{
 					// EMERGENCY STOP
                  fail_safe_counter++;
-                 if(fail_safe_counter > 250){
+                 if(fail_safe_counter > 200){
                 	 prepare_emergency_break();
                 	 stopped_because_of_collision = 1;
                  }

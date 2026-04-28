@@ -101,6 +101,7 @@ void emergency_break();
 int creep_to(float x, float y, int direction);
 void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_L);
 int8_t is_idle();
+void wait_for_idle();
 void reset_speed_control_variables();
 void apply_smooth_or_not(float distance, int8_t is_smooth);
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth);

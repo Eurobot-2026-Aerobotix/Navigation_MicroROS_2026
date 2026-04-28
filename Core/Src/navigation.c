@@ -38,7 +38,7 @@ float turning_radius;
 float filtered_target_speed_R = 0;
 float filtered_target_speed_L = 0;
 float speed_filter = 0.95;
-float clearance_from_crates = 11;
+float clearance_from_crates = 9;
 
 int8_t reached_destination = 1;
 int command_history = 0;
@@ -54,9 +54,7 @@ int creep_forward(float max_distance, float target_x, float target_y){
 	float direction = SGN(max_distance);
 	float distance = fabs(max_distance);
 	float speed = creep_speed;
-	while(!is_idle()){
-		delay(10);
-	};
+	wait_for_idle();
 	reset_speed_control_variables();
 	direction_R = 1;
 	direction_L = 1;
@@ -81,7 +79,6 @@ int creep_forward(float max_distance, float target_x, float target_y){
 	cruise_speed_R = speed;
 	cruise_speed_L = speed;
 	float distance_to_target = distance;
-	float previous_distance_to_target = distance;
 	float x = 0;
 
 	wheel_state_R = ACCELERATING;
@@ -113,11 +110,13 @@ int creep_forward(float max_distance, float target_x, float target_y){
 		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)); // the first coefficient is tunable
 		lane_correction_term +=  + phi_correction_term;
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.2), 0.2);
+		if(x < 10){
+			lane_correction_term = 0;
+		}
 
 		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term));
 		delay(4);
-		previous_distance_to_target = distance_to_target;
-		distance_to_target = distance - get_distance_to(starting_x, starting_y);
+		distance_to_target = fabs(distance - get_distance_to(starting_x, starting_y));
 
 		if ( (fabs(PWM_R) > STOP_PWM_THRESHOLD && fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
 			|| (fabs(PWM_L) > STOP_PWM_THRESHOLD && fabs(current_speed_L) < STOP_SPEED_THRESHOLD) ){
@@ -183,9 +182,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		breaking_acceleration = -3;
 	}
 	speed = fabs(speed);
-	while(!is_idle()){
-		delay(10);
-	};
+	wait_for_idle();
 	reset_speed_control_variables();
 	direction_R = 1;
 	direction_L = 1;
@@ -220,7 +217,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 	starting_phi = absolute_phi;
 	float lane_correction_term;
 	float phase_two_distance = 10 * (distance/300.0);
-	while (distance_to_target > phase_two_distance && !(distance_to_target > previous_distance_to_target && distance_to_target< distance/2) ){
+	while (distance_to_target > phase_two_distance){
 		x = MAX(distance - distance_to_target, 0);
 		if (wheel_state_R == ACCELERATING && x > x1 ){
 			wheel_state_R = CRUISING;
@@ -243,11 +240,14 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		float slow_down_factor = 1 - fabs(lane_correction_term)*0.5;
 		lane_correction_term +=  + phi_correction_term;
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.2), 0.2);
+		if (x<10){
+			lane_correction_term = 0;
+		}
 
 		set_target_speeds(direction*calculate_instant_target_speed(x, distance)*(1 + lane_correction_term) * slow_down_factor ,direction*calculate_instant_target_speed(x, distance)* (1 - lane_correction_term) * slow_down_factor );
 		delay(4);
 		previous_distance_to_target = distance_to_target;
-		distance_to_target = get_distance_to(target_x, target_y);
+		distance_to_target = fabs(distance - get_distance_to(starting_x, starting_y));
 		if(hybrid_arrival_time(x, distance, x1, x2, distance_to_target) < reached_destination_time){
 			reached_destination = 1;
 		}
@@ -345,9 +345,7 @@ float calculate_instant_target_phi(float x, float distance){
 	return 0;
 }
 int rotate(float angle, int8_t is_radian, int8_t is_smooth){
-	while(!is_idle()){
-		delay(10);
-	};
+	wait_for_idle();
 	reset_speed_control_variables();
 	angle = is_radian? angle: deg_to_rad(angle);
 	float rotating_ramping_acceleration = 20; // high acceleration for small angle and low for large
@@ -475,9 +473,7 @@ int rotate(float angle, int8_t is_radian, int8_t is_smooth){
 }
 int orientate(float orientation, int8_t is_radian, int8_t is_smooth){
 	orientation = (is_radian)? orientation : deg_to_rad(orientation);
-	while(!is_idle()){
-		delay(10);
-	};
+	wait_for_idle();
 	if (fabs(orientation - current_phi) > deg_to_rad(0.5) ){
 		float angle = orientation - current_phi;
 		if (angle > PI){
@@ -519,9 +515,7 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	acc_linearization_coef = sqrt(d_1);
 	dec_linearization_coef = sqrt(distance - d_2);
 
-	while(!is_idle()){
-		delay(10);
-	};
+	wait_for_idle();
 	reset_speed_control_variables();
 
 	direction_R = 1;
@@ -615,55 +609,47 @@ int bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, flo
 	return 0;
 }
 int go_to(float x, float y, float speed, int direction, int8_t is_smooth){
-	while(!is_idle()){
-		delay(10);
-	}
+	wait_for_idle();
 	float angle = normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 );
 	while (fabs(normalize_angle(angle - current_phi)) > deg_to_rad(1)){
 		orientate(angle, 1 , 0);
 		if(emergency_recieved == 1){
 			return 0;
 		}
-		while(!is_idle()){
-			delay(10);
-		}
+		wait_for_idle();
 		if (control_loop_state == SHUTDOWN ){
 			return 0;
 		}
 
 	}
-	delay(50);
 	if (get_distance_to(x, y) > 2){
 		move_forward_full(direction * get_distance_to(x, y), speed, x, y, is_smooth);
 	}
 	return 0;
 }
 int creep_to(float x, float y, int direction){
-	while(!is_idle()){
-		delay(10);
-	}
+	wait_for_idle();
 	float angle = normalize_angle( get_angle_to(x, y) + PI*(1 - direction)/2 );
 	while (fabs(normalize_angle(angle - current_phi)) > deg_to_rad(1)){
 		orientate(angle, 1 , 0);
 		if(emergency_recieved == 1){
 			return 0;
 		}
-		while(!is_idle()){
-			delay(10);
-		}
+		wait_for_idle();
 		if (control_loop_state == SHUTDOWN ){
 			return 0;
 		}
 
 	}
-	delay(50);
 	if (get_distance_to(x, y) > 2){
 		creep_forward(direction * get_distance_to(x, y), x, y);
 	}
 	return 0;
 }
 void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smooth){
+	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
 	reached_destination = 0;
+	emergency_recieved = 0;
 	stopped_because_of_collision = 0;
 	robot_status.arguments[0] = x;
 	robot_status.arguments[1] = y;
@@ -672,24 +658,22 @@ void prepare_go_to(float x, float y, float speed, int direction, int8_t is_smoot
 	target_command_x = x;
 	target_command_y = y;
 	target_command_phi = atan2(y - current_y, x - current_x);
-	emergency_recieved = 0;
-	robot_status.status = (direction == 1)? GOIN_TO : GOIN_TO_BACKWARDS;
-	command_history = command_history*10 + robot_status.status;
 }
 void prepare_creep_to(float x, float y, int direction){
+	robot_status.status = (direction == 1)?CREEPIN_TO : CREEPIN_TO_BACKWARDS;
 	reached_destination = 0;
+	emergency_recieved = 0;
 	stopped_because_of_collision = 0;
 	robot_status.arguments[0] = x;
 	robot_status.arguments[1] = y;
 	target_command_x = x;
 	target_command_y = y;
 	target_command_phi = atan2(y - current_y, x - current_x);
-	emergency_recieved = 0;
-	command_history = command_history*10 + robot_status.status;
-	robot_status.status = (direction == 1)?CREEPIN_TO : CREEPIN_TO_BACKWARDS;
 }
 void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, float y3, float speed, int direction, int8_t is_smooth){
+	robot_status.status = (direction == 1)? BEZIER_CURVIN : BEZIER_CURVIN_BACKWARDS;
 	reached_destination = 0;
+	emergency_recieved = 0;
 	stopped_because_of_collision = 0;
 	robot_status.arguments[0] = x1;//x1
 	robot_status.arguments[1] = y1;//y1
@@ -699,21 +683,21 @@ void prepare_bezier_curve(float x1, float y1, float x2, float y2, float x3, floa
 	robot_status.arguments[5] = y3;//y3
 	robot_status.arguments[6] = speed;//speed
 	robot_status.arguments[7] = is_smooth;
-	robot_status.status = (direction == 1)? BEZIER_CURVIN : BEZIER_CURVIN_BACKWARDS;
 }
 void prepare_orientate(float orientation, int8_t is_radian, int8_t is_smooth){
+	robot_status.status = ORIENTATIN;
 	reached_destination = 0;
+	emergency_recieved = 0;
 	stopped_because_of_collision = 0;
 	robot_status.arguments[0] = orientation;
 	robot_status.arguments[1] = is_radian;
 	robot_status.arguments[2] = is_smooth;
-	robot_status.status = ORIENTATIN;
 }
 void prepare_emergency_break(){
 	stopped_because_of_collision = 0;
+	emergency_recieved = 0;
 	wheel_state_L = EMERGENCY_BREAK;
 	wheel_state_R = EMERGENCY_BREAK;
-	command_history = command_history*10 + 9;
 }
 void emergency_break(){
 	emergency_recieved = 1;
@@ -733,15 +717,15 @@ void emergency_break(){
 	int left_stopped = 0;
 	while((!right_stopped) || (!left_stopped)){
 		delay(10);
-		if (SGN(current_speed_R) != speed_sign_R || fabs(current_speed_R) < 10){
+		if ((SGN(current_speed_R) != speed_sign_R) || (fabs(current_speed_R) < 10)){
 			right_stopped = 1;
 		}
-		if (SGN(current_speed_L) != speed_sign_L|| fabs(current_speed_L) < 10){
+		if ((SGN(current_speed_L) != speed_sign_L) || (fabs(current_speed_L) < 10)){
 			left_stopped = 1;
 		}
 	}
 	position_max_response = default_position_max_response;
-	set_target_encoder_counts(saved_encoder_count_R, saved_encoder_count_L);
+	set_target_encoder_counts(saved_encoder_count_R - SGN(target_speed_R) * 1500, saved_encoder_count_L - SGN(target_speed_L) * 1500);
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 }
@@ -769,10 +753,19 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 
 int8_t is_idle(){
 	int encoder_tolerance = 50;
-	int pwm_tolerance = 600;
+	int pwm_tolerance = 400;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);
 	return right_wheel_idle && left_wheel_idle;
+}
+
+void wait_for_idle(){
+	while(control_loop_state == POSITION && !is_idle() && (fabs(current_speed_R) > 5) && (fabs(current_speed_L) > 5)){
+		delay(10);
+	}
+	control_loop_state = ACTIVATED;
+	stop_motors();
+	delay(10);
 }
 void reset_speed_control_variables(){
 	previous_speed_control_time = micros()-999;
