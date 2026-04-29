@@ -32,8 +32,8 @@ enum Communication{
 };
 
 #define PI 3.1415926535897932384626433832795
-#define STOP_PWM_THRESHOLD   3500   // close to PWM_max (4499)
-#define STOP_SPEED_THRESHOLD 200    // mm/s (robot almost stopped)
+#define STOP_PWM_THRESHOLD   3400   // close to PWM_max (4499)
+#define STOP_SPEED_THRESHOLD 120    // mm/s (robot almost stopped)
 
 extern enum Communication communication_state;
 extern TIM_HandleTypeDef* htim_motors;

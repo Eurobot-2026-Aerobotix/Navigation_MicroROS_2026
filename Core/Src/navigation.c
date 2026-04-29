@@ -706,26 +706,31 @@ void emergency_break(){
 	control_loop_state = ACTIVATED;
 	PWM_L = 0;
 	PWM_R = 0;
-	while((fabs(current_speed_R) > 200) || (fabs(current_speed_L) > 200) ){
-		delay(10);
-	}
-	int speed_sign_R = SGN(current_speed_R);
-	int speed_sign_L = SGN(current_speed_L);
-	position_max_response = PWM_max*0.25;
-	set_target_encoder_counts(saved_encoder_count_R - speed_sign_R * 1500, saved_encoder_count_L - speed_sign_L * 1500);
-	int right_stopped = 0;
-	int left_stopped = 0;
-	while((!right_stopped) || (!left_stopped)){
-		delay(10);
-		if ((SGN(current_speed_R) != speed_sign_R) || (fabs(current_speed_R) < 10)){
-			right_stopped = 1;
+	if (!stopped_because_of_collision){
+		while((fabs(current_speed_R) > 200) || (fabs(current_speed_L) > 200) ){
+			delay(10);
 		}
-		if ((SGN(current_speed_L) != speed_sign_L) || (fabs(current_speed_L) < 10)){
-			left_stopped = 1;
+		int speed_sign_R = SGN(current_speed_R);
+		int speed_sign_L = SGN(current_speed_L);
+		position_max_response = PWM_max*0.25;
+		set_target_encoder_counts(saved_encoder_count_R - speed_sign_R * 1500, saved_encoder_count_L - speed_sign_L * 1500);
+		int right_stopped = 0;
+		int left_stopped = 0;
+		while((!right_stopped) || (!left_stopped)){
+			delay(10);
+			if ((SGN(current_speed_R) != speed_sign_R) || (fabs(current_speed_R) < 10)){
+				right_stopped = 1;
+			}
+			if ((SGN(current_speed_L) != speed_sign_L) || (fabs(current_speed_L) < 10)){
+				left_stopped = 1;
+			}
 		}
+		position_max_response = default_position_max_response;
+		set_target_encoder_counts(saved_encoder_count_R - SGN(target_speed_R) * 1500, saved_encoder_count_L - SGN(target_speed_L) * 1500);
+	}else{
+		set_target_encoder_counts(saved_encoder_count_R - SGN(target_speed_R) * 1500, saved_encoder_count_L - SGN(target_speed_L) * 1500);
+		stopped_because_of_collision = 0;
 	}
-	position_max_response = default_position_max_response;
-	set_target_encoder_counts(saved_encoder_count_R - SGN(target_speed_R) * 1500, saved_encoder_count_L - SGN(target_speed_L) * 1500);
 	wheel_state_R = DEAD_STOP;
 	wheel_state_L = DEAD_STOP;
 }

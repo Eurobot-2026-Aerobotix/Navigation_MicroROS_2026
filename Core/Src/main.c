@@ -1290,7 +1290,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					}
 				}
 			}
-			if ( fail_safe_activated &&
+			if (
+					(robot_status.status != CREEPIN_TO)
+					&&
+					(robot_status.status != CREEPIN_TO_BACKWARDS)
+					&&
+					fail_safe_activated
+					&&
 					(
 						(fabs(PWM_R) > STOP_PWM_THRESHOLD &&
 						 fabs(current_speed_R) < STOP_SPEED_THRESHOLD)
@@ -1299,12 +1305,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 						(fabs(PWM_L) > STOP_PWM_THRESHOLD &&
 						 fabs(current_speed_L) < STOP_SPEED_THRESHOLD)
-					   )
-				   )
+					)
+				)
 				{
 					// EMERGENCY STOP
                  fail_safe_counter++;
-                 if(fail_safe_counter > 200){
+                 if(fail_safe_counter > 150){
                 	 prepare_emergency_break();
                 	 stopped_because_of_collision = 1;
                  }
