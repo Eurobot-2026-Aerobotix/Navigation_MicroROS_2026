@@ -237,7 +237,7 @@ int move_forward_full(float distance, float speed, float target_x, float target_
 		float deviation_distance = -direction * sqrt(SQR(current_y - starting_y) + SQR(current_x - starting_x)) * sin(deviation_angle); // positive to the left and negative to the right
 		float phi_correction_term = direction * (calculate_instant_target_phi(x, distance) - absolute_phi) * ( 3 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0) ); // the first coefficient is tunable
 		lane_correction_term = (deviation_distance) * ( 0.01 / ( MAX( ( abs(target_speed_R) + abs(target_speed_L) )/2, 100.0) /500.0)); // the first coefficient is tunable
-		float slow_down_factor = 1 - fabs(lane_correction_term)*0.5;
+		float slow_down_factor = 1 - fabs(lane_correction_term)*0.3;
 		lane_correction_term +=  + phi_correction_term;
 		lane_correction_term = MIN(MAX(lane_correction_term, -0.2), 0.2);
 		if (x<10){
@@ -770,7 +770,7 @@ void wait_for_idle(){
 	}
 	control_loop_state = ACTIVATED;
 	stop_motors();
-	delay(10);
+	delay(3);
 }
 void reset_speed_control_variables(){
 	previous_speed_control_time = micros()-999;
