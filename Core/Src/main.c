@@ -141,10 +141,6 @@ void shutdown(){
 	PWM_L = 0;
 }
 
-float rfp(float x) { // meaning remove floating part
-    return (float)((int)x);
-}
-
 void service_callback(const void *request_msg, void *response_msg) {
     service__srv__NaviStm_Request *req_in = (service__srv__NaviStm_Request *)request_msg;
     service__srv__NaviStm_Response *res_out = (service__srv__NaviStm_Response *)response_msg;
@@ -1102,24 +1098,24 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == ORIENTATIN){
-			orientate(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]));
+			orientate(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO){
 			accepted_new_go_to++;
-			go_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), 1, rfp(robot_status.arguments[3]));
+			go_to(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), 1, roundf(robot_status.arguments[3]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == GOIN_TO_BACKWARDS){
-			go_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), -1, rfp(robot_status.arguments[3]));
+			go_to(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), -1, roundf(robot_status.arguments[3]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
-			bezier_curve(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), rfp(robot_status.arguments[3]), rfp(robot_status.arguments[4]), rfp(robot_status.arguments[5]), rfp(robot_status.arguments[6]), 1, rfp(robot_status.arguments[7]));
+			bezier_curve(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), roundf(robot_status.arguments[3]), roundf(robot_status.arguments[4]), roundf(robot_status.arguments[5]), roundf(robot_status.arguments[6]), 1, roundf(robot_status.arguments[7]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
-			bezier_curve(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), rfp(robot_status.arguments[2]), rfp(robot_status.arguments[3]), rfp(robot_status.arguments[4]), rfp(robot_status.arguments[5]), rfp(robot_status.arguments[6]), -1, rfp(robot_status.arguments[7]));
+			bezier_curve(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), roundf(robot_status.arguments[3]), roundf(robot_status.arguments[4]), roundf(robot_status.arguments[5]), roundf(robot_status.arguments[6]), -1, roundf(robot_status.arguments[7]));
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == SETTIN_POSITION){
@@ -1131,11 +1127,11 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == CREEPIN_TO){
-			creep_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), 1);
+			creep_to(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), 1);
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == CREEPIN_TO_BACKWARDS){
-			creep_to(rfp(robot_status.arguments[0]), rfp(robot_status.arguments[1]), -1);
+			creep_to(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), -1);
 			robot_status.status = IDLE;
 		}
 		if (robot_status.status == IDLE && command_history%10 != 0){
