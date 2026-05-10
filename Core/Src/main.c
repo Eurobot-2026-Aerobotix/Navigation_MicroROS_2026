@@ -386,7 +386,7 @@ int main(void)
   //setup_wheel_diameters(79.67706788, 80.9302886);
   setup_wheel_diameters(64.408532262731481481481481481482, 64.34127197265625);
 
-  setup_wheels_spacing(188.5, 284.20073164740865096195903149549);
+  setup_wheels_spacing(188.5, 283.95978509187450826410681414493);
 
   setup_aruco_positions(61, 96.85, -76.9, -97.35);
   //setup_wheels_spacing(188.5, 342.5);
@@ -447,7 +447,7 @@ int main(void)
 //
 //  rotating_speed = 300;
 //  rotate(3600, 0, 0);
-//
+
 //  set_target_encoder_counts(0, 0);
 //  while(1){
 //	  send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
@@ -1111,11 +1111,15 @@ void executor_function(void *argument)
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN){
-			bezier_curve(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), roundf(robot_status.arguments[3]), roundf(robot_status.arguments[4]), roundf(robot_status.arguments[5]), roundf(robot_status.arguments[6]), 1, roundf(robot_status.arguments[7]));
+			if (get_distance_to(robot_status.arguments[4], robot_status.arguments[5]) < 2000){
+				bezier_curve(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), roundf(robot_status.arguments[3]), roundf(robot_status.arguments[4]), roundf(robot_status.arguments[5]), roundf(robot_status.arguments[6]), 1, roundf(robot_status.arguments[7]));
+			}
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == BEZIER_CURVIN_BACKWARDS){
-			bezier_curve(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), roundf(robot_status.arguments[3]), roundf(robot_status.arguments[4]), roundf(robot_status.arguments[5]), roundf(robot_status.arguments[6]), -1, roundf(robot_status.arguments[7]));
+			if (get_distance_to(robot_status.arguments[4], robot_status.arguments[5]) < 2000){
+				bezier_curve(roundf(robot_status.arguments[0]), roundf(robot_status.arguments[1]), roundf(robot_status.arguments[2]), roundf(robot_status.arguments[3]), roundf(robot_status.arguments[4]), roundf(robot_status.arguments[5]), roundf(robot_status.arguments[6]), -1, roundf(robot_status.arguments[7]));
+			}
 			robot_status.status = IDLE;
 		}
 		else if ( robot_status.status == SETTIN_POSITION){
