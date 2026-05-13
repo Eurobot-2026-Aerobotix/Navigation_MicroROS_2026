@@ -65,11 +65,11 @@ int timer_flag = 0;
 
 // position control parameters
 float kpP_R = 15;
-float kdP_R = 1.3;
+float kdP_R = 1.4;
 float kiP_R = 75;
 
 float kpP_L = 15;
-float kdP_L = 1.3;
+float kdP_L = 1.4;
 float kiP_L = 75;
 
 float error = 0;
@@ -447,7 +447,7 @@ int main(void)
 //
 //  rotating_speed = 300;
 //  rotate(3600, 0, 0);
-
+//
 //  set_target_encoder_counts(0, 0);
 //  while(1){
 //	  send_values_to_usart(encoder_count_R, encoder_count_L, 0, 0);
@@ -1310,7 +1310,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				{
 					// EMERGENCY STOP
                  fail_safe_counter++;
-                 if(fail_safe_counter > 60){
+                 if(fail_safe_counter >250){
                 	 prepare_emergency_break();
                 	 stopped_because_of_collision = 1;
                  }
