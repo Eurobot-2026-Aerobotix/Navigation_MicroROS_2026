@@ -48,7 +48,7 @@ int target_command_y = 0;
 int target_command_phi = 0;
 int emergency_recieved = 0;
 int stopped_because_of_collision = 0;
-float reached_destination_time = 0.35;
+float reached_destination_time = 0.30;
 
 int creep_forward(float max_distance, float target_x, float target_y){
 	float direction = SGN(max_distance);
