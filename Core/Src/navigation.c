@@ -11,7 +11,7 @@ enum Wheel_state wheel_state_R = DEAD_STOP;
 enum Wheel_state wheel_state_L = DEAD_STOP;
 enum Trajectory trajectory = STRAIGHT;
 enum Control_loop control_loop_state = DISACTIVATED;
-float ramping_acceleration = 10.5;
+float ramping_acceleration = 10;
 float acc_linearization_coef = 0;
 float dec_linearization_coef = 0;
 
@@ -757,8 +757,8 @@ void set_target_encoder_counts(int32_t encoder__count_R, int32_t encoder__count_
 }
 
 int8_t is_idle(){
-	int encoder_tolerance = 40;
-	int pwm_tolerance = 300;
+	int encoder_tolerance = 35;
+	int pwm_tolerance = 150;
 	int8_t right_wheel_idle = (fabs(target_encoder_count_R - encoder_count_R) < encoder_tolerance) && (fabs(PWM_R) < pwm_tolerance) && (fabs(previous_position_error_R) < encoder_tolerance);
 	int8_t left_wheel_idle = (fabs(target_encoder_count_L - encoder_count_L) < encoder_tolerance) && (fabs(PWM_L) < pwm_tolerance) && (fabs(previous_position_error_L) < encoder_tolerance);
 	return right_wheel_idle && left_wheel_idle;

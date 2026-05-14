@@ -82,9 +82,23 @@ int command_count = 0;
 int fail_safe_activated = 1;
 int fail_safe_counter = 0;
 
+int8_t in_tornado = 0;
+int32_t tornado_start_time = 0;
+
+
 float last_set_position_x = 0;
 float last_set_position_y = 0;
 float last_set_position_phi = 0;
+
+int8_t tornado_condition(){
+	 return (
+			 (fabs(current_speed_R) > 500)
+			 &&
+			 (fabs(current_speed_L) > 500)
+			 &&
+			 (SGN(current_speed_R) != SGN(current_speed_L))
+			);
+}
 
 void reset_everything(){
 	reset_motors_vars();
@@ -1290,6 +1304,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 					}
 				}
 			}
+			// collision failsafe
 			if (
 					(robot_status.status != CREEPIN_TO)
 					&&
@@ -1317,6 +1332,29 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}
 			else {
 				 fail_safe_counter = 0;
+			}
+			///////////////////////////
+			////// tornado failsafe
+			if(in_tornado){
+				if (tornado_condition()){
+					if ((micros() - tornado_start_time) > 4000000){
+						//////////
+						if (control_loop_state == POSITION){
+							emergency_break();
+							robot_status.status = IDLE;
+						}else{
+							prepare_emergency_break();
+						}
+						in_tornado = 0;
+					}
+				}else{
+					in_tornado = 0;
+				}
+			}else{
+				if (tornado_condition()){
+					in_tornado = 1;
+					tornado_start_time = micros();
+				}
 			}
 		}
 		run_right_motor();
