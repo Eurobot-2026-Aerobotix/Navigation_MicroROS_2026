@@ -92,9 +92,7 @@ float last_set_position_phi = 0;
 
 int8_t tornado_condition(){
 	 return (
-			 (fabs(current_speed_R) > 500)
-			 &&
-			 (fabs(current_speed_L) > 500)
+			 ((fabs(current_speed_R) + fabs(current_speed_L)) > 900)
 			 &&
 			 (SGN(current_speed_R) != SGN(current_speed_L))
 			);
@@ -1188,7 +1186,7 @@ void IMU_update_function(void *argument)
 //	delay(6000);
 //	prepare_go_to(1750, 1845, 1100, 1, 0);
 //	delay(6000);
-//	prepare_orientate(10, 0, 0);
+//	prepare_orientate(180, 0, 0);
 //	delay(700);
 //	prepare_emergency_break();
 //
@@ -1295,9 +1293,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 							(
 								(wheel_state_L != EMERGENCY_BREAK)
 								&&
-								(abs(encoder_count_R - target_encoder_count_R) > 1500 )
+								(abs(encoder_count_R - target_encoder_count_R) > 5000 )
 								&&
-								(abs(target_encoder_count_L - encoder_count_L) > 1500 )
+								(abs(target_encoder_count_L - encoder_count_L) > 5000 )
 							)
 						){
 						set_target_encoder_counts(encoder_count_R, encoder_count_L);
@@ -1337,7 +1335,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			////// tornado failsafe
 			if(in_tornado){
 				if (tornado_condition()){
-					if ((micros() - tornado_start_time) > 4000000){
+					if ((micros() - tornado_start_time) > 1200000){
 						//////////
 						if (control_loop_state == POSITION){
 							emergency_break();
